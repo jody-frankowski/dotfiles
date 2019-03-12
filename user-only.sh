@@ -27,7 +27,7 @@ fi
 
 # stow the dotfiles
 pushd ~/.dotfiles/ &> /dev/null
-for dir in backups base docker emacs gnupg js mpd mpv ssh tmux valgrind X ; do
+for dir in base docker emacs gnupg js mpd mpv ssh tmux valgrind X ; do
     stow --no-folding ${dir}
 done
 # hack for the freaking symlink removal

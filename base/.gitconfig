@@ -1,0 +1,21 @@
+[core]
+	excludesfile = /home/me/.gitignore
+[pull]
+	rebase = true
+[push]
+	default = simple
+[rebase]
+	autoStash = true
+[rerere]
+	enabled = true
+[user]
+	email = jody.frankowski@gmail.com
+	name = Jody Frankowski
+[github]
+	user = jody-frankowski
+[magithub]
+	online = false
+[magithub "status"]
+	includeStatusHeader = false
+	includePullRequestsSection = false
+	includeIssuesSection = false

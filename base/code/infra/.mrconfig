@@ -1,0 +1,12 @@
+# [ansible]
+# checkout = git clone --depth 1 --recursive 'git://github.com/ansible/ansible.git' 'ansible'
+# update = git pull ; git submodule update
+
+# [fedora-infra-ansible]
+# checkout = git clone --depth 1 'https://infrastructure.fedoraproject.org/infra/ansible.git' 'fedora-infra-ansible'
+
+# [gentoo]
+# checkout = git clone --depth 1 'https://anongit.gentoo.org/git/repo/gentoo.git' 'gentoo'
+
+# [linux]
+# checkout = git clone --depth 1 'git://git.kernel.org/pub/scm/linux/kernel/git/torvalds/linux.git' 'linux'

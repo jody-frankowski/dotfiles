@@ -1,0 +1,3 @@
+#!/bin/sh
+
+exec firejail --rlimit-as=5000000000 /usr/bin/$(basename $0)

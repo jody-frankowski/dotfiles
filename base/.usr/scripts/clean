@@ -1,0 +1,11 @@
+#!/bin/sh
+
+set -euo pipefail
+
+bleachbit --clean \
+          chromium.vacuum \
+          firefox.crash_reports \
+          firefox.download_history \
+          firefox.vacuum \
+          google_chrome.vacuum \
+          thunderbird.vacuum

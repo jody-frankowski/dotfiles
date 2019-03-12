@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Using `--inplace` might be dangerous in some cases, see
+# https://lists.samba.org/archive/rsync/2010-June/025178.html
+rsync -avPih --inplace --size-only --stats "$@"

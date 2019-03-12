@@ -1,0 +1,304 @@
+# If not running interactively, don't do anything
+[[ $- != *i* ]] && return
+
+[ -f /etc/bash.bashrc ] && . /etc/bash.bashrc
+### bash settings ###
+# insensitive completion
+bind 'set completion-ignore-case on'
+
+# ignore commands starting with spaces and duplicates
+HISTCONTROL=ignoreboth
+# show human readable time
+HISTTIMEFORMAT="%c "
+
+# check the window size after each command and, if necessary, updates the values of LINES and COLUMNS.
+shopt -s checkwinsize
+# TODO needed???
+#shopt -s histappend
+
+### aliases ###
+# platform specific
+if [ $(uname -s) = "OpenBSD" ]; then
+    if command -v gls ; then
+        alias ls='gls --color=auto --group-directories-first'
+    fi
+else
+    alias grep='grep --color=auto'
+    alias ls='ls --color=auto --group-directories-first'
+fi
+
+alias ..='cd ..'
+alias ...='cd ../..'
+alias cgrep="grep -Ev '^\s*[#$;]|^$'"
+alias l='ls -lFh'     # size,show type,human readable
+alias la='ls -lAFh'   # long list,show almost all,show type,human readable
+alias latr='ls -latr'
+alias sl=ls
+alias nxr='nginx -s reload'
+alias nxt='nginx -t'
+alias lir='lighttpd reload'
+alias lit='lighttpd -f /etc/lighttpd/lighttpd.conf -t'
+alias apar='apachectl -k graceful'
+alias apat='apachectl -t && apachectl -t -D DUMP_VHOSTS'
+alias meminfo='free -m -l -t'
+alias pscpu='ps auxf | sort -n -k 3'
+alias psg="ps aux | grep"
+alias psmem='ps auxf | sort -n -k 4'
+alias rm='rm -i'
+alias v=vi
+command -v /usr/bin/vim > /dev/null && alias v=vim
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gst='git status'
+alias cpv='rsync -avP'
+alias cpvr='rsync -avP --inplace --size-only -i'
+alias cpvs='rsync -avP --rsync-path="sudo rsync"'
+
+
+if ! command -v ag > /dev/null; then
+    alias ag=ag-function
+fi
+
+### env ###
+export LS_COLORS='no=00;38;5;244:rs=0:di=00;38;5;33:ln=01;38;5;37:mh=00:pi=48;5;230;38;5;136;01:so=48;5;230;38;5;136;01:do=48;5;230;38;5;136;01:bd=48;5;230;38;5;244;01:cd=48;5;230;38;5;244;01:or=48;5;235;38;5;160:su=48;5;160;38;5;230:sg=48;5;136;38;5;230:ca=30;41:tw=48;5;64;38;5;230:ow=48;5;235;38;5;33:st=48;5;33;38;5;230:ex=01;38;5;64:*.tar=00;38;5;61:*.tgz=01;38;5;61:*.arj=01;38;5;61:*.taz=01;38;5;61:*.lzh=01;38;5;61:*.lzma=01;38;5;61:*.tlz=01;38;5;61:*.txz=01;38;5;61:*.zip=01;38;5;61:*.z=01;38;5;61:*.Z=01;38;5;61:*.dz=01;38;5;61:*.gz=01;38;5;61:*.lz=01;38;5;61:*.xz=01;38;5;61:*.bz2=01;38;5;61:*.bz=01;38;5;61:*.tbz=01;38;5;61:*.tbz2=01;38;5;61:*.tz=01;38;5;61:*.deb=01;38;5;61:*.rpm=01;38;5;61:*.jar=01;38;5;61:*.rar=01;38;5;61:*.ace=01;38;5;61:*.zoo=01;38;5;61:*.cpio=01;38;5;61:*.7z=01;38;5;61:*.rz=01;38;5;61:*.apk=01;38;5;61:*.gem=01;38;5;61:*.zpaq=01;38;5;61:*.arc=01;38;5;61:*.jpg=00;38;5;136:*.JPG=00;38;5;136:*.jpeg=00;38;5;136:*.gif=00;38;5;136:*.bmp=00;38;5;136:*.pbm=00;38;5;136:*.pgm=00;38;5;136:*.ppm=00;38;5;136:*.tga=00;38;5;136:*.xbm=00;38;5;136:*.xpm=00;38;5;136:*.tif=00;38;5;136:*.tiff=00;38;5;136:*.png=00;38;5;136:*.svg=00;38;5;136:*.svgz=00;38;5;136:*.mng=00;38;5;136:*.pcx=00;38;5;136:*.dl=00;38;5;136:*.xcf=00;38;5;136:*.xwd=00;38;5;136:*.yuv=00;38;5;136:*.cgm=00;38;5;136:*.emf=00;38;5;136:*.eps=00;38;5;136:*.CR2=00;38;5;136:*.ico=00;38;5;136:*.webp=00;38;5;136:*.tex=01;38;5;245:*.rdf=01;38;5;245:*.owl=01;38;5;245:*.n3=01;38;5;245:*.ttl=01;38;5;245:*.nt=01;38;5;245:*.torrent=01;38;5;245:*.xml=01;38;5;245:*Makefile=01;38;5;245:*Rakefile=01;38;5;245:*build.xml=01;38;5;245:*rc=01;38;5;245:*1=01;38;5;245:*.nfo=01;38;5;245:*README=01;38;5;245:*README.txt=01;38;5;245:*readme.txt=01;38;5;245:*.md=01;38;5;245:*.rst=01;38;5;245:*README.markdown=01;38;5;245:*.ini=01;38;5;245:*.yml=01;38;5;245:*.cfg=01;38;5;245:*.conf=01;38;5;245:*.c=01;38;5;245:*.cpp=01;38;5;245:*.cc=01;38;5;245:*.log=00;38;5;240:*.bak=00;38;5;240:*.aux=00;38;5;240:*.bbl=00;38;5;240:*.blg=00;38;5;240:*~=00;38;5;240:*#=00;38;5;240:*.part=00;38;5;240:*.incomplete=00;38;5;240:*.swp=00;38;5;240:*.tmp=00;38;5;240:*.temp=00;38;5;240:*.o=00;38;5;240:*.pyc=00;38;5;240:*.class=00;38;5;240:*.cache=00;38;5;240:*.aac=00;38;5;166:*.au=00;38;5;166:*.flac=00;38;5;166:*.mid=00;38;5;166:*.midi=00;38;5;166:*.mka=00;38;5;166:*.mp3=00;38;5;166:*.mpc=00;38;5;166:*.ogg=00;38;5;166:*.ra=00;38;5;166:*.wav=00;38;5;166:*.m4a=00;38;5;166:*.axa=00;38;5;166:*.oga=00;38;5;166:*.spx=00;38;5;166:*.xspf=00;38;5;166:*.mov=01;38;5;166:*.mpg=01;38;5;166:*.mpeg=01;38;5;166:*.m2v=01;38;5;166:*.mkv=01;38;5;166:*.ogm=01;38;5;166:*.mp4=01;38;5;166:*.m4v=01;38;5;166:*.mp4v=01;38;5;166:*.vob=01;38;5;166:*.qt=01;38;5;166:*.nuv=01;38;5;166:*.wmv=01;38;5;166:*.asf=01;38;5;166:*.rm=01;38;5;166:*.rmvb=01;38;5;166:*.flc=01;38;5;166:*.avi=01;38;5;166:*.fli=01;38;5;166:*.flv=01;38;5;166:*.gl=01;38;5;166:*.m2ts=01;38;5;166:*.divx=01;38;5;166:*.webm=01;38;5;166:*.axv=01;38;5;166:*.anx=01;38;5;166:*.ogv=01;38;5;166:*.ogx=01;38;5;166:'
+
+if command -v vim > /dev/null ; then
+    export EDITOR=$(command -v vim)
+    export VISUAL=$(command -v vim)
+else
+    export EDITOR=$(command -v vi)
+    export VISUAL=$(command -v vi)
+fi
+
+### functions ###
+ag-function () {
+    grep -ri "$@" *
+}
+
+bak () {
+    for arg in "$@" ; do
+        newname="$arg-$(date -Iseconds).bak";
+        cp -a "$arg" "$newname";
+    done
+}
+
+cd () {
+    builtin cd "$@" && ls
+}
+
+con-by-state () {
+    ss -nat | tail -n +2 | awk '{print $1}'| sort | uniq -c | sort -rn
+}
+
+con-by-ip () {
+    ss -ntu | tail -n +2 | awk '{print $6}' | cut -d: -f1 | sort | uniq -c | sort -n
+}
+
+f () {
+    to_search=$(echo $* | sed "s/ /*/g")
+    find . -iname "*${to_search}*"
+}
+
+getip () {
+    dig +short myip.opendns.com @resolver1.opendns.com
+}
+
+motd () {
+    cat /etc/motd
+    echo
+    uname -a
+    echo
+    free -m
+    echo
+    w
+    echo
+}
+
+slit () {
+    # print columns 1 2 3 ... n
+    awk "{ print ${(j:,:):-\$${^@}}  }"
+}
+
+diff-fw () {
+    if grep -i centos /etc/issue || [ -f /etc/redhat-release ]; then
+        diff <(iptables-save) /etc/sysconfig/iptables
+    else
+        diff <(iptables-save) /etc/network/iptables-rules
+    fi
+}
+
+vdiff-fw () {
+    if grep -i centos /etc/issue || [ -f /etc/redhat-release ]; then
+        vimdiff <(iptables-save) /etc/sysconfig/iptables
+    else
+        vimdiff <(iptables-save) /etc/network/iptables-rules
+    fi
+}
+
+### prompt ###
+# sexy-bash-prompt
+if tput setaf 1 &> /dev/null; then
+  tput sgr0 &> /dev/null
+  prompt_bold="$(tput bold)"
+  prompt_reset="$(tput sgr0)"
+
+  if [[ "$(tput colors)" -ge 256 ]] &> /dev/null; then
+    prompt_user_color="$prompt_bold$(tput setaf 27)"
+    prompt_preposition_color="$prompt_bold$(tput setaf 7)"
+    prompt_device_color="$prompt_bold$(tput setaf 39)"
+    prompt_dir_color="$prompt_bold$(tput setaf 76)"
+    prompt_git_status_color="$prompt_bold$(tput setaf 154)"
+    prompt_git_progress_color="$prompt_bold$(tput setaf 9)"
+  else
+    prompt_user_color="$prompt_bold$(tput setaf 4)"
+    prompt_preposition_color="$prompt_bold$(tput setaf 7)"
+    prompt_device_color="$prompt_bold$(tput setaf 6)"
+    prompt_dir_color="$prompt_bold$(tput setaf 2)"
+    prompt_git_status_color="$prompt_bold$(tput setaf 3)"
+    prompt_git_progress_color="$prompt_bold$(tput setaf 1)"
+  fi
+
+  prompt_symbol_color="$prompt_bold"
+
+else
+  prompt_reset="\033[m"
+  prompt_user_color="\033[1;34m"
+  prompt_preposition_color="\033[1;37m"
+  prompt_device_color="\033[1;36m"
+  prompt_dir_color="\033[1;32m"
+  prompt_git_status_color="\033[1;33m"
+  prompt_git_progress_color="\033[1;31m"
+  prompt_symbol_color=""
+fi
+
+if [[ -n "$PROMPT_USER_COLOR" ]]; then prompt_user_color="$PROMPT_USER_COLOR"; fi
+if [[ -n "$PROMPT_PREPOSITION_COLOR" ]]; then prompt_preposition_color="$PROMPT_PREPOSITION_COLOR"; fi
+if [[ -n "$PROMPT_DEVICE_COLOR" ]]; then prompt_device_color="$PROMPT_DEVICE_COLOR"; fi
+if [[ -n "$PROMPT_DIR_COLOR" ]]; then prompt_dir_color="$PROMPT_DIR_COLOR"; fi
+if [[ -n "$PROMPT_GIT_STATUS_COLOR" ]]; then prompt_git_status_color="$PROMPT_GIT_STATUS_COLOR"; fi
+if [[ -n "$PROMPT_GIT_PROGRESS_COLOR" ]]; then prompt_git_progress_color="$PROMPT_GIT_PROGRESS_COLOR"; fi
+if [[ -n "$PROMPT_SYMBOL_COLOR" ]]; then prompt_symbol_color="$PROMPT_SYMBOL_COLOR"; fi
+
+get_git_branch() {
+  ref="$(git symbolic-ref HEAD 2> /dev/null | sed -e 's/refs\/heads\///')"
+  if [[ "$ref" != "" ]]; then
+    echo "$ref"
+  else
+    echo "(no branch)"
+  fi
+}
+get_git_progress() {
+  git_dir="$(git rev-parse --git-dir)"
+
+  if [[ -f "$git_dir/MERGE_HEAD" ]]; then
+    echo " [merge]"
+  elif [[ -d "$git_dir/rebase-apply" ]]; then
+    if [[ -f "$git_dir/rebase-apply/applying" ]]; then
+      echo " [am]"
+    else
+      echo " [rebase]"
+    fi
+  elif [[ -d "$git_dir/rebase-merge" ]]; then
+    echo " [rebase]"
+  elif [[ -f "$git_dir/CHERRY_PICK_HEAD" ]]; then
+    echo " [cherry-pick]"
+  fi
+  if [[ -f "$git_dir/BISECT_LOG" ]]; then
+    echo " [bisect]"
+  fi
+  if [[ -f "$git_dir/REVERT_HEAD" ]]; then
+    echo " [revert]"
+  fi
+}
+is_branch1_behind_branch2 () {
+  first_log="$(git log $1..$2 -1 2> /dev/null)"
+  [[ -n "$first_log" ]]
+}
+branch_exists () {
+  git branch --remote 2> /dev/null | grep --quiet "$1"
+}
+parse_git_ahead () {
+  branch="$(get_git_branch)"
+  remote_branch="origin/$branch"
+  if (is_branch1_behind_branch2 "$remote_branch" "$branch" ||
+      ! branch_exists "$remote_branch"); then
+    echo 1
+  fi
+}
+parse_git_behind () {
+  branch="$(get_git_branch)"
+  remote_branch="origin/$branch"
+  if is_branch1_behind_branch2 "$branch" "$remote_branch"; then
+    echo 1
+  fi
+}
+parse_git_dirty() {
+  if [[ -n "$(git status --porcelain 2> /dev/null)" ]]; then
+    echo 1
+  fi
+}
+is_on_git() {
+  git rev-parse 2> /dev/null
+}
+get_git_status() {
+  dirty_branch="$(parse_git_dirty)"
+  branch_ahead="$(parse_git_ahead)"
+  branch_behind="$(parse_git_behind)"
+
+  if [[ "$dirty_branch" == 1 && "$branch_ahead" == 1 && "$branch_behind" == 1 ]]; then
+    echo "⬢"
+  elif [[ "$dirty_branch" == 1 && "$branch_ahead" == 1 ]]; then
+    echo "▲"
+  elif [[ "$dirty_branch" == 1 && "$branch_behind" == 1 ]]; then
+    echo "▼"
+  elif [[ "$branch_ahead" == 1 && "$branch_behind" == 1 ]]; then
+    echo "⬡"
+  elif [[ "$branch_ahead" == 1 ]]; then
+    echo "△"
+  elif [[ "$branch_behind" == 1 ]]; then
+    echo "▽"
+  elif [[ "$dirty_branch" == 1 ]]; then
+    echo "*"
+  fi
+}
+get_git_info () {
+  branch="$(get_git_branch)"
+
+  if [[ "$branch" != "" ]]; then
+    output="$branch"
+
+    output="$output$(get_git_status)"
+
+    echo "$output"
+  fi
+}
+get_prompt_symbol() {
+  if [[ "$UID" == 0 ]]; then
+    echo "#"
+  else
+    echo "\$"
+  fi
+}
+
+PS1="\[$prompt_user_color\]\u\[$prompt_reset\] \
+\[$prompt_preposition_color\]at\[$prompt_reset\] \
+\[$prompt_device_color\]\h\[$prompt_reset\] \
+\[$prompt_preposition_color\]in\[$prompt_reset\] \
+\[$prompt_dir_color\]\w\[$prompt_reset\] \
+\[$prompt_preposition_color\][\$(date +%H:%M:%S)]\[$prompt_reset\]\
+\$( is_on_git && \
+  echo -n \" \[$prompt_preposition_color\]on\[$prompt_reset\] \" && \
+  echo -n \"\[$prompt_git_status_color\]\$(get_git_info)\" && \
+  echo -n \"\[$prompt_git_progress_color\]\$(get_git_progress)\" && \
+  echo -n \"\[$prompt_preposition_color\]\")\n\[$prompt_reset\]\
+\[$prompt_symbol_color\]$(get_prompt_symbol) \[$prompt_reset\]"
+
+
+### init ###
+motd
+
+# auto start a tmux session
+if [ -z "$TMUX" ] ; then
+    if command -v tmux &>/dev/null ; then
+        tmux attach -t main || tmux new -s main 'tmux set -g default-command "bash --rcfile /tmp/.ssh-bashrc" ; bash --rcfile /tmp/.ssh-bashrc'
+    fi
+fi

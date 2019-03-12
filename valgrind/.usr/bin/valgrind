@@ -1,0 +1,5 @@
+#!/bin/sh
+
+# Call the real valgrind
+# The last one in PATH for now
+$(type -a valgrind | tail -n-1 | awk '{print $3}') --suppressions="$HOME"/.config/valgrind/vgpreload.supp "$@"

@@ -1,0 +1,10 @@
+#!/bin/sh
+
+if [[ $# -lt 2 ]] ; then
+    echo "$0 expects at least one source and one destination." >&2
+    return 1
+fi
+
+if rsync -avPih --remove-source-files "$@" ; then
+    find "${@:1:$(($# - 1))}" -type d -empty -delete
+fi

@@ -1,0 +1,11 @@
+#!/bin/sh
+
+# See https://www.gnupg.org/documentation/manuals/gnupg/Common-Problems.html (Third item)
+# We always tell gpg the current tty should be the one he should talk to
+# This relies on a correct GPG_TTY environment variable
+gpg-connect-agent updatestartuptty /bye >/dev/null
+# Also we kill any possibly remaining pinentry
+killall -9 pinentry-tty &> /dev/null
+# Finally we launch ssh and prevent a possible fork bomb by calling
+# the ssh binary directly
+exec /usr/bin/ssh "$@"

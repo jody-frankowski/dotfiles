@@ -1,0 +1,636 @@
+* Packages config
+
+Add the MELPA and org-mode elpa:
+
+#+BEGIN_SRC emacs-lisp
+  ;; ~require~ is a way to load "features". Features are exported with
+  ;; the function ~provide~.  The argument to the require function
+  ;; should be a file name (without .el/.elc) that exports a feature of
+  ;; the same name with ~provide~.
+  (require 'package)
+  ;; Tells Emacs not to do a (package-initialize) after loading the init files
+  ;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Package-Installation.html
+  ;; This changes in Emacs 27 (not yet released)
+  ;; https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=24acb31c04b4048b85311d794e600ecd7ce60d3b
+  ;; Because of this change, this directive is also in early-init.el.
+  (setq package-enable-at-startup nil)
+  (setq package-archives '(("org"   . "http://orgmode.org/elpa/")
+                            ("gnu"   . "http://elpa.gnu.org/packages/")
+                            ("melpa" . "https://melpa.org/packages/")))
+  (package-initialize)
+#+END_SRC
+
+Now we'll install the ~use-package~ package which makes installing,
+loading and configuring packages easier. When using ~use-package~, it
+can install packages if they aren't already installed if
+~use-package-always-ensure~ is ~true~ or if the ~:ensure~ keyword is
+set to ~t~. It can execute code before the package is loaded thanks to
+the ~:init~ keyword. It can execute code after the package is loaded
+with the ~:config~ keyword (and the execution is deferred until after
+the package is loaded, even if it is lazy loaded).
+
+
+#+BEGIN_SRC emacs-lisp
+(unless (package-installed-p 'use-package)
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+#+END_SRC
+
+Let's make sure packages are always installed if they aren't already:
+
+#+BEGIN_SRC emacs-lisp
+(setq use-package-always-ensure t)
+#+END_SRC
+
+Add ~/.emacs.d/lisp to load-path so that we can pull individual .el files
+directly:
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+#+END_SRC
+
+* UI
+
+Disable useless UI elements:
+
+#+BEGIN_SRC emacs-lisp
+;; Modes are usually disabled by calling an associated function with negative values.
+;; Setting the corresponding variable won't work.
+(scroll-bar-mode -1)
+(tool-bar-mode   -1)
+(tooltip-mode    -1)
+(menu-bar-mode   -1)
+#+END_SRC
+
+** Theme
+
+#+BEGIN_SRC emacs-lisp
+(use-package doom-themes
+  :config
+  (load-theme 'doom-one-light t))
+;; Not mature enough :/
+;;(use-package base16-theme
+;;  :config
+;;  (setq base16-theme-256-color-source "colors")
+;;  (load-theme 'base16-summerfruit-light t))
+#+END_SRC
+
+* Customize Config
+
+Put all customizations in seperate file so it doesn't clobber our init.el:
+
+#+BEGIN_SRC emacs-lisp
+(setq custom-file "~/.emacs.d/custom.el")
+(if (file-exists-p custom-file)
+    (load custom-file))
+#+END_SRC
+
+* Bell
+
+Disable the bell:
+
+#+BEGIN_SRC emacs-lisp
+(setq ring-bell-function 'ignore)
+#+END_SRC
+
+* evil-mode
+
+Enable evil-mode. This needs to be put before any other evil package is loaded:
+
+#+BEGIN_SRC emacs-lisp
+;; Enable C-u binding
+(use-package evil
+  :init
+  ;; Makes C-u scroll like in vim
+  (setq evil-want-C-u-scroll t)
+  ;; Makes Y copy like in vim
+  (setq evil-want-Y-yank-to-eol t)
+  ;; Makes TAB behave like TAB in Emacs (eg. Open tree in org-mode rather than jump forward) when in terminal
+  ;; See https://catern.com/posts/terminal_quirks.html for why C-i is equivalent to TAB in a terminal
+  (setq evil-want-C-i-jump nil)
+  :config
+  (evil-mode 1))
+#+END_SRC
+
+* Org
+
+#+BEGIN_SRC emacs-lisp
+(require 'org)
+
+;; Customized to remove the empty line in SRC blocks
+;; FIXME indent better?
+(setq org-structure-template-alist
+(quote (("s" "#+BEGIN_SRC ?
+,#+END_SRC")
+ ("e" "#+BEGIN_EXAMPLE
+?
+#+END_EXAMPLE")
+ ("d" ":PROPERTIES:
+:DRILL_CARD_TYPE: show1cloze
+:END:
+
+?")
+ ("q" "#+BEGIN_QUOTE
+?
+#+END_QUOTE")
+ ("v" "#+BEGIN_VERSE
+?
+#+END_VERSE")
+ ("V" "#+BEGIN_VERBATIM
+?
+#+END_VERBATIM")
+ ("c" "#+BEGIN_CENTER
+?
+#+END_CENTER")
+ ("C" "#+BEGIN_COMMENT
+?
+#+END_COMMENT")
+ ("l" "#+BEGIN_EXPORT latex
+?
+#+END_EXPORT")
+ ("L" "#+LaTeX: ")
+ ("h" "#+BEGIN_EXPORT html
+?
+#+END_EXPORT")
+ ("H" "#+HTML: ")
+ ("a" "#+BEGIN_EXPORT ascii
+?
+#+END_EXPORT")
+ ("A" "#+ASCII: ")
+ ("i" "#+INDEX: ?")
+ ("I" "#+INCLUDE: %file ?"))))
+#+END_SRC
+
+Set org-mode to show edits that are hidden in folded trees (eg. x in
+command mode).  Note that this won't protect against insert mode
+deletions :/
+https://emacs.stackexchange.com/questions/10708/org-mode-evil-prevent-editing-of-hidden-text-within-collapsed-subtree
+seems to confirm that we are right.
+
+FIXME make this work for all evil-mode edits.
+FIXME doesn't seem to work outside of spacemacs, even for the 'x' command in folded tree
+
+The way it works is that org-mode calls org-check-before-invisible-edit in functions
+(eg. org-self-insert-command) that are about the edit the buffer. The
+problem is that evil-mode doesn't call the same functions, so the
+check is never done.  evil-org-mode hooks some of them, and is
+included in spacemacs, so that's why it can work for 'x' in spacemacs.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-catch-invisible-edits 'error)
+#+END_SRC
+
+Tells org-mode to indent trees visually even if they aren't really:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-startup-indented t)
+#+END_SRC
+
+Tells org-mode to preserve indentation when exporting code
+blocks. Also a way not to have indentation in code blocks. Setting
+~org-edit-src-content-indentation~ to 0 might do the trick as well.
+
+#+BEGIN_SRC emacs-lisp
+(setq org-edit-src-content-indentation t)
+#+END_SRC
+
+Install ~evil-org~ so that keybindings like ~>~ or ~<~ behave as
+expected and also support motion (contrary to ~org-evil~):
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-org
+  :ensure t
+  :after org
+  :config
+  (add-hook 'org-mode-hook 'evil-org-mode)
+  (add-hook 'evil-org-mode-hook
+            (lambda ()
+              (evil-org-set-key-theme))))
+#+END_SRC
+
+** Drill
+
+#+BEGIN_SRC emacs-lisp
+;; Pulls org-learn required by org-drill
+(use-package org
+  :ensure org-plus-contrib)
+
+(require 'org-drill)
+
+;; org-drill quick fix
+;; https://bitbucket.org/eeeickythump/org-drill/issues/62/org-drill-doesnt-work-with-org-mode-92
+(defun org-drill-hide-subheadings-if (test)
+    "TEST is a function taking no arguments. TEST will be called for each
+of the immediate subheadings of the current drill item, with the point
+on the relevant subheading. TEST should return nil if the subheading is
+to be revealed, non-nil if it is to be hidden.
+Returns a list containing the position of each immediate subheading of
+the current topic."
+    (let ((drill-entry-level (org-current-level))
+          (drill-sections nil))
+      (org-show-subtree)
+      (save-excursion
+        (org-map-entries
+         (lambda ()
+           (when (and (not (outline-invisible-p))
+                      (> (org-current-level) drill-entry-level))
+             (when (or (/= (org-current-level) (1+ drill-entry-level))
+                       (funcall test))
+               (hide-subtree))
+             (push (point) drill-sections)))
+         t 'tree))
+      (reverse drill-sections)))
+
+(setq org-drill-left-cloze-delimiter "<[")
+(setq org-drill-right-cloze-delimiter "]>")
+
+(setq org-drill-maximum-items-per-session 50) ; default is 30
+(setq org-drill-maximum-duration 40) ; default is 20 minutes
+#+END_SRC
+
+*** TODO org-drill: implement fact expiration?
+*** TODO org-drill: implement a way to tell "I want Emacs to tell me to add more facts about this card when this one is remembered or in X days". Example: pi decimals and prime numbers.
+
+** anki-editor
+
+#+BEGIN_SRC emacs-lisp
+(use-package anki-editor)
+#+END_SRC
+
+* Dired
+
+Add "-h" to the dired ls flags:
+
+#+BEGIN_SRC emacs-lisp
+(setq dired-listing-switches "-alh")
+#+END_SRC
+
+* Git
+Install Magit, evil-magit and diff-hl for the diffs in the fringe:
+
+#+BEGIN_SRC emacs-lisp
+(use-package magit)
+(use-package evil-magit)
+(use-package diff-hl)
+(global-diff-hl-mode)
+(diff-hl-margin-mode)
+(add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+#+END_SRC
+
+* Unicode Homoglyphs Highlighter
+
+Add unicode-troll-stopper which highlights unicode homoglyphs. (Think
+https://github.com/reinderien/mimic).
+
+Breaks Magit. Doesn't work properly in itself. :/
+
+#+BEGIN_SRC emacs-lisp
+;;(use-package unicode-troll-stopper)
+;;(define-globalized-minor-mode
+;;    global-unicode-troll-stopper-mode
+;;    unicode-troll-stopper-mode
+;;    (lambda ()
+;;        (unicode-troll-stopper-mode 1)))
+;;(global-unicode-troll-stopper-mode 1)
+#+END_SRC
+
+* Indentation
+
+Add editorconfig which will configure the proper indentation settings based on
+the ~.editorconfig~ files (if no file is found emacs defaults will be applied):
+
+#+BEGIN_SRC emacs-lisp
+(use-package editorconfig
+  :ensure t
+  :config
+  (editorconfig-mode 1))
+;; require-final-newline is managed by ethan-wspace so we block it
+;; so it doesn't warn us about it.
+(add-hook 'editorconfig-hack-properties-functions
+    '(lambda (props)
+        (puthash 'insert_final_newline "false" props)))
+#+END_SRC
+
+* Backups
+
+With a combination of undo-tree (~u~ and ~C-r~ with branches) and
+auto-saving, a loss of work should be pretty small.  The undo-tree
+will contain the latest changes, laid out in a tree, in order to be
+able to come back to another "branch" of edition. Emacs auto-save is
+configured to save every 300 keystrokes or 30 seconds of idle time, in
+the edited file, and not in an external one that we might forget to
+restore from! We will also configure Emacs to save and restore the
+last point position.
+
+Enable and configure persistent undo with the help of undo-tree:
+
+#+BEGIN_SRC emacs-lisp
+;; evil already pulls undo-tree, but let's be explicit here
+(use-package undo-tree
+  :init
+  (unless (file-exists-p "~/.emacs.d/.cache/undo")
+    (make-directory "~/.emacs.d/.cache/undo"))
+  :config
+  (setq undo-tree-auto-save-history t
+        undo-tree-visualizer-diff t
+        undo-tree-visualizer-timestamps t
+        undo-tree-history-directory-alist '(("." . "~/.emacs.d/.cache/undo"))))
+#+END_SRC
+
+Configure Emcas to auto-save in the edited file:
+
+#+BEGIN_SRC emacs-lisp
+(auto-save-visited-mode)
+#+END_SRC
+
+Disable "backup~" files, persistent undo should be enough:
+
+#+BEGIN_SRC emacs-lisp
+(setq make-backup-files nil)
+#+END_SRC
+
+Configures Emacs to save and restore the last place of the point
+between sessions:
+
+#+BEGIN_SRC emacs-lisp
+(save-place-mode 1)
+#+END_SRC
+
+* Version Control
+
+Automatically follow symbolic links to files under version control (stops Emacs from asking):
+
+#+BEGIN_SRC emacs-lisp
+;; Also set in init.el so it doesn't bother us when we edit the emacs
+;; config that is just changed, thus regenerated.
+(setq vc-follow-symlinks t)
+#+END_SRC
+
+* Auto Refresh Buffers
+
+Set Emacs to auto refresh the file backed buffers if the file changed,
+but not if the buffer is changed.
+
+#+BEGIN_SRC emacs-lisp
+(global-auto-revert-mode 1)
+;; Make it quiet
+(setq auto-revert-verbose nil)
+#+END_SRC
+
+Enable the refresh for dired views too:
+
+#+BEGIN_SRC emacs-lisp
+(setq global-auto-revert-non-file-buffers t)
+#+END_SRC
+* Line and Column Numbers
+
+Show relative line numbers, and also show column number in the status bar:
+
+#+BEGIN_SRC emacs-lisp
+(setq display-line-numbers-type 'relative)
+;; Make Emacs set the line-numbers width to the largest width needed
+;; Why isn't this the default ? :(
+(setq display-line-numbers-width-start t)
+(global-display-line-numbers-mode)
+
+(setq column-number-mode t)
+#+END_SRC
+
+* Comments
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-nerd-commenter)
+#+END_SRC
+
+* Column Indicator
+
+Shows a ruler at ~fill-column~ column. May be broken sometimes. It's
+still better than whitespace's ~lines-tail~ that isn't dynamic by default
+and that also doesn't take into account the tab width.
+
+#+BEGIN_SRC emacs-lisp
+(use-package fill-column-indicator)
+(define-globalized-minor-mode global-fci-mode fci-mode (lambda ()
+    (if buffer-file-name (fci-mode 1))))
+(global-fci-mode 1)
+#+END_SRC
+
+* Whitespace
+
+Use built-in whitespace mode to show tabs with a custom symbol, trailing spaces,
+empty lines and specials spaces (hard space and ideographic space) with a custom
+symbol.
+
+#+BEGIN_SRC emacs-lisp
+(setq-default
+  whitespace-style '(face tabs trailing empty space-mark tab-mark))
+  (setq whitespace-display-mappings
+    '(
+        (space-mark   ?\xA0  [?\u25a0]     [?_]) ; hard space - black square
+        (space-mark ?\u3000 [?\u25a1])           ; ideographic space - white square
+        ;;
+        ;; Examples:
+        ;; NO-BREAK SPACE: ` `
+        ;; IDEOGRAPHIC SPACE: `　`
+        ;;
+        ;; WARNING: the mapping below has a problem.
+        ;; When a TAB occupies exactly one column, it will display the
+        ;; character ?\xBB at that column followed by a TAB which goes to
+        ;; the next TAB column.
+        ;; If this is a problem for you, please, comment the line below.
+        (tab-mark     ?\t    [?› ?\t] [?\\ ?\t]) ; tab - right guillemet
+))
+#+END_SRC
+
+Add ethan-wspace that will highlight existing whitespace errors and clean new
+ones. It's very handy and will help not cluttering git logs. By default it
+highlights tabs unless ~indent-tabs-mode~ is set. It also handles the final
+newline.
+
+#+BEGIN_SRC emacs-lisp
+(use-package ethan-wspace
+  :config
+  (global-ethan-wspace-mode 1))
+;; Disable for the magit commit buffer
+(add-hook 'text-mode-hook
+    (lambda ()
+        (if (equal (file-name-nondirectory buffer-file-name) "COMMIT_EDITMSG")
+            (ethan-wspace-mode -1))))
+#+END_SRC
+
+* Prefer Newer Files
+Configure Emacs to load a '.el' instead of a '.elc' if the '.el' is newer:
+
+#+BEGIN_SRC emacs-lisp
+(setq load-prefer-newer t)
+#+END_SRC
+
+* Clipboard
+
+Save the clipboard content before overwriting it from Emacs:
+
+#+BEGIN_SRC emacs-lisp
+(setq save-interprogram-paste-before-kill t)
+#+END_SRC
+
+* Brackets
+
+Configures Emacs to highlight the matching brackets:
+
+#+BEGIN_SRC emacs-lisp
+(show-paren-mode 1)
+#+END_SRC
+
+* Markdown Mode
+
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode)
+#+END_SRC
+
+* Ivy
+Install Ivy, Counsel and Swiper:
+
+#+BEGIN_SRC emacs-lisp
+(use-package counsel)
+#+END_SRC
+
+# TODO Add the recent files to ~ivy-switch-buffers~:
+
+#+BEGIN_SRC emacs-lisp
+;;(setq ivy-use-virtual-buffers t)
+#+END_SRC
+
+Remove "^" from the initial input:
+
+#+BEGIN_SRC emacs-lisp
+(setq ivy-initial-inputs-alist nil)
+#+END_SRC
+
+Enable flx sorting on default ~ivy--regex-plus~ matches:
+
+#+BEGIN_SRC emacs-lisp
+;;(use-package flx)
+(defun ivy--flx-sort (name cands)
+  "Sort according to closeness to string NAME the string list CANDS."
+  (condition-case nil
+      (let* ((fuzzy-regex (ivy--regex-plus name))
+             (flx-name (replace-regexp-in-string " " "" name))
+             cands-left
+             cands-to-sort)
+
+        ;; Filter out non-matching candidates
+        (dolist (cand cands)
+          (when (string-match-p fuzzy-regex cand)
+            (push cand cands-left)))
+
+        ;; pre-sort the candidates by length before partitioning
+        (setq cands-left (cl-sort cands-left #'< :key #'length))
+
+        ;; partition the candidates into sorted and unsorted groups
+        (dotimes (_ (min (length cands-left) ivy-flx-limit))
+          (push (pop cands-left) cands-to-sort))
+
+        (nconc
+         ;; Compute all of the flx scores in one pass and sort
+         (mapcar #'car
+                 (sort (mapcar
+                        (lambda (cand)
+                          (cons cand
+                                (car (flx-score cand flx-name ivy--flx-cache))))
+                        cands-to-sort)
+                       (lambda (c1 c2)
+                         ;; Break ties by length
+                         (if (/= (cdr c1) (cdr c2))
+                             (> (cdr c1)
+                                (cdr c2))
+                           (< (length (car c1))
+                              (length (car c2)))))))
+
+         ;; Add the unsorted candidates
+         cands-left))
+    (error cands)))
+
+(defun ivy--sort (name candidates)
+  "Re-sort candidates by NAME.
+All CANDIDATES are assumed to match NAME."
+           (ivy--flx-sort name candidates))
+#+END_SRC
+
+Enable command history in ~counsel-M-x~ with ~amx~:
+
+#+BEGIN_SRC emacs-lisp
+(use-package amx)
+#+END_SRC
+
+Remove "." and ".." when matching files:
+
+#+BEGIN_SRC emacs-lisp
+(setq ivy-extra-directories nil)
+#+END_SRC
+
+Enable the mode:
+
+#+BEGIN_SRC emacs-lisp
+(ivy-mode 1)
+#+END_SRC
+
+* Alignment
+
+Enable motioned alignments with evil-lion:
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-lion
+  :init
+  (setq evil-lion-left-align-key (kbd "g a"))
+  (setq evil-lion-right-align-key (kbd "g A"))
+  :config
+  (evil-lion-mode))
+#+END_SRC
+* General
+
+Install General:
+
+#+BEGIN_SRC emacs-lisp
+(use-package general)
+#+END_SRC
+
+Misc keybindings with General:
+
+#+BEGIN_SRC emacs-lisp
+(general-define-key
+  :states '(normal visual)
+  :prefix "SPC"
+  "SPC" 'counsel-M-x
+  "bb"  'counsel-ibuffer
+  "bd"  'kill-this-buffer
+  "bn"  'next-buffer
+  "bp"  'previous-buffer
+  "cy"  'evilnc-copy-and-comment-lines
+  "ff"  'counsel-find-file
+  "fj"  'dired
+  "fr"  'counsel-recentf
+  "gs"  'magit-status
+  "hdf" 'counsel-describe-function
+  "hdk" 'describe-key
+  "hdm" 'describe-mode
+  "hdv" 'counsel-describe-variable
+  "tw"  'whitespace-mode
+  "wd"  'window-delete
+  "wh"  'evil-window-left
+  "wj"  'evil-window-down
+  "wk"  'evil-window-up
+  "wl"  'evil-window-right
+  ";"   'evilnc-comment-operator
+  "/"   'counsel-rg)
+
+(general-def ivy-minibuffer-map
+  "C-j" 'ivy-next-line
+  "C-k" 'ivy-previous-line)
+#+END_SRC
+
+** TODO Fix and make dired evil-integration nicer
+- https://github.com/noctuid/general.el/issues/89
+- https://github.com/noctuid/general.el/issues/97
+- https://github.com/noctuid/general.el/issues/98

@@ -1,0 +1,14 @@
+# [exploit-database]
+# checkout = git clone --depth 1 'git@github.com:offensive-security/exploit-database.git' 'exploit-database'
+
+# [php-malware-finder]
+# checkout = git clone --depth 1 'git@github.com:nbs-system/php-malware-finder' 'php-malware-finder'
+
+# [radare2]
+# checkout = git clone --depth 1 'git@github.com:radare/radare2' 'radare2'
+
+# [SecLists]
+# checkout = git clone --depth 1 'git@github.com:danielmiessler/SecLists.git' 'SecLists'
+
+# [xortool]
+# checkout = git clone --depth 1 'git@github.com:hellman/xortool' 'xortool'

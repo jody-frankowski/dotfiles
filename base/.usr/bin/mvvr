@@ -1,0 +1,12 @@
+#!/bin/sh
+
+if [[ $# -lt 2 ]] ; then
+    echo "$0 expects at least one source and one destination." >&2
+    return 1
+fi
+
+# Using `--inplace` might be dangerous in some cases, see
+# https://lists.samba.org/archive/rsync/2010-June/025178.html
+if rsync -avPih --inplace --size-only --stats --remove-source-files "$@" ; then
+    find "${@:1:$(($# - 1))}" -type d -empty -delete
+fi

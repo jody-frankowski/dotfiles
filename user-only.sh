@@ -67,8 +67,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     done
 
     latest_tmux=$(ls -t ~/.brew/Cellar/tmux/ | head -n1)
-    grep with-utf8proc ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb || sed -i -e $'s/args = %W\\[/args = %W[\\\n      --with-utf8proc/' ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb
-    brew reinstall tmux
+    if ! grep with-utf8proc ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb &>/dev/null ; then
+        sed -i -e $'s/args = %W\\[/args = %W[\\\n      --with-utf8proc/' ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb
+        brew reinstall tmux
+    fi
+
     brew services start syncthing
 
     for symlink in date dircolors ls rm ; do

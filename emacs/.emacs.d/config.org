@@ -611,6 +611,17 @@ parenthesis):
     (add-hook 'lisp-mode-hook #'lispyville-mode))
 #+END_SRC
 
+* Polymode
+
+Install ~polymode~ for ~org-mode~ and ~markdown-mode~ which will activate
+e.g. emacs-lisp mode when the cursor is in a emacs-lisp code block in a org-mode
+buffer (<3 All my love goes to this mode <3):
+
+#+BEGIN_SRC emacs-lisp
+(use-package poly-org)
+(use-package poly-markdown)
+#+END_SRC
+
 * General
 
 Install General:

@@ -648,6 +648,7 @@ Misc keybindings with General:
   "hdk" 'describe-key
   "hdm" 'describe-mode
   "hdv" 'counsel-describe-variable
+  "qq"  'save-buffers-kill-emacs
   "tw"  'whitespace-mode
   "wd"  'window-delete
   "wh"  'evil-window-left

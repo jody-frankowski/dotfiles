@@ -33,7 +33,7 @@ done
 # hack for the freaking symlink removal
 chmod 500 ~/.config/gtk-2.0/
 
-stow --no-folding *-"$(hostname)"
+ls -d *-"$(hostname)" &>/dev/null && stow --no-folding *-"$(hostname)"
 popd &> /dev/null
 
 # Linux Specific

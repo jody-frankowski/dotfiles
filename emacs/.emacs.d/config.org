@@ -109,7 +109,6 @@ Disable the bell:
 Enable evil-mode. This needs to be put before any other evil package is loaded:
 
 #+BEGIN_SRC emacs-lisp
-;; Enable C-u binding
 (use-package evil
   :init
   ;; Makes C-u scroll like in vim

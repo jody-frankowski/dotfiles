@@ -43,6 +43,17 @@ Let's make sure packages are always installed if they aren't already:
 (setq use-package-always-ensure t)
 #+END_SRC
 
+Also let's make sure we refresh the package lists when installing a new package
+(and not everytime):
+
+#+BEGIN_SRC emacs-lisp
+(defun package-install-refresh-contents (&rest args)
+  (message "Refreshing")
+  (package-refresh-contents)
+  (advice-remove 'package-install 'package-install-refresh-contents))
+(advice-add 'package-install :before 'package-install-refresh-contents)
+#+END_SRC
+
 Add ~/.emacs.d/lisp to load-path so that we can pull individual .el files
 directly:
 

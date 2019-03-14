@@ -20,7 +20,7 @@ script_dir=$(dirname $0)
 silent pushd ${script_dir}
 
 # stow some dotfiles
-for dir in docker zsh ; do
+for dir in docker tmux zsh ; do
     silent stow --no-folding ${dir}
 done
 

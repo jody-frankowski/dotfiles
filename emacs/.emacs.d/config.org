@@ -599,6 +599,18 @@ Enable motioned alignments with evil-lion:
   :config
   (evil-lion-mode))
 #+END_SRC
+* Lisp Editing
+
+Make lisp editing in evil-mode nicer with ~lispyville~ (e.g. ~dd~ will balance
+parenthesis):
+
+#+BEGIN_SRC emacs-lisp
+(use-package lispyville
+    :config
+    (add-hook 'emacs-lisp-mode-hook #'lispyville-mode)
+    (add-hook 'lisp-mode-hook #'lispyville-mode))
+#+END_SRC
+
 * General
 
 Install General:

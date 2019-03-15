@@ -284,16 +284,22 @@ Add "-h" to the dired ls flags:
 #+END_SRC
 
 * Git
+
 Install Magit, evil-magit and diff-hl for the diffs in the fringe:
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit)
 (use-package evil-magit)
-(use-package diff-hl)
-(global-diff-hl-mode)
-(diff-hl-margin-mode)
-(add-hook 'dired-mode-hook 'diff-hl-dired-mode)
-(add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+;; Consistently doesn't update for unknown reasons! :( :( :(
+;; (use-package diff-hl)
+;; (global-diff-hl-mode)
+;; (diff-hl-margin-mode)
+;; (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+;; (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+;; Mouse resizing to the right in the terminal is broken with this mode
+;; https://github.com/syohex/emacs-git-gutter/issues/162
+(use-package git-gutter)
+(global-git-gutter-mode)
 #+END_SRC
 
 * Unicode Homoglyphs Highlighter

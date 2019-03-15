@@ -285,11 +285,16 @@ Add "-h" to the dired ls flags:
 
 * Git
 
-Install Magit, evil-magit and diff-hl for the diffs in the fringe:
+Install Magit, evil-magit:
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit)
 (use-package evil-magit)
+#+END_SRC
+
+Install git-gutter for a git diff margin:
+
+#+BEGIN_SRC emacs-lisp
 ;; Consistently doesn't update for unknown reasons! :( :( :(
 ;; (use-package diff-hl)
 ;; (global-diff-hl-mode)

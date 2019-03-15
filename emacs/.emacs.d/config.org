@@ -86,6 +86,14 @@ Disable useless UI elements:
 ;;  (load-theme 'base16-summerfruit-light t))
 #+END_SRC
 
+* Terminal
+
+Enable mouse support in the terminal:
+
+#+BEGIN_SRC emacs-lisp
+(xterm-mouse-mode)
+#+END_SRC
+
 * Customize Config
 
 Put all customizations in seperate file so it doesn't clobber our init.el:

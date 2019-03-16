@@ -3,6 +3,10 @@
 set -e
 
 silent () {
+    # This function captures all the output (stdout and stderr) of the command
+    # (and its arguments) passed by argument and will only output it if the
+    # command doesn't return 0.
+
     tmp=$(mktemp) || return # this will be the temp file w/ the output
     set +e
     set -e

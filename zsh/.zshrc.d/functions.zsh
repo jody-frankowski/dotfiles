@@ -488,7 +488,7 @@ sc () {
         sudo systemctl "$@"
     fi
 }
-compdef sc="systemctl"
+type systemctl > /dev/null && compdef sc="systemctl"
 
 search () {
     to_search=$(echo $* | sed "s/ /*/g")

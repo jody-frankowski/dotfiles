@@ -3,7 +3,7 @@
 set -e
 
 script_dir=$(dirname $0)
-silent pushd ${script_dir}
+pushd ${script_dir} > /dev/null
 
 source ./lib.sh
 
@@ -20,8 +20,6 @@ for terminfo in ./base/.terminfo/*.terminfo ; do
     tic -x -o ~/.terminfo $terminfo
 done
 
-cd ~
-
 # fzf
 if [[ ! -d ~/.usr/opt/fzf ]] ; then
     silent git clone --depth 1 https://github.com/junegunn/fzf.git ~/.usr/opt/fzf
@@ -35,3 +33,5 @@ fi
 
 # vim
 silent curl https://raw.githubusercontent.com/amix/vimrc/master/vimrcs/basic.vim -o ~/.vimrc
+
+popd > /dev/null

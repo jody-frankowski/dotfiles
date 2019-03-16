@@ -27,7 +27,6 @@ fi
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh > /dev/null
 
 # stow the dotfiles
-pushd ~/.dotfiles/ &> /dev/null
 for dir in base docker emacs gnupg js mpd mpv ssh tmux valgrind X ; do
     stow --no-folding ${dir}
 done
@@ -35,7 +34,6 @@ done
 chmod 500 ~/.config/gtk-2.0/
 
 ls -d *-"$(hostname)" &>/dev/null && stow --no-folding *-"$(hostname)"
-popd &> /dev/null
 
 # Linux Specific
 if [[ "$OSTYPE" == "linux-gnu" ]] ; then
@@ -81,9 +79,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 fi
 
 # ssh config
-pushd ~/.ssh &> /dev/null
+cd ~/.ssh > /dev/null
 ./update
-popd &> /dev/null
 
+cd ~/
 # Clone repositories
 chronic mr -j 5 up
+
+popd > /dev/null

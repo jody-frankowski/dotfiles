@@ -7,14 +7,14 @@ pushd ${script_dir} > /dev/null
 
 source ./lib.sh
 
+if [[ `id -u` -ne 0 ]] ; then
+    ./user-only.sh
+fi
+
 # stow some dotfiles
 for dir in docker tmux zsh ; do
     stow --no-folding ${dir}
 done
-
-if [[ `id -u` -ne 0 ]] ; then
-    ./user-only.sh
-fi
 
 for terminfo in ./base/.terminfo/*.terminfo ; do
     tic -x -o ~/.terminfo $terminfo

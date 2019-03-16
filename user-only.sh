@@ -14,9 +14,7 @@ done
 # mpd
 if [[ ! -d ~/.mpd ]] ; then
     mkdir -p ~/.mpd/playlists
-    pushd ~/.mpd &> /dev/null
-    touch mpd.db mpd.log mpd.pid mpdstate
-    popd &> /dev/null
+    touch ~/.mpd/{mpd.db,mpd.log,mpd.pid,mpdstate}
 fi
 
 # ssh

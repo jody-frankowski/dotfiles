@@ -5,8 +5,8 @@ set -e
 silent () {
     tmp=$(mktemp) || return # this will be the temp file w/ the output
     set +e
-    "$@"  > "$tmp" 2>&1 # this should run the command, respecting all arguments
     set -e
+    "$@" > "$tmp" 2>&1 # this should run the command, respecting all arguments
     ret=$?
     if [ "$ret" -ne 0 ] ; then
         echo "$@"

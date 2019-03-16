@@ -2,7 +2,10 @@
 
 set -euo pipefail
 
-cd ~
+script_dir=$(dirname $0)
+pushd ${script_dir} > /dev/null
+
+source ./lib.sh
 
 for dir in ~/.usr/bin/ ~/.usr/opt ~/.usr/var/log ~/code/ ~/code/tmp ; do
     [[ -d "${dir}" ]] || mkdir -p "${dir}"

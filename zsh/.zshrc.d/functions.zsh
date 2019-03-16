@@ -32,7 +32,7 @@ curlh () {
 }
 
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/encode64/encode64.plugin.zsh
-encode64() {
+encode64 () {
     if [[ $# -eq 0 ]]; then
         cat | base64
     else
@@ -40,7 +40,7 @@ encode64() {
     fi
 }
 
-decode64() {
+decode64 () {
     if [[ $# -eq 0 ]]; then
         cat | base64 --decode
     else
@@ -150,7 +150,7 @@ gcl () {
     fi
 }
 
-_clip() {
+_clip () {
     # Shamelessly stolen and adapted from http://www.passwordstore.org/
     # This base64 business is because bash/zsh cannot store binary data in a shell
     # variable. Specifically, it cannot store nulls nor (non-trivally) store

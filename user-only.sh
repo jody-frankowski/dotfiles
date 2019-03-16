@@ -72,7 +72,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         brew reinstall tmux
     fi
 
-    brew services start syncthing
+    brew services list | grep syncthing > /dev/null || brew services start syncthing
 
     for symlink in date dircolors ls rm ; do
         [[ -L ~/.usr/bin/$symlink ]] || ln -s ~/.brew/bin/g$symlink ~/.usr/bin/$symlink

@@ -21,6 +21,12 @@ _terminal-set-titles-with-command () {
     emulate -L zsh
     setopt EXTENDED_GLOB
 
+    local title=""
+    # If we're connected with ssh and we're not in tmux
+    if [[ -n ${SSH_CLIENT} && -z ${TMUX} ]] ; then
+        title="${USER}@${HOST}: "
+    fi
+
     # Get the command name that is under job control
     if [[ "${2[(w)1]}" == (fg|%*)(\;|) ]]; then
         # Get the job name, and, if missing, set it to the default %+
@@ -37,8 +43,9 @@ _terminal-set-titles-with-command () {
         )
     else
         # Set the command name, or in the case of mosh/s/ssh/sshrc/sudo, the next command
-        _set-window-title "${${2[(wr)^(*=*|mosh|s|ssh|sshrc|sudo|-*)]}:t}"
+        title="${title}${${2[(wr)^(*=*|mosh|s|ssh|sshrc|sudo|-*)]}:t}"
     fi
+    _set-window-title "${title}"
 }
 
 # Sets the window title with the current path
@@ -46,13 +53,20 @@ _terminal-set-titles-with-path () {
     emulate -L zsh
     setopt EXTENDED_GLOB
 
+    local title=""
+    # If we're connected with ssh and we're not in tmux
+    if [[ -n ${SSH_CLIENT} && -z ${TMUX} ]] ; then
+       title="${USER}@${HOST}: "
+    fi
+
     local pwd="${PWD/#$HOME/~}"
     if [[ "$pwd" == "~" ]]; then
-        _set-window-title "~"
+        title="${title}~"
     else
         # Paths like "$HOME/.config/something" will show as "~/.c/something"
-        _set-window-title "${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
+        title="${title}${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
     fi
+    _set-window-title "${title}"
 }
 
 # Sets the window title before the prompt is displayed

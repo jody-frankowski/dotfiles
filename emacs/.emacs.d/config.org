@@ -598,6 +598,12 @@ Remove "." and ".." when matching files:
 (setq ivy-extra-directories nil)
 #+END_SRC
 
+Switch to the home directory with "~/" and not "~":
+
+#+BEGIN_SRC emacs-lisp
+(setq ivy-magic-tilde nil)
+#+END_SRC
+
 Enable the mode:
 
 #+BEGIN_SRC emacs-lisp

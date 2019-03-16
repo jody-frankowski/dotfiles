@@ -85,6 +85,6 @@ cd ~/.ssh > /dev/null
 
 cd ~/
 # Clone repositories
-chronic mr -j 5 up
+silent mr -j 5 up
 
 popd > /dev/null

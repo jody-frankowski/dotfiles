@@ -360,29 +360,6 @@ pacs () {
     rehash
 }
 
-sprunge () {
-    if [ -t 0 ]; then
-        if [ "$*" ]; then
-            if [ -f "$*" ]; then
-                echo Uploading the contents of "$*"... >&2
-                cat "$*"
-            else
-                echo Uploading the text: \""$*"\"... >&2
-                echo "$*"
-            fi | curl -F 'sprunge=<-' http://sprunge.us 2>/dev/null | tee /dev/tty | xsel -ib
-        else
-            echo "usage:
-  $0 filename.txt
-  $0 text string
-  $0 < filename.txt
-  piped_data | $0"
-        fi
-    else
-        echo Using input from a pipe or STDIN redirection... >&2
-        curl -F 'sprunge=<-' http://sprunge.us 2>/dev/null  | tee /dev/tty | xsel -ib
-    fi
-}
-
 play () {
     [[ -d ~/.mpd/music/temp/ ]] || mkdir -p ~/.mpd/music/temp &> /dev/null
     find ~/.mpd/music/temp -type l -delete
@@ -553,6 +530,29 @@ share () {
 slit () {
     # print columns 1 2 3 ... n
     awk "{ print ${(j:,:):-\$${^@}}  }"
+}
+
+sprunge () {
+    if [ -t 0 ]; then
+        if [ "$*" ]; then
+            if [ -f "$*" ]; then
+                echo Uploading the contents of "$*"... >&2
+                cat "$*"
+            else
+                echo Uploading the text: \""$*"\"... >&2
+                echo "$*"
+            fi | curl -F 'sprunge=<-' http://sprunge.us 2>/dev/null | tee /dev/tty | xsel -ib
+        else
+            echo "usage:
+  $0 filename.txt
+  $0 text string
+  $0 < filename.txt
+  piped_data | $0"
+        fi
+    else
+        echo Using input from a pipe or STDIN redirection... >&2
+        curl -F 'sprunge=<-' http://sprunge.us 2>/dev/null  | tee /dev/tty | xsel -ib
+    fi
 }
 
 sshrc () {

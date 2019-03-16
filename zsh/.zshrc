@@ -131,6 +131,6 @@ fi
 
 ### Plugins
 # fzf
-source /home/me/.usr/opt/fzf/shell/completion.zsh 2> /dev/null
-source /home/me/.usr/opt/fzf/shell/key-bindings.zsh
+source ~/.usr/opt/fzf/shell/completion.zsh 2> /dev/null
+source ~/.usr/opt/fzf/shell/key-bindings.zsh
 ###

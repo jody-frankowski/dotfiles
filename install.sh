@@ -9,9 +9,9 @@ silent () {
 
     tmp=$(mktemp) || return # this will be the temp file w/ the output
     set +e
-    set -e
     "$@" > "$tmp" 2>&1 # this should run the command, respecting all arguments
     ret=$?
+    set -e
     if [ "$ret" -ne 0 ] ; then
         echo "$@"
         cat "$tmp"  # if $? (the return of the last run command) is not zero, cat the temp file

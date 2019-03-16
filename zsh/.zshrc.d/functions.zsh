@@ -51,9 +51,29 @@ alias d64=decode64
 alias e64=encode64
 
 easy-grep () {
-    to_search=$(echo $* | sed "s/ /.*/g")
-    rg "${to_search}"
+    # Use it like so: easy-grep word1 word2
+    # Words can appear in any order
+    # Colors are enabled by default, disable with '--no-colors'
+
+    grep_cmd="\rg"
+    if [[ $1 = "--no-colors" ]] ; then
+        grep_cmd="$grep_cmd --color=never"
+        shift
+    else
+        grep_cmd="$grep_cmd --color=always"
+    fi
+
+    cmd=""
+    if [[ $# -ge 1 ]] ; then
+        cmd="$grep_cmd '$1'"
+        shift
+    fi
+    for term in "$@" ; do
+        cmd="$cmd | $grep_cmd '$term'"
+    done
+    eval $cmd
 }
+alias rg='easy-grep'
 alias -g G='| easy-grep'
 
 flac-encode () {

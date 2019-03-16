@@ -9,7 +9,7 @@ source ./lib.sh
 
 # stow some dotfiles
 for dir in docker tmux zsh ; do
-    silent stow --no-folding ${dir}
+    stow --no-folding ${dir}
 done
 
 if [[ `id -u` -ne 0 ]] ; then

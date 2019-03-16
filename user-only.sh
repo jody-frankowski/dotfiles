@@ -13,7 +13,7 @@ done
 
 # macOS Specific
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    [[ -d ~/.brew ]] || git clone --depth=1 https://github.com/Homebrew/brew ~/.brew
+    [[ -d ~/.brew ]] || silent git clone --depth=1 https://github.com/Homebrew/brew ~/.brew
 
     packages=(
         coreutils
@@ -30,13 +30,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     )
 
     for package in ${packages[@]} ; do
-        [[ -d ~/.brew/opt/$package ]] || ~/.brew/bin/brew install $package
+        [[ -d ~/.brew/opt/$package ]] || silent ~/.brew/bin/brew install $package
     done
 
     latest_tmux=$(ls -t ~/.brew/Cellar/tmux/ | head -n1)
     if ! grep with-utf8proc ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb &>/dev/null ; then
         sed -i -e $'s/args = %W\\[/args = %W[\\\n      --with-utf8proc/' ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb
-        brew reinstall tmux
+        silent brew reinstall tmux
     fi
 
     brew services list | grep syncthing > /dev/null || brew services start syncthing
@@ -57,7 +57,7 @@ fi
 [[ -d ~/.ssh/tmp ]] || mkdir ~/.ssh/tmp && chmod 700 ~/.ssh/tmp
 
 # tpm (tmux-plugin-manager)
-[[ -d ~/.tmux/plugins/tpm ]] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+[[ -d ~/.tmux/plugins/tpm ]] || silent git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # install plugins. buggy, better use prefix + I
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh > /dev/null
 

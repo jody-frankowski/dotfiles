@@ -1,0 +1,27 @@
+#!/bin/bash
+
+# Custom script to make rg match words in any order
+# Usage: rg [word ...]
+
+options=""
+for arg in "$@" ; do
+    shift
+    if [[ "$arg" =~ ^-.* ]] ; then
+        options="$options $arg"
+        continue
+    fi
+    set -- "$@" "$arg"
+done
+
+grep_cmd="$(type -a $(basename $0) | tail -n-1 | awk '{print $3}') $options"
+
+cmd=""
+if [[ $# -ge 1 ]] ; then
+    cmd="$grep_cmd '$1'"
+    shift
+fi
+for term in "$@" ; do
+    cmd="$cmd | $grep_cmd '$term'"
+done
+
+eval $cmd

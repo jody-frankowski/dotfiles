@@ -16,6 +16,7 @@ ORG_ANKI_TEMPLATE="""
 *** {}
 :PROPERTIES:
 :ANKI_NOTE_TYPE: Basic (and reversed card)
+:SOURCE: {}
 :END:
 
 **** Front
@@ -138,7 +139,7 @@ def generate_html_videos(videos):
     return html
 
 def generate_org_tree(sign):
-    return ORG_ANKI_TEMPLATE.format(sign.word, sign.word, sign.definition, sign.html_videos)
+    return ORG_ANKI_TEMPLATE.format(sign.word, sign.url, sign.word, sign.definition, sign.html_videos)
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:

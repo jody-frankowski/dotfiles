@@ -44,6 +44,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     for symlink in date dircolors ls rm ; do
         [[ -L ~/.usr/bin/$symlink ]] || ln -s ~/.brew/bin/g$symlink ~/.usr/bin/$symlink
     done
+
+    ### iterm2
+    # Specify the preferences directory
+    defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.dotfiles/iterm2"
+    # Tell iTerm2 to use the custom preferences from this directory
+    defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
 fi
 
 # mpd

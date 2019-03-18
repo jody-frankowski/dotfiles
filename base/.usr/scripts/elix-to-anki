@@ -110,40 +110,6 @@ def get_infos(sign):
                 sources += [source.attrs['src']]
         sign.videos_sources += [sources]
 
-def get_signs(word):
-    """
-    TODO check for errors
-    Search for word on elix.
-    On elix, a word may return multiple signs.
-    Returns a list of Sign.
-    """
-
-    session = HTMLSession()
-    params = {'page': 'recherche_definitions', 'lang': 'fr', 'recherche': word}
-    r = session.get(SEARCH_BASE_URL, params=params)
-
-    words_with_sign = r.html.find("a[title='Aller au signe']")
-
-    signs = []
-    for word in words_with_sign:
-        sign = Sign()
-        r = session.get(BASE_URL + word.attrs['href'])
-        sign.word = r.html.find(".titre_mot")[0].text
-        if len(r.html.find(".definition_complete")) >= 1:
-            sign.definition = r.html.find(".definition_complete")[0].text
-        sign.url = r.url
-
-        videos = r.html.find("video")
-        for video in videos:
-            sources = []
-            for source in video.find("source"):
-                sources += [source.attrs['src']]
-            sign.videos_sources += [sources]
-
-        signs += [sign]
-
-    return signs
-
 def best_video_source(sources):
     """
     Returns the "best" video source from a list of sources.

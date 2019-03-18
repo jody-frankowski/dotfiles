@@ -68,6 +68,7 @@ def archive(url):
         print(r.url, file=sys.stderr)
         print(r, file=sys.stderr)
         return None
+
     return r
 
 def find_signs(word):
@@ -171,7 +172,7 @@ if __name__ == "__main__":
                 # get the archived source url by searching for a source that ends with the original url
                 video['archived'] = archived_sign.html.find("source[src$='{}']".format(video['original']))[0].attrs['src']
                 videos += [video]
-            
+
             sign.html_videos = generate_html_videos(videos)
             org_tree = generate_org_tree(sign)
 

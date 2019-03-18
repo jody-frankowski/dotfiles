@@ -168,6 +168,7 @@ if __name__ == "__main__":
                 video = {}
                 # archiving the word/sign page takes care of archiving the videos
                 video['original'] = best_video_source(video_sources)
+                # get the archived source url by searching for a source that ends with the original url
                 video['archived'] = archived_sign.html.find("source[src$='{}']".format(video['original']))[0].attrs['src']
                 videos += [video]
             

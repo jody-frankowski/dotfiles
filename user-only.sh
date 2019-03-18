@@ -68,7 +68,7 @@ fi
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh > /dev/null
 
 # stow the dotfiles
-for dir in base docker emacs gnupg js mpd mpv ssh tmux valgrind X ; do
+for dir in base docker emacs gnupg js karabiner mpd mpv ssh tmux valgrind X ; do
     stow --no-folding ${dir}
 done
 # hack for the freaking symlink removal

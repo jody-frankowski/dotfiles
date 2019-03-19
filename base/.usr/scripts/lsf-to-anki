@@ -146,6 +146,9 @@ def set_infos(sign):
             sign.definition = r.html.find(".definition_complete")[0].text
     elif r.url.startswith("http://www.sematos.eu/"):
         sign.word = str.capitalize(r.html.find("#titremot")[0].text)
+    elif r.url.startswith("https://signsuisse.sgb-fss.ch/"):
+        sign.word = str.capitalize(r.html.find("h1")[0].text)
+        sign.definition = r.html.find("h2 ~ p")[1].text
 
 
 def set_videos_sources(sign):
@@ -164,7 +167,7 @@ def set_videos_sources(sign):
             if not (source.attrs['type'].startswith("video/x-flv") or
                     source.attrs['type'].startswith("video/ogg") or
                     source.attrs['type'].startswith("video/MP2T")):
-                sources += [source.attrs['src']]
+                sources += [urllib.parse.urljoin(r.url, source.attrs['src'])]
         sign.videos_sources += [sources]
 
 def best_video_source(sources):

@@ -3,9 +3,8 @@
 from requests_html import HTMLSession
 import requests
 import sys
+import urllib
 
-BASE_URL = "http://www.elix-lsf.fr/"
-SEARCH_BASE_URL = BASE_URL + "/spip.php"
 VIDEO_HTML_TEMPLATE="""\
 <video autoplay='' loop='' preload='metadata' class='noresize' muted='' style='width: 100%; display: inline-block; height: 100%;'>
 <source src='{}'>
@@ -33,8 +32,9 @@ class Sign:
     def __init__(self):
         self.word = ""
         self.definition = ""
-        # Sign videos rendered as html with two sources: the original and an archived one.
-        # Also only the best quality video source is taken from the original.
+        # Sign videos rendered as html with two sources: the original and an
+        # archived one.  Also only the best quality video source is taken from
+        # the original.
         self.html_videos = ""
         # A sign may have multiple videos.
         # Videos have multiple sources.
@@ -49,6 +49,7 @@ def archive(url):
     already does that for us (even if we don't know how exactly).
     Returns the request object
     """
+
     session = HTMLSession()
     # For some reasons, unknown to me, the Wayback Machine
     # automatically redirects(302) to the archived page when saving
@@ -72,35 +73,83 @@ def archive(url):
 
     return r
 
-def find_signs(word):
+def search_sematos(query):
     """
     TODO check for errors
-    Search for word on elix.
-    On elix, a word may return multiple signs.
-    Returns a list of Sign. Only The url field will be filled.
+    Search query on "sematos.eu".
+    Returns a list of Sign.
     """
 
-    session = HTMLSession()
-    params = {'page': 'recherche_definitions', 'lang': 'fr', 'recherche': '"{}"'.format(word)}
-    r = session.get(SEARCH_BASE_URL, params=params)
+    base_url = "http://www.sematos.eu"
 
-    words_with_sign = r.html.find("a[title='Aller au signe']")
+    session = HTMLSession()
+    r = session.get(
+        base_url + "/lsf-r-{}.html"
+        .format(urllib.parse.quote_plus('+'.join(query.split())))
+    )
+
+    # When there's only one result we are automatically redirected to the sign page
+    if r.url.startswith('http://www.sematos.eu/lsf-p-'):
+        sign = Sign()
+        sign.url = r.url
+        sign.word = str.capitalize(r.html.find("#titremot")[0].text)
+        return [sign]
+
+    results = r.html.find("#resrech li")
 
     signs = []
-    for word in words_with_sign:
+    for result in results:
         sign = Sign()
-        sign.url = BASE_URL + word.attrs['href']
+        sign.url = result.find(".qv")[0].attrs['href']
+        sign.word = str.capitalize(result.text)
+
         signs += [sign]
 
     return signs
 
-def get_infos(sign):
+
+def search_elix(query):
+    """
+    TODO check for errors
+    Search query on "elix-lsf.fr".
+    Returns a list of Sign.
+    """
+
+    base_url = "http://www.elix-lsf.fr/"
+
+    session = HTMLSession()
+    params = {
+        'page': 'recherche_definitions',
+        'lang': 'fr', 'recherche': '"{}"'.format(query)
+    }
+    r = session.get(base_url +"/spip.php", params=params)
+
+    definitions_with_sign = r.html.find("a[title='Aller au signe']")
+
+    signs = []
+    for definition in definitions_with_sign:
+        sign = Sign()
+        sign.url = base_url + definition.attrs['href']
+
+        # Linking a word, its definition and sign url on the search page is much
+        # harder than just querying the sign page
+        r = session.get(sign.url)
+        sign.word = r.html.find(".titre_mot")[0].text
+        if len(r.html.find(".definition_complete")) >= 1:
+            sign.definition = r.html.find(".definition_complete")[0].text
+
+        signs += [sign]
+
+    return signs
+
+def set_videos_sources(sign):
+    """
+    Should be site agnostic
+    For each videos in sign.url add the sources to sign.videos_sources
+    """
+
     session = HTMLSession()
     r = session.get(sign.url)
-    sign.word = r.html.find(".titre_mot")[0].text
-    if len(r.html.find(".definition_complete")) >= 1:
-        sign.definition = r.html.find(".definition_complete")[0].text
-
     videos = r.html.find("video")
     for video in videos:
         sources = []
@@ -134,12 +183,21 @@ def best_video_source(sources):
 def generate_html_videos(videos):
     html = ""
     for video in videos:
-        html = html + VIDEO_HTML_TEMPLATE.format(video['original'], video['archived'])
+        html = html + VIDEO_HTML_TEMPLATE.format(
+            video['original'],
+            video['archived']
+        )
 
     return html
 
 def generate_org_tree(sign):
-    return ORG_ANKI_TEMPLATE.format(sign.word, sign.url, sign.word, sign.definition, sign.html_videos)
+    return ORG_ANKI_TEMPLATE.format(
+        sign.word,
+        sign.url,
+        sign.word,
+        sign.definition,
+        sign.html_videos
+    )
 
 if __name__ == "__main__":
     if len(sys.argv) < 2:
@@ -159,19 +217,24 @@ if __name__ == "__main__":
             sign.url = arg
             signs = [sign]
         else:
-            signs = find_signs(arg)
+            signs = search_elix(arg)
+            signs += search_sematos(arg)
 
         for sign in signs:
-            get_infos(sign)
+            set_videos_sources(sign)
             archived_sign = archive(sign.url)
 
             videos = []
             for video_sources in sign.videos_sources:
                 video = {}
-                # archiving the word/sign page takes care of archiving the videos
+                # archiving the word/sign page takes care of archiving the
+                # videos
                 video['original'] = best_video_source(video_sources)
-                # get the archived source url by searching for a source that ends with the original url
-                video['archived'] = archived_sign.html.find("source[src$='{}']".format(video['original']))[0].attrs['src']
+                # get the archived source url by searching for a source that
+                # ends with the original url
+                video['archived'] = archived_sign.html.find(
+                    "source[src$='{}']".format(video['original'])
+                )[0].attrs['src']
                 videos += [video]
 
             sign.html_videos = generate_html_videos(videos)

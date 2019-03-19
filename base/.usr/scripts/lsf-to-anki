@@ -92,7 +92,7 @@ def search_sematos(query):
     if r.url.startswith('http://www.sematos.eu/lsf-p-'):
         sign = Sign()
         sign.url = r.url
-        sign.word = str.capitalize(r.html.find("#titremot")[0].text)
+        set_infos(sign)
         return [sign]
 
     results = r.html.find("#resrech li")
@@ -101,7 +101,7 @@ def search_sematos(query):
     for result in results:
         sign = Sign()
         sign.url = result.find(".qv")[0].attrs['href']
-        sign.word = str.capitalize(result.text)
+        set_infos(sign)
 
         signs += [sign]
 
@@ -130,17 +130,23 @@ def search_elix(query):
     for definition in definitions_with_sign:
         sign = Sign()
         sign.url = base_url + definition.attrs['href']
-
-        # Linking a word, its definition and sign url on the search page is much
-        # harder than just querying the sign page
-        r = session.get(sign.url)
-        sign.word = r.html.find(".titre_mot")[0].text
-        if len(r.html.find(".definition_complete")) >= 1:
-            sign.definition = r.html.find(".definition_complete")[0].text
+        set_infos(sign)
 
         signs += [sign]
 
     return signs
+
+def set_infos(sign):
+    session = HTMLSession()
+    r = session.get(sign.url)
+
+    if r.url.startswith("http://www.elix-lsf.fr/"):
+        sign.word = r.html.find(".titre_mot")[0].text
+        if len(r.html.find(".definition_complete")) >= 1:
+            sign.definition = r.html.find(".definition_complete")[0].text
+    elif r.url.startswith("http://www.sematos.eu/"):
+        sign.word = str.capitalize(r.html.find("#titremot")[0].text)
+
 
 def set_videos_sources(sign):
     """
@@ -215,6 +221,7 @@ if __name__ == "__main__":
         if args_urls:
             sign = Sign()
             sign.url = arg
+            set_infos(sign)
             signs = [sign]
         else:
             signs = search_elix(arg)

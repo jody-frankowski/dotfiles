@@ -341,6 +341,41 @@ the ~.editorconfig~ files (if no file is found emacs defaults will be applied):
         (puthash 'insert_final_newline "false" props)))
 #+END_SRC
 
+Make editorconfig work with files without extension by faking the extension
+based on the major-mode (Stolen from
+https://github.com/editorconfig/editorconfig-emacs/issues/75#issuecomment-350182935
+and
+https://github.com/hlissner/doom-emacs/blob/develop/modules/tools/editorconfig/config.el):
+
+#+BEGIN_SRC emacs-lisp
+;; editorconfig cannot procure the correct settings for extension-less files.
+;; Executable scripts with a shebang line, for example. So why not use Emacs'
+;; major mode to drop editorconfig a hint? This is accomplished by temporarily
+;; appending an extension to `buffer-file-name' when we talk to editorconfig.
+(defvar +editorconfig-mode-alist
+  '((perl-mode   . "pl")
+    (php-mode    . "php")
+    (python-mode . "py")
+    (ruby-mode   . "rb")
+    (sh-mode     . "sh")))
+;;"An alist mapping major modes to extensions. Used by
+;;`editorconfig-smart-detection' to give editorconfig filetype hints.")
+
+(defun editorconfig-smart-detection (orig-fn)
+    "Retrieve the properties for the current file. If it doesn't have an
+    extension, try to guess one."
+    (let ((buffer-file-name
+           (if (and (not (bound-and-true-p org-src-mode))
+                    (file-name-extension buffer-file-name))
+               buffer-file-name
+             (format "%s%s" buffer-file-name
+                     (if-let* ((ext (cdr (assq major-mode +editorconfig-mode-alist))))
+                         (concat "." ext)
+                       "")))))
+      (funcall orig-fn)))
+(advice-add #'editorconfig-call-editorconfig-exec :around #'editorconfig-smart-detection)
+#+END_SRC
+
 * Backups
 
 With a combination of undo-tree (~u~ and ~C-r~ with branches) and

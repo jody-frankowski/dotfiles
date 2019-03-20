@@ -449,14 +449,26 @@ Enable the refresh for dired views too:
 #+END_SRC
 * Line and Column Numbers
 
-Show relative line numbers, and also show column number in the status bar:
+Show relative line numbers, and also show column number in the status bar. Line
+numbers aren't activated for the first buffer with emacsclient because of
+https://github.com/emacs-mirror/emacs/blob/master/lisp/display-line-numbers.el#L97.
+I'm not sure why ~frame-parameter~ returns nil :/. So let's override the culprit
+function and use it in a custom global minor mode.
 
 #+BEGIN_SRC emacs-lisp
+(defun my-display-line-numbers--turn-on ()
+  "Turn on `display-line-numbers-mode'."
+  (unless (minibufferp)
+    (display-line-numbers-mode)))
+
+(define-globalized-minor-mode my-global-display-line-numbers-mode
+  display-line-numbers-mode my-display-line-numbers--turn-on)
+
 (setq display-line-numbers-type 'relative)
 ;; Make Emacs set the line-numbers width to the largest width needed
 ;; Why isn't this the default ? :(
 (setq display-line-numbers-width-start t)
-(global-display-line-numbers-mode)
+(my-global-display-line-numbers-mode)
 
 (setq column-number-mode t)
 #+END_SRC

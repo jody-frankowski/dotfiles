@@ -669,6 +669,14 @@ parenthesis):
     (add-hook 'lisp-mode-hook #'lispyville-mode))
 #+END_SRC
 
+Disable editorconfig for lisp modes. Emacs builtin should be better:
+
+#+BEGIN_SRC emacs-lisp
+(dolist (mode '(emacs-lisp-mode lisp-mode))
+  (setq editorconfig-indentation-alist
+    (assq-delete-all mode editorconfig-indentation-alist)))
+#+END_SRC
+
 * Polymode
 
 Install ~polymode~ for ~org-mode~ and ~markdown-mode~ which will activate

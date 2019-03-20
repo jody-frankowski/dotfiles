@@ -698,6 +698,33 @@ buffer (<3 All my love goes to this mode <3):
 (use-package poly-markdown)
 #+END_SRC
 
+* Windows
+
+#+BEGIN_SRC emacs-lisp
+(defun window-right-or-split ()
+  "Split the window vertically, focus the new window and launch find-file."
+  (interactive)
+  (let ((other-window (windmove-find-other-window 'right (selected-window))))
+    (cond
+      ((null other-window)
+        (split-window-right)
+        (windmove-right)
+        (counsel-find-file))
+      (t (select-window other-window)))))
+
+(defun window-down-or-split ()
+  "Split the window horizontally, focus the new window and launch find-file."
+  (interactive)
+  (let ((other-window (windmove-find-other-window 'down (selected-window))))
+    (cond
+      ((or (null other-window) (window-minibuffer-p other-window))
+        (split-window-below)
+        (windmove-down)
+        (counsel-find-file))
+      (t
+        (select-window other-window)))))
+#+END_SRC
+
 * General
 
 Install General:
@@ -728,11 +755,11 @@ Misc keybindings with General:
   "hdv" 'counsel-describe-variable
   "qq"  'save-buffers-kill-emacs
   "tw"  'whitespace-mode
-  "wd"  'window-delete
-  "wh"  'evil-window-left
-  "wj"  'evil-window-down
-  "wk"  'evil-window-up
-  "wl"  'evil-window-right
+  "wd"  'delete-window
+  "wh"  'windmove-left
+  "wj"  'window-down-or-split
+  "wk"  'windmove-up
+  "wl"  'window-right-or-split
   ";"   'evilnc-comment-operator
   "/"   'counsel-rg)
 

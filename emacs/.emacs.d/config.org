@@ -681,7 +681,7 @@ Explicitely set ~evil-shift-width~ which is used by the ~<~ and ~>~ indentation
 commands to 2 (default is 4):
 
 #+BEGIN_SRC emacs-lisp
-(dolist (mode '(emacs-lisp-mode lisp-mode))
+(dolist (mode '(emacs-lisp-mode-hook lisp-mode-hook))
   (add-hook mode
     (function (lambda ()
                 (setq evil-shift-width 2)))))

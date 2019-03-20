@@ -17,6 +17,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
     packages=(
         coreutils
+        editorconfig
         emacs
         gdb
         mosh

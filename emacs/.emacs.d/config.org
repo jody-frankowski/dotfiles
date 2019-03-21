@@ -737,6 +737,14 @@ buffer (<3 All my love goes to this mode <3):
         (select-window other-window)))))
 #+END_SRC
 
+* GPG
+
+#+BEGIN_SRC emacs-lisp
+(use-package pinentry
+  :config
+  (pinentry-start))
+#+END_SRC
+
 * General
 
 Install General:

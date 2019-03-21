@@ -786,6 +786,9 @@ Misc keybindings with General:
 (general-def ivy-minibuffer-map
   "C-j" 'ivy-next-line
   "C-k" 'ivy-previous-line)
+
+(general-def evil-ex-completion-map
+  "C-b" 'backward-char)
 #+END_SRC
 
 ** TODO Fix and make dired evil-integration nicer

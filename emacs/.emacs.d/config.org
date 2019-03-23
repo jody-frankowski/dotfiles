@@ -162,8 +162,6 @@ expected and also support motion (contrary to ~org-evil~):
 
 #+BEGIN_SRC emacs-lisp
 (use-package evil-org
-  :ensure t
-  :after org
   :config
   (add-hook 'org-mode-hook 'evil-org-mode)
   (add-hook 'evil-org-mode-hook
@@ -275,7 +273,6 @@ the ~.editorconfig~ files (if no file is found emacs defaults will be applied):
 
 #+BEGIN_SRC emacs-lisp
 (use-package editorconfig
-  :ensure t
   :config
   (editorconfig-mode 1))
 ;; require-final-newline is managed by ethan-wspace so we block it

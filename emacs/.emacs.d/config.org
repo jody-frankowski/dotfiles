@@ -524,60 +524,14 @@ Remove "^" from the initial input:
 (setq ivy-initial-inputs-alist nil)
 #+END_SRC
 
-Enable flx sorting on default ~ivy--regex-plus~ matches:
+Enable a more intelligent sorting of ~ivy~ matches with ~prescient~:
 
 #+BEGIN_SRC emacs-lisp
-;;(use-package flx)
-(defun ivy--flx-sort (name cands)
-  "Sort according to closeness to string NAME the string list CANDS."
-  (condition-case nil
-      (let* ((fuzzy-regex (ivy--regex-plus name))
-             (flx-name (replace-regexp-in-string " " "" name))
-             cands-left
-             cands-to-sort)
-
-        ;; Filter out non-matching candidates
-        (dolist (cand cands)
-          (when (string-match-p fuzzy-regex cand)
-            (push cand cands-left)))
-
-        ;; pre-sort the candidates by length before partitioning
-        (setq cands-left (cl-sort cands-left #'< :key #'length))
-
-        ;; partition the candidates into sorted and unsorted groups
-        (dotimes (_ (min (length cands-left) ivy-flx-limit))
-          (push (pop cands-left) cands-to-sort))
-
-        (nconc
-         ;; Compute all of the flx scores in one pass and sort
-         (mapcar #'car
-                 (sort (mapcar
-                        (lambda (cand)
-                          (cons cand
-                                (car (flx-score cand flx-name ivy--flx-cache))))
-                        cands-to-sort)
-                       (lambda (c1 c2)
-                         ;; Break ties by length
-                         (if (/= (cdr c1) (cdr c2))
-                             (> (cdr c1)
-                                (cdr c2))
-                           (< (length (car c1))
-                              (length (car c2)))))))
-
-         ;; Add the unsorted candidates
-         cands-left))
-    (error cands)))
-
-(defun ivy--sort (name candidates)
-  "Re-sort candidates by NAME.
-All CANDIDATES are assumed to match NAME."
-           (ivy--flx-sort name candidates))
-#+END_SRC
-
-Enable command history in ~counsel-M-x~ with ~amx~:
-
-#+BEGIN_SRC emacs-lisp
-(use-package amx)
+(use-package prescient)
+(use-package ivy-prescient)
+(prescient-persist-mode)
+(setq ivy-prescient-retain-classic-highlighting t)
+(ivy-prescient-mode)
 #+END_SRC
 
 Remove "." and ".." when matching files:

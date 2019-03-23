@@ -524,7 +524,8 @@ Remove "^" from the initial input:
 (setq ivy-initial-inputs-alist nil)
 #+END_SRC
 
-Enable a more intelligent sorting of ~ivy~ matches with ~prescient~:
+Enable a more intelligent sorting of ~ivy~ matches with ~prescient~. Note that
+prescient does an out of order match and overrides ~ivy-re-builders-alist~:
 
 #+BEGIN_SRC emacs-lisp
 (use-package prescient)

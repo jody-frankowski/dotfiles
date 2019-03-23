@@ -686,6 +686,16 @@ buffer (<3 All my love goes to this mode <3):
   (pinentry-start))
 #+END_SRC
 
+* Clipboard
+
+Link the kill ring with the system clipboard with the ~xclip~ package. This
+should work even if emacs runs exclusively in the terminal:
+
+#+BEGIN_SRC emacs-lisp
+(use-package xclip)
+(xclip-mode)
+#+END_SRC
+
 * General
 
 Install General:

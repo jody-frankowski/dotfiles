@@ -718,6 +718,7 @@ Misc keybindings with General:
   "hdm" 'describe-mode
   "hdv" 'counsel-describe-variable
   "qq"  'save-buffers-kill-emacs
+  "ry"  'counsel-yank-pop
   "tw"  'whitespace-mode
   "wd"  'delete-window
   "wh"  'windmove-left

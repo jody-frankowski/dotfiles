@@ -13,7 +13,7 @@ for arg in "$@" ; do
     set -- "$@" "$arg"
 done
 
-grep_cmd="$(type -a $(basename $0) | tail -n-1 | awk '{print $3}') $options"
+grep_cmd='rg $options'
 
 cmd=""
 if [[ $# -ge 1 ]] ; then

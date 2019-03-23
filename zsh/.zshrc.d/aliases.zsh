@@ -42,7 +42,7 @@ alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 alias psc='ps xawf -eo pid,user,cgroup,args'
 alias rdesktop='rdesktop -g 1680x1050'
-alias rg='rg -S --color=always'
+alias rg="easy-grep -S --color=always"
 alias umount='sudo umount'
 alias weather='curl wttr.in/lyon'
 

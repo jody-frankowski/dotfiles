@@ -1,57 +1,4 @@
-* Packages Config
-
-Add the MELPA and org-mode elpa:
-
-#+BEGIN_SRC emacs-lisp
-;; ~require~ is a way to load "features". Features are exported with
-;; the function ~provide~.  The argument to the require function
-;; should be a file name (without .el/.elc) that exports a feature of
-;; the same name with ~provide~.
-(require 'package)
-;; Tells Emacs not to do a (package-initialize) after loading the init files
-;; https://www.gnu.org/software/emacs/manual/html_node/emacs/Package-Installation.html
-;; This changes in Emacs 27 (not yet released)
-;; https://git.savannah.gnu.org/cgit/emacs.git/commit/?id=24acb31c04b4048b85311d794e600ecd7ce60d3b
-;; Because of this change, this directive is also in early-init.el.
-(setq package-enable-at-startup nil)
-(setq package-archives '(("org"   . "http://orgmode.org/elpa/")
-                            ("gnu"   . "http://elpa.gnu.org/packages/")
-                            ("melpa" . "https://melpa.org/packages/")))
-(package-initialize)
-#+END_SRC
-
-Now we'll install the ~use-package~ package which makes installing,
-loading and configuring packages easier. When using ~use-package~, it
-can install packages if they aren't already installed if
-~use-package-always-ensure~ is ~true~ or if the ~:ensure~ keyword is
-set to ~t~. It can execute code before the package is loaded thanks to
-the ~:init~ keyword. It can execute code after the package is loaded
-with the ~:config~ keyword (and the execution is deferred until after
-the package is loaded, even if it is lazy loaded).
-
-
-#+BEGIN_SRC emacs-lisp
-(unless (package-installed-p 'use-package)
-    (package-refresh-contents)
-    (package-install 'use-package))
-(require 'use-package)
-#+END_SRC
-
-Let's make sure packages are always installed if they aren't already:
-
-#+BEGIN_SRC emacs-lisp
-(setq use-package-always-ensure t)
-#+END_SRC
-
-Also let's make sure we refresh the package lists when installing a new package
-(and not everytime):
-
-#+BEGIN_SRC emacs-lisp
-(defun package-install-refresh-contents (&rest args)
-    (package-refresh-contents)
-    (advice-remove 'package-install 'package-install-refresh-contents))
-(advice-add 'package-install :before 'package-install-refresh-contents)
-#+END_SRC
+* Load Path
 
 Add ~/.emacs.d/lisp to load-path so that we can pull individual .el files
 directly:
@@ -133,8 +80,6 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
 * Org
 
 #+BEGIN_SRC emacs-lisp
-(require 'org)
-
 ;; Customized to remove the empty line in SRC blocks
 ;; FIXME indent better?
 (setq org-structure-template-alist
@@ -229,10 +174,9 @@ expected and also support motion (contrary to ~org-evil~):
 ** Drill
 
 #+BEGIN_SRC emacs-lisp
-;; Pulls org-learn required by org-drill
-(use-package org
-  :ensure org-plus-contrib)
-
+;; Manually install/require org-drill dependencies
+(use-package cl)
+(use-package cl-lib)
 (require 'org-drill)
 
 ;; org-drill quick fix

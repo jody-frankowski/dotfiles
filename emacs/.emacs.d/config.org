@@ -658,6 +658,16 @@ should work even if emacs runs exclusively in the terminal:
 (xclip-mode)
 #+END_SRC
 
+* Yasnippet
+
+Install yasnippet and the snippets packages:
+
+#+BEGIN_SRC emacs-lisp
+(use-package yasnippet)
+(use-package yasnippet-snippets)
+(yas-global-mode)
+#+END_SRC
+
 * General
 
 Install General:

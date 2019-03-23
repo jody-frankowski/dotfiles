@@ -647,11 +647,14 @@ e.g. emacs-lisp mode when the cursor is in a emacs-lisp code block in a org-mode
 buffer (<3 All my love goes to this mode <3):
 
 #+BEGIN_SRC emacs-lisp
-(use-package poly-org)
-(use-package poly-markdown)
+;;(use-package poly-org)
+;;(use-package poly-markdown)
 #+END_SRC
 
 * Windows
+
+Add two window functions that either switch to an existing window or split and
+launch ~find-file~:
 
 #+BEGIN_SRC emacs-lisp
 (defun window-right-or-split ()
@@ -679,6 +682,9 @@ buffer (<3 All my love goes to this mode <3):
 #+END_SRC
 
 * GPG
+
+Install the ~pinentry~ package and start it. It should now catch calls to
+gpg-agent and let us enter the passphrase in a proper Emacs miniwindow:
 
 #+BEGIN_SRC emacs-lisp
 (use-package pinentry

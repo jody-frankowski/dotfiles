@@ -80,6 +80,7 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
 * Org
 
 #+BEGIN_SRC emacs-lisp
+(require 'org-tempo)
 ;; Customized to remove the empty line in SRC blocks
 ;; FIXME indent better?
 (setq org-structure-template-alist

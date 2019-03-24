@@ -634,11 +634,18 @@ Install General:
 (use-package general)
 #+END_SRC
 
+Tell general to automatically unbind keys that conflict
+(https://github.com/noctuid/general.el#automatic-key-unbinding):
+
+#+BEGIN_SRC emacs-lisp
+(general-auto-unbind-keys)
+#+END_SRC
+
 Misc keybindings with General:
 
 #+BEGIN_SRC emacs-lisp
 (general-define-key
-  :states '(normal visual)
+  :keymaps '(emacs motion normal visual)
   :prefix "SPC"
   "SPC" 'counsel-M-x
   "bb"  'counsel-ibuffer

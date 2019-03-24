@@ -79,52 +79,6 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
 
 * Org
 
-#+BEGIN_SRC emacs-lisp
-(require 'org-tempo)
-;; Customized to remove the empty line in SRC blocks
-;; FIXME indent better?
-(setq org-structure-template-alist
-(quote (("s" "#+BEGIN_SRC ?
-,#+END_SRC")
- ("e" "#+BEGIN_EXAMPLE
-?
-#+END_EXAMPLE")
- ("d" ":PROPERTIES:
-:DRILL_CARD_TYPE: show1cloze
-:END:
-
-?")
- ("q" "#+BEGIN_QUOTE
-?
-#+END_QUOTE")
- ("v" "#+BEGIN_VERSE
-?
-#+END_VERSE")
- ("V" "#+BEGIN_VERBATIM
-?
-#+END_VERBATIM")
- ("c" "#+BEGIN_CENTER
-?
-#+END_CENTER")
- ("C" "#+BEGIN_COMMENT
-?
-#+END_COMMENT")
- ("l" "#+BEGIN_EXPORT latex
-?
-#+END_EXPORT")
- ("L" "#+LaTeX: ")
- ("h" "#+BEGIN_EXPORT html
-?
-#+END_EXPORT")
- ("H" "#+HTML: ")
- ("a" "#+BEGIN_EXPORT ascii
-?
-#+END_EXPORT")
- ("A" "#+ASCII: ")
- ("i" "#+INDEX: ?")
- ("I" "#+INCLUDE: %file ?"))))
-#+END_SRC
-
 Set org-mode to show edits that are hidden in folded trees (eg. x in
 command mode).  Note that this won't protect against insert mode
 deletions :/
@@ -663,7 +617,11 @@ should work even if emacs runs exclusively in the terminal:
 Install yasnippet and the snippets packages:
 
 #+BEGIN_SRC emacs-lisp
-(use-package yasnippet)
+(use-package yasnippet
+  :defer 10
+  :config
+  (setq yas-snippet-dirs
+        '("~/.emacs.d/snippets")))
 (use-package yasnippet-snippets)
 (yas-global-mode)
 #+END_SRC

@@ -700,14 +700,13 @@ Misc keybindings with General:
 (general-def evil-ex-completion-map
   "C-b" 'backward-char)
 
+(general-def 'normal dired-mode-map
+  "h" 'dired-up-directory
+  "l" 'dired-find-file)
+
 (general-def '(insert normal visual) 'override
   "M-h" 'eyebrowse-prev-window-config
   "M-l" 'eyebrowse-next-window-config
   "M-t" 'me/new-eyebrowse-window-config
   "M-d" 'eyebrowse-close-window-config)
 #+END_SRC
-
-** TODO Fix and make dired evil-integration nicer
-- https://github.com/noctuid/general.el/issues/89
-- https://github.com/noctuid/general.el/issues/97
-- https://github.com/noctuid/general.el/issues/98

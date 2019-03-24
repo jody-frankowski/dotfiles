@@ -666,7 +666,10 @@ Misc keybindings with General:
 
 #+BEGIN_SRC emacs-lisp
 (general-define-key
-  :keymaps '(emacs motion normal visual)
+  ;; With this combination of keymaps/states the following keybinding
+  ;; seem to work everywhere (even in dired, *Help*, *Messages* and magit)
+  :keymaps '(emacs motion override normal visual)
+  :states '(emacs motion normal visual)
   :prefix "SPC"
   "SPC" 'counsel-M-x
   "bb"  'counsel-ibuffer

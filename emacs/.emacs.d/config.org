@@ -502,6 +502,12 @@ Switch to the home directory with "~/" and not "~":
 (setq ivy-magic-tilde nil)
 #+END_SRC
 
+Increase the number of results:
+
+#+BEGIN_SRC emacs-lisp
+(setq ivy-height 20)
+#+END_SRC
+
 Enable the mode:
 
 #+BEGIN_SRC emacs-lisp

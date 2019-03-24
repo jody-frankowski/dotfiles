@@ -632,6 +632,21 @@ Install yasnippet and the snippets packages:
 (yas-global-mode)
 #+END_SRC
 
+* Eyebrowse
+
+Add the ~eyebrowse~ package that helps us manage window configurations and hence
+simulating tabs:
+
+#+BEGIN_SRC emacs-lisp
+(use-package eyebrowse)
+(eyebrowse-mode)
+
+(defun me/new-eyebrowse-window-config ()
+  (interactive)
+  (eyebrowse-create-window-config)
+  (delete-other-windows))
+#+END_SRC
+
 * General
 
 Install General:
@@ -684,6 +699,12 @@ Misc keybindings with General:
 
 (general-def evil-ex-completion-map
   "C-b" 'backward-char)
+
+(general-def '(insert normal visual) 'override
+  "M-h" 'eyebrowse-prev-window-config
+  "M-l" 'eyebrowse-next-window-config
+  "M-t" 'me/new-eyebrowse-window-config
+  "M-d" 'eyebrowse-close-window-config)
 #+END_SRC
 
 ** TODO Fix and make dired evil-integration nicer

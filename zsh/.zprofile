@@ -15,12 +15,11 @@ export VISUAL='emacsclient -a "" --tty'
 # Pager
 export PAGER='less'
 # Sets the default Less options.
-# -F quit if the entire file fits on the screen
 # -i smart case search
 # -M show line numbers in prompt
 # -R interpret ANSI color escape sequences
 # -j4 search results will be 4 lines lower than the top of the screen
-export LESS='-F -i -M -R -j4'
+export LESS='-i -M -R -j4'
 
 # Go
 export GOPATH=~/.go

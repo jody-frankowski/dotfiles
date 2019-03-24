@@ -655,7 +655,7 @@ Install General:
 (use-package general)
 #+END_SRC
 
-Tell general to automatically unbind keys that conflict
+Tell general to automatically unbind *prefix* keys that conflict
 (https://github.com/noctuid/general.el#automatic-key-unbinding):
 
 #+BEGIN_SRC emacs-lisp

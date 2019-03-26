@@ -75,7 +75,9 @@ done
 # hack for the freaking symlink removal
 chmod 500 ~/.config/gtk-2.0/
 
+# Stow *-hostname or *-domain
 ls -d *-"$(hostname)" &>/dev/null && stow --no-folding *-"$(hostname)"
+ls -d *-"$(hostname | cut -d. -f2-)" &>/dev/null && stow --no-folding *-"$(hostname | cut -d. -f2-)"
 
 # Linux Specific
 if [[ "$OSTYPE" == "linux-gnu" ]] ; then

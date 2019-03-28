@@ -140,13 +140,13 @@ def set_infos(sign):
     session = HTMLSession()
     r = session.get(sign.url)
 
-    if r.url.startswith("http://www.elix-lsf.fr/"):
+    if r.url.find("elix-lsf.fr") != -1:
         sign.word = r.html.find(".titre_mot")[0].text
         if len(r.html.find(".definition_complete")) >= 1:
             sign.definition = r.html.find(".definition_complete")[0].text
-    elif r.url.startswith("http://www.sematos.eu/"):
+    elif r.url.find("sematos.eu") != -1:
         sign.word = str.capitalize(r.html.find("#titremot")[0].text)
-    elif r.url.startswith("https://signsuisse.sgb-fss.ch/"):
+    elif r.url.find("signsuisse.sgb-fss.ch") != -1:
         sign.word = str.capitalize(r.html.find("h1")[0].text)
         sign.definition = r.html.find("h2 ~ p")[1].text
 

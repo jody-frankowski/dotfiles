@@ -51,18 +51,13 @@ def archive(url):
     """
 
     session = HTMLSession()
-    # For some reasons, unknown to me, the Wayback Machine
-    # automatically redirects(302) to the archived page when saving
-    # something other than html (eg. mp4) So we only do a head
-    # request, which won't be automatically redirected by requests and
-    # then do the get on the archived page base on the
-    # "Content-Location" header.
-    r = session.head('https://web.archive.org/save/' + url)
+    # For some reasons, unknown to me, the Wayback Machine sometimes redirects
+    # (301/302) to the archived page when saving something other than html
+    # (eg. mp4) or when the archived page itself redirects. So we always do a
+    # first GET, and then GET based on "Content-Location" which is always
+    # present (be it a 200 or a 301/302)
 
-    if r.status_code != 200:
-        print(r.url, file=sys.stderr)
-        print(r, file=sys.stderr)
-        return None
+    r = session.get('https://web.archive.org/save/' + url)
 
     r = session.get('https://web.archive.org/' + r.headers['Content-Location'])
 

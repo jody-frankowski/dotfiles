@@ -115,7 +115,7 @@ def search_elix(query):
     Returns a list of Sign.
     """
 
-    base_url = "http://www.elix-lsf.fr/"
+    base_url = "https://www.elix-lsf.fr/"
 
     session = HTMLSession()
     params = {

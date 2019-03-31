@@ -7,7 +7,7 @@ pushd ${script_dir} > /dev/null
 
 source ./lib.sh
 
-for dir in ~/.usr/bin/ ~/.usr/opt ~/.usr/var/log ~/code/ ~/code/tmp ; do
+for dir in ~/code/ ~/code/tmp/ ; do
     [[ -d "${dir}" ]] || mkdir -p "${dir}"
 done
 

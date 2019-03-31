@@ -7,6 +7,10 @@ pushd ${script_dir} > /dev/null
 
 source ./lib.sh
 
+for dir in ~/.usr/bin/ ~/.usr/opt/ ~/.usr/var/log/ ; do
+    [[ -d "${dir}" ]] || mkdir -p "${dir}"
+done
+
 if [[ `id -u` -ne 0 ]] ; then
     ./user-only.sh
 fi

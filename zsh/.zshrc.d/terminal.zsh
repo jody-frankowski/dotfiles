@@ -8,6 +8,19 @@ if [[ "$TERM" == (dumb|linux|*bsd*|eterm*) ]]; then
     return 1
 fi
 
+if ! infocmp &> /dev/null ; then
+    echo "Terminfo database '$TERM' not found!" >&2
+
+    if infocmp "${TERM[(ws:-:)1]}" &> /dev/null ; then
+        echo "Falling back to a dumber TERM: '${TERM[(ws:-:)1]}'!" >&2
+        export TERM="${TERM[(ws:-:)1]}"
+    else
+        echo "Dumber TERM '${TERM[(ws:-:)1]}' not found either!" >&2
+        echo "Falling back to 'xterm'!" >&2
+        export TERM=xterm
+    fi
+fi
+
 # Sets the terminal window title
 # Make sure you have this in your tmux config, for this to work
 # setw -g window-status-current-format "#I:#T#F"

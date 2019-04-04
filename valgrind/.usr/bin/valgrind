@@ -2,4 +2,10 @@
 
 # Call the real valgrind
 # The last one in PATH for now
-$(type -a valgrind | tail -n-1 | awk '{print $3}') --suppressions="$HOME"/.config/valgrind/vgpreload.supp "$@"
+real=$(type -a valgrind | tail -n-1 | awk '{print $3}')
+if [[ "$real" == "$0" ]] ; then
+    echo "Aborting! Valgrind doesn't seem to be installed!" 2>&1
+    exit -1
+fi
+
+"$real" --suppressions="$HOME"/.config/valgrind/vgpreload.supp "$@"

@@ -163,6 +163,12 @@ the current topic."
 (setq org-drill-maximum-duration 40) ; default is 20 minutes
 #+END_SRC
 
+Hide the headings during drill sessions:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-drill-hide-item-headings-p t)
+#+END_SRC
+
 *** TODO org-drill: implement fact expiration?
 *** TODO org-drill: implement a way to tell "I want Emacs to tell me to add more facts about this card when this one is remembered or in X days". Example: pi decimals and prime numbers.
 

@@ -29,7 +29,7 @@ lib =
 
 checkout = git_clone "$MR_REPO"
 
-include = cat .mrconfig-*
+include = cat ~/.mrconfig-*
 
 [.dotfiles]
 checkout = git clone 'git@gitlab.com:jody-frankowski/dotfiles.git' '.dotfiles'

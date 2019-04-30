@@ -38,4 +38,6 @@ checkout = git clone 'git@gitlab.com:jody-frankowski/dotfiles.git' '.dotfiles'
 
 [code/emacs-lisp-introduction-solutions]
 
+[code/k8s-training]
+
 [code/til]

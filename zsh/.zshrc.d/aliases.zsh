@@ -75,8 +75,10 @@ alias rm='rm --one-file-system -i'
 
 # Docker
 alias docker='sudo docker'
-alias rm-docker='docker rm `docker ps -a -q`'
-alias rmi-docker='docker rmi `docker images -a -q`'
+# Removes all unused containers, images and networks
+alias docker-cleanup='docker system prune'
+# Removes all containers, images, networks and volumes
+alias docker-full-cleanup='docker system prune --all --volumes'
 
 # Git
 # cat ~/.zsh/repos/*oh-my-zsh*/plugins/git/git.plugin.zsh

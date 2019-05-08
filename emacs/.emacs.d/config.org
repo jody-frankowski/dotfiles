@@ -169,6 +169,12 @@ Hide the headings during drill sessions:
 (setq org-drill-hide-item-headings-p t)
 #+END_SRC
 
+Lower the *learn fraction* to be a little more on the safe side (default is =0.5=):
+
+#+BEGIN_SRC emacs-lisp
+(setq org-drill-learn-fraction 0.45)
+#+END_SRC
+
 *** TODO org-drill: implement fact expiration?
 *** TODO org-drill: implement a way to tell "I want Emacs to tell me to add more facts about this card when this one is remembered or in X days". Example: pi decimals and prime numbers.
 

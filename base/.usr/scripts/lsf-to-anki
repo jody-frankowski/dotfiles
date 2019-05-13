@@ -20,6 +20,7 @@ ORG_ANKI_TEMPLATE="""
 
 **** Front
 {}
+
 {}
 
 **** Back

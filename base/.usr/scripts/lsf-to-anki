@@ -149,7 +149,19 @@ def set_infos(sign):
     elif r.url.find("signsuisse.sgb-fss.ch") != -1:
         sign.word = str.capitalize(r.html.find("h1")[0].text)
         sign.definition = r.html.find("h2 ~ p")[1].text
+    elif r.url.find("spreadthesign.com") != -1:
+        sign.word = r.html.find("h2")[0].text
 
+def source_is_android_compatible(source):
+    """
+    Returns True if the video source is compatible with android.
+    @source can be one of <source> or <video>, it doesn't matter.
+    """
+
+    return not ('type' in source.attrs and
+        (source.attrs['type'].startswith("video/x-flv") or
+        source.attrs['type'].startswith("video/ogg") or
+        source.attrs['type'].startswith("video/MP2T")))
 
 def set_videos_sources(sign):
     """
@@ -162,11 +174,9 @@ def set_videos_sources(sign):
     videos = r.html.find("video")
     for video in videos:
         sources = []
-        for source in video.find("source"):
-            # Android has trouble reading those :/
-            if not (source.attrs['type'].startswith("video/x-flv") or
-                    source.attrs['type'].startswith("video/ogg") or
-                    source.attrs['type'].startswith("video/MP2T")):
+        # We consider the <video> tag too
+        for source in video.find("source")+[video]:
+            if 'src' in source.attrs and source_is_android_compatible(source):
                 sources += [urllib.parse.urljoin(r.url, source.attrs['src'])]
         sign.videos_sources += [sources]
 
@@ -175,8 +185,8 @@ def best_video_source(sources):
     Returns the "best" video source from a list of sources.
     Size usually isn't the right thing to look for when
     searching for the best quality but it looks like it is
-    on this particular site because the best quality is at a
-    larger resolution and overall size.
+    on some sites because the best quality is at a larger
+    resolution and overall size.
     """
 
     biggest_source_size = 0
@@ -245,7 +255,7 @@ if __name__ == "__main__":
                 video['archived'] = urllib.parse.urljoin(
                     archived_sign.url,
                     archived_sign.html.find(
-                        "source[src$='{}']".format(video['original'])
+                        "[src$='{}']".format(video['original'])
                     )[0].attrs['src'].replace("//web", "/web")
                 )
                 videos += [video]

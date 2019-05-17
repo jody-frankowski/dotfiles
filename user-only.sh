@@ -51,6 +51,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.dotfiles/iterm2"
     # Tell iTerm2 to use the custom preferences from this directory
     defaults write com.googlecode.iterm2.plist LoadPrefsFromCustomFolder -bool true
+
+    ### Dock
+    # Show only active apps
+    defaults write com.apple.dock static-only -bool true; killall Dock
 fi
 
 # mpd

@@ -9,7 +9,7 @@ bak () {
 
 capitalize () {
     for arg in "$@" ; do
-        new=`echo "$arg" | sed -e 's/^./\U&/'`
+        new=$(echo "$arg" | sed 's/[^ .-_]*/\L\u&/g')
         mv "$arg" "$new"
     done
 }

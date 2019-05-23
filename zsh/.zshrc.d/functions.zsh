@@ -7,6 +7,13 @@ bak () {
     done
 }
 
+capitalize () {
+    for arg in "$@" ; do
+        new=`echo "$arg" | sed -e 's/^./\U&/'`
+        mv "$arg" "$new"
+    done
+}
+
 clean-mv () {
     for file in "$@" ; do
         dir=$(dirname -z "$file" | head -c -1)

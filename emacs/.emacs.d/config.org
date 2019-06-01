@@ -112,6 +112,13 @@ blocks. Also a way not to have indentation in code blocks. Setting
 (setq org-edit-src-content-indentation t)
 #+END_SRC
 
+Change the TODO workflow:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-todo-keywords
+      '((sequence "TODO" "DOING" "|" "DONE" "CANCELLED" "OBSOLETE")))
+#+END_SRC
+
 Install ~evil-org~ so that keybindings like ~>~ or ~<~ behave as
 expected and also support motion (contrary to ~org-evil~):
 

@@ -697,6 +697,7 @@ Misc keybindings with General:
   "hdk" 'describe-key
   "hdm" 'describe-mode
   "hdv" 'counsel-describe-variable
+  "mTT" 'org-todo
   "qq"  'save-buffers-kill-emacs
   "ry"  'counsel-yank-pop
   "tw"  'whitespace-mode

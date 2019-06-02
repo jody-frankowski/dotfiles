@@ -20,10 +20,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         editorconfig
         emacs
         gdb
+        go
         mosh
         myrepos
         python3
         ripgrep
+        rust
         stow
         syncthing
         tmux

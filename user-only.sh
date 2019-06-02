@@ -46,6 +46,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         [[ -L ~/.usr/bin/$symlink ]] || ln -s ~/.brew/bin/g$symlink ~/.usr/bin/$symlink
     done
 
+    ### screensaver
+    # Require a password immediately after enabling the screensaver
+    defaults write com.apple.screensaver askForPassword -bool true
+    defaults write com.apple.screensaver askForPasswordDelay -int 0
+
     ### iterm2
     # Specify the preferences directory
     defaults write com.googlecode.iterm2.plist PrefsCustomFolder -string "~/.dotfiles/iterm2"

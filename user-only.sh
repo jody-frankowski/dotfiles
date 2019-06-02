@@ -54,7 +54,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
     ### Dock
     # Show only active apps
-    defaults write com.apple.dock static-only -bool true; killall Dock
+    defaults write com.apple.dock static-only -bool true
+    # Auto hide
+    defaults write com.apple.dock autohide -bool true
+    # Reload
+    killall Dock
 fi
 
 # mpd

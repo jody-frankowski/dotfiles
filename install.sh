@@ -25,15 +25,7 @@ for terminfo in ./base/.terminfo/*.terminfo ; do
 done
 
 # fzf
-if [[ ! -d ~/.usr/opt/fzf ]] ; then
-    silent git clone --depth 1 https://github.com/junegunn/fzf.git ~/.usr/opt/fzf
-    silent pushd ~/.usr/opt/fzf
-    silent git pull
-    silent make
-    silent make install
-    silent popd
-    silent ln -s ~/.usr/opt/fzf/bin/fzf ~/.usr/bin/
-fi
+go get -u github.com/junegunn/fzf
 
 # vim
 silent curl https://raw.githubusercontent.com/amix/vimrc/master/vimrcs/basic.vim -o ~/.vimrc

@@ -28,7 +28,7 @@ export GOPATH=~/.go
 export NPM_PACKAGES=~/.npm-packages
 
 # .local/bin is for pip install --user
-export PATH="$HOME/.npm-packages/bin:$HOME/.local/bin:$HOME/.usr/bin:$HOME/.go/bin/:$PATH"
+export PATH="$HOME/.npm-packages/bin:$HOME/.local/bin:$HOME/.usr/bin:$HOME/.go/bin/:$HOME/.cargo/bin/:$PATH"
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="$HOME/.brew/bin:$PATH"
 fi

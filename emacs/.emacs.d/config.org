@@ -77,6 +77,13 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
   (evil-mode 1))
 #+END_SRC
 
+Install evil-numbers to make C-a and C-x among others work:
+
+#+BEGIN_SRC emacs-lisp
+(straight-use-package
+  '(el-patch :type git :host github :repo "dieggsy/evil-numbers"))
+#+END_SRC
+
 * Org
 
 Set org-mode to show edits that are hidden in folded trees (eg. x in
@@ -715,6 +722,12 @@ Misc keybindings with General:
   "wl"  'window-right-or-split
   ";"   'evilnc-comment-operator
   "/"   'counsel-rg)
+
+(general-define-key
+ :states '(normal)
+ :keymaps '(override)
+ "C-a" 'evil-numbers/inc-at-pt
+ "C-x" 'evil-numbers/dec-at-pt)
 
 (general-def ivy-minibuffer-map
   "C-j" 'ivy-next-line

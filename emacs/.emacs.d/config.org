@@ -694,8 +694,13 @@ Misc keybindings with General:
 (general-define-key
   ;; With this combination of keymaps/states the following keybinding
   ;; seem to work everywhere (even in dired, *Help*, *Messages* and magit)
-  :keymaps '(emacs motion override normal visual)
+
+  ;; /!\ There's a weird bug(?) where the keybindings don't work when first
+  ;; opening the *Messages* buffer but work as soon as you switch out and back
+  ;; in the window!
+
   :states '(emacs motion normal visual)
+  :keymaps '(override)
   :prefix "SPC"
   "SPC" 'counsel-M-x
   "bb"  'counsel-ibuffer

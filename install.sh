@@ -1,6 +1,7 @@
 #!/bin/bash
 
-set -e
+set -euo pipefail
+set -x
 
 script_dir=$(dirname $0)
 pushd ${script_dir} > /dev/null
@@ -14,7 +15,7 @@ done
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="~/.brew/bin/:$PATH"
 
-    [[ -d ~/.brew ]] || silent git clone --depth=1 https://github.com/Homebrew/brew ~/.brew
+    [[ -d ~/.brew ]] || git clone --depth=1 https://github.com/Homebrew/brew ~/.brew
 
     packages=(
         atool
@@ -26,13 +27,13 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     )
 
     for package in ${packages[@]} ; do
-        [[ -d ~/.brew/opt/$package ]] || silent brew install $package
+        [[ -d ~/.brew/opt/$package ]] || brew install $package
     done
 
     latest_tmux=$(ls -t ~/.brew/Cellar/tmux/ | head -n1)
     if ! grep with-utf8proc ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb &>/dev/null ; then
         sed -i -e $'s/args = %W\\[/args = %W[\\\n      --with-utf8proc/' ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb
-        silent brew reinstall tmux
+        brew reinstall tmux
     fi
 
     # coreutils symlinks
@@ -62,7 +63,7 @@ done
 
 # tpm (tmux-plugin-manager)
 # This needs to be after tmux's stowing because tpm searches for its config in tmux.conf
-[[ -d ~/.tmux/plugins/tpm ]] || silent git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+[[ -d ~/.tmux/plugins/tpm ]] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # install plugins. buggy, better use prefix + I
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh > /dev/null
 

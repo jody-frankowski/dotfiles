@@ -1,6 +1,7 @@
 #!/bin/bash
 
 set -euo pipefail
+set -x
 
 script_dir=$(dirname $0)
 pushd ${script_dir} > /dev/null
@@ -28,7 +29,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     )
 
     for package in ${packages[@]} ; do
-        [[ -d ~/.brew/opt/$package ]] || silent brew install $package
+        [[ -d ~/.brew/opt/$package ]] || brew install $package
     done
 
     brew services list | grep syncthing > /dev/null || brew services start syncthing

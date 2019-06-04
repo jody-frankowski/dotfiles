@@ -87,8 +87,4 @@ fi
 cd ~/.ssh > /dev/null
 ./update
 
-cd ~/
-# Clone repositories
-silent mr -j 5 up
-
 popd > /dev/null

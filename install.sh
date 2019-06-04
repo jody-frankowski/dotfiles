@@ -71,6 +71,7 @@ for terminfo in ./base/.terminfo/*.terminfo ; do
 done
 
 # fzf
+export GOPATH=~/.go
 go get -u github.com/junegunn/fzf
 
 popd > /dev/null

@@ -27,7 +27,4 @@ done
 # fzf
 go get -u github.com/junegunn/fzf
 
-# vim
-silent curl https://raw.githubusercontent.com/amix/vimrc/master/vimrcs/basic.vim -o ~/.vimrc
-
 popd > /dev/null

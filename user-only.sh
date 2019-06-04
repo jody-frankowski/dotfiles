@@ -13,40 +13,25 @@ done
 
 # macOS Specific
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    [[ -d ~/.brew ]] || silent git clone --depth=1 https://github.com/Homebrew/brew ~/.brew
+    export PATH="~/.brew/bin/:$PATH"
 
     packages=(
-        coreutils
         editorconfig
         emacs
         gdb
         go
         mosh
         myrepos
-        python3
-        ripgrep
         rust
-        stow
         syncthing
-        tmux
         valgrind
     )
 
     for package in ${packages[@]} ; do
-        [[ -d ~/.brew/opt/$package ]] || silent ~/.brew/bin/brew install $package
+        [[ -d ~/.brew/opt/$package ]] || silent brew install $package
     done
-
-    latest_tmux=$(ls -t ~/.brew/Cellar/tmux/ | head -n1)
-    if ! grep with-utf8proc ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb &>/dev/null ; then
-        sed -i -e $'s/args = %W\\[/args = %W[\\\n      --with-utf8proc/' ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb
-        silent brew reinstall tmux
-    fi
 
     brew services list | grep syncthing > /dev/null || brew services start syncthing
-
-    for symlink in date dircolors ls rm ; do
-        [[ -L ~/.usr/bin/$symlink ]] || ln -s ~/.brew/bin/g$symlink ~/.usr/bin/$symlink
-    done
 
     ### screensaver
     # Require a password immediately after enabling the screensaver
@@ -77,11 +62,6 @@ fi
 # ssh
 [[ -d ~/.ssh ]] || mkdir ~/.ssh && chmod 700 ~/.ssh
 [[ -d ~/.ssh/tmp ]] || mkdir ~/.ssh/tmp && chmod 700 ~/.ssh/tmp
-
-# tpm (tmux-plugin-manager)
-[[ -d ~/.tmux/plugins/tpm ]] || silent git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-# install plugins. buggy, better use prefix + I
-~/.tmux/plugins/tpm/scripts/install_plugins.sh > /dev/null
 
 # stow the dotfiles
 for dir in base docker emacs gnupg js karabiner mpd mpv ssh tmux valgrind X ; do

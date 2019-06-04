@@ -34,7 +34,7 @@ colors), and italics,
 
 # Use the existing xterm-256color capabilities (and not xterm-direct
 # ones because it isn't widespread enough)
-   use=xterm-256color,
+  use=xterm-256color,
 
 # Add the new 24-bit color compatible setab/setaf capabilities (They
 # should be backward compatible)
@@ -47,8 +47,8 @@ colors), and italics,
 
 # Italics capabilities. xterm-256color doesn't export them, however
 # most modern terminal support them.
-   sitm=\E[3m,
-   ritm=\E[23m,
+  sitm=\E[3m,
+  ritm=\E[23m,
 
 # Enable 24-bit colors in Emacs 26 and 27
 # Emacs 27 switched to detecting the "RGB" capability but kept
@@ -58,13 +58,13 @@ colors), and italics,
 # Emacs 26 documentation:
 # https://web.archive.org/web/20190226163746/https://www.gnu.org/software/emacs/manual/html_mono/efaq.html#Colors-on-a-TTY
 # Note that these capabilities won't appear in the output of $(infocmp)
-   setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
-   setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+  setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+  setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
 
 # Tmux looks for these capabilities in the outer terminal in order to
 # enable 24-bit colors.
 # https://gist.github.com/XVilka/8346728#gistcomment-2110619
 # https://github.com/tmux/tmux/blob/018f1b8a803f15910781dc9894fbd168cfa50943/tty-term.c#L570
 # Note that these capabilities won't appear in the output of $(infocmp)
-   Tc,
-   RGB,
+  Tc,
+  RGB,

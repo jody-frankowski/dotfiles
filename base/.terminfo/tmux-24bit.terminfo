@@ -34,7 +34,7 @@ colors),
 
 # Use the existing tmux-256color capabilities (there isn't yet a
 # tmux-direct terminfo)
-   use=tmux-256color,
+  use=tmux-256color,
 
 # Add the new 24-bit color compatible setab/setaf capabilities (They
 # should be backward compatible)
@@ -53,13 +53,13 @@ colors),
 # Emacs 26 documentation:
 # https://web.archive.org/web/20190226163746/https://www.gnu.org/software/emacs/manual/html_mono/efaq.html#Colors-on-a-TTY
 # Note that these capabilities won't appear in the output of $(infocmp)
-   setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
-   setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+  setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+  setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
 
 # Tmux looks for these capabilities in the outer terminal in order to
 # enable 24-bit colors.
 # https://gist.github.com/XVilka/8346728#gistcomment-2110619
 # https://github.com/tmux/tmux/blob/018f1b8a803f15910781dc9894fbd168cfa50943/tty-term.c#L570
 # Note that these capabilities won't appear in the output of $(infocmp)
-   Tc,
-   RGB,
+  Tc,
+  RGB,

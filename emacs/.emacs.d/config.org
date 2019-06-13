@@ -583,6 +583,13 @@ commands to 2 (default is 4):
                 (setq evil-shift-width 2)))))
 #+END_SRC
 
+Install Geiser for a better integration of other Lisps (Guile/Scheme/Racket) in
+Emacs:
+
+#+BEGIN_SRC emacs-lisp
+(use-package geiser)
+#+END_SRC
+
 * Polymode
 
 Install ~polymode~ for ~org-mode~ and ~markdown-mode~ which will activate

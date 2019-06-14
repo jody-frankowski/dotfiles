@@ -393,6 +393,12 @@ function and use it in a custom global minor mode.
 ;; Why isn't this the default ? :(
 (setq display-line-numbers-width-start t)
 
+;; Do not let Emacs size down the line numbers width if we are
+;; displaying a smaller line number (eg. line under 100 when the file has
+;; more than 100 lines)
+;; Why isn't this the default ? x2 :(
+(setq display-line-numbers-grow-only t)
+
 (setq column-number-mode t)
 #+END_SRC
 

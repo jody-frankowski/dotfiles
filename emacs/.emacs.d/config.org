@@ -386,12 +386,12 @@ function and use it in a custom global minor mode.
 
 (define-globalized-minor-mode my-global-display-line-numbers-mode
   display-line-numbers-mode my-display-line-numbers--turn-on)
+(my-global-display-line-numbers-mode)
 
 (setq display-line-numbers-type 'relative)
 ;; Make Emacs set the line-numbers width to the largest width needed
 ;; Why isn't this the default ? :(
 (setq display-line-numbers-width-start t)
-(my-global-display-line-numbers-mode)
 
 (setq column-number-mode t)
 #+END_SRC

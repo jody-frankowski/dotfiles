@@ -113,11 +113,10 @@ Tells org-mode to indent trees visually even if they aren't really:
 #+END_SRC
 
 Tells org-mode to preserve indentation when exporting code
-blocks. Also a way not to have indentation in code blocks. Setting
-~org-edit-src-content-indentation~ to 0 might do the trick as well.
+blocks. Also a way not to have indentation in code blocks.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-edit-src-content-indentation t)
+(setq org-edit-src-content-indentation 0)
 #+END_SRC
 
 Change the TODO workflow:

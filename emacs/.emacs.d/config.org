@@ -74,6 +74,9 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
   ;; Makes TAB behave like TAB in Emacs (eg. Open tree in org-mode rather than jump forward) when in terminal
   ;; See https://catern.com/posts/terminal_quirks.html for why C-i is equivalent to TAB in a terminal
   (setq evil-want-C-i-jump nil)
+  ;; Makes * and # behave like in Vim (When the point is on the whitespace
+  ;; before a word, the search will automatically select the word)
+  (setq evil-symbol-word-search t)
   :config
   (evil-mode 1))
 #+END_SRC
@@ -471,14 +474,6 @@ Configure Emacs to load a '.el' instead of a '.elc' if the '.el' is newer:
 (setq load-prefer-newer t)
 #+END_SRC
 
-* Clipboard
-
-Save the clipboard content before overwriting it from Emacs:
-
-#+BEGIN_SRC emacs-lisp
-(setq save-interprogram-paste-before-kill t)
-#+END_SRC
-
 * Brackets
 
 Configures Emacs to highlight the matching brackets:
@@ -649,6 +644,12 @@ gpg-agent and let us enter the passphrase in a proper Emacs miniwindow:
 #+END_SRC
 
 * Clipboard
+
+Save the clipboard content before overwriting it from Emacs:
+
+#+BEGIN_SRC emacs-lisp
+(setq save-interprogram-paste-before-kill t)
+#+END_SRC
 
 Link the kill ring with the system clipboard with the ~xclip~ package. This
 should work even if emacs runs exclusively in the terminal:

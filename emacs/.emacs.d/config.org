@@ -755,10 +755,9 @@ Misc keybindings with General:
   "/"   'counsel-rg)
 
 (general-define-key
- :states '(normal)
- :keymaps '(override)
- "C-a" 'evil-numbers/inc-at-pt
- "C-x" 'evil-numbers/dec-at-pt)
+  :states '(normal)
+  :keymaps '(override)
+  "C-a" 'evil-numbers/inc-at-pt)
 
 (general-def ivy-minibuffer-map
   "C-j" 'ivy-next-line

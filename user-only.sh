@@ -19,6 +19,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         emacs
         gdb
         go
+        gnupg
         mosh
         myrepos
         rust

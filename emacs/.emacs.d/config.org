@@ -413,26 +413,24 @@ function and use it in a custom global minor mode.
 
 * Column Indicator
 
-Shows a ruler at ~fill-column~ column. May be broken sometimes. It's
-still better than whitespace's ~lines-tail~ that isn't dynamic by default
-and that also doesn't take into account the tab width.
+Use the buil-in ~fill-column-indicator-mode~ on Emacs >= 27 (fci-mode was too
+slow for big org-mode files). This should take into account the ~fill-column~
+value:
 
 #+BEGIN_SRC emacs-lisp
-(use-package fill-column-indicator)
-(define-globalized-minor-mode global-fci-mode fci-mode (lambda ()
-    (if buffer-file-name (fci-mode 1))))
-(global-fci-mode 1)
+(if (version<= "27" emacs-version)
+  (global-display-fill-column-indicator-mode))
 #+END_SRC
 
 * Whitespace
 
-Use built-in whitespace mode to show tabs with a custom symbol, trailing spaces,
-empty lines and specials spaces (hard space and ideographic space) with a custom
-symbol.
+Use the built-in whitespace-mode to show tabs with a custom symbol, trailing
+spaces, empty lines, characters after the ~fill-column~ and specials spaces
+(hard space and ideographic space) with a custom symbol:
 
 #+BEGIN_SRC emacs-lisp
 (setq-default
-  whitespace-style '(face tabs trailing empty space-mark tab-mark))
+  whitespace-style '(face tabs trailing empty lines-tail space-mark tab-mark))
   (setq whitespace-display-mappings
     '(
         (space-mark   ?\xA0  [?\u25a0]     [?_]) ; hard space - black square
@@ -449,6 +447,19 @@ symbol.
         ;; If this is a problem for you, please, comment the line below.
         (tab-mark     ?\t    [?› ?\t] [?\\ ?\t]) ; tab - right guillemet
 ))
+#+END_SRC
+
+Make sure whitespace-mode uses ~fill-column~ value:
+
+#+BEGIN_SRC emacs-lisp
+(setq whitespace-line-column nil)
+#+END_SRC
+
+Enable whitespace-mode for all prog and text buffers:
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'prog-mode-hook 'whitespace-mode)
+(add-hook 'text-mode-hook 'whitespace-mode)
 #+END_SRC
 
 Add ethan-wspace that will highlight existing whitespace errors and clean new

@@ -46,7 +46,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # tic.
     [[ -d ~/.terminfo ]] || mkdir ~/.terminfo
     latest_ncurses=$(ls -t ~/.brew/Cellar/ncurses/ | head -n1)
-    PATH="/Users/jfrankow/.brew/opt/ncurses/bin:$PATH" TERMINFO_DIRS=~/.brew/Cellar/ncurses/$latest_ncurses/share/terminfo/ infocmp -x tmux-256color > ~/.terminfo/tmux-256color
+    PATH="~/.brew/opt/ncurses/bin:$PATH" TERMINFO_DIRS=~/.brew/Cellar/ncurses/$latest_ncurses/share/terminfo/ infocmp -x tmux-256color > ~/.terminfo/tmux-256color
     tic -x ~/.terminfo/tmux-256color
 fi
 

@@ -6,8 +6,6 @@ set -x
 script_dir=$(dirname $0)
 pushd ${script_dir} > /dev/null
 
-source ./lib.sh
-
 for dir in ~/code/ ~/code/tmp/ ; do
     [[ -d "${dir}" ]] || mkdir -p "${dir}"
 done

@@ -50,7 +50,7 @@ firefox &>/dev/null &
 alacritty -e ~/.tmux/start-tmux.sh &
 
 # Remove when https://github.com/jonls/redshift/issues/318 is closed
-nohup redshift -l $(curl ipinfo.io | jq -j .loc | tr ',' ':') &>/dev/null &
+nohup redshift -l $(curl ipinfo.io | jq -j .loc | tr ',' ':') -t 6500:3000 &>/dev/null &
 
 # Automount removable drives
 devmon &

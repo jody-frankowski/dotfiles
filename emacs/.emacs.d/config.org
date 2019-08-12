@@ -231,6 +231,11 @@ Install git-gutter for a git diff margin:
 ;; https://github.com/syohex/emacs-git-gutter/issues/162
 (use-package git-gutter)
 (global-git-gutter-mode)
+
+* Project Management
+
+#+BEGIN_SRC emacs-lisp
+(use-package projectile)
 #+END_SRC
 
 * Unicode Homoglyphs Highlighter
@@ -743,6 +748,9 @@ Misc keybindings with General:
   "hdm" 'describe-mode
   "hdv" 'counsel-describe-variable
   "mTT" 'org-todo
+  "pf"  'projectile-find-file
+  "pr"  'projectile-recentf
+  "pR"  'projectile-replace
   "qq"  'save-buffers-kill-emacs
   "ry"  'counsel-yank-pop
   "tw"  'whitespace-mode

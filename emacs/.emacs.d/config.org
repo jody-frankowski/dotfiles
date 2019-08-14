@@ -715,7 +715,7 @@ Install yasnippet and the snippets packages:
 #+END_SRC
 
 
-* General
+* Keybindings
 
 Install General:
 

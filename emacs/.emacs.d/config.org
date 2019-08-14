@@ -378,6 +378,7 @@ Enable the refresh for dired views too:
 #+BEGIN_SRC emacs-lisp
 (setq global-auto-revert-non-file-buffers t)
 #+END_SRC
+
 * Line and Column Numbers
 
 Show relative line numbers, and also show column number in the status bar. Line

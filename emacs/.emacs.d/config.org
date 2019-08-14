@@ -572,6 +572,7 @@ Enable motioned alignments with evil-lion:
   :config
   (evil-lion-mode))
 #+END_SRC
+
 * Lisp Editing
 
 Make lisp editing in evil-mode nicer with ~lispyville~ (e.g. ~dd~ will balance

@@ -1,45 +1,125 @@
-* Load Path
+* Alignment
 
-Add ~/.emacs.d/lisp to load-path so that we can pull individual .el files
-directly:
-
-#+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/lisp/")
-#+END_SRC
-
-* UI
-
-Disable useless UI elements:
+Enable motioned alignments with evil-lion:
 
 #+BEGIN_SRC emacs-lisp
-;; Modes are usually disabled by calling an associated function with negative values.
-;; Setting the corresponding variable won't work.
-(if (fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
-(tool-bar-mode   -1)
-(tooltip-mode    -1)
-(menu-bar-mode   -1)
-#+END_SRC
-
-** Theme
-
-#+BEGIN_SRC emacs-lisp
-(use-package doom-themes
+(use-package evil-lion
+  :init
+  (setq evil-lion-left-align-key (kbd "g a"))
+  (setq evil-lion-right-align-key (kbd "g A"))
   :config
-  (load-theme 'doom-one-light t))
-;; Not mature enough :/
-;;(use-package base16-theme
-;;  :config
-;;  (setq base16-theme-256-color-source "colors")
-;;  (load-theme 'base16-summerfruit-light t))
+  (evil-lion-mode))
 #+END_SRC
 
-* Terminal
+* Auto Refresh Buffers
 
-Enable mouse support in the terminal:
+Set Emacs to auto refresh the file backed buffers if the file changed,
+but not if the buffer is changed.
 
 #+BEGIN_SRC emacs-lisp
-(xterm-mouse-mode)
+(global-auto-revert-mode 1)
+;; Make it quiet
+(setq auto-revert-verbose nil)
+#+END_SRC
+
+Enable the refresh for dired views too:
+
+#+BEGIN_SRC emacs-lisp
+(setq global-auto-revert-non-file-buffers t)
+#+END_SRC
+
+* Backups
+
+With a combination of undo-tree (~u~ and ~C-r~ with branches) and
+auto-saving, a loss of work should be pretty small.  The undo-tree
+will contain the latest changes, laid out in a tree, in order to be
+able to come back to another "branch" of edition. Emacs auto-save is
+configured to save every 300 keystrokes or 30 seconds of idle time, in
+the edited file, and not in an external one that we might forget to
+restore from! We will also configure Emacs to save and restore the
+last point position.
+
+Enable and configure persistent undo with the help of undo-tree:
+
+#+BEGIN_SRC emacs-lisp
+;; evil already pulls undo-tree, but let's be explicit here
+(use-package undo-tree
+  :init
+  (unless (file-exists-p "~/.emacs.d/.cache/undo")
+    (make-directory "~/.emacs.d/.cache/undo"))
+  :config
+  (setq undo-tree-auto-save-history t
+        undo-tree-visualizer-diff t
+        undo-tree-visualizer-timestamps t
+        undo-tree-history-directory-alist '(("." . "~/.emacs.d/.cache/undo"))))
+#+END_SRC
+
+Configure Emcas to auto-save in the edited file:
+
+#+BEGIN_SRC emacs-lisp
+(auto-save-visited-mode)
+#+END_SRC
+
+Disable "backup~" files, persistent undo should be enough:
+
+#+BEGIN_SRC emacs-lisp
+(setq make-backup-files nil)
+#+END_SRC
+
+Configures Emacs to save and restore the last place of the point
+between sessions:
+
+#+BEGIN_SRC emacs-lisp
+(save-place-mode 1)
+#+END_SRC
+
+* Bell
+
+Disable the bell:
+
+#+BEGIN_SRC emacs-lisp
+(setq ring-bell-function 'ignore)
+#+END_SRC
+
+* Brackets
+
+Configures Emacs to highlight the matching brackets:
+
+#+BEGIN_SRC emacs-lisp
+(show-paren-mode 1)
+#+END_SRC
+
+* Clipboard
+
+Save the clipboard content before overwriting it from Emacs:
+
+#+BEGIN_SRC emacs-lisp
+(setq save-interprogram-paste-before-kill t)
+#+END_SRC
+
+Link the kill ring with the system clipboard with the ~xclip~ package. This
+should work even if emacs runs exclusively in the terminal:
+
+#+BEGIN_SRC emacs-lisp
+(use-package xclip)
+(xclip-mode)
+#+END_SRC
+
+* Column Indicator
+
+Use the buil-in ~fill-column-indicator-mode~ on Emacs >= 27 (fci-mode was too
+slow for big org-mode files). This should take into account the ~fill-column~
+value:
+
+#+BEGIN_SRC emacs-lisp
+(if (version<= "27" emacs-version)
+  (global-display-fill-column-indicator-mode))
+#+END_SRC
+
+* Comments
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-nerd-commenter)
 #+END_SRC
 
 * Customize Config
@@ -52,12 +132,18 @@ Put all customizations in seperate file so it doesn't clobber our init.el:
     (load custom-file))
 #+END_SRC
 
-* Bell
+* Dired
 
-Disable the bell:
+Add "-h" to the dired ls flags:
 
 #+BEGIN_SRC emacs-lisp
-(setq ring-bell-function 'ignore)
+(setq dired-listing-switches "-alh")
+#+END_SRC
+
+* Ediff
+
+#+BEGIN_SRC emacs-lisp
+(setq ediff-split-window-function 'split-window-horizontally)
 #+END_SRC
 
 * evil-mode
@@ -86,6 +172,247 @@ Install evil-numbers to make C-a and C-x among others work:
 #+BEGIN_SRC emacs-lisp
 (straight-use-package
   '(el-patch :type git :host github :repo "dieggsy/evil-numbers"))
+#+END_SRC
+
+* Eyebrowse
+
+Add the ~eyebrowse~ package that helps us manage window configurations and hence
+simulating tabs:
+
+#+BEGIN_SRC emacs-lisp
+(use-package eyebrowse)
+(eyebrowse-mode)
+
+(defun me/new-eyebrowse-window-config ()
+  (interactive)
+  (eyebrowse-create-window-config)
+  (delete-other-windows))
+#+END_SRC
+
+* Git
+
+Install Magit, evil-magit:
+
+#+BEGIN_SRC emacs-lisp
+(use-package magit)
+(use-package evil-magit)
+#+END_SRC
+
+Install git-gutter for a git diff margin:
+
+#+BEGIN_SRC emacs-lisp
+;; Consistently doesn't update for unknown reasons! :( :( :(
+;; (use-package diff-hl)
+;; (global-diff-hl-mode)
+;; (diff-hl-margin-mode)
+;; (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
+;; (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
+;; Mouse resizing to the right in the terminal is broken with this mode
+;; https://github.com/syohex/emacs-git-gutter/issues/162
+(use-package git-gutter)
+(global-git-gutter-mode)
+#+END_SRC
+
+* GPG
+
+Install the ~pinentry~ package and start it. It should now catch calls to
+gpg-agent and let us enter the passphrase in a proper Emacs miniwindow:
+
+#+BEGIN_SRC emacs-lisp
+(use-package pinentry
+  :config
+  (pinentry-start))
+#+END_SRC
+
+* Indentation
+
+Add editorconfig which will configure the proper indentation settings based on
+the ~.editorconfig~ files (if no file is found emacs defaults will be applied):
+
+#+BEGIN_SRC emacs-lisp
+(use-package editorconfig
+  :config
+  (editorconfig-mode 1))
+;; require-final-newline is managed by ethan-wspace so we block it
+;; so it doesn't warn us about it.
+(add-hook 'editorconfig-hack-properties-functions
+    '(lambda (props)
+        (puthash 'insert_final_newline "false" props)))
+#+END_SRC
+
+Make editorconfig work with files without extension by faking the extension
+based on the major-mode (Stolen from
+https://github.com/editorconfig/editorconfig-emacs/issues/75#issuecomment-350182935
+and
+https://github.com/hlissner/doom-emacs/blob/develop/modules/tools/editorconfig/config.el):
+
+#+BEGIN_SRC emacs-lisp
+;; editorconfig cannot procure the correct settings for extension-less files.
+;; Executable scripts with a shebang line, for example. So why not use Emacs'
+;; major mode to drop editorconfig a hint? This is accomplished by temporarily
+;; appending an extension to `buffer-file-name' when we talk to editorconfig.
+(defvar +editorconfig-mode-alist
+  '((perl-mode   . "pl")
+    (php-mode    . "php")
+    (python-mode . "py")
+    (ruby-mode   . "rb")
+    (sh-mode     . "sh")))
+;;"An alist mapping major modes to extensions. Used by
+;;`editorconfig-smart-detection' to give editorconfig filetype hints.")
+
+(defun editorconfig-smart-detection (orig-fn)
+    "Retrieve the properties for the current file. If it doesn't have an
+    extension, try to guess one."
+    (let ((buffer-file-name
+           (if (and (not (bound-and-true-p org-src-mode))
+                    (file-name-extension buffer-file-name))
+               buffer-file-name
+             (format "%s%s" buffer-file-name
+                     (if-let* ((ext (cdr (assq major-mode +editorconfig-mode-alist))))
+                         (concat "." ext)
+                       "")))))
+      (funcall orig-fn)))
+(advice-add #'editorconfig-call-editorconfig-exec :around #'editorconfig-smart-detection)
+#+END_SRC
+
+* Line and Column Numbers
+
+Show relative line numbers, and also show column number in the status bar. Line
+numbers aren't activated for the first buffer with emacsclient because of
+https://github.com/emacs-mirror/emacs/blob/master/lisp/display-line-numbers.el#L97.
+I'm not sure why ~frame-parameter~ returns nil :/. So let's override the culprit
+function and use it in a custom global minor mode.
+
+#+BEGIN_SRC emacs-lisp
+(defun my-display-line-numbers--turn-on ()
+  "Turn on `display-line-numbers-mode'."
+  (unless (minibufferp)
+    (display-line-numbers-mode)))
+
+(define-globalized-minor-mode my-global-display-line-numbers-mode
+  display-line-numbers-mode my-display-line-numbers--turn-on)
+(my-global-display-line-numbers-mode)
+
+(setq display-line-numbers-type 'relative)
+
+;; Make Emacs set the line-numbers width to the largest width needed
+;; Why isn't this the default ? :(
+(setq display-line-numbers-width-start t)
+
+;; Do not let Emacs size down the line numbers width if we are
+;; displaying a smaller line number (eg. line under 100 when the file
+;; has more than 100 lines)
+;; Why isn't this the default ? x2 :(
+(setq display-line-numbers-grow-only t)
+
+(setq column-number-mode t)
+#+END_SRC
+
+* Lisp Editing
+
+Make lisp editing in evil-mode nicer with ~lispyville~ (e.g. ~dd~ will balance
+parenthesis):
+
+#+BEGIN_SRC emacs-lisp
+(use-package lispyville
+    :config
+    (add-hook 'emacs-lisp-mode-hook #'lispyville-mode)
+    (add-hook 'lisp-mode-hook #'lispyville-mode))
+#+END_SRC
+
+Disable editorconfig for lisp modes. Emacs builtin should be better:
+
+#+BEGIN_SRC emacs-lisp
+(dolist (mode '(emacs-lisp-mode lisp-mode))
+  (setq editorconfig-indentation-alist
+    (assq-delete-all mode editorconfig-indentation-alist)))
+#+END_SRC
+
+Explicitely set ~evil-shift-width~ which is used by the ~<~ and ~>~ indentation
+commands to 2 (default is 4):
+
+#+BEGIN_SRC emacs-lisp
+(dolist (mode '(emacs-lisp-mode-hook lisp-mode-hook))
+  (add-hook mode
+    (function (lambda ()
+                (setq evil-shift-width 2)))))
+#+END_SRC
+
+Install Geiser for a better integration of other Lisps (Guile/Scheme/Racket) in
+Emacs:
+
+#+BEGIN_SRC emacs-lisp
+(use-package geiser)
+#+END_SRC
+
+* Load Path
+
+Add ~/.emacs.d/lisp to load-path so that we can pull individual .el files
+directly:
+
+#+BEGIN_SRC emacs-lisp
+(add-to-list 'load-path "~/.emacs.d/lisp/")
+#+END_SRC
+
+* Markdown Mode
+
+#+BEGIN_SRC emacs-lisp
+(use-package markdown-mode)
+#+END_SRC
+
+* Minibuffer Completion
+
+Install Ivy, Counsel and Swiper:
+
+#+BEGIN_SRC emacs-lisp
+(use-package counsel)
+#+END_SRC
+
+# TODO Add the recent files to ~ivy-switch-buffers~:
+
+#+BEGIN_SRC emacs-lisp
+;;(setq ivy-use-virtual-buffers t)
+#+END_SRC
+
+Remove "^" from the initial input:
+
+#+BEGIN_SRC emacs-lisp
+(setq ivy-initial-inputs-alist nil)
+#+END_SRC
+
+Enable a more intelligent sorting of ~ivy~ matches with ~prescient~. Note that
+prescient does an out of order match and overrides ~ivy-re-builders-alist~:
+
+#+BEGIN_SRC emacs-lisp
+(use-package prescient)
+(use-package ivy-prescient)
+(prescient-persist-mode)
+(setq ivy-prescient-retain-classic-highlighting t)
+(ivy-prescient-mode)
+#+END_SRC
+
+Remove "." and ".." when matching files:
+
+#+BEGIN_SRC emacs-lisp
+(setq ivy-extra-directories nil)
+#+END_SRC
+
+Switch to the home directory with "~/" and not "~":
+
+#+BEGIN_SRC emacs-lisp
+(setq ivy-magic-tilde nil)
+#+END_SRC
+
+Increase the number of results:
+
+#+BEGIN_SRC emacs-lisp
+(setq ivy-height 20)
+#+END_SRC
+
+Enable the mode:
+
+#+BEGIN_SRC emacs-lisp
+(ivy-mode 1)
 #+END_SRC
 
 * Org
@@ -201,42 +528,63 @@ Lower the *learn fraction* to be a little more on the safe side (default is =0.5
 (use-package anki-editor)
 #+END_SRC
 
-* Dired
+* TODO Polymode
 
-Add "-h" to the dired ls flags:
+Install ~polymode~ for ~org-mode~ and ~markdown-mode~ which will activate
+e.g. emacs-lisp mode when the cursor is in a emacs-lisp code block in a org-mode
+buffer (<3 All my love goes to this mode <3):
 
 #+BEGIN_SRC emacs-lisp
-(setq dired-listing-switches "-alh")
+;;(use-package poly-org)
+;;(use-package poly-markdown)
 #+END_SRC
 
-* Git
-
-Install Magit, evil-magit:
-
-#+BEGIN_SRC emacs-lisp
-(use-package magit)
-(use-package evil-magit)
-#+END_SRC
-
-Install git-gutter for a git diff margin:
+* Prefer Newer Files
+Configure Emacs to load a '.el' instead of a '.elc' if the '.el' is newer:
 
 #+BEGIN_SRC emacs-lisp
-;; Consistently doesn't update for unknown reasons! :( :( :(
-;; (use-package diff-hl)
-;; (global-diff-hl-mode)
-;; (diff-hl-margin-mode)
-;; (add-hook 'dired-mode-hook 'diff-hl-dired-mode)
-;; (add-hook 'magit-post-refresh-hook 'diff-hl-magit-post-refresh)
-;; Mouse resizing to the right in the terminal is broken with this mode
-;; https://github.com/syohex/emacs-git-gutter/issues/162
-(use-package git-gutter)
-(global-git-gutter-mode)
+(setq load-prefer-newer t)
 #+END_SRC
 
 * Project Management
 
 #+BEGIN_SRC emacs-lisp
 (use-package projectile)
+#+END_SRC
+
+* Terminal
+
+Enable mouse support in the terminal:
+
+#+BEGIN_SRC emacs-lisp
+(xterm-mouse-mode)
+#+END_SRC
+
+* UI
+
+Disable useless UI elements:
+
+#+BEGIN_SRC emacs-lisp
+;; Modes are usually disabled by calling an associated function with negative values.
+;; Setting the corresponding variable won't work.
+(if (fboundp 'scroll-bar-mode)
+  (scroll-bar-mode -1))
+(tool-bar-mode   -1)
+(tooltip-mode    -1)
+(menu-bar-mode   -1)
+#+END_SRC
+
+** Theme
+
+#+BEGIN_SRC emacs-lisp
+(use-package doom-themes
+  :config
+  (load-theme 'doom-one-light t))
+;; Not mature enough :/
+;;(use-package base16-theme
+;;  :config
+;;  (setq base16-theme-256-color-source "colors")
+;;  (load-theme 'base16-summerfruit-light t))
 #+END_SRC
 
 * TODO Unicode Homoglyphs Highlighter
@@ -256,102 +604,6 @@ Breaks Magit. Doesn't work properly in itself. :/
 ;;(global-unicode-troll-stopper-mode 1)
 #+END_SRC
 
-* Indentation
-
-Add editorconfig which will configure the proper indentation settings based on
-the ~.editorconfig~ files (if no file is found emacs defaults will be applied):
-
-#+BEGIN_SRC emacs-lisp
-(use-package editorconfig
-  :config
-  (editorconfig-mode 1))
-;; require-final-newline is managed by ethan-wspace so we block it
-;; so it doesn't warn us about it.
-(add-hook 'editorconfig-hack-properties-functions
-    '(lambda (props)
-        (puthash 'insert_final_newline "false" props)))
-#+END_SRC
-
-Make editorconfig work with files without extension by faking the extension
-based on the major-mode (Stolen from
-https://github.com/editorconfig/editorconfig-emacs/issues/75#issuecomment-350182935
-and
-https://github.com/hlissner/doom-emacs/blob/develop/modules/tools/editorconfig/config.el):
-
-#+BEGIN_SRC emacs-lisp
-;; editorconfig cannot procure the correct settings for extension-less files.
-;; Executable scripts with a shebang line, for example. So why not use Emacs'
-;; major mode to drop editorconfig a hint? This is accomplished by temporarily
-;; appending an extension to `buffer-file-name' when we talk to editorconfig.
-(defvar +editorconfig-mode-alist
-  '((perl-mode   . "pl")
-    (php-mode    . "php")
-    (python-mode . "py")
-    (ruby-mode   . "rb")
-    (sh-mode     . "sh")))
-;;"An alist mapping major modes to extensions. Used by
-;;`editorconfig-smart-detection' to give editorconfig filetype hints.")
-
-(defun editorconfig-smart-detection (orig-fn)
-    "Retrieve the properties for the current file. If it doesn't have an
-    extension, try to guess one."
-    (let ((buffer-file-name
-           (if (and (not (bound-and-true-p org-src-mode))
-                    (file-name-extension buffer-file-name))
-               buffer-file-name
-             (format "%s%s" buffer-file-name
-                     (if-let* ((ext (cdr (assq major-mode +editorconfig-mode-alist))))
-                         (concat "." ext)
-                       "")))))
-      (funcall orig-fn)))
-(advice-add #'editorconfig-call-editorconfig-exec :around #'editorconfig-smart-detection)
-#+END_SRC
-
-* Backups
-
-With a combination of undo-tree (~u~ and ~C-r~ with branches) and
-auto-saving, a loss of work should be pretty small.  The undo-tree
-will contain the latest changes, laid out in a tree, in order to be
-able to come back to another "branch" of edition. Emacs auto-save is
-configured to save every 300 keystrokes or 30 seconds of idle time, in
-the edited file, and not in an external one that we might forget to
-restore from! We will also configure Emacs to save and restore the
-last point position.
-
-Enable and configure persistent undo with the help of undo-tree:
-
-#+BEGIN_SRC emacs-lisp
-;; evil already pulls undo-tree, but let's be explicit here
-(use-package undo-tree
-  :init
-  (unless (file-exists-p "~/.emacs.d/.cache/undo")
-    (make-directory "~/.emacs.d/.cache/undo"))
-  :config
-  (setq undo-tree-auto-save-history t
-        undo-tree-visualizer-diff t
-        undo-tree-visualizer-timestamps t
-        undo-tree-history-directory-alist '(("." . "~/.emacs.d/.cache/undo"))))
-#+END_SRC
-
-Configure Emcas to auto-save in the edited file:
-
-#+BEGIN_SRC emacs-lisp
-(auto-save-visited-mode)
-#+END_SRC
-
-Disable "backup~" files, persistent undo should be enough:
-
-#+BEGIN_SRC emacs-lisp
-(setq make-backup-files nil)
-#+END_SRC
-
-Configures Emacs to save and restore the last place of the point
-between sessions:
-
-#+BEGIN_SRC emacs-lisp
-(save-place-mode 1)
-#+END_SRC
-
 * Version Control
 
 Automatically follow symbolic links to files under version control (stops Emacs from asking):
@@ -360,73 +612,6 @@ Automatically follow symbolic links to files under version control (stops Emacs 
 ;; Also set in init.el so it doesn't bother us when we edit the emacs
 ;; config that is just changed, thus regenerated.
 (setq vc-follow-symlinks t)
-#+END_SRC
-
-* Auto Refresh Buffers
-
-Set Emacs to auto refresh the file backed buffers if the file changed,
-but not if the buffer is changed.
-
-#+BEGIN_SRC emacs-lisp
-(global-auto-revert-mode 1)
-;; Make it quiet
-(setq auto-revert-verbose nil)
-#+END_SRC
-
-Enable the refresh for dired views too:
-
-#+BEGIN_SRC emacs-lisp
-(setq global-auto-revert-non-file-buffers t)
-#+END_SRC
-
-* Line and Column Numbers
-
-Show relative line numbers, and also show column number in the status bar. Line
-numbers aren't activated for the first buffer with emacsclient because of
-https://github.com/emacs-mirror/emacs/blob/master/lisp/display-line-numbers.el#L97.
-I'm not sure why ~frame-parameter~ returns nil :/. So let's override the culprit
-function and use it in a custom global minor mode.
-
-#+BEGIN_SRC emacs-lisp
-(defun my-display-line-numbers--turn-on ()
-  "Turn on `display-line-numbers-mode'."
-  (unless (minibufferp)
-    (display-line-numbers-mode)))
-
-(define-globalized-minor-mode my-global-display-line-numbers-mode
-  display-line-numbers-mode my-display-line-numbers--turn-on)
-(my-global-display-line-numbers-mode)
-
-(setq display-line-numbers-type 'relative)
-
-;; Make Emacs set the line-numbers width to the largest width needed
-;; Why isn't this the default ? :(
-(setq display-line-numbers-width-start t)
-
-;; Do not let Emacs size down the line numbers width if we are
-;; displaying a smaller line number (eg. line under 100 when the file
-;; has more than 100 lines)
-;; Why isn't this the default ? x2 :(
-(setq display-line-numbers-grow-only t)
-
-(setq column-number-mode t)
-#+END_SRC
-
-* Comments
-
-#+BEGIN_SRC emacs-lisp
-(use-package evil-nerd-commenter)
-#+END_SRC
-
-* Column Indicator
-
-Use the buil-in ~fill-column-indicator-mode~ on Emacs >= 27 (fci-mode was too
-slow for big org-mode files). This should take into account the ~fill-column~
-value:
-
-#+BEGIN_SRC emacs-lisp
-(if (version<= "27" emacs-version)
-  (global-display-fill-column-indicator-mode))
 #+END_SRC
 
 * Whitespace
@@ -485,143 +670,6 @@ newline.
             (ethan-wspace-mode -1))))
 #+END_SRC
 
-* Prefer Newer Files
-Configure Emacs to load a '.el' instead of a '.elc' if the '.el' is newer:
-
-#+BEGIN_SRC emacs-lisp
-(setq load-prefer-newer t)
-#+END_SRC
-
-* Brackets
-
-Configures Emacs to highlight the matching brackets:
-
-#+BEGIN_SRC emacs-lisp
-(show-paren-mode 1)
-#+END_SRC
-
-* Markdown Mode
-
-#+BEGIN_SRC emacs-lisp
-(use-package markdown-mode)
-#+END_SRC
-
-* Minibuffer Completion
-
-Install Ivy, Counsel and Swiper:
-
-#+BEGIN_SRC emacs-lisp
-(use-package counsel)
-#+END_SRC
-
-# TODO Add the recent files to ~ivy-switch-buffers~:
-
-#+BEGIN_SRC emacs-lisp
-;;(setq ivy-use-virtual-buffers t)
-#+END_SRC
-
-Remove "^" from the initial input:
-
-#+BEGIN_SRC emacs-lisp
-(setq ivy-initial-inputs-alist nil)
-#+END_SRC
-
-Enable a more intelligent sorting of ~ivy~ matches with ~prescient~. Note that
-prescient does an out of order match and overrides ~ivy-re-builders-alist~:
-
-#+BEGIN_SRC emacs-lisp
-(use-package prescient)
-(use-package ivy-prescient)
-(prescient-persist-mode)
-(setq ivy-prescient-retain-classic-highlighting t)
-(ivy-prescient-mode)
-#+END_SRC
-
-Remove "." and ".." when matching files:
-
-#+BEGIN_SRC emacs-lisp
-(setq ivy-extra-directories nil)
-#+END_SRC
-
-Switch to the home directory with "~/" and not "~":
-
-#+BEGIN_SRC emacs-lisp
-(setq ivy-magic-tilde nil)
-#+END_SRC
-
-Increase the number of results:
-
-#+BEGIN_SRC emacs-lisp
-(setq ivy-height 20)
-#+END_SRC
-
-Enable the mode:
-
-#+BEGIN_SRC emacs-lisp
-(ivy-mode 1)
-#+END_SRC
-
-* Alignment
-
-Enable motioned alignments with evil-lion:
-
-#+BEGIN_SRC emacs-lisp
-(use-package evil-lion
-  :init
-  (setq evil-lion-left-align-key (kbd "g a"))
-  (setq evil-lion-right-align-key (kbd "g A"))
-  :config
-  (evil-lion-mode))
-#+END_SRC
-
-* Lisp Editing
-
-Make lisp editing in evil-mode nicer with ~lispyville~ (e.g. ~dd~ will balance
-parenthesis):
-
-#+BEGIN_SRC emacs-lisp
-(use-package lispyville
-    :config
-    (add-hook 'emacs-lisp-mode-hook #'lispyville-mode)
-    (add-hook 'lisp-mode-hook #'lispyville-mode))
-#+END_SRC
-
-Disable editorconfig for lisp modes. Emacs builtin should be better:
-
-#+BEGIN_SRC emacs-lisp
-(dolist (mode '(emacs-lisp-mode lisp-mode))
-  (setq editorconfig-indentation-alist
-    (assq-delete-all mode editorconfig-indentation-alist)))
-#+END_SRC
-
-Explicitely set ~evil-shift-width~ which is used by the ~<~ and ~>~ indentation
-commands to 2 (default is 4):
-
-#+BEGIN_SRC emacs-lisp
-(dolist (mode '(emacs-lisp-mode-hook lisp-mode-hook))
-  (add-hook mode
-    (function (lambda ()
-                (setq evil-shift-width 2)))))
-#+END_SRC
-
-Install Geiser for a better integration of other Lisps (Guile/Scheme/Racket) in
-Emacs:
-
-#+BEGIN_SRC emacs-lisp
-(use-package geiser)
-#+END_SRC
-
-* TODO Polymode
-
-Install ~polymode~ for ~org-mode~ and ~markdown-mode~ which will activate
-e.g. emacs-lisp mode when the cursor is in a emacs-lisp code block in a org-mode
-buffer (<3 All my love goes to this mode <3):
-
-#+BEGIN_SRC emacs-lisp
-;;(use-package poly-org)
-;;(use-package poly-markdown)
-#+END_SRC
-
 * Windows
 
 Add two window functions that either switch to an existing window or split and
@@ -652,33 +700,6 @@ launch ~find-file~:
         (select-window other-window)))))
 #+END_SRC
 
-* GPG
-
-Install the ~pinentry~ package and start it. It should now catch calls to
-gpg-agent and let us enter the passphrase in a proper Emacs miniwindow:
-
-#+BEGIN_SRC emacs-lisp
-(use-package pinentry
-  :config
-  (pinentry-start))
-#+END_SRC
-
-* Clipboard
-
-Save the clipboard content before overwriting it from Emacs:
-
-#+BEGIN_SRC emacs-lisp
-(setq save-interprogram-paste-before-kill t)
-#+END_SRC
-
-Link the kill ring with the system clipboard with the ~xclip~ package. This
-should work even if emacs runs exclusively in the terminal:
-
-#+BEGIN_SRC emacs-lisp
-(use-package xclip)
-(xclip-mode)
-#+END_SRC
-
 * Yasnippet
 
 Install yasnippet and the snippets packages:
@@ -693,26 +714,6 @@ Install yasnippet and the snippets packages:
 (yas-global-mode)
 #+END_SRC
 
-* Eyebrowse
-
-Add the ~eyebrowse~ package that helps us manage window configurations and hence
-simulating tabs:
-
-#+BEGIN_SRC emacs-lisp
-(use-package eyebrowse)
-(eyebrowse-mode)
-
-(defun me/new-eyebrowse-window-config ()
-  (interactive)
-  (eyebrowse-create-window-config)
-  (delete-other-windows))
-#+END_SRC
-
-* Ediff
-
-#+BEGIN_SRC emacs-lisp
-(setq ediff-split-window-function 'split-window-horizontally)
-#+END_SRC
 
 * General
 

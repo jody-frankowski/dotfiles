@@ -231,6 +231,7 @@ Install git-gutter for a git diff margin:
 ;; https://github.com/syohex/emacs-git-gutter/issues/162
 (use-package git-gutter)
 (global-git-gutter-mode)
+#+END_SRC
 
 * Project Management
 

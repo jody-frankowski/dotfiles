@@ -213,6 +213,14 @@ Install git-gutter for a git diff margin:
 (global-git-gutter-mode)
 #+END_SRC
 
+* Go
+
+Install =go-mode=:
+
+#+BEGIN_SRC emacs-lisp
+(use-package go-mode)
+#+END_SRC
+
 * GPG
 
 Install the ~pinentry~ package and start it. It should now catch calls to

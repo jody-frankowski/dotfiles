@@ -505,7 +505,8 @@ Configures Emacs to highlight the matching brackets:
 (use-package markdown-mode)
 #+END_SRC
 
-* Ivy
+* Minibuffer Completion
+
 Install Ivy, Counsel and Swiper:
 
 #+BEGIN_SRC emacs-lisp

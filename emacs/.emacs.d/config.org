@@ -707,6 +707,12 @@ simulating tabs:
   (delete-other-windows))
 #+END_SRC
 
+* Ediff
+
+#+BEGIN_SRC emacs-lisp
+(setq ediff-split-window-function 'split-window-horizontally)
+#+END_SRC
+
 * General
 
 Install General:

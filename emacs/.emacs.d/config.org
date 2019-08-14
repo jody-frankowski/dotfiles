@@ -239,7 +239,7 @@ Install git-gutter for a git diff margin:
 (use-package projectile)
 #+END_SRC
 
-* Unicode Homoglyphs Highlighter
+* TODO Unicode Homoglyphs Highlighter
 
 Add unicode-troll-stopper which highlights unicode homoglyphs. (Think
 https://github.com/reinderien/mimic).
@@ -610,7 +610,7 @@ Emacs:
 (use-package geiser)
 #+END_SRC
 
-* Polymode
+* TODO Polymode
 
 Install ~polymode~ for ~org-mode~ and ~markdown-mode~ which will activate
 e.g. emacs-lisp mode when the cursor is in a emacs-lisp code block in a org-mode

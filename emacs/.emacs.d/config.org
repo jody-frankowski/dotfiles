@@ -759,7 +759,7 @@ Misc keybindings with General:
   "bp"  'previous-buffer
   "cy"  'evilnc-copy-and-comment-lines
   "ff"  'counsel-find-file
-  "fj"  'dired
+  "fj"  'dired-jump
   "fr"  'counsel-recentf
   "gs"  'magit-status
   "hdf" 'counsel-describe-function

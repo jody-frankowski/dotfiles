@@ -1,16 +1,3 @@
-* Alignment
-
-Enable motioned alignments with evil-lion:
-
-#+BEGIN_SRC emacs-lisp
-(use-package evil-lion
-  :init
-  (setq evil-lion-left-align-key (kbd "g a"))
-  (setq evil-lion-right-align-key (kbd "g A"))
-  :config
-  (evil-lion-mode))
-#+END_SRC
-
 * Auto Refresh Buffers
 
 Set Emacs to auto refresh the file backed buffers if the file changed,
@@ -172,6 +159,19 @@ Install evil-numbers to make C-a and C-x among others work:
 #+BEGIN_SRC emacs-lisp
 (straight-use-package
   '(el-patch :type git :host github :repo "dieggsy/evil-numbers"))
+#+END_SRC
+
+** Alignment
+
+Enable motioned alignments with evil-lion:
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-lion
+  :init
+  (setq evil-lion-left-align-key (kbd "g a"))
+  (setq evil-lion-right-align-key (kbd "g A"))
+  :config
+  (evil-lion-mode))
 #+END_SRC
 
 * Eyebrowse

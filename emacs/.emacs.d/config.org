@@ -275,32 +275,6 @@ https://github.com/hlissner/doom-emacs/blob/develop/modules/tools/editorconfig/c
 (advice-add #'editorconfig-call-editorconfig-exec :around #'editorconfig-smart-detection)
 #+END_SRC
 
-* Programming Languages
-** C
-
-Set the default c indentation style to "linux" rather than gnu
-(https://www.emacswiki.org/emacs/IndentingC#toc2). The default style produces
-code such as:
-
-#+BEGIN_SRC c
-if(foo)
-  {
-    bar++;
-  }
-#+END_SRC
-
-#+BEGIN_SRC emacs-lisp
-(setq c-default-style "linux")
-#+END_SRC
-
-** Go
-
-Install =go-mode=:
-
-#+BEGIN_SRC emacs-lisp
-(use-package go-mode)
-#+END_SRC
-
 * Line and Column Numbers
 
 Show relative line numbers, and also show column number in the status bar. Line
@@ -570,6 +544,32 @@ Configure Emacs to load a '.el' instead of a '.elc' if the '.el' is newer:
 
 #+BEGIN_SRC emacs-lisp
 (setq load-prefer-newer t)
+#+END_SRC
+
+* Programming Languages
+** C
+
+Set the default c indentation style to "linux" rather than gnu
+(https://www.emacswiki.org/emacs/IndentingC#toc2). The default style produces
+code such as:
+
+#+BEGIN_SRC c
+if(foo)
+  {
+    bar++;
+  }
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+(setq c-default-style "linux")
+#+END_SRC
+
+** Go
+
+Install =go-mode=:
+
+#+BEGIN_SRC emacs-lisp
+(use-package go-mode)
 #+END_SRC
 
 * Project Management

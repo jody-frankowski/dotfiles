@@ -40,13 +40,15 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         [[ -d ~/.brew/opt/$package ]] || brew install $package
     done
 
+    ### Tmux
+    # Patch the formula to enable displaying unicode characters
     if ! grep with-utf8proc ~/.brew/Library/Taps/homebrew/homebrew-core/Formula/tmux.rb &>/dev/null ; then
         sed -i -e $'s/args = %W\\[/args = %W[\\\n      --with-utf8proc/' ~/.brew/Library/Taps/homebrew/homebrew-core/Formula/tmux.rb
         brew reinstall tmux
     fi
 
-
-    # coreutils symlinks
+    ### coreutils
+    # Replace some macOS's coreutils binaries with a GNU one
     for symlink in date dircolors ls rm sort ; do
         [[ -L ~/.usr/bin/$symlink ]] || ln -s g$symlink ~/.usr/bin/$symlink
     done
@@ -55,6 +57,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # macOS's one
     [[ -L ~/.brew/bin/scan-build ]] || ln -s ~/.brew/opt/lllvm/bin/scan-build ~/.brew/bin/
 
+    ### terminfo
     # We need the terminfo capabilites of tmux-256color, however macOS doesn't
     # provide one.  The one that is in the homebrew's ncurses is incompatible
     # with macOS ncurses tools (tic/terminfo). So we export the terminfo

@@ -47,7 +47,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
 
     # coreutils symlinks
-    for symlink in date dircolors ls rm ; do
+    for symlink in date dircolors ls rm sort ; do
         [[ -L ~/.usr/bin/$symlink ]] || ln -s g$symlink ~/.usr/bin/$symlink
     done
 

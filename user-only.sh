@@ -40,12 +40,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         [[ -d ~/.brew/opt/$package ]] || brew install $package
     done
 
-    latest_tmux=$(ls -t ~/.brew/Cellar/tmux/ | head -n1)
-    if ! grep with-utf8proc ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb &>/dev/null ; then
-        sed -i -e $'s/args = %W\\[/args = %W[\\\n      --with-utf8proc/' ~/.brew/Cellar/tmux/$latest_tmux/.brew/tmux.rb
+    if ! grep with-utf8proc ~/.brew/Library/Taps/homebrew/homebrew-core/Formula/tmux.rb &>/dev/null ; then
+        sed -i -e $'s/args = %W\\[/args = %W[\\\n      --with-utf8proc/' ~/.brew/Library/Taps/homebrew/homebrew-core/Formula/tmux.rb
         brew reinstall tmux
     fi
-    latest_tmux=$(ls -t ~/.brew/Cellar/tmux/ | head -n1)
+
 
     # coreutils symlinks
     for symlink in date dircolors ls rm ; do

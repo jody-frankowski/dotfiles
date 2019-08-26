@@ -18,6 +18,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     packages=(
         atool
         coreutils
+        llvm
         python3
         ripgrep
         stow
@@ -38,6 +39,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     for symlink in date dircolors ls rm ; do
         [[ -L ~/.usr/bin/$symlink ]] || ln -s g$symlink ~/.usr/bin/$symlink
     done
+
+    # symlink only llvm's scan-build because we don't want this llvm to replace
+    # macOS's one
+    ln -s ~/.brew/opt/lllvm/bin/scan-build ~/.brew/bin/
 
     # We need the terminfo capabilites of tmux-256color, however macOS doesn't
     # provide one.  The one that is in the homebrew's ncurses is incompatible

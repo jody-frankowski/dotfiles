@@ -155,9 +155,15 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
   ;; Makes TAB behave like TAB in Emacs (eg. Open tree in org-mode rather than jump forward) when in terminal
   ;; See https://catern.com/posts/terminal_quirks.html for why C-i is equivalent to TAB in a terminal
   (setq evil-want-C-i-jump nil)
-  ;; Makes * and # behave like in Vim (When the point is on the whitespace
-  ;; before a word, the search will automatically select the word)
-  (setq evil-symbol-word-search t)
+  ;; Evil currently has a bug where typing * or # on the first
+  ;; whitespace char of a line doesn't work in some cases. See
+  ;; https://github.com/emacs-evil/evil/issues/1160
+  ;; If you want to "fix" this you could set evil-symbol-word-search
+  ;; as shown:
+  ;;(setq evil-symbol-word-search t)
+  ;; But note that it would also change the word selection of these
+  ;; commands. Eg. "test-123" would now be considered a word while it
+  ;; previously was only "test".
   :config
   (evil-mode 1))
 #+END_SRC

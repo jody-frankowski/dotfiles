@@ -111,12 +111,6 @@ value:
   (global-display-fill-column-indicator-mode))
 #+END_SRC
 
-* Comments
-
-#+BEGIN_SRC emacs-lisp
-(use-package evil-nerd-commenter)
-#+END_SRC
-
 * Customize Config
 
 Put all customizations in seperate file so it doesn't clobber our init.el:
@@ -186,6 +180,17 @@ Enable motioned alignments with evil-lion:
   (setq evil-lion-right-align-key (kbd "g A"))
   :config
   (evil-lion-mode))
+#+END_SRC
+
+** Comments
+
+Install [[https://github.com/linktohack/evil-commentary][evil-commentary]] that
+duplicates [[https://github.com/tpope/vim-commentary][vim-commentary]]'s
+features:
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-commentary)
+(evil-commentary-mode)
 #+END_SRC
 
 * Eyebrowse
@@ -586,6 +591,15 @@ Install =go-mode=:
 (use-package go-mode)
 #+END_SRC
 
+** LSP
+
+#+BEGIN_SRC emacs-lisp
+(use-package lsp-mode
+  :hook (c-mode . lsp)
+  :commands lsp)
+#+END_SRC
+
+
 * Project Management
 
 #+BEGIN_SRC emacs-lisp
@@ -834,4 +848,10 @@ Misc keybindings with General:
   "M-l" 'eyebrowse-next-window-config
   "M-t" 'me/new-eyebrowse-window-config
   "M-d" 'eyebrowse-close-window-config)
+#+END_SRC
+
+Unbind some keybindings that duplicate other evil/vim keybindings:
+
+#+BEGIN_SRC emacs-lisp
+(global-unset-key (kbd "M-;"))
 #+END_SRC

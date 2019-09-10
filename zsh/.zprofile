@@ -35,3 +35,8 @@ export PATH="$HOME/.npm-packages/bin:$HOME/.local/bin:$HOME/.usr/bin:$HOME/.go/b
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="$HOME/.brew/bin:$PATH"
 fi
+
+# Disable Homebrew's auto update
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    export HOMEBREW_NO_AUTO_UPDATE=1
+fi

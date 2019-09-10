@@ -810,7 +810,8 @@ Misc keybindings with General:
   "gs"  'magit-status
   "hdf" 'counsel-describe-function
   "hdk" 'describe-key
-  "hdm" 'describe-mode
+  "hdm" 'describe-minor-mode
+  "hdM" 'describe-mode
   "hdv" 'counsel-describe-variable
   "mTT" 'org-todo
   "pf"  'projectile-find-file

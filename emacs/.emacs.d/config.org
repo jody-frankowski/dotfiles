@@ -591,15 +591,6 @@ Emacs:
 (use-package geiser)
 #+END_SRC
 
-** LSP
-
-#+BEGIN_SRC emacs-lisp
-(use-package lsp-mode
-  :hook (c-mode . lsp)
-  :commands lsp)
-#+END_SRC
-
-
 * Project Management
 
 #+BEGIN_SRC emacs-lisp

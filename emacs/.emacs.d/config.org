@@ -327,43 +327,6 @@ function and use it in a custom global minor mode.
 (setq column-number-mode t)
 #+END_SRC
 
-* Lisp Editing
-
-Make lisp editing in evil-mode nicer with ~lispyville~ (e.g. ~dd~ will balance
-parenthesis):
-
-#+BEGIN_SRC emacs-lisp
-(use-package lispyville
-    :config
-    (add-hook 'emacs-lisp-mode-hook #'lispyville-mode)
-    (add-hook 'lisp-mode-hook #'lispyville-mode))
-#+END_SRC
-
-Disable editorconfig for lisp modes. Emacs builtin should be better:
-
-#+BEGIN_SRC emacs-lisp
-(dolist (mode '(emacs-lisp-mode lisp-mode))
-  (setq editorconfig-indentation-alist
-    (assq-delete-all mode editorconfig-indentation-alist)))
-#+END_SRC
-
-Explicitely set ~evil-shift-width~ which is used by the ~<~ and ~>~ indentation
-commands to 2 (default is 4):
-
-#+BEGIN_SRC emacs-lisp
-(dolist (mode '(emacs-lisp-mode-hook lisp-mode-hook))
-  (add-hook mode
-    (function (lambda ()
-                (setq evil-shift-width 2)))))
-#+END_SRC
-
-Install Geiser for a better integration of other Lisps (Guile/Scheme/Racket) in
-Emacs:
-
-#+BEGIN_SRC emacs-lisp
-(use-package geiser)
-#+END_SRC
-
 * Load Path
 
 Add ~/.emacs.d/lisp to load-path so that we can pull individual .el files
@@ -589,6 +552,43 @@ Install =go-mode=:
 
 #+BEGIN_SRC emacs-lisp
 (use-package go-mode)
+#+END_SRC
+
+** Lisp
+
+Make lisp editing in evil-mode nicer with ~lispyville~ (e.g. ~dd~ will balance
+parenthesis):
+
+#+BEGIN_SRC emacs-lisp
+(use-package lispyville
+    :config
+    (add-hook 'emacs-lisp-mode-hook #'lispyville-mode)
+    (add-hook 'lisp-mode-hook #'lispyville-mode))
+#+END_SRC
+
+Disable editorconfig for lisp modes. Emacs builtin should be better:
+
+#+BEGIN_SRC emacs-lisp
+(dolist (mode '(emacs-lisp-mode lisp-mode))
+  (setq editorconfig-indentation-alist
+    (assq-delete-all mode editorconfig-indentation-alist)))
+#+END_SRC
+
+Explicitely set ~evil-shift-width~ which is used by the ~<~ and ~>~ indentation
+commands to 2 (default is 4):
+
+#+BEGIN_SRC emacs-lisp
+(dolist (mode '(emacs-lisp-mode-hook lisp-mode-hook))
+  (add-hook mode
+    (function (lambda ()
+                (setq evil-shift-width 2)))))
+#+END_SRC
+
+Install Geiser for a better integration of other Lisps (Guile/Scheme/Racket) in
+Emacs:
+
+#+BEGIN_SRC emacs-lisp
+(use-package geiser)
 #+END_SRC
 
 ** LSP

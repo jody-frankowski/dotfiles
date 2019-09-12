@@ -431,6 +431,12 @@ blocks. Also a way not to have indentation in code blocks.
 (setq org-edit-src-content-indentation 0)
 #+END_SRC
 
+Tells =org-edit-special= not to come back to a single window after edition:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-src-window-setup 'other-window)
+#+END_SRC
+
 Change the TODO workflow:
 
 #+BEGIN_SRC emacs-lisp

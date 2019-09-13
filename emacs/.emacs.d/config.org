@@ -298,7 +298,9 @@ Set indentation to spaces instead of the mix of tabs and spaces default
 [https://www.gnu.org/software/emacs/manual/html_node/emacs/Just-Spaces.html]:
 
 #+BEGIN_SRC emacs-lisp
-(setq indent-tabs-mode nil)
+; note: setq doesn't work with this one (in the org-edit-special
+; buffer the value would still be t)
+(customize-set-variable 'indent-tabs-mode nil)
 #+END_SRC
 
 * Line and Column Numbers

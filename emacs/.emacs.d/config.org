@@ -294,6 +294,13 @@ https://github.com/hlissner/doom-emacs/blob/develop/modules/tools/editorconfig/c
 (advice-add #'editorconfig-call-editorconfig-exec :around #'editorconfig-smart-detection)
 #+END_SRC
 
+Set indentation to spaces instead of the mix of tabs and spaces default
+[https://www.gnu.org/software/emacs/manual/html_node/emacs/Just-Spaces.html]:
+
+#+BEGIN_SRC emacs-lisp
+(setq indent-tabs-mode nil)
+#+END_SRC
+
 * Line and Column Numbers
 
 Show relative line numbers, and also show column number in the status bar. Line

@@ -717,8 +717,10 @@ newline.
 ;; Disable for the magit commit buffer
 (add-hook 'text-mode-hook
     (lambda ()
-        (if (equal (file-name-nondirectory buffer-file-name) "COMMIT_EDITMSG")
-            (ethan-wspace-mode -1))))
+      (if (and buffer-file-name
+               (equal (file-name-nondirectory buffer-file-name)
+                      "COMMIT_EDITMSG"))
+          (ethan-wspace-mode -1))))
 #+END_SRC
 
 * Windows

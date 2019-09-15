@@ -295,7 +295,7 @@ https://github.com/hlissner/doom-emacs/blob/develop/modules/tools/editorconfig/c
 #+END_SRC
 
 Set indentation to spaces instead of the mix of tabs and spaces default
-[https://www.gnu.org/software/emacs/manual/html_node/emacs/Just-Spaces.html]:
+[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Just-Spaces.html]]:
 
 #+BEGIN_SRC emacs-lisp
 ; note: setq doesn't work with this one (in the org-edit-special

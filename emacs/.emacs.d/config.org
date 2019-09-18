@@ -447,10 +447,25 @@ idleness:
 (customize-set-variable 'org-edit-src-auto-save-idle-delay 1)
 #+END_SRC
 
-Tells =org-edit-special= not to come back to a single window after edition:
+Tells =org-edit-special= not to come back to a single window after edition.
+
+The available configurations are not satisfactory imho.
+What I want:
+- To see the original buffer
+- To preserve the original layout when returning from edition
+
+This configuration provides both by creating a new window (split to the right)
+and simply closing the split when exiting. A possible improvement would be, when
+the frame is small, to hijack a window and to restore its buffer when exiting.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-src-window-setup 'other-window)
+(defun org-src-switch-to-buffer (buffer context)
+  (case context
+    ('edit
+     (split-window-right)
+     (windmove-right))
+    ('exit (delete-window)))
+  (switch-to-buffer buffer))
 #+END_SRC
 
 Change the TODO workflow:

@@ -465,7 +465,7 @@ expected and also support motion (contrary to ~org-evil~):
               (evil-org-set-key-theme))))
 #+END_SRC
 
-** Drill
+** org-drill
 
 #+BEGIN_SRC emacs-lisp
 ;; Manually install/require org-drill dependencies

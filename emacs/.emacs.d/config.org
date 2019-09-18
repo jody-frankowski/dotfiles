@@ -632,6 +632,12 @@ Emacs (e.g. it provides =run-mit= and =run-guile=). It's also needed by
 (use-package geiser)
 #+END_SRC
 
+Set geiser default scheme implementation (mit for now):
+
+#+BEGIN_SRC emacs-lisp
+(setq geiser-default-implementation 'mit)
+#+END_SRC
+
 * Project Management
 
 #+BEGIN_SRC emacs-lisp

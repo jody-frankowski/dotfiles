@@ -22,7 +22,7 @@
   (load bootstrap-file nil 'nomessage))
 
 (straight-use-package 'use-package)
-(setq straight-use-package-by-default t)
+(customize-set-variable 'straight-use-package-by-default t)
 
 ;; Pull the org packages
 (straight-use-package 'org-plus-contrib)

@@ -862,5 +862,8 @@ Misc keybindings with General:
 Unbind some keybindings that duplicate other evil/vim keybindings:
 
 #+BEGIN_SRC emacs-lisp
+;; Duplicates gc
 (global-unset-key (kbd "M-;"))
+;; Duplicates C-v
+(global-unset-key (kbd "C-q"))
 #+END_SRC

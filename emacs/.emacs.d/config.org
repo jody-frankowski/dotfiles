@@ -440,6 +440,13 @@ blocks. Also a way not to have indentation in code blocks.
 (setq org-edit-src-content-indentation 0)
 #+END_SRC
 
+Enable auto saving of the edit buffer into the original file after 1 second of
+idleness:
+
+#+BEGIN_SRC emacs-lisp
+(customize-set-variable 'org-edit-src-auto-save-idle-delay 1)
+#+END_SRC
+
 Tells =org-edit-special= not to come back to a single window after edition:
 
 #+BEGIN_SRC emacs-lisp

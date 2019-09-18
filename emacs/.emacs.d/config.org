@@ -525,6 +525,24 @@ Lower the *learn fraction* to be a little more on the safe side (default is =0.5
 (use-package anki-editor)
 #+END_SRC
 
+** babel
+
+Disable confirmation prompt when evaluation code blocks:
+
+#+BEGIN_SRC emacs-lisp
+(setq org-confirm-babel-evaluate nil)
+#+END_SRC
+
+Enable more languages for babel code execution:
+
+#+BEGIN_SRC emacs-lisp
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((emacs-lisp . t)
+   (python . t)
+   (scheme . t)))
+#+END_SRC
+
 * TODO Polymode
 
 Install ~polymode~ for ~org-mode~ and ~markdown-mode~ which will activate

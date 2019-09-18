@@ -654,6 +654,24 @@ Set geiser default scheme implementation (mit for now):
 (setq geiser-default-implementation 'mit)
 #+END_SRC
 
+** Syntax Checking
+
+Install =flycheck= for on-the-fly syntax checking:
+
+#+BEGIN_SRC emacs-lisp
+(use-package flycheck
+  :init (global-flycheck-mode))
+#+END_SRC
+
+Disable flycheck's emacs-lisp-checkdoc for org-edit-special buffers:
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-src-mode-hook
+          (lambda ()
+            (when (eq major-mode 'emacs-lisp-mode)
+              (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc)))))
+#+END_SRC
+
 * Project Management
 
 #+BEGIN_SRC emacs-lisp

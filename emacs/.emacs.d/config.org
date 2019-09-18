@@ -583,8 +583,9 @@ Configure Emacs to load a '.el' instead of a '.elc' if the '.el' is newer:
 (setq load-prefer-newer t)
 #+END_SRC
 
-* Programming Languages
-** C
+* Programming
+** Languages
+*** C
 
 Set the default c indentation style to "linux" rather than gnu
 (https://www.emacswiki.org/emacs/IndentingC#toc2). The default style produces
@@ -601,7 +602,7 @@ if(foo)
 (setq c-default-style "linux")
 #+END_SRC
 
-** Go
+*** Go
 
 Install =go-mode=:
 
@@ -609,7 +610,7 @@ Install =go-mode=:
 (use-package go-mode)
 #+END_SRC
 
-** Lisp
+*** Lisp
 
 Make lisp editing in evil-mode nicer with ~lispyville~ (e.g. ~dd~ will balance
 parenthesis):

@@ -625,7 +625,8 @@ commands to 2 (default is 4):
 #+END_SRC
 
 Install Geiser for a better integration of other Lisps (Guile/Scheme/Racket) in
-Emacs. It's also needed by =ob-scheme= for org-babel session evaluations:
+Emacs (e.g. it provides =run-mit= and =run-guile=). It's also needed by
+=ob-scheme= for org-babel session evaluations:
 
 #+BEGIN_SRC emacs-lisp
 (use-package geiser)

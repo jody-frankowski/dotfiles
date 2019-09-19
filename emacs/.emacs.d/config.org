@@ -1,3 +1,25 @@
+* Helpers
+
+Add a =csetq= macro that calls the appropriate function to set a variable (the
+custom-set one, set-default, or just set). This should be safer than using
+=setq= because a variable may get "customized" later on. (Don't forget that
+using =setq= when a variable needs "customization" can cause problems because
+the setting function associated to that variable wouldn't be called)
+
+Stolen from
+https://lists.gnu.org/archive/html/help-gnu-emacs/2015-12/msg00097.html
+
+#+BEGIN_SRC emacs-lisp
+(defmacro csetq (variable value)
+  "Macro to set the value of a variable, possibly a custom user option."
+  `(funcall (or (get ',variable 'custom-set)
+                (and (plist-member (symbol-plist ',variable)
+                                   'standard-value) 'set-default)
+                'set)
+            ',variable ,value))
+#+END_SRC
+
+
 * Auto Pairs
 
 Enable =electric-pair-mode= to automatically insert matching brackets or quotes:
@@ -14,13 +36,13 @@ but not if the buffer is changed.
 #+BEGIN_SRC emacs-lisp
 (global-auto-revert-mode 1)
 ;; Make it quiet
-(setq auto-revert-verbose nil)
+(csetq auto-revert-verbose nil)
 #+END_SRC
 
 Enable the refresh for dired views too:
 
 #+BEGIN_SRC emacs-lisp
-(setq global-auto-revert-non-file-buffers t)
+(csetq global-auto-revert-non-file-buffers t)
 #+END_SRC
 
 * Backups
@@ -43,10 +65,10 @@ Enable and configure persistent undo with the help of undo-tree:
   (unless (file-exists-p "~/.emacs.d/.cache/undo")
     (make-directory "~/.emacs.d/.cache/undo"))
   :config
-  (setq undo-tree-auto-save-history t
-        undo-tree-visualizer-diff t
-        undo-tree-visualizer-timestamps t
-        undo-tree-history-directory-alist '(("." . "~/.emacs.d/.cache/undo"))))
+  (csetq undo-tree-auto-save-history t)
+  (csetq undo-tree-visualizer-diff t)
+  (csetq undo-tree-visualizer-timestamps t)
+  (csetq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.cache/undo"))))
 #+END_SRC
 
 Configure Emcas to auto-save in the edited file:
@@ -58,7 +80,7 @@ Configure Emcas to auto-save in the edited file:
 Disable "backup~" files, persistent undo should be enough:
 
 #+BEGIN_SRC emacs-lisp
-(setq make-backup-files nil)
+(csetq make-backup-files nil)
 #+END_SRC
 
 Configures Emacs to save and restore the last place of the point
@@ -73,7 +95,7 @@ between sessions:
 Disable the bell:
 
 #+BEGIN_SRC emacs-lisp
-(setq ring-bell-function 'ignore)
+(csetq ring-bell-function 'ignore)
 #+END_SRC
 
 * Brackets
@@ -89,7 +111,7 @@ Configures Emacs to highlight the matching brackets:
 Save the clipboard content before overwriting it from Emacs:
 
 #+BEGIN_SRC emacs-lisp
-(setq save-interprogram-paste-before-kill t)
+(csetq save-interprogram-paste-before-kill t)
 #+END_SRC
 
 Link the kill ring with the system clipboard with the ~xclip~ package. This
@@ -116,7 +138,7 @@ value:
 Put all customizations in seperate file so it doesn't clobber our init.el:
 
 #+BEGIN_SRC emacs-lisp
-(setq custom-file "~/.emacs.d/custom.el")
+(csetq custom-file "~/.emacs.d/custom.el")
 (if (file-exists-p custom-file)
     (load custom-file))
 #+END_SRC
@@ -126,13 +148,27 @@ Put all customizations in seperate file so it doesn't clobber our init.el:
 Add "-h" to the dired ls flags:
 
 #+BEGIN_SRC emacs-lisp
-(setq dired-listing-switches "-alh")
+(csetq dired-listing-switches "-alh")
+#+END_SRC
+
+* Echo Area
+
+#+BEGIN_SRC emacs-lisp
+(defun my-command-error-function (data context caller)
+  "Ignore the buffer-read-only, beginning-of-buffer,
+end-of-buffer signals; pass the rest to the default handler."
+  (unless (memq (car data) '(buffer-read-only
+                             beginning-of-buffer
+                             end-of-buffer))
+    (command-error-default-function data context caller)))
+
+(csetq command-error-function #'my-command-error-function)
 #+END_SRC
 
 * Ediff
 
 #+BEGIN_SRC emacs-lisp
-(setq ediff-split-window-function 'split-window-horizontally)
+(csetq ediff-split-window-function 'split-window-horizontally)
 #+END_SRC
 
 * evil-mode
@@ -143,18 +179,18 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
 (use-package evil
   :init
   ;; Makes C-u scroll like in vim
-  (setq evil-want-C-u-scroll t)
+  (csetq evil-want-C-u-scroll t)
   ;; Makes Y copy like in vim
-  (setq evil-want-Y-yank-to-eol t)
+  (csetq evil-want-Y-yank-to-eol t)
   ;; Makes TAB behave like TAB in Emacs (eg. Open tree in org-mode rather than jump forward) when in terminal
   ;; See https://catern.com/posts/terminal_quirks.html for why C-i is equivalent to TAB in a terminal
-  (setq evil-want-C-i-jump nil)
+  (csetq evil-want-C-i-jump nil)
   ;; Evil currently has a bug where typing * or # on the first
   ;; whitespace char of a line doesn't work in some cases. See
   ;; https://github.com/emacs-evil/evil/issues/1160
   ;; If you want to "fix" this you could set evil-symbol-word-search
   ;; as shown:
-  ;;(setq evil-symbol-word-search t)
+  ;;(csetq evil-symbol-word-search t)
   ;; But note that it would also change the word selection of these
   ;; commands. Eg. "test-123" would now be considered a word while it
   ;; previously was only "test".
@@ -176,8 +212,8 @@ Enable motioned alignments with evil-lion:
 #+BEGIN_SRC emacs-lisp
 (use-package evil-lion
   :init
-  (setq evil-lion-left-align-key (kbd "g a"))
-  (setq evil-lion-right-align-key (kbd "g A"))
+  (csetq evil-lion-left-align-key (kbd "g a"))
+  (csetq evil-lion-right-align-key (kbd "g A"))
   :config
   (evil-lion-mode))
 #+END_SRC
@@ -249,6 +285,8 @@ Add editorconfig which will configure the proper indentation settings based on
 the ~.editorconfig~ files (if no file is found emacs defaults will be applied):
 
 #+BEGIN_SRC emacs-lisp
+(csetq mode-require-final-newline nil)
+;; The config below doesn't seem to work!
 (use-package editorconfig
   :config
   (editorconfig-mode 1))
@@ -298,9 +336,7 @@ Set indentation to spaces instead of the mix of tabs and spaces default
 [[https://www.gnu.org/software/emacs/manual/html_node/emacs/Just-Spaces.html]]:
 
 #+BEGIN_SRC emacs-lisp
-; note: setq doesn't work with this one (in the org-edit-special
-; buffer the value would still be t)
-(customize-set-variable 'indent-tabs-mode nil)
+(csetq indent-tabs-mode nil)
 #+END_SRC
 
 * Line and Column Numbers
@@ -321,19 +357,19 @@ function and use it in a custom global minor mode.
   display-line-numbers-mode my-display-line-numbers--turn-on)
 (my-global-display-line-numbers-mode)
 
-(setq display-line-numbers-type 'relative)
+(csetq display-line-numbers-type 'relative)
 
 ;; Make Emacs set the line-numbers width to the largest width needed
 ;; Why isn't this the default ? :(
-(setq display-line-numbers-width-start t)
+(csetq display-line-numbers-width-start t)
 
 ;; Do not let Emacs size down the line numbers width if we are
 ;; displaying a smaller line number (eg. line under 100 when the file
 ;; has more than 100 lines)
 ;; Why isn't this the default ? x2 :(
-(setq display-line-numbers-grow-only t)
+(csetq display-line-numbers-grow-only t)
 
-(setq column-number-mode t)
+(csetq column-number-mode t)
 #+END_SRC
 
 * Load Path
@@ -362,13 +398,13 @@ Install Ivy, Counsel and Swiper:
 # TODO Add the recent files to ~ivy-switch-buffers~:
 
 #+BEGIN_SRC emacs-lisp
-;;(setq ivy-use-virtual-buffers t)
+;;(csetq ivy-use-virtual-buffers t)
 #+END_SRC
 
 Remove "^" from the initial input:
 
 #+BEGIN_SRC emacs-lisp
-(setq ivy-initial-inputs-alist nil)
+(csetq ivy-initial-inputs-alist nil)
 #+END_SRC
 
 Enable a more intelligent sorting of ~ivy~ matches with ~prescient~. Note that
@@ -378,26 +414,26 @@ prescient does an out of order match and overrides ~ivy-re-builders-alist~:
 (use-package prescient)
 (use-package ivy-prescient)
 (prescient-persist-mode)
-(setq ivy-prescient-retain-classic-highlighting t)
+(csetq ivy-prescient-retain-classic-highlighting t)
 (ivy-prescient-mode)
 #+END_SRC
 
 Remove "." and ".." when matching files:
 
 #+BEGIN_SRC emacs-lisp
-(setq ivy-extra-directories nil)
+(csetq ivy-extra-directories nil)
 #+END_SRC
 
 Switch to the home directory with "~/" and not "~":
 
 #+BEGIN_SRC emacs-lisp
-(setq ivy-magic-tilde nil)
+(csetq ivy-magic-tilde nil)
 #+END_SRC
 
 Increase the number of results:
 
 #+BEGIN_SRC emacs-lisp
-(setq ivy-height 20)
+(csetq ivy-height 20)
 #+END_SRC
 
 Enable the mode:
@@ -424,27 +460,27 @@ check is never done.  evil-org-mode hooks some of them, and is
 included in spacemacs, so that's why it can work for 'x' in spacemacs.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-catch-invisible-edits 'error)
+(csetq org-catch-invisible-edits 'error)
 #+END_SRC
 
 Tells org-mode to indent trees visually even if they aren't really:
 
 #+BEGIN_SRC emacs-lisp
-(setq org-startup-indented t)
+(csetq org-startup-indented t)
 #+END_SRC
 
 Tells org-mode to preserve indentation when exporting code
 blocks. Also a way not to have indentation in code blocks.
 
 #+BEGIN_SRC emacs-lisp
-(setq org-edit-src-content-indentation 0)
+(csetq org-edit-src-content-indentation 0)
 #+END_SRC
 
 Enable auto saving of the edit buffer into the original file after 1 second of
 idleness:
 
 #+BEGIN_SRC emacs-lisp
-(customize-set-variable 'org-edit-src-auto-save-idle-delay 1)
+(csetq org-edit-src-auto-save-idle-delay 1)
 #+END_SRC
 
 Tells =org-edit-special= not to come back to a single window after edition.
@@ -471,7 +507,7 @@ the frame is small, to hijack a window and to restore its buffer when exiting.
 Change the TODO workflow:
 
 #+BEGIN_SRC emacs-lisp
-(setq org-todo-keywords
+(csetq org-todo-keywords
       '((sequence "TODO" "DOING" "|" "DONE" "CANCELLED" "OBSOLETE")))
 #+END_SRC
 
@@ -519,23 +555,23 @@ the current topic."
          t 'tree))
       (reverse drill-sections)))
 
-(setq org-drill-left-cloze-delimiter "<[")
-(setq org-drill-right-cloze-delimiter "]>")
+(csetq org-drill-left-cloze-delimiter "<[")
+(csetq org-drill-right-cloze-delimiter "]>")
 
-(setq org-drill-maximum-items-per-session 50) ; default is 30
-(setq org-drill-maximum-duration 40) ; default is 20 minutes
+(csetq org-drill-maximum-items-per-session 50) ; default is 30
+(csetq org-drill-maximum-duration 40) ; default is 20 minutes
 #+END_SRC
 
 Hide the headings during drill sessions:
 
 #+BEGIN_SRC emacs-lisp
-(setq org-drill-hide-item-headings-p t)
+(csetq org-drill-hide-item-headings-p t)
 #+END_SRC
 
 Lower the *learn fraction* to be a little more on the safe side (default is =0.5=):
 
 #+BEGIN_SRC emacs-lisp
-(setq org-drill-learn-fraction 0.45)
+(csetq org-drill-learn-fraction 0.45)
 #+END_SRC
 
 *** TODO org-drill: implement fact expiration?
@@ -552,7 +588,7 @@ Lower the *learn fraction* to be a little more on the safe side (default is =0.5
 Disable confirmation prompt when evaluation code blocks:
 
 #+BEGIN_SRC emacs-lisp
-(setq org-confirm-babel-evaluate nil)
+(csetq org-confirm-babel-evaluate nil)
 #+END_SRC
 
 Enable more languages for babel code execution:
@@ -563,6 +599,80 @@ Enable more languages for babel code execution:
  '((emacs-lisp . t)
    (python . t)
    (scheme . t)))
+#+END_SRC
+
+Stolen from http://kitchingroup.cheme.cmu.edu/blog/2015/03/19/Restarting-org-babel-sessions-in-org-mode-more-effectively/
+
+#+BEGIN_SRC emacs-lisp
+(defun src-block-in-session-p (&optional name)
+  "Return if src-block is in a session of NAME.
+NAME may be nil for unnamed sessions."
+  (let* ((info (org-babel-get-src-block-info))
+         (lang (nth 0 info))
+         (body (nth 1 info))
+         (params (nth 2 info))
+         (session (cdr (assoc :session params))))
+
+    (cond
+     ;; unnamed session, both name and session are nil
+     ((and (null session)
+           (null name))
+      t)
+     ;; Matching name and session
+     ((and
+       (stringp name)
+       (stringp session)
+       (string= name session))
+      t)
+     ;; no match
+     (t nil))))
+
+(defun org-babel-restart-session-to-point (&optional arg)
+  "Restart session up to the src-block in the current point.
+Goes to beginning of buffer and executes each code block with
+`org-babel-execute-src-block' that has the same language and
+session as the current block. ARG has same meaning as in
+`org-babel-execute-src-block'."
+  (interactive "P")
+  (unless (org-in-src-block-p)
+    (error "You must be in a src-block to run this command"))
+  (let* ((current-point (point-marker))
+         (info (org-babel-get-src-block-info))
+         (lang (nth 0 info))
+         (params (nth 2 info))
+         (session (cdr (assoc :session params))))
+    (save-excursion
+      (goto-char (point-min))
+      (while (re-search-forward org-babel-src-block-regexp nil t)
+        ;; goto start of block
+        (goto-char (match-beginning 0))
+        (let* ((this-info (org-babel-get-src-block-info))
+               (this-lang (nth 0 this-info))
+               (this-params (nth 2 this-info))
+               (this-session (cdr (assoc :session this-params))))
+          (when
+              (and
+               (< (point) (marker-position current-point))
+               (string= lang this-lang)
+               (src-block-in-session-p session))
+            (org-babel-execute-src-block arg)))
+        ;; move forward so we can find the next block
+        (forward-line)))))
+
+(defun org-babel-kill-session ()
+  "Kill session for current code block."
+  (interactive)
+  (unless (org-in-src-block-p)
+    (error "You must be in a src-block to run this command"))
+  (save-window-excursion
+    (org-babel-switch-to-session)
+    (kill-buffer)))
+#+END_SRC
+
+#+BEGIN_SRC emacs-lisp
+;; (csetq org-babel-default-header-args
+;;   (cons '(:results . "output")
+;;   (assq-delete-all :results org-babel-default-header-args)))
 #+END_SRC
 
 * TODO Polymode
@@ -580,7 +690,7 @@ buffer (<3 All my love goes to this mode <3):
 Configure Emacs to load a '.el' instead of a '.elc' if the '.el' is newer:
 
 #+BEGIN_SRC emacs-lisp
-(setq load-prefer-newer t)
+(csetq load-prefer-newer t)
 #+END_SRC
 
 * Programming
@@ -599,7 +709,7 @@ if(foo)
 #+END_SRC
 
 #+BEGIN_SRC emacs-lisp
-(setq c-default-style "linux")
+(csetq c-default-style "linux")
 #+END_SRC
 
 *** Go
@@ -626,7 +736,7 @@ Disable editorconfig for lisp modes. Emacs builtin should be better:
 
 #+BEGIN_SRC emacs-lisp
 (dolist (mode '(emacs-lisp-mode lisp-mode))
-  (setq editorconfig-indentation-alist
+  (csetq editorconfig-indentation-alist
     (assq-delete-all mode editorconfig-indentation-alist)))
 #+END_SRC
 
@@ -637,7 +747,7 @@ commands to 2 (default is 4):
 (dolist (mode '(emacs-lisp-mode-hook lisp-mode-hook))
   (add-hook mode
     (function (lambda ()
-                (setq evil-shift-width 2)))))
+                (csetq evil-shift-width 2)))))
 #+END_SRC
 
 Install Geiser for a better integration of other Lisps (Guile/Scheme/Racket) in
@@ -651,7 +761,7 @@ Emacs (e.g. it provides =run-mit= and =run-guile=). It's also needed by
 Set geiser default scheme implementation (mit for now):
 
 #+BEGIN_SRC emacs-lisp
-(setq geiser-default-implementation 'mit)
+(csetq geiser-default-implementation 'mit)
 #+END_SRC
 
 ** Syntax Checking
@@ -669,7 +779,7 @@ Disable flycheck's emacs-lisp-checkdoc for org-edit-special buffers:
 (add-hook 'org-src-mode-hook
           (lambda ()
             (when (eq major-mode 'emacs-lisp-mode)
-              (setq flycheck-disabled-checkers '(emacs-lisp-checkdoc)))))
+              (csetq flycheck-disabled-checkers '(emacs-lisp-checkdoc)))))
 #+END_SRC
 
 * Project Management
@@ -709,7 +819,7 @@ Disable useless UI elements:
 ;; Not mature enough :/
 ;;(use-package base16-theme
 ;;  :config
-;;  (setq base16-theme-256-color-source "colors")
+;;  (csetq base16-theme-256-color-source "colors")
 ;;  (load-theme 'base16-summerfruit-light t))
 #+END_SRC
 
@@ -737,7 +847,7 @@ Automatically follow symbolic links to files under version control (stops Emacs 
 #+BEGIN_SRC emacs-lisp
 ;; Also set in init.el so it doesn't bother us when we edit the emacs
 ;; config that is just changed, thus regenerated.
-(setq vc-follow-symlinks t)
+(csetq vc-follow-symlinks t)
 #+END_SRC
 
 * Whitespace
@@ -747,9 +857,9 @@ spaces, empty lines, characters after the ~fill-column~ and specials spaces
 (hard space and ideographic space) with a custom symbol:
 
 #+BEGIN_SRC emacs-lisp
-(setq-default
+(csetq
   whitespace-style '(face tabs trailing empty lines-tail space-mark tab-mark))
-  (setq whitespace-display-mappings
+  (csetq whitespace-display-mappings
     '(
         (space-mark   ?\xA0  [?\u25a0]     [?_]) ; hard space - black square
         (space-mark ?\u3000 [?\u25a1])           ; ideographic space - white square
@@ -770,7 +880,7 @@ spaces, empty lines, characters after the ~fill-column~ and specials spaces
 Make sure whitespace-mode uses ~fill-column~ value:
 
 #+BEGIN_SRC emacs-lisp
-(setq whitespace-line-column nil)
+(csetq whitespace-line-column nil)
 #+END_SRC
 
 Enable whitespace-mode for all prog and text buffers:
@@ -836,7 +946,7 @@ Install yasnippet and the snippets packages:
 (use-package yasnippet
   :defer 10
   :config
-  (setq yas-snippet-dirs
+  (csetq yas-snippet-dirs
         '("~/.emacs.d/snippets")))
 (use-package yasnippet-snippets)
 (yas-global-mode)
@@ -907,6 +1017,11 @@ Misc keybindings with General:
   :keymaps '(override)
   "C-a" 'evil-numbers/inc-at-pt)
 
+(general-define-key
+  :states '(insert)
+  :keymaps '(override)
+  "C-h" nil)
+
 (general-def ivy-minibuffer-map
   "C-j" 'ivy-next-line
   "C-k" 'ivy-previous-line)
@@ -932,4 +1047,11 @@ Unbind some keybindings that duplicate other evil/vim keybindings:
 (global-unset-key (kbd "M-;"))
 ;; Duplicates C-v
 (global-unset-key (kbd "C-q"))
+#+END_SRC
+
+
+* SICP
+
+#+BEGIN_SRC emacs-lisp
+(use-package sicp)
 #+END_SRC

@@ -250,6 +250,7 @@ simulating tabs:
 (eyebrowse-mode)
 
 (defun me/new-eyebrowse-window-config ()
+  "Create a new \"tab\" with eyebrowse."
   (interactive)
   (eyebrowse-create-window-config)
   (delete-other-windows))

@@ -21,7 +21,13 @@
       (eval-print-last-sexp)))
   (load bootstrap-file nil 'nomessage))
 
+;; Install the package 'use-package' in order to have the macro 'use-package'
 (straight-use-package 'use-package)
+;; This avoids us setting ':straight t' for every use-package call because we
+;; want use-package to use straight instead of the default package.el every
+;; time.  See
+;; https://github.com/raxod502/straight.el#integration-with-use-package and
+;; https://github.com/jwiegley/use-package#usage-with-other-package-managers
 (customize-set-variable 'straight-use-package-by-default t)
 
 ;; Pull the org packages

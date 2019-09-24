@@ -45,7 +45,7 @@ Enable the refresh for dired views too:
 (csetq global-auto-revert-non-file-buffers t)
 #+END_SRC
 
-* Backups
+* Backups and Saving
 
 With a combination of undo-tree (~u~ and ~C-r~ with branches) and
 auto-saving, a loss of work should be pretty small.  The undo-tree
@@ -88,6 +88,17 @@ between sessions:
 
 #+BEGIN_SRC emacs-lisp
 (save-place-mode 1)
+#+END_SRC
+
+Don't prompt for saving when calling =save-some-buffers=:
+
+#+BEGIN_SRC emacs-lisp
+(defun set-buffer-save-without-query ()
+  "Set `buffer-save-without-query' to t."
+  (unless (variable-binding-locus 'buffer-save-without-query)
+    (setq buffer-save-without-query t)))
+
+(add-hook #'find-file-hook #'set-buffer-save-without-query)
 #+END_SRC
 
 * Bell

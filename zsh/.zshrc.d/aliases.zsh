@@ -62,8 +62,7 @@ alias psg='ps aux | rg'
 alias psmem='ps auxf | sort -n -k 4'
 
 # Editors
-alias e='emacsclient -a "" --no-wait'
-alias ee='emacsclient -a "" --tty'
+alias e='emacsclient -a "" --tty'
 alias v=vim
 
 # Safer commands

@@ -1,0 +1,12 @@
+#!/bin/sh
+
+# Stolen from https://stackoverflow.com/questions/25418092/how-can-i-set-up-git-branch-for-automatic-backups
+
+set -x
+
+BRANCH=backup
+export GIT_INDEX_FILE=/tmp/git-backup-index.$$
+git add .
+git commit-tree $(git write-tree) -p $(git show-ref --hash --heads $BRANCH) -m "Automatic backup" | xargs git branch -f $BRANCH
+git push origin $BRANCH
+rm -f "$GIT_INDEX_FILE"

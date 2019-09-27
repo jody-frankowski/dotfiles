@@ -25,13 +25,14 @@ export LESS='-i -M -R -j4'
 export GOPATH=~/.go
 
 # Npm
-export NPM_PACKAGES=~/.npm-packages
+export NPM_PACKAGES=~/.cache/npm
 
 # Python
 export PYTHONPATH="$HOME/.usr/lib/:$PYTHONPATH"
 
+
 # .local/bin is for pip install --user
-export PATH="$HOME/.npm-packages/bin:$HOME/.local/bin:$HOME/.usr/bin:$HOME/.go/bin/:$HOME/.cargo/bin/:$PATH"
+export PATH="$HOME/.cache/npm/bin:$HOME/.local/bin:$HOME/.usr/bin:$HOME/.go/bin/:$HOME/.cargo/bin/:$PATH"
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="$HOME/.brew/bin:$PATH"
 fi

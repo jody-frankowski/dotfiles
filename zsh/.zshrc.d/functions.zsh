@@ -297,6 +297,20 @@ mount () {
     fi
 }
 
+mv-merge () {
+    if (( $# < 2 )) ; then
+        echo "Usage: mv-merge SRC... DST"
+        return 1
+    fi
+
+    dst=${@[-1]}
+    for src in "${@[0,-2]}" ; do
+        if cp -al "$src" "$dst" ; then
+            \rm -rf "$src"
+        fi
+    done
+}
+
 pacman-list-disowned () {
     # Lists Pacman disowned files
     local tmp="${TMPDIR:-/tmp}/pacman-disowned-$UID-$$"

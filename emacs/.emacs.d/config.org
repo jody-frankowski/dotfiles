@@ -1064,6 +1064,8 @@ Unbind some keybindings that duplicate other evil/vim keybindings:
 #+BEGIN_SRC emacs-lisp
 ;; Duplicates gc
 (global-unset-key (kbd "M-;"))
+;; Duplicates gq
+(global-unset-key (kbd "M-q"))
 ;; Duplicates C-v
 (global-unset-key (kbd "C-q"))
 #+END_SRC

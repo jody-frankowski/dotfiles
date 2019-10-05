@@ -971,6 +971,15 @@ Install yasnippet and the snippets packages:
 (yas-global-mode)
 #+END_SRC
 
+Disable Yasnippet overlay protection in org-mode because it interferes with the
+org-drill snippet. When you type in a heading that has an org-mode tag
+(eg. =:drill:=) the tag will automatically be shifted to the right, causing
+yasnippet to abort in the default configuration:
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook (lambda ()
+                           (setq-local yas-inhibit-overlay-modification-protection t)))
+#+END_SRC
 
 * Keybindings
 

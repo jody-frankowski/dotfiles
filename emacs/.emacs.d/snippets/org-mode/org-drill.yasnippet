@@ -2,9 +2,8 @@
 # name: org-drill item
 # key: D
 # --
-`(make-string (org-current-level) ?*)` Drill :drill:
+`(make-string (org-current-level) ?*)` $1 :drill:
 :PROPERTIES:
-:DRILL_CARD_TYPE: show1cloze
-:END:
+${2::DRILL_CARD_TYPE: show1cloze`(newline)`}:END:
 
 $0

@@ -1068,6 +1068,17 @@ Misc keybindings with General:
   "M-d" 'eyebrowse-close-window-config)
 #+END_SRC
 
+Add some vim specific keybindings that are missing from evil-mode or not
+installed because a component isn't used (eg. =evil-search-module= being set to
+isearch):
+
+#+BEGIN_SRC emacs-lisp
+(define-key isearch-mode-map (kbd "C-n") 'isearch-ring-advance)
+(define-key minibuffer-local-isearch-map (kbd "C-n") 'next-history-element)
+(define-key isearch-mode-map (kbd "C-p") 'isearch-ring-retreat)
+(define-key minibuffer-local-isearch-map (kbd "C-p") 'previous-history-element)
+#+END_SRC
+
 Unbind some keybindings that duplicate other evil/vim keybindings:
 
 #+BEGIN_SRC emacs-lisp
@@ -1077,6 +1088,12 @@ Unbind some keybindings that duplicate other evil/vim keybindings:
 (global-unset-key (kbd "M-q"))
 ;; Duplicates C-v
 (global-unset-key (kbd "C-q"))
+;; Duplicates C-n
+(define-key isearch-mode-map (kbd "M-n") nil)
+(define-key minibuffer-local-isearch-map (kbd "M-n") nil)
+;; Duplicates C-p
+(define-key isearch-mode-map (kbd "M-p") nil)
+(define-key minibuffer-local-isearch-map (kbd "M-p") nil)
 #+END_SRC
 
 

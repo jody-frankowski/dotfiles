@@ -200,9 +200,6 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
   (csetq evil-want-C-u-scroll t)
   ;; Makes Y copy like in vim
   (csetq evil-want-Y-yank-to-eol t)
-  ;; Makes TAB behave like TAB in Emacs (eg. Open tree in org-mode rather than jump forward) when in terminal
-  ;; See https://catern.com/posts/terminal_quirks.html for why C-i is equivalent to TAB in a terminal
-  (csetq evil-want-C-i-jump nil)
   ;; Evil currently has a bug where typing * or # on the first
   ;; whitespace char of a line doesn't work in some cases. See
   ;; https://github.com/emacs-evil/evil/issues/1160
@@ -214,6 +211,40 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
   ;; previously was only "test".
   :config
   (evil-mode 1))
+#+END_SRC
+
+Makes TAB behave like both C-i in Vim and TAB in Emacs (eg. Jump forward and
+open tree) in org-mode. In other mode we just set it to behave as C-i in Vim.
+See https://catern.com/posts/terminal_quirks.html for why C-i is equivalent to
+TAB in a terminal.
+This effectively covers the possible values of =evil-want-C-i-jump= for org-mode
+more intelligently.
+This can be extended to other modes as needs be. (Incidentally it also "fixes"
+yasnippet expanding things while in normal mode):
+
+#+BEGIN_SRC emacs-lisp
+(csetq evil-want-C-i-jump t)
+(defun my-org-mode-C-i-handler (&optional arg)
+  (interactive)
+  (if (eq (length (recent-keys)) 1)
+      (org-cycle))
+  (let ((second-to-last-key-pressed (aref (recent-keys)
+                                          (- (length (recent-keys))
+                                             2))))
+    (cond
+     ;; C-o TAB
+     ((eq second-to-last-key-pressed 15)
+      (setq my-org-mode-C-i-handler-in-sequence t) (evil-jump-forward))
+     ;; !(C-o|C-i) TAB
+     ((not (or (eq second-to-last-key-pressed 9)
+               (eq second-to-last-key-pressed 15)))
+      (setq my-org-mode-C-i-handler-in-sequence nil) (org-cycle))
+     ;; !(C-o|C-i) TAB TAB
+     ((eq my-org-mode-C-i-handler-in-sequence nil) (org-cycle))
+     ;; C-o|C-i TAB
+     ((eq my-org-mode-C-i-handler-in-sequence t) (evil-jump-forward)))))
+(setq my-org-mode-C-i-handler-in-sequence nil)
+(evil-define-key 'normal org-mode-map (kbd "TAB") #'my-org-mode-C-i-handler)
 #+END_SRC
 
 Install evil-numbers to make C-a and C-x among others work:

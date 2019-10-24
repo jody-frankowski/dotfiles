@@ -213,6 +213,13 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
   (evil-mode 1))
 #+END_SRC
 
+Makes =(= and =)= motions work like with the default Vim settings, namely not
+supposing that sentences are followed by two spaces:
+
+#+BEGIN_SRC emacs-lisp
+(csetq sentence-end-double-space nil)
+#+END_SRC
+
 Makes TAB behave like both C-i in Vim and TAB in Emacs (eg. Jump forward and
 open tree) in org-mode. In other mode we just set it to behave as C-i in Vim.
 See https://catern.com/posts/terminal_quirks.html for why C-i is equivalent to

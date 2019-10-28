@@ -880,6 +880,13 @@ Disable useless UI elements:
 ;;  (load-theme 'base16-summerfruit-light t))
 #+END_SRC
 
+Override the background color of whitespace-tab otherwise it's a very visible dark gray:
+
+#+BEGIN_SRC emacs-lisp
+(with-eval-after-load 'whitespace
+  (set-face-background 'whitespace-tab nil))
+#+END_SRC
+
 * TODO Unicode Homoglyphs Highlighter
 
 Add unicode-troll-stopper which highlights unicode homoglyphs. (Think

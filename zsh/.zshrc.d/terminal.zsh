@@ -41,19 +41,13 @@ _terminal-set-titles-with-command () {
     fi
 
     # Get the command name that is under job control
-    if [[ "${2[(w)1]}" == (fg|%*)(\;|) ]]; then
-        # Get the job name, and, if missing, set it to the default %+
-        local job_name="${${2[(wr)%*(\;|)]}:-%+}"
+    if [[ "${3[(w)1]}" == (fg|%*) ]]; then
+        # Get the job id, and, if missing, set it to the current job (%%)
+        local job_id="${${2[(wr)%*(\;|)]}:-%%}"
 
-        # Make a local copy for use in the subshell.
-        local -A jobtexts_from_parent_shell
-        jobtexts_from_parent_shell=(${(kv)jobtexts})
-
-        jobs "$job_name" 2>/dev/null > >(
-            read index discarded
-            # The index is already surrounded by brackets: [1]
-            _terminal_set-titles-with-command "${(e):-\$jobtexts_from_parent_shell$index}"
-        )
+        local job_cmd=${jobtexts[$job_id]}
+        local job_cmd_array=(${(s/ /)job_cmd})
+        title="${job_cmd_array[1]}"
     else
         # Set the command name, or in the case of mosh/s/ssh/sshrc/sudo, the next command
         title="${title}${${2[(wr)^(*=*|mosh|s|ssh|sshrc|sudo|-*)]}:t}"

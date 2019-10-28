@@ -869,6 +869,8 @@ Disable useless UI elements:
 
 ** Theme
 
+Install doom-themes and load doom-one-light:
+
 #+BEGIN_SRC emacs-lisp
 (use-package doom-themes
   :config

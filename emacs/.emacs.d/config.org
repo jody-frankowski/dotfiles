@@ -882,7 +882,8 @@ Install doom-themes and load doom-one-light:
 ;;  (load-theme 'base16-summerfruit-light t))
 #+END_SRC
 
-Override the background color of whitespace-tab otherwise it's a very visible dark gray:
+Override the background color of whitespace-tab otherwise it's a very visible
+dark gray:
 
 #+BEGIN_SRC emacs-lisp
 (with-eval-after-load 'whitespace

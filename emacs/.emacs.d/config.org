@@ -261,6 +261,9 @@ Install evil-numbers to make C-a and C-x among others work:
   '(el-patch :type git :host github :repo "dieggsy/evil-numbers"))
 #+END_SRC
 
+Note that we don't set =evil-search-module= to =evil-search= because it's much
+slower than isearch.
+
 ** Alignment
 
 Enable motioned alignments with evil-lion:

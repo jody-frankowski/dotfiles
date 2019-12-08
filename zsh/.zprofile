@@ -30,12 +30,22 @@ export NPM_PACKAGES=~/.cache/npm
 # Python
 export PYTHONPATH="$HOME/.usr/lib/:$PYTHONPATH"
 
-
-# .local/bin is for pip install --user
-export PATH="$HOME/.cache/npm/bin:$HOME/.local/bin:$HOME/.usr/bin:$HOME/.go/bin/:$HOME/.cargo/bin/:$PATH"
+## PATH
+# Homebrew
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="$HOME/.brew/bin:$PATH"
 fi
+# Node
+export PATH="$HOME/.cache/npm/bin:$PATH"
+# Python
+export PATH="$HOME/.local/bin:$PATH"
+# Go
+export PATH="$HOME/.go/bin:$PATH"
+# Rust
+export PATH="$HOME/.cargo/bin:$PATH"
+# Custom scripts and symlinks
+export PATH="$HOME/.usr/bin:$PATH"
+## PATH
 
 # Disable Homebrew's auto update
 if [[ "$OSTYPE" == "darwin"* ]]; then

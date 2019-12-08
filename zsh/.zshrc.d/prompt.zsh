@@ -424,7 +424,7 @@ function prompt_build_prompt {
     # http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
     # in order, show, the last command error code, if the shell is privileged
     # and if there are jobs running
-    prompt_segment ' %(?::%F{red}%? )%(!:⚡  :)%(1j:⚙  :)%F{blue}%n%F{red}@%F{green}%m%f '
+    prompt_segment ' %(?::%F{red}%? )%(!:%F{yellow}⚡  :)%(1j:⚙  :)%F{blue}%n%F{red}@%F{green}%m%f '
 
     # %S aka standout mode, by inverting the colors, lets us have blue as
     # %background and default background as foreground. Hence this prompt will

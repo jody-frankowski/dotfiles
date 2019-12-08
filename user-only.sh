@@ -52,7 +52,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
     # symlink only llvm's scan-build because we don't want this llvm to replace
     # macOS's one
-    [[ -L ~/.brew/bin/scan-build ]] || ln -s ~/.brew/opt/lllvm/bin/scan-build ~/.brew/bin/
+    [[ -L ~/.brew/bin/scan-build ]] || ln -s ~/.brew/opt/llvm/bin/scan-build ~/.brew/bin/
 
     ### terminfo
     # We need the terminfo capabilites of tmux-256color, however macOS doesn't

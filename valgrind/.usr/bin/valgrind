@@ -8,4 +8,4 @@ if [[ "$real" == "$0" ]] ; then
     exit -1
 fi
 
-"$real" --suppressions="$HOME"/.config/valgrind/vgpreload.supp "$@"
+exec "$real" --suppressions="$HOME"/.config/valgrind/vgpreload.supp "$@"

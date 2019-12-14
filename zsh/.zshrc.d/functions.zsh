@@ -38,6 +38,18 @@ curlh () {
     curl -s -v -o /dev/null $@
 }
 
+download-missing-libs () {
+    if [[ $# -ne 1 ]] ; then
+        echo "Usage: download-missing-libs BINARY"
+    else
+        missing_libs=()
+        for lib in $(ldd "$1" | grep 'not found' | awk '{print $1}') ; do
+            missing_libs+=$(pkgfile "${lib}")
+        done
+        sudo pacman -S "${missing_libs[@]}"
+    fi
+}
+
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/encode64/encode64.plugin.zsh
 encode64 () {
     if [[ $# -eq 0 ]]; then

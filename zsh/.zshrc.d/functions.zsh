@@ -152,6 +152,30 @@ flac-encode-dir () {
     done
 }
 
+forward-port () {
+    local host_and_port
+    local remote_port
+    if [[ $# -eq 0 ]] ; then
+        echo "Usage: $0 [HOST:]PORT [--stop]"
+        return 1
+    fi
+    host_and_port="$1"
+    if ! echo "$host_and_port" | grep ':' ; then
+        host_and_port="localhost:$host_and_port"
+    fi
+    if [[ "$2" = "--stop" ]] ; then
+        ssh -R :0:"$host_and_port" -O cancel port-forwarder
+    else
+        if remote_port=$(ssh -g -o GatewayPorts=yes -R :0:"$host_and_port" -O forward port-forwarder) ; then
+            echo "Remote port: $remote_port"
+            echo "Use 'forward-port $host_and_port --stop' to stop the forwarding."
+        else
+            return 1
+        fi
+    fi
+    return 0
+}
+
 gcl () {
     if git clone --recursive "$@" ; then
         # cd into a given directory or into the one git created

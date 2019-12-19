@@ -545,32 +545,103 @@ search () {
 alias f=search
 
 share () {
-    [[ -d ~/.share/ ]] || mkdir ~/.share
-
-    for file in ~/.share/*(N) ; do
-        [[ -L "${file}" ]] && unlink "$file"
-    done
-
-    for arg in $* ; do
-        [ -f $arg ] && ln -s "$(realpath $arg)" ~/.share
-
-        if [ -d $arg ] ; then
-            for file in $arg/* ; do
-                ln -s "$(realpath $file)" ~/.share
-            done
-        fi
-    done
-
-    cd ~/.share &>/dev/null
-
-    if [[ $# == 1 ]] ; then
-        echo wget -r --reject "index.html" "http://$(ip -o -4 a | awk -F'[ /]+' '$2!~/lo/{print $4}'):8000/${1}" | tee >(xsel -i -b)
-    else
-        echo wget -r --reject "index.html" "http://$(ip -o -4 a | awk -F'[ /]+' '$2!~/lo/{print $4}'):8000" | tee >(xsel -i -b)
+    if [[ $1 = "-h" || $1 = "--help" ]] ; then
+        echo "Usage: $0 [--auth[=PASSWORD]] [--expose] [DIR|FILE...]"
+        return
     fi
 
-    # TODO select free port automatically
-    python3 -m http.server # ${port}
+    local auth=false
+    local auth_password=""
+    local expose=false
+    local to_share=()
+    while [[ $# -gt 0 ]] ; do
+        arg="$1"
+
+        case "$arg" in
+            --auth*)
+                auth=true
+                auth_password="$(echo $1 | cut -s -d= -f2)"
+                ;;
+            --expose)
+                expose=true
+                ;;
+            *)
+                to_share+=("$1")
+                ;;
+        esac
+        shift
+    done
+
+    if [[ ${#to_share[@]} -eq 0 ]] ; then
+        to_share=(.)
+    fi
+
+    local share_directory_root=$(mktemp -d)
+
+    if [[ "${auth}" = true ]] ; then
+        # When there is an index.html file, Python doesn't generate a directory
+        # listing for the root directory
+        # https://docs.python.org/3/library/http.server.html#http.server.SimpleHTTPRequestHandler.do_GET
+        touch "${share_directory_root}"/index.html
+        if [[ -z "${auth_password}" ]] ; then
+            auth_password=$(gen-passphrase --no-clipboard)
+        fi
+        share_directory="${share_directory_root}"/"${auth_password}"
+        mkdir "${share_directory}"
+    else
+        share_directory="${share_directory_root}"
+    fi
+
+    for arg in "${to_share[@]}" ; do
+        ln -s "$(realpath ${arg})" "${share_directory}"
+    done
+
+    cd "${share_directory_root}" &>/dev/null
+
+    # It really should be a while loop of python trying to listen to the port,
+    # but with this way we can easily print the port before running the server,
+    # and let the user stop it with a simple C-c
+    local port="9999"
+    while ss -nlt | awk '{print $4}' | grep ":${port}" > /dev/null ; do
+        port="${RANDOM}"
+    done
+
+    echo "Pick one of the following:"
+    [[ ${expose} == true ]] && echo "Local:"
+    for ip in $(ip -o -4 a | awk -F'[ /]+' '$2!~/lo/{print $4}') ; do
+        url="http://${ip}:${port}"
+        if [[ -n "${auth_password}" ]] ; then
+            url="${url}/${auth_password}/"
+        fi
+        echo wget -r --reject "'"index.html\*"'" "${url}"
+    done
+
+    if [[ "${expose}" = true ]] ; then
+        if ! local remote_port=$(forward-port "${port}" | head -n1 | awk '{print $3}') ; then
+            echo "Failed to expose share."
+            return 1
+        fi
+        echo "Remote:"
+        remote_local_ips=$(ssh port-forwarder "ip -o -4 a | awk -F'[ /]+' '\$2!~/lo/{print \$4}'")
+        for ip in ${=remote_local_ips} ; do
+            url="http://${ip}:${remote_port}"
+            if [[ -n "${auth_password}" ]] ; then
+                url="${url}/${auth_password}/"
+            fi
+            echo wget -r --reject "'"index.html\*"'" "${url}"
+        done
+    fi
+
+    python3 -m http.server "${port}"
+    forward-port "${port}" --stop
+
+    # We don't `rm -rf` to be a bit safer
+    find "${share_directory}" -maxdepth 1 -type l -delete
+    if [[ "${auth}" = true ]] ; then
+        rmdir "${share_directory}"
+        rm -f "${share_directory_root}/index.html"
+    fi
+    rmdir "${share_directory_root}"
 
     cd - &>/dev/null
 }

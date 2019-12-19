@@ -216,6 +216,11 @@ _clip () {
 }
 
 gen-passphrase () {
+    local use_clipboard=true
+    if [[ "$1" == "--no-clipboard" ]] ; then
+        use_clipboard=false
+        shift
+    fi
     if [[ -z $1 ]] ; then
         dict="words"
     else
@@ -223,12 +228,20 @@ gen-passphrase () {
     fi
 
     passphrase=$(echo $(LC_COLLATE=C grep "^[a-z0-9]\{3,7\}$" /usr/share/dict/$dict | shuf -n4))
-
-    echo "Passphrase copied to clipboard."
-    _clip gen-passphrase $(echo $passphrase | tr -d ' ')
+    if [[ "${use_clipboard}" = true ]] ; then
+        echo "Passphrase copied to clipboard."
+        _clip gen-passphrase $(echo $passphrase | tr -d ' ')
+    else
+        echo $passphrase | tr -d ' '
+    fi
 }
 
 gen-password () {
+    local use_clipboard=true
+    if [[ "$1" == "--no-clipboard" ]] ; then
+        use_clipboard=false
+        shift
+    fi
     if [[ -z $1 ]] ; then
         length="16"
     else
@@ -236,8 +249,12 @@ gen-password () {
     fi
 
     password=$(pwgen $length 1)
-    echo "Password copied to clipboard."
-    _clip gen-password $password
+    if [[ "${use_clipboard}" = true ]] ; then
+        echo "Password copied to clipboard."
+        _clip gen-password $password
+    else
+        echo $password
+    fi
 }
 
 getip () {

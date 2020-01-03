@@ -1,13 +1,11 @@
-
-# Created by https://www.gitignore.io/api/c,go,vim,rust,ruby,emacs,python,ansible,visualstudiocode
-# Edit at https://www.gitignore.io/?templates=c,go,vim,rust,ruby,emacs,python,ansible,visualstudiocode
-
 ### Ansible ###
 *.retry
 
 ### C ###
 # Prerequisites
 *.d
+# Not the *.d dirs (eg. ~/.emacs.d/)
+!*.d/
 
 # Object files
 *.o
@@ -119,6 +117,11 @@ flycheck_*.el
 
 # Output of the go coverage tool, specifically when used with LiteIDE
 
+### GNU GLOBAL ###
+GPATH
+GRTAGS
+GTAGS
+
 ### Go Patch ###
 /vendor/
 /Godeps/
@@ -138,7 +141,6 @@ develop-eggs/
 downloads/
 eggs/
 .eggs/
-lib/
 lib64/
 parts/
 sdist/
@@ -339,5 +341,3 @@ tags
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
-
-# End of https://www.gitignore.io/api/c,go,vim,rust,ruby,emacs,python,ansible,visualstudiocode

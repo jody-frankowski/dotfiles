@@ -248,7 +248,8 @@ gen-password () {
         length=$1
     fi
 
-    password=$(pwgen $length 1)
+    password=$(dd if=/dev/urandom bs=1 count=$((length * 2)) 2>/dev/null |
+                   base64 | head -c ${length})
     if [[ "${use_clipboard}" = true ]] ; then
         echo "Password copied to clipboard."
         _clip gen-password $password

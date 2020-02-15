@@ -352,16 +352,61 @@ mount () {
 }
 
 mv-merge () {
+    local dst
+    local dst_realpath
+    local src
+    local src_realpath
+
     if (( $# < 2 )) ; then
-        echo "Usage: mv-merge SRC... DST"
+        echo "Usage: mv-merge DIR... DST"
+        echo "If DIR exists in DST, the two directories will be merged."
+        echo "Example:"
+        cat <<- EOF
+			$ tree
+			.
+			├── DIR
+			│   └── A
+			└── DST
+			    └── DIR
+			        └── B
+			$ mv-merge DIR DST
+			$ tree
+			.
+			└── DST
+			    └── DIR
+			        ├── A
+			        └── B
+		EOF
         return 1
     fi
 
-    dst=${@[-1]}
-    for src in "${@[0,-2]}" ; do
-        if cp -al "$src" "$dst" ; then
-            \rm -rf "$src"
+    dst="${@[-1]}"
+    for src in "${@[0,-2]}"
+    do
+        dst_realpath="$(realpath ${dst})"
+        src_realpath="$(realpath ${src})"
+        if echo "${src_realpath}" |
+                grep "^${dst_realpath}" > /dev/null ||
+           echo "${dst_realpath}" |
+                grep "^${src_realpath}" > /dev/null ||
+           echo "${src_realpath}" |
+                grep "^$(realpath ${dst_realpath}/$(basename ${src}))" > /dev/null ||
+           echo "$(realpath ${dst_realpath}/$(basename ${src}))" |
+                grep "^${src_realpath}" > /dev/null
+        then
+            echo "Possible directory cycle detected!" 1>&2
+            return -1
         fi
+
+        # We "protect" this command with a timeout, in case one of the checks
+        # above misses another problem.
+        if ! timeout 1 find "${src}" -type d -exec mkdir -p "${dst_realpath}/{}" \;
+        then
+            echo "mkdir timeout! Possible undetected directory cycle!"
+            return -1
+        fi
+        find "${src}" -type f -exec sh -c "mv '{}' \"${dst_realpath}/\$(dirname {})\"" \;
+        find "${src}" -type d -empty -delete
     done
 }
 

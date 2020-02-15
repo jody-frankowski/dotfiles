@@ -803,7 +803,8 @@ parenthesis):
 (use-package lispyville
     :config
     (add-hook 'emacs-lisp-mode-hook #'lispyville-mode)
-    (add-hook 'lisp-mode-hook #'lispyville-mode))
+    (add-hook 'lisp-mode-hook #'lispyville-mode)
+    (add-hook 'scheme-mode-hook #'lispyville-mode))
 #+END_SRC
 
 Disable editorconfig for lisp modes. Emacs builtin should be better:

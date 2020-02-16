@@ -386,10 +386,6 @@ mv-merge () {
         dst_realpath="$(realpath ${dst})"
         src_realpath="$(realpath ${src})"
         if echo "${src_realpath}" |
-                grep "^${dst_realpath}" > /dev/null ||
-           echo "${dst_realpath}" |
-                grep "^${src_realpath}" > /dev/null ||
-           echo "${src_realpath}" |
                 grep "^$(realpath ${dst_realpath}/$(basename ${src}))" > /dev/null ||
            echo "$(realpath ${dst_realpath}/$(basename ${src}))" |
                 grep "^${src_realpath}" > /dev/null

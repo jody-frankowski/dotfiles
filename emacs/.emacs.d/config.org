@@ -279,13 +279,13 @@ Enable motioned alignments with evil-lion:
 
 ** Comments
 
-Install [[https://github.com/linktohack/evil-commentary][evil-commentary]] that
-duplicates [[https://github.com/tpope/vim-commentary][vim-commentary]]'s
-features:
+Install
+[[https://github.com/redguardtoo/evil-nerd-commenter][evil-nerd-commenter]] to
+provide =SPC ;= and =SPC c y= operators (=SPC ;= is a bit faster to type than
+=SPC c c=):
 
 #+BEGIN_SRC emacs-lisp
-(use-package evil-commentary)
-(evil-commentary-mode)
+(use-package evil-nerd-commenter)
 #+END_SRC
 
 * Eyebrowse
@@ -1081,7 +1081,7 @@ Misc keybindings with General:
   "bd"  'kill-this-buffer
   "bn"  'next-buffer
   "bp"  'previous-buffer
-  "cy"  'evilnc-copy-and-comment-lines
+  "cy"  'evilnc-copy-and-comment-operator
   "ff"  'counsel-find-file
   "fj"  'dired-jump
   "fr"  'counsel-recentf

@@ -916,6 +916,20 @@ Make all prompts use =y= or =n= as an answer:
 (fset 'yes-or-no-p 'y-or-n-p)
 #+END_SRC
 
+Disable popup prompts (dialog boxes) because they often screw the emacsclient
+display:
+
+#+BEGIN_SRC emacs-lisp
+(csetq use-dialog-box nil)
+#+END_SRC
+
+Reproduction steps for the above problem:
+- Write something to a file, without saving
+- Modify the file outside of Emacs
+- Ask to save the file from Emacs
+- Don't answer to the Echo Area prompt
+- Popup now shows up
+
 Make scrolling smoother (line by line) and without jumps, while keeping 10 lines
 visible under point at all times:
 

@@ -910,6 +910,12 @@ dark gray:
 
 * UX
 
+Make all prompts use =y= or =n= as an answer:
+
+#+BEGIN_SRC emacs-lisp
+(fset 'yes-or-no-p 'y-or-n-p)
+#+END_SRC
+
 Make scrolling smoother (line by line) and without jumps, while keeping 10 lines
 visible under point at all times:
 

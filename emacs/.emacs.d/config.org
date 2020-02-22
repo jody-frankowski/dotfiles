@@ -908,6 +908,19 @@ dark gray:
   (set-face-background 'whitespace-tab nil))
 #+END_SRC
 
+* UX
+
+Make scrolling smoother (line by line) and without jumps, while keeping 10 lines
+visible under point at all times:
+
+#+BEGIN_SRC emacs-lisp
+(setq scroll-conservatively 9999)
+(setq scroll-margin 10)
+#+END_SRC
+
+Note that scrolling from the very bottom is buggy:
+[[https://github.com/syl20bnr/spacemacs/issues/8224][https://github.com/syl20bnr/spacemacs/issues/8224]]
+
 * TODO Unicode Homoglyphs Highlighter
 
 Add unicode-troll-stopper which highlights unicode homoglyphs. (Think

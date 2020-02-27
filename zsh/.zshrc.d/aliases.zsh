@@ -52,6 +52,7 @@ alias scu='systemctl --user'
 alias ls='ls --color=auto --group-directories-first'
 alias l='ls -lFh'     # size,show type,human readable
 alias la='ls -lAFh'   # long list,show almost all,show type,human readable
+alias lat='\ls --color=auto -lat'
 alias latr='\ls --color=auto -latr'
 alias sl=ls
 

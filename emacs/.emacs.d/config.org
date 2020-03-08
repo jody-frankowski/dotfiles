@@ -1142,7 +1142,9 @@ Misc keybindings with General:
 (general-define-key
   :states '(normal)
   :keymaps '(override)
-  "C-a" 'evil-numbers/inc-at-pt)
+  "C-a" 'evil-numbers/inc-at-pt
+  "C-x" 'evil-numbers/dec-at-pt
+)
 
 (general-define-key
   :states '(insert)

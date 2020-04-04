@@ -131,6 +131,6 @@ fi
 
 ### Plugins
 # fzf
-source ~/.go/src/github.com/junegunn/fzf/shell/completion.zsh
-source ~/.go/src/github.com/junegunn/fzf/shell/key-bindings.zsh
+source ~/.usr/share/fzf/completion.zsh
+source ~/.usr/share/fzf/key-bindings.zsh
 ###

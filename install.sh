@@ -29,8 +29,4 @@ for terminfo in ./base/.terminfo/*.terminfo ; do
     tic -x -o ~/.terminfo $terminfo
 done
 
-# fzf
-export GOPATH=~/.go
-go get -u github.com/junegunn/fzf
-
 popd > /dev/null

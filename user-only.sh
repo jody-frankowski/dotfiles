@@ -22,7 +22,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         editorconfig
         emacs
         gnupg
-        go
+        fzf
         mosh
         myrepos
         python3
@@ -86,6 +86,17 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # Reload
     killall Dock
 fi
+
+# fzf
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    fzf_path=~/.brew/opt/fzf/shell/
+else
+    fzf_path=/usr/share/fzf/
+fi
+[[ -d ~/.usr/share/fzf ]] || mkdir ~/.usr/share/fzf
+for file in completion.zsh key-bindings.zsh ; do
+    [[ -L ~/.usr/share/fzf/${file} ]] || ln -s ${fzf_path}/${file} ~/.usr/share/fzf/${file}
+done
 
 # ssh
 [[ -d ~/.ssh ]] || mkdir ~/.ssh && chmod 700 ~/.ssh

@@ -450,21 +450,6 @@ pacs () {
     rehash
 }
 
-play () {
-    [[ -d ~/.mpd/music/temp/ ]] || mkdir -p ~/.mpd/music/temp &> /dev/null
-    find ~/.mpd/music/temp -type l -delete
-
-    for dir in "$@" ; do
-        ln -s "$(realpath $dir)" ~/.mpd/music/temp &>/dev/null
-    done
-
-    {mpc -q update --wait
-    mpc clear
-    mpc ls temp | mpc -q add
-    mpc play} &>/dev/null &!
-}
-compdef _files play
-
 pssh () {
     # Takes a list of host as arguments
     # For each host:

@@ -87,18 +87,12 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     killall Dock
 fi
 
-# mpd
-if [[ ! -d ~/.mpd ]] ; then
-    mkdir -p ~/.mpd/playlists
-    touch ~/.mpd/{mpd.db,mpd.log,mpd.pid,mpdstate}
-fi
-
 # ssh
 [[ -d ~/.ssh ]] || mkdir ~/.ssh && chmod 700 ~/.ssh
 [[ -d ~/.ssh/tmp ]] || mkdir ~/.ssh/tmp && chmod 700 ~/.ssh/tmp
 
 # stow the dotfiles
-for dir in base docker emacs gnupg js karabiner mpd mpv ssh tmux valgrind X ; do
+for dir in base docker emacs gnupg js karabiner mpv ssh tmux valgrind X ; do
     stow --no-folding ${dir}
 done
 # hack for the freaking symlink removal

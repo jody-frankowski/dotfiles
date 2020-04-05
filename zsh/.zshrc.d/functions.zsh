@@ -26,28 +26,8 @@ clifu () {
     curl -s "https://www.commandlinefu.com/commands/matching/$1/`echo -n $1 | base64`/plaintext" | less
 }
 
-con-by-state () {
-    ss -nat | tail -n +2 | awk '{print $1}'| sort | uniq -c | sort -rn
-}
-
-con-by-ip () {
-    ss -ntu | tail -n +2 | awk '{print $6}' | cut -d: -f1 | sort | uniq -c | sort -n
-}
-
 curlh () {
     curl -s -v -o /dev/null $@
-}
-
-download-missing-libs () {
-    if [[ $# -ne 1 ]] ; then
-        echo "Usage: download-missing-libs BINARY"
-    else
-        missing_libs=()
-        for lib in $(ldd "$1" | grep 'not found' | awk '{print $1}') ; do
-            missing_libs+=$(pkgfile "${lib}")
-        done
-        sudo pacman -S "${missing_libs[@]}"
-    fi
 }
 
 # https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/encode64/encode64.plugin.zsh
@@ -706,18 +686,3 @@ sshrc () {
 }
 alias s=sshrc
 compdef s="ssh"
-
-sudo-ssh () {
-    ssh $* -t "sudo su"
-}
-compdef sudo-ssh="ssh"
-
-urgent-ssh () {
-    ssh -t $@ "/usr/bin/nice -n-20 bash -l"
-}
-compdef urgent-ssh="ssh"
-
-vmanage () {
-    virt-manager -c qemu+ssh://$1/system
-}
-compdef vmanage="ssh"

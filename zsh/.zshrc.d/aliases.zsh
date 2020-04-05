@@ -6,7 +6,6 @@ alias -g H='| head'
 alias -g G='| rg'
 alias -g J='| jq'
 alias -g L='| less'
-alias -g P='| parallel'
 alias -g S='| sort'
 alias -g SU='| sort -u'
 alias -g T='| tail'
@@ -37,7 +36,6 @@ alias ip='ip -c'
 alias k='kubectl'
 alias mkdir='mkdir -pv'
 alias o='xdg-open'
-alias psc='ps xawf -eo pid,user,cgroup,args'
 alias rdesktop='rdesktop -g 1680x1050'
 alias rg="easy-grep -S --color=always"
 alias umount='sudo umount'
@@ -118,9 +116,6 @@ alias pacu='sudo pacman -Syu'
 alias piku='sudo pikaur -Syyu --noconfirm'
 alias pacman-list-orphans='pacman --query --deps --unrequired'
 alias pacman-remove-orphans='sudo pacman --remove --recursive $(pacman --quiet --query --deps --unrequired)'
-
-# Pentest
-alias sqlmap='sqlmap --random-agent'
 
 # Url tools
 alias urlencode='python2 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'

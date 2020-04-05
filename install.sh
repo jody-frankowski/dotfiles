@@ -6,7 +6,7 @@ set -x
 script_dir=$(dirname $0)
 pushd ${script_dir} > /dev/null
 
-for dir in ~/.usr/bin/ ~/.usr/opt/ ~/.usr/var/log/ ; do
+for dir in ~/.usr/bin/ ~/.usr/opt/ ~/.usr/share/ ~/.usr/var/log/ ; do
     [[ -d "${dir}" ]] || mkdir -p "${dir}"
 done
 

@@ -10,7 +10,7 @@ symlink () {
 
     for file in $(find "${package}" -type f)
     do
-        dir=~/"$(dirname ${file} | cut -d/ -f2-)"
+        dir=~/"$(dirname ${file} | cut -s -d/ -f2-)"
         filename="$(basename ${file})"
         mkdir -p "${dir}"
         [ -L "${dir}/${filename}" ] || ln -s $(realpath "${file}") "${dir}/${filename}"

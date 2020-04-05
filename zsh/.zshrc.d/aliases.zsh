@@ -35,7 +35,6 @@ alias get='curl --continue-at - --location --progress-bar --remote-name --remote
 alias info='info --vi-keys'
 alias ip='ip -c'
 alias k='kubectl'
-alias locate='locate -i -e'
 alias mkdir='mkdir -pv'
 alias o='xdg-open'
 alias psc='ps xawf -eo pid,user,cgroup,args'

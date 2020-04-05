@@ -336,7 +336,7 @@ hglog () {
 
 loc () {
     to_search=$(echo $* | sed "s/ /*/g")
-    \locate "*${to_search}*"
+    locate -i -e "*${to_search}*"
 }
 
 mkcd () {

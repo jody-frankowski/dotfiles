@@ -5,10 +5,6 @@ set -euxo pipefail
 script_dir=$(dirname $0)
 pushd ${script_dir} > /dev/null
 
-for dir in ~/code/ ~/code/tmp/ ; do
-    [[ -d "${dir}" ]] || mkdir -p "${dir}"
-done
-
 # macOS Specific
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="~/.brew/bin/:$PATH"

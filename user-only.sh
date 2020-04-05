@@ -3,7 +3,7 @@
 set -euxo pipefail
 
 script_dir=$(dirname $0)
-pushd ${script_dir} > /dev/null
+pushd "${script_dir}" > /dev/null
 
 # macOS Specific
 if [[ "$OSTYPE" == "darwin"* ]]; then

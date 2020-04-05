@@ -1,7 +1,6 @@
 #!/bin/bash
 
-set -euo pipefail
-set -x
+set -euxo pipefail
 
 script_dir=$(dirname $0)
 pushd ${script_dir} > /dev/null

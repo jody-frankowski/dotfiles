@@ -127,11 +127,9 @@ done
 [[ -d ~/.ssh/tmp ]] || mkdir ~/.ssh/tmp && chmod 700 ~/.ssh/tmp
 
 # Symlink the dotfiles
-for dir in base docker emacs gnupg js mpv ssh tmux valgrind X ; do
+for dir in alacritty base docker emacs gnupg js mpv ssh tmux valgrind ; do
     symlink ${dir}
 done
-# hack for the freaking symlink removal
-chmod 500 ~/.config/gtk-2.0/
 
 # Symlink *-hostname or *-domain
 ls -d *-"$(hostname)" &>/dev/null && symlink *-"$(hostname)"
@@ -141,9 +139,6 @@ ls -d *-"$(hostname | cut -d. -f2-)" &>/dev/null && symlink *-"$(hostname | cut 
 if [[ "$OSTYPE" == "linux-gnu" ]] ; then
     # Reload systemd because of systemd units
     systemctl --user daemon-reload
-
-    # change file-chooser startup location in gtk 3 https://wiki.archlinux.org/index.php/GTK%2B#File-Chooser_Startup-Location
-    gsettings set org.gtk.Settings.FileChooser startup-mode cwd
 fi
 
 # ssh config

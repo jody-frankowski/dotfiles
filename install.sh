@@ -5,11 +5,23 @@ set -euxo pipefail
 script_dir=$(dirname $0)
 pushd "${script_dir}" > /dev/null
 
+symlink () {
+    package="$1"
+
+    for file in $(find "${package}" -type f)
+    do
+        dir=~/"$(dirname ${file} | cut -d/ -f2-)"
+        filename="$(basename ${file})"
+        mkdir -p "${dir}"
+        [ -L "${dir}/${filename}" ] || ln -s $(realpath "${file}") "${dir}/${filename}"
+    done
+}
+
 for terminfo in ./base/.terminfo/*.terminfo ; do
     tic -x -o ~/.terminfo $terminfo
 done
 
-stow --no-folding zsh
+symlink zsh
 
 # Stop there for root
 if [[ `id -u` -eq 0 ]] ; then
@@ -37,7 +49,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         myrepos
         python3
         ripgrep
-        stow
         syncthing
         tmux
         valgrind
@@ -112,16 +123,16 @@ done
 [[ -d ~/.ssh ]] || mkdir ~/.ssh && chmod 700 ~/.ssh
 [[ -d ~/.ssh/tmp ]] || mkdir ~/.ssh/tmp && chmod 700 ~/.ssh/tmp
 
-# stow the dotfiles
+# Symlink the dotfiles
 for dir in base docker emacs gnupg js karabiner mpv ssh tmux valgrind X ; do
-    stow --no-folding ${dir}
+    symlink ${dir}
 done
 # hack for the freaking symlink removal
 chmod 500 ~/.config/gtk-2.0/
 
-# Stow *-hostname or *-domain
-ls -d *-"$(hostname)" &>/dev/null && stow --no-folding *-"$(hostname)"
-ls -d *-"$(hostname | cut -d. -f2-)" &>/dev/null && stow --no-folding *-"$(hostname | cut -d. -f2-)"
+# Symlink *-hostname or *-domain
+ls -d *-"$(hostname)" &>/dev/null && symlink *-"$(hostname)"
+ls -d *-"$(hostname | cut -d. -f2-)" &>/dev/null && symlink *-"$(hostname | cut -d. -f2-)"
 
 # Linux Specific
 if [[ "$OSTYPE" == "linux-gnu" ]] ; then
@@ -136,7 +147,8 @@ fi
 ~/.ssh/update
 
 # tpm (tmux-plugin-manager)
-# This needs to be after tmux's stowing because tpm searches for its config in tmux.conf
+# This needs to be done after tmux's symlinking because tpm searches for its
+# config in tmux.conf
 [[ -d ~/.tmux/plugins/tpm ]] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
 # install plugins. buggy, better use prefix + I
 ~/.tmux/plugins/tpm/scripts/install_plugins.sh > /dev/null

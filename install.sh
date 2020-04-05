@@ -106,6 +106,9 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     defaults write com.apple.dock autohide -bool true
     # Reload
     killall Dock
+
+    ### Karabiner
+    symlink karabiner
 fi
 
 # fzf
@@ -124,7 +127,7 @@ done
 [[ -d ~/.ssh/tmp ]] || mkdir ~/.ssh/tmp && chmod 700 ~/.ssh/tmp
 
 # Symlink the dotfiles
-for dir in base docker emacs gnupg js karabiner mpv ssh tmux valgrind X ; do
+for dir in base docker emacs gnupg js mpv ssh tmux valgrind X ; do
     symlink ${dir}
 done
 # hack for the freaking symlink removal

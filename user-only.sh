@@ -122,7 +122,6 @@ if [[ "$OSTYPE" == "linux-gnu" ]] ; then
 fi
 
 # ssh config
-cd ~/.ssh > /dev/null
-./update
+~/.ssh/update
 
 popd > /dev/null

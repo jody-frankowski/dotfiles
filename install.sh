@@ -60,7 +60,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         ripgrep
         syncthing
         tmux
-        valgrind
     )
 
     for package in ${packages[@]} ; do
@@ -136,7 +135,7 @@ done
 [[ -d ~/.ssh/tmp ]] || mkdir ~/.ssh/tmp && chmod 700 ~/.ssh/tmp
 
 # Symlink the dotfiles
-for dir in alacritty base docker emacs gnupg js mpv ssh tmux valgrind ; do
+for dir in alacritty base docker emacs gnupg js mpv ssh tmux ; do
     symlink ${dir}
 done
 

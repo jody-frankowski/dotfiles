@@ -120,11 +120,3 @@ alias pacman-remove-orphans='sudo pacman --remove --recursive $(pacman --quiet -
 # Url tools
 alias urlencode='python2 -c "import sys, urllib as ul; print ul.quote_plus(sys.argv[1])"'
 alias urldecode='python2 -c "import sys, urllib as ul; print ul.unquote_plus(sys.argv[1])"'
-
-# C
-# Bug on macOS with the system and brew python versions
-# https://stackoverflow.com/a/47658597
-alias lldb='PATH=/usr/bin lldb'
-alias gww="gcc -Wall -Wextra -Werror"
-alias make='make DEBUG=1'
-alias valgrind='valgrind --show-leak-kinds=all --leak-check=full --track-origins=yes'

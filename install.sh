@@ -12,8 +12,17 @@ symlink () {
     do
         dir=~/"$(dirname ${file} | cut -s -d/ -f2-)"
         filename="$(basename ${file})"
+        link="${dir}/${filename}"
+
         mkdir -p "${dir}"
-        [ -L "${dir}/${filename}" ] || ln -s $(realpath "${file}") "${dir}/${filename}"
+
+        if [ -e "${link}" -a ! -L "${link}" ]
+        then
+            echo "${link} exists and is not a symlink. Aborting!"
+            exit 1
+        else
+            ln -f -s $(realpath "${file}") "${link}"
+        fi
     done
 }
 

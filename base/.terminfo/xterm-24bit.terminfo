@@ -42,8 +42,10 @@ colors), and italics,
   setaf=\E[%?%p1%{8}%<%t3%p1%d%e38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%d%;m,
 # New -direct modes also update the number of colors available
   colors#0x1000000,
-# Misc overrides to be exactly like xterm-direct
-  ccc@,initc@,oc@,rs1=\Ec,
+# Remove some 256color specific capabilities
+  ccc@,initc@,oc@,
+# rs1 is changed with xterm-direct
+  rs1=\Ec,
 
 # Enable 24-bit colors in Emacs 26 and 27
 # Emacs 27 switched to detecting the "RGB" capability but kept

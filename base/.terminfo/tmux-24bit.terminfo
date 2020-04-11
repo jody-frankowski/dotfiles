@@ -42,7 +42,7 @@ colors),
   setaf=\E[%?%p1%{8}%<%t3%p1%d%e38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%d%;m,
 # New -direct modes also update the number of colors available
   colors#0x1000000,
-# Misc overrides to be more like xterm-direct
+# Remove some 256color specific capabilities
   ccc@,initc@,oc@,
 
 # Enable 24-bit colors in Emacs 26 and 27

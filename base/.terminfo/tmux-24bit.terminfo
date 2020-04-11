@@ -43,7 +43,7 @@ colors),
 # New -direct modes also update the number of colors available
   colors#0x1000000,
 # Misc overrides to be more like xterm-direct
-  ccc@,initc@,oc@,rs1=\Ec,
+  ccc@,initc@,oc@,
 
 # Enable 24-bit colors in Emacs 26 and 27
 # Emacs 27 switched to detecting the "RGB" capability but kept

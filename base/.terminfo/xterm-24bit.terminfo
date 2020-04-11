@@ -45,11 +45,6 @@ colors), and italics,
 # Misc overrides to be exactly like xterm-direct
   ccc@,initc@,oc@,rs1=\Ec,
 
-# Italics capabilities. xterm-256color doesn't export them, however
-# most modern terminal support them.
-  sitm=\E[3m,
-  ritm=\E[23m,
-
 # Enable 24-bit colors in Emacs 26 and 27
 # Emacs 27 switched to detecting the "RGB" capability but kept
 # compatibility with the setb24/setf24 capabilities because the new

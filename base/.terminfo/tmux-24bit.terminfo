@@ -52,7 +52,8 @@ colors),
 # https://github.com/emacs-mirror/emacs/blob/2f7885a4b3609dec19e4595c6c24f3a21f33c5d6/doc/misc/efaq.texi#L1629
 # Emacs 26 documentation:
 # https://web.archive.org/web/20190226163746/https://www.gnu.org/software/emacs/manual/html_mono/efaq.html#Colors-on-a-TTY
-# Note that these capabilities won't appear in the output of $(infocmp)
+# Because these are considered to be 'user-defined' capabilities, they will only
+# appear in the output of infocmp when the -x flag is used.
   setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
   setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
 

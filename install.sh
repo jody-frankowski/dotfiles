@@ -132,7 +132,7 @@ done
 
 # ssh
 [[ -d ~/.ssh ]] || mkdir ~/.ssh && chmod 700 ~/.ssh
-[[ -d ~/.ssh/tmp ]] || mkdir ~/.ssh/tmp && chmod 700 ~/.ssh/tmp
+[[ -d ~/.cache/ssh ]] || mkdir ~/.cache/ssh && chmod 700 ~/.cache/ssh
 
 # Symlink the dotfiles
 for dir in alacritty base docker emacs gnupg js mpv ssh tmux ; do

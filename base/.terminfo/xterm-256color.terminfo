@@ -1,0 +1,37 @@
+# See README.md for more information.
+
+# Name | Description
+xterm-256color|xterm with 24-bit colors (aka direct color mode, aka True colors)
+
+# Use the existing xterm-256color capabilities
+  use=xterm-256color,
+
+# Add the new 24-bit color capabilities.
+# We use the semicolon instead of the colon version because the former is more widespread.
+  setab=\E[%?%p1%{8}%<%t4%p1%d%e48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%d%;m,
+  setaf=\E[%?%p1%{8}%<%t3%p1%d%e38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%d%;m,
+# Update the number of colors available.
+  colors#0x1000000,
+# Remove some 256color specific capabilities.
+  ccc@,initc@,oc@,
+# rs1 is different in xterm-direct than in xterm-256color
+  rs1=\Ec,
+
+# Emacs 26 needs the specific capabilities `setb24` and `setf24` in order to
+# show True colors. Emacs 27 only needs that the now standard `RGB` capability
+# be defined. At the time of writing this, Emacs 27 hasn't been released yet.
+# Emacs 26/27 documentation:
+# https://github.com/emacs-mirror/emacs/blob/7a9fb5d55c9bf612a38348d59e769ee915175e28/doc/misc/efaq.texi#L1542
+# Because these are considered to be 'user-defined' capabilities, they will only
+# appear in the output of infocmp when the -x flag is used.
+  setb24=\E[48;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+  setf24=\E[38;2;%p1%{65536}%/%d;%p1%{256}%/%{255}%&%d;%p1%{255}%&%dm,
+
+# Tmux looks for these capabilities in the outer terminal in order to
+# enable 24-bit colors.
+# https://gist.github.com/XVilka/8346728#gistcomment-2110619
+# https://github.com/tmux/tmux/blob/018f1b8a803f15910781dc9894fbd168cfa50943/tty-term.c#L570
+# Because these are considered to be 'user-defined' capabilities, they will only
+# appear in the output of infocmp when the -x flag is used.
+  Tc,
+  RGB,

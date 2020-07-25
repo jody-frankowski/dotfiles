@@ -13,13 +13,16 @@ export PAGER='less'
 export LESS='-i -M -R -j4'
 
 # Go
-export GOPATH=~/.go
+export GOPATH=~/.cache/go
 
 # Npm
 export NPM_PACKAGES=~/.cache/npm
 
 # Python
 export PYTHONPATH="$HOME/.usr/lib/:$PYTHONPATH"
+
+# Rust
+export CARGO_HOME=~/.cache/cargo
 
 ## PATH
 # Homebrew
@@ -31,9 +34,9 @@ export PATH="$HOME/.cache/npm/bin:$PATH"
 # Python
 export PATH="$HOME/.local/bin:$PATH"
 # Go
-export PATH="$HOME/.go/bin:$PATH"
+export PATH="$HOME/.cache/go/bin:$PATH"
 # Rust
-export PATH="$HOME/.cargo/bin:$PATH"
+export PATH="$HOME/.cache/cargo/bin:$PATH"
 # Custom scripts and symlinks
 export PATH="$HOME/.usr/bin:$PATH"
 ## PATH

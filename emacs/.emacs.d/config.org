@@ -600,34 +600,7 @@ expected and also support motion (contrary to ~org-evil~):
 ** org-drill
 
 #+BEGIN_SRC emacs-lisp
-;; Manually install/require org-drill dependencies
-(use-package cl)
-(use-package cl-lib)
-(require 'org-drill)
-
-;; org-drill quick fix
-;; https://bitbucket.org/eeeickythump/org-drill/issues/62/org-drill-doesnt-work-with-org-mode-92
-(defun org-drill-hide-subheadings-if (test)
-    "TEST is a function taking no arguments. TEST will be called for each
-of the immediate subheadings of the current drill item, with the point
-on the relevant subheading. TEST should return nil if the subheading is
-to be revealed, non-nil if it is to be hidden.
-Returns a list containing the position of each immediate subheading of
-the current topic."
-    (let ((drill-entry-level (org-current-level))
-          (drill-sections nil))
-      (org-show-subtree)
-      (save-excursion
-        (org-map-entries
-         (lambda ()
-           (when (and (not (outline-invisible-p))
-                      (> (org-current-level) drill-entry-level))
-             (when (or (/= (org-current-level) (1+ drill-entry-level))
-                       (funcall test))
-               (hide-subtree))
-             (push (point) drill-sections)))
-         t 'tree))
-      (reverse drill-sections)))
+(use-package org-drill)
 
 (csetq org-drill-left-cloze-delimiter "<[")
 (csetq org-drill-right-cloze-delimiter "]>")

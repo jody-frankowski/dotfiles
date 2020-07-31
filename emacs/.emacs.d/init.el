@@ -30,6 +30,10 @@
 ;; https://github.com/jwiegley/use-package#usage-with-other-package-managers
 (customize-set-variable 'straight-use-package-by-default t)
 
+;; Enable shallow clones
+;; Re-enable this setting when https://github.com/raxod502/straight.el/issues/527 is closed
+;; (customize-set-variable 'straight-vc-git-default-clone-depth 1)
+
 ;; Pull the org packages
 (straight-use-package 'org-plus-contrib)
 (straight-use-package 'org)

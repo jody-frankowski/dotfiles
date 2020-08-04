@@ -856,6 +856,7 @@ Disable useless UI elements:
 (tool-bar-mode   -1)
 (tooltip-mode    -1)
 (menu-bar-mode   -1)
+(setq inhibit-startup-screen t)
 #+END_SRC
 
 ** Theme

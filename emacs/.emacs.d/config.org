@@ -570,7 +570,7 @@ the frame is small, to hijack a window and to restore its buffer when exiting.
 
 #+BEGIN_SRC emacs-lisp
 (defun org-src-switch-to-buffer (buffer context)
-  (case context
+  (pcase context
     ('edit
      (split-window-right)
      (windmove-right))

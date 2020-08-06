@@ -597,6 +597,12 @@ expected and also support motion (contrary to ~org-evil~):
               (evil-org-set-key-theme))))
 #+END_SRC
 
+Change the org-preview-latex "ltximg" directory location:
+
+#+BEGIN_SRC emacs-lisp
+(csetq org-preview-latex-image-directory (expand-file-name "~/.cache/emacs/ltximg/"))
+#+END_SRC
+
 ** org-drill
 
 #+BEGIN_SRC emacs-lisp

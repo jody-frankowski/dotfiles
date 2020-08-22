@@ -133,17 +133,6 @@ should work even if emacs runs exclusively in the terminal:
 (xclip-mode)
 #+END_SRC
 
-* Column Indicator
-
-Use the buil-in ~fill-column-indicator-mode~ on Emacs >= 27 (fci-mode was too
-slow for big org-mode files). This should take into account the ~fill-column~
-value:
-
-#+BEGIN_SRC emacs-lisp
-(if (version<= "27" emacs-version)
-  (global-display-fill-column-indicator-mode))
-#+END_SRC
-
 * Customize Config
 
 Put all customizations in seperate file so it doesn't clobber our init.el:

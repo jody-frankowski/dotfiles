@@ -820,6 +820,18 @@ Set geiser default scheme implementation (mit for now):
 (csetq geiser-default-implementation 'mit)
 #+END_SRC
 
+** LSP
+
+Install =lsp-mode= and =lsp-ui=:
+
+#+BEGIN_SRC emacs-lisp
+(use-package lsp-mode
+  :commands (lsp lsp-deferred))
+
+(use-package lsp-ui
+  :commands lsp-ui-mode)
+#+END_SRC
+
 ** Syntax Checking
 
 Install =flycheck= for on-the-fly syntax checking:

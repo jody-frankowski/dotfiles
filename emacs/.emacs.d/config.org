@@ -775,6 +775,20 @@ Install =go-mode=:
 (use-package go-mode)
 #+END_SRC
 
+Configure =lsp-mode= for Go:
+
+#+BEGIN_SRC emacs-lisp
+;; Start an LSP server startup when a Go buffer is visible for the first time.
+(add-hook 'go-mode-hook #'lsp-deferred)
+
+;; Set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+#+END_SRC
+
 *** Lisp
 
 Make lisp editing in evil-mode nicer with ~lispyville~ (e.g. ~dd~ will balance

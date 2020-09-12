@@ -736,6 +736,19 @@ Configure Emacs to load a '.el' instead of a '.elc' if the '.el' is newer:
 #+END_SRC
 
 * Programming
+** Autocompletion
+
+Install =company=. =lsp-mode= will automatically use it for completion:
+
+#+BEGIN_SRC emacs-lisp
+(use-package company
+  :ensure t
+  :config
+  ;; Enable completion-as-you-type behavior.
+  (setq company-idle-delay 0)
+  (setq company-minimum-prefix-length 1))
+#+END_SRC
+
 ** Languages
 *** C
 

@@ -1204,10 +1204,3 @@ Unbind some keybindings that duplicate other evil/vim keybindings:
 (define-key isearch-mode-map (kbd "M-p") nil)
 (define-key minibuffer-local-isearch-map (kbd "M-p") nil)
 #+END_SRC
-
-
-* SICP
-
-#+BEGIN_SRC emacs-lisp
-(use-package sicp)
-#+END_SRC

@@ -878,6 +878,21 @@ Configure =projectile= to use ivy for its completion:
 (setq projectile-completion-system 'ivy)
 #+END_SRC
 
+* Recent Files
+
+Enable the =recentf= minor mode which builds a list of recently opened files:
+
+#+BEGIN_SRC emacs-lisp
+(recentf-mode 1)
+(setq recentf-max-saved-items 100)
+#+END_SRC
+
+Save the list every 5 minutes (the new entries are lost if Emacs crashes):
+
+#+BEGIN_SRC emacs-lisp
+(run-at-time nil (* 5 60) 'recentf-save-list)
+#+END_SRC
+
 * Terminal
 
 Enable mouse support in the terminal:

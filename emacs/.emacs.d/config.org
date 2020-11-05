@@ -866,8 +866,16 @@ Disable flycheck's emacs-lisp-checkdoc for org-edit-special buffers:
 
 * Project Management
 
+Install =projectile=:
+
 #+BEGIN_SRC emacs-lisp
 (use-package projectile)
+#+END_SRC
+
+Configure =projectile= to use ivy for its completion:
+
+#+BEGIN_SRC emacs-lisp
+(setq projectile-completion-system 'ivy)
 #+END_SRC
 
 * Terminal

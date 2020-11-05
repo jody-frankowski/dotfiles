@@ -592,6 +592,12 @@ Change the org-preview-latex "ltximg" directory location:
 (csetq org-preview-latex-image-directory (expand-file-name "~/.cache/emacs/ltximg/"))
 #+END_SRC
 
+Upscale latex previews (even on FHD screens they are too small):
+
+#+BEGIN_SRC emacs-lisp
+(setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
+#+END_SRC
+
 ** org-drill
 
 #+BEGIN_SRC emacs-lisp

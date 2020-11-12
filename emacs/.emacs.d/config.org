@@ -748,7 +748,12 @@ Install =company=. =lsp-mode= will automatically use it for completion:
   :config
   ;; Enable completion-as-you-type behavior.
   (setq company-idle-delay 0)
-  (setq company-minimum-prefix-length 1))
+  (setq company-minimum-prefix-length 1)
+  ;; Add personal keybindings
+  (define-key company-active-map (kbd "C-j") 'company-select-next)
+  (define-key company-active-map (kbd "C-k") 'company-select-previous)
+  (define-key company-search-map (kbd "C-j") 'company-select-next)
+  (define-key company-search-map (kbd "C-k") 'company-select-previous))
 #+END_SRC
 
 ** Languages

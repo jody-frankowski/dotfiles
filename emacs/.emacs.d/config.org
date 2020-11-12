@@ -47,28 +47,24 @@ Enable the refresh for dired views too:
 
 * Backups and Saving
 
-With a combination of undo-tree (~u~ and ~C-r~ with branches) and
-auto-saving, a loss of work should be pretty small.  The undo-tree
-will contain the latest changes, laid out in a tree, in order to be
-able to come back to another "branch" of edition. Emacs auto-save is
-configured to save every 300 keystrokes or 30 seconds of idle time, in
-the edited file, and not in an external one that we might forget to
-restore from! We will also configure Emacs to save and restore the
-last point position.
+With a combination of =undo-fu= (~u~ and ~C-r~) and auto-saving, a loss of work should be pretty
+small. Emacs auto-save is configured to save every 300 keystrokes or 30 seconds of idle time, in the
+edited file, and not in an external one that we might forget to restore from! We will also configure
+Emacs to save and restore the last point position.
 
-Enable and configure persistent undo with the help of undo-tree:
+Enable and configure persistent undo with undo-fu:
 
 #+BEGIN_SRC emacs-lisp
-;; evil already pulls undo-tree, but let's be explicit here
-(use-package undo-tree
-  :init
-  (unless (file-exists-p "~/.emacs.d/.cache/undo")
-    (make-directory "~/.emacs.d/.cache/undo"))
-  :config
-  (csetq undo-tree-auto-save-history t)
-  (csetq undo-tree-visualizer-diff t)
-  (csetq undo-tree-visualizer-timestamps t)
-  (csetq undo-tree-history-directory-alist '(("." . "~/.emacs.d/.cache/undo"))))
+(use-package undo-fu)
+(use-package undo-fu-session)
+(global-undo-fu-session-mode)
+(csetq undo-fu-session-file-limit 100)
+#+END_SRC
+
+Configure evil-mode to use undo-fu:
+
+#+BEGIN_SRC emacs-lisp
+(csetq evil-undo-system 'undo-fu)
 #+END_SRC
 
 Configure Emcas to auto-save in the edited file:

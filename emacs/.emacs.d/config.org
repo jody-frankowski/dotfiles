@@ -59,6 +59,7 @@ Enable and configure persistent undo with undo-fu:
 (use-package undo-fu-session)
 (global-undo-fu-session-mode)
 (csetq undo-fu-session-file-limit 100)
+(csetq undo-fu-session-directory "~/.cache/emacs/undo-fu/")
 #+END_SRC
 
 Configure evil-mode to use undo-fu:

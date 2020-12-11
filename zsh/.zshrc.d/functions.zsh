@@ -381,7 +381,7 @@ mv-merge () {
             echo "mkdir timeout! Possible undetected directory cycle!"
             return -1
         fi
-        find "${src}" -type f -exec sh -c "mv '{}' \"${dst_realpath}/\$(dirname {})\"" \;
+        find "${src}" -type f -exec sh -c "mv '{}' \"${dst_realpath}/\$(basename \$(dirname {}))\"" \;
         find "${src}" -type d -empty -delete
     done
 }

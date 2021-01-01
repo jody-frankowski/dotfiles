@@ -77,13 +77,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         [[ -d ~/.brew/opt/$package ]] || brew install $package
     done
 
-    ### Tmux
-    # Patch the formula to enable displaying unicode characters
-    if ! grep with-utf8proc ~/.brew/Library/Taps/homebrew/homebrew-core/Formula/tmux.rb &>/dev/null ; then
-        sed -i -e $'s/args = %W\\[/args = %W[\\\n      --with-utf8proc/' ~/.brew/Library/Taps/homebrew/homebrew-core/Formula/tmux.rb
-        brew reinstall tmux
-    fi
-
     ### coreutils
     # Replace some macOS's coreutils binaries with a GNU one
     for symlink in date dircolors ls rm sort ; do

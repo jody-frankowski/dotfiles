@@ -98,7 +98,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     PATH="~/.brew/opt/ncurses/bin:$PATH" TERMINFO_DIRS=~/.brew/Cellar/ncurses/$latest_ncurses/share/terminfo/ infocmp -x tmux-256color > ~/.terminfo/tmux-256color
     tic -x ~/.terminfo/tmux-256color
 
-    brew services list | grep syncthing > /dev/null || brew services start syncthing
+    brew services list | grep 'syncthing.*started' > /dev/null || brew services start syncthing
 
     ### screensaver
     # Require a password immediately after enabling the screensaver

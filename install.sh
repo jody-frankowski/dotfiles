@@ -21,7 +21,7 @@ symlink () {
             echo "${link} exists and is not a symlink. Aborting!"
             exit 1
         else
-            ln -f -s $(realpath "${file}") "${link}"
+            ln -f -s "$(pwd)/${file}" "${link}"
         fi
     done
 }

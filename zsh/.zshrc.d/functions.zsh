@@ -328,9 +328,9 @@ mkcd () {
 
 mount () {
     if [ "$#" -eq 0 ] ; then
-        /bin/mount | column -t
+        command mount | column -t
     else
-        /bin/mount $@
+        command mount $@
     fi
 }
 

@@ -2,7 +2,7 @@
 
 # Adapted from https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
 
-fpath=(~/.zshrc.d/completion $fpath)
+fpath=($(brew --prefix)/share/zsh/site-functions ~/.zshrc.d/completion $fpath)
 
 # Load and initialize the bash and zsh completion system ignoring
 # insecure directories with a cache time of 24 hours, so it should

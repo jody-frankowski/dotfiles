@@ -45,3 +45,6 @@ export PATH="$HOME/.usr/bin:$PATH"
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export HOMEBREW_NO_AUTO_UPDATE=1
 fi
+
+# Set the locale
+export LC_ALL=en_US.UTF-8

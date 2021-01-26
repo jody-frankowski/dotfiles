@@ -3,7 +3,7 @@
 # Adapted from https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
 
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    fpath=($(brew --prefix)/share/zsh/site-functions)
+    fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
 fi
 fpath=(~/.zshrc.d/completion $fpath)
 

@@ -401,7 +401,7 @@ Set indentation to spaces instead of the mix of tabs and spaces default
 
 * Line and Column Numbers
 
-Show relative line numbers, and also show column number in the status bar. Line
+Show line numbers, and also show column number in the status bar. Line
 numbers aren't activated for the first buffer with emacsclient because of
 https://github.com/emacs-mirror/emacs/blob/master/lisp/display-line-numbers.el#L97.
 I'm not sure why ~frame-parameter~ returns nil :/. So let's override the culprit
@@ -417,7 +417,7 @@ function and use it in a custom global minor mode.
   display-line-numbers-mode my-display-line-numbers--turn-on)
 (my-global-display-line-numbers-mode)
 
-(csetq display-line-numbers-type 'relative)
+(csetq display-line-numbers-type t)
 
 ;; Make Emacs set the line-numbers width to the largest width needed
 ;; Why isn't this the default ? :(

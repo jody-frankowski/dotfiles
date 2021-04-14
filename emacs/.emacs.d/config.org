@@ -274,6 +274,17 @@ provide =SPC ;= and =SPC c y= operators (=SPC ;= is a bit faster to type than
 (use-package evil-nerd-commenter)
 #+END_SRC
 
+** matchit
+
+Install [[https://github.com/redguardtoo/evil-matchit][evil-matchit]] to provide a more complete
+support of the '%' operator:
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-matchit)
+(require 'evil-matchit)
+(global-evil-matchit-mode 1)
+#+END_SRC
+
 * Eyebrowse
 
 Add the ~eyebrowse~ package that helps us manage window configurations and hence
@@ -840,6 +851,14 @@ Set geiser default scheme implementation (mit for now):
 
 #+BEGIN_SRC emacs-lisp
 (csetq geiser-default-implementation 'mit)
+#+END_SRC
+
+*** Rust
+
+#+BEGIN_SRC emacs-lisp
+(use-package rustic)
+(csetq rustic-format-on-save t)
+(csetq rustic-format-trigger 'on-save)
 #+END_SRC
 
 ** LSP

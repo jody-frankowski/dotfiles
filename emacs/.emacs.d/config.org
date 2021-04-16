@@ -182,6 +182,9 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
 #+BEGIN_SRC emacs-lisp
 (use-package evil
   :init
+  ;; Required by evil-collection
+  (setq evil-want-integration t) ;; This is optional since it's already set to t by default.
+  (setq evil-want-keybinding nil)
   ;; Makes C-u scroll like in vim
   (csetq evil-want-C-u-scroll t)
   ;; Makes Y copy like in vim
@@ -274,7 +277,19 @@ provide =SPC ;= and =SPC c y= operators (=SPC ;= is a bit faster to type than
 (use-package evil-nerd-commenter)
 #+END_SRC
 
-** matchit
+** evil-collection
+
+Install [[https://github.com/emacs-evil/evil-collection][evil-collection]] to provide more
+keybindings (eg. in Magit):
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-collection
+  :after evil
+  :config
+  (evil-collection-init))
+#+END_SRC
+
+** evil-matchit
 
 Install [[https://github.com/redguardtoo/evil-matchit][evil-matchit]] to provide a more complete
 support of the '%' operator:
@@ -317,11 +332,10 @@ Automatically create missing directories when using =find-file= (or
 
 * Git
 
-Install Magit, evil-magit:
+Install Magit:
 
 #+BEGIN_SRC emacs-lisp
 (use-package magit)
-(use-package evil-magit)
 #+END_SRC
 
 Install git-gutter for a git diff margin:

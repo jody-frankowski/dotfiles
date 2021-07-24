@@ -650,7 +650,43 @@ Lower the *learn fraction* to be a little more on the safe side (default is =0.5
 ** anki-editor
 
 #+BEGIN_SRC emacs-lisp
-(use-package anki-editor)
+(use-package anki-editor
+  :init
+  (csetq anki-editor-use-math-jax t)
+  (csetq anki-editor-create-decks t))
+
+;; Wrap latex-environment in between \[\] which are the delimiters
+;; Anki uses for Mathjax display equations.
+(defun anki-editor--wrap-latex-for-mathjax (content)
+  "Wrap CONTENT for Anki's native MathJax support."
+  (format "<p>\\[%s\\]</p>" content))
+
+;; Don't wrap each latex-environment lines in <div> because AnkiDroid
+;; doesn't seem to support that.
+(defun anki-editor--ox-latex-for-mathjax (latex _contents _info)
+  "Transcode LATEX from Org to HTML.
+CONTENTS is nil.  INFO is a plist holding contextual information."
+  (message "HELLO")
+  (let ((code (org-remove-indentation (org-element-property :value latex))))
+    (setq code
+          (pcase (org-element-type latex)
+            ('latex-fragment (anki-editor--translate-latex-delimiters-to-anki-mathjax-delimiters code))
+            ('latex-environment (anki-editor--wrap-latex-for-mathjax (org-html-encode-plain-text code)))))
+
+    (if anki-editor-break-consecutive-braces-in-latex
+        (replace-regexp-in-string "}}" "} } " code)
+      code)))
+#+END_SRC
+
+Workaround for https://github.com/louietan/anki-editor/issues/76:
+
+#+BEGIN_SRC emacs-lisp
+(defun anki-editor--anki-connect-invoke! (orig-fun &rest args)
+    (let ((request--curl-callback
+           (lambda (proc event) (request--curl-callback "localhost" proc event))))
+      (apply orig-fun args)))
+
+(advice-add 'anki-editor--anki-connect-invoke :around #'anki-editor--anki-connect-invoke!)
 #+END_SRC
 
 ** babel

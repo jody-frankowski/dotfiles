@@ -457,13 +457,17 @@ function and use it in a custom global minor mode.
 (csetq column-number-mode t)
 #+END_SRC
 
-* Load Path
+* Load Custom Files
 
-Add ~/.emacs.d/lisp to load-path so that we can pull individual .el files
-directly:
+Load all the .el files from ~/.emacs.d/lisp:
 
 #+BEGIN_SRC emacs-lisp
-(add-to-list 'load-path "~/.emacs.d/lisp/")
+(defun load-directory (dir)
+  (let ((load-it
+         (lambda (f)
+           (load-file (concat (file-name-as-directory dir) f)))))
+    (mapc load-it (directory-files dir nil "\\.el$"))))
+(load-directory "~/.emacs.d/lisp/")
 #+END_SRC
 
 * Markdown Mode

@@ -691,7 +691,7 @@ Workaround for https://github.com/louietan/anki-editor/issues/76:
 
 ** babel
 
-Disable confirmation prompt when evaluation code blocks:
+Disable confirmation prompt when evaluating code blocks:
 
 #+BEGIN_SRC emacs-lisp
 (csetq org-confirm-babel-evaluate nil)

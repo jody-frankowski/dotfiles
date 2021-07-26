@@ -35,7 +35,7 @@
 ;; (customize-set-variable 'straight-vc-git-default-clone-depth 1)
 
 ;; Pull the org packages
-(straight-use-package 'org-plus-contrib)
+(straight-use-package '(org-plus-contrib :type git :repo "https://git.sr.ht/~bzg/org-contrib"))
 (straight-use-package 'org)
 
 ;; The lastest version of org-babel-load-file doesn't follow symlinks when it

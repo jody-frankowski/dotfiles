@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Custom script to make rg match words in any order
-# Usage: rg [word ...]
+# Usage: easy-grep [word ...]
 
 options=""
 for arg in "$@" ; do

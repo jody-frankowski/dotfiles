@@ -3,6 +3,10 @@
 # Custom script to make rg match words in any order
 # Usage: easy-grep [word ...]
 
+# /!\ Warning: If called with "--color=always" `easy-grep abc cd` won't match "abcdef" because "abc"
+# will be enclosed in ANSI color codes, making the string look like "COLOR-CODEabcCOLOR-CODEdef" and
+# so the last rg (for "cd") won't be able to match.
+
 options=""
 for arg in "$@" ; do
     shift

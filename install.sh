@@ -86,10 +86,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         [[ -L ~/.usr/bin/$symlink ]] || ln -s g$symlink ~/.usr/bin/$symlink
     done
 
-    # symlink only llvm's scan-build because we don't want this llvm to replace
-    # macOS's one
-    [[ -L ~/.brew/bin/scan-build ]] || ln -s ~/.brew/opt/llvm/bin/scan-build ~/.brew/bin/
-
     ### terminfo
     # We need the terminfo capabilites of tmux-256color, however macOS doesn't
     # provide one.  The one that is in the homebrew's ncurses is incompatible

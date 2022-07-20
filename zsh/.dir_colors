@@ -3,12 +3,9 @@
 # Let's pretend all terminals are colorizable
 TERM *
 
-## Documentation
-#
 # The color sequences comply with https://en.wikipedia.org/wiki/ANSI_escape_code
 
-## Special files
-
+# Special files
 BLK                    48;5;230;38;5;244;01
 CAPABILITY             30;41
 CHR                    48;5;230;38;5;244;01
@@ -28,7 +25,7 @@ SOCK                   48;5;230;38;5;136;01
 STICKY                 48;5;33;38;5;230
 STICKY_OTHER_WRITABLE  48;5;64;38;5;230
 
-## Archives or compressed (violet)
+# Archives or compressed (violet)
 .7z     00;38;5;63
 .Z      00;38;5;63
 .a      00;38;5;63

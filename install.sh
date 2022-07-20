@@ -25,6 +25,8 @@ symlink () {
     done
 }
 
+### Config for normal and root users
+
 for terminfo in ./base/.terminfo/*.terminfo ; do
     tic -x -o ~/.terminfo $terminfo
 done
@@ -46,6 +48,8 @@ symlink zsh
 if [[ `id -u` -eq 0 ]] ; then
     exit 0
 fi
+
+### Config for normal users only
 
 for dir in ~/.usr/bin/ ~/.usr/opt/ ~/.usr/share/ ~/.usr/var/log/ ; do
     [[ -d "${dir}" ]] || mkdir -p "${dir}"

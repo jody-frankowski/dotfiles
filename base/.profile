@@ -27,7 +27,7 @@ export PYTHONPATH="$HOME/.usr/lib/:$PYTHONPATH"
 # Rust
 export CARGO_HOME=~/.cache/cargo
 
-## PATH
+### PATH
 # Homebrew
 if [[ "$OSTYPE" == "darwin"* ]]; then
     export PATH="$HOME/.brew/bin:$PATH"
@@ -42,7 +42,7 @@ export PATH="$HOME/.cache/go/bin:$PATH"
 export PATH="$HOME/.cache/cargo/bin:$PATH"
 # Custom scripts and symlinks
 export PATH="$HOME/.usr/bin:$PATH"
-## PATH
+### PATH
 
 # Disable Homebrew's auto update
 if [[ "$OSTYPE" == "darwin"* ]]; then

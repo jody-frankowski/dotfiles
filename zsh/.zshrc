@@ -94,9 +94,6 @@ done
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
-# More restrictive umask
-umask 077
-
 ### Hooks
 # Auto ls when cd
 chpwd() {

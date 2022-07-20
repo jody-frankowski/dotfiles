@@ -1,3 +1,6 @@
+# More restrictive umask
+umask 077
+
 # Emacs as default editor
 # https://unix.stackexchange.com/questions/4859/visual-vs-editor-whats-the-difference
 export EDITOR='emacsclient -a "" --tty'

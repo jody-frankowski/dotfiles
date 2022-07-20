@@ -997,6 +997,14 @@ Disable useless UI elements:
 (setq inhibit-startup-screen t)
 #+END_SRC
 
+Change the terminal window title to "emacs: (buffer-name)":
+
+#+BEGIN_SRC emacs-lisp
+(defun xterm-title-update ()
+  (send-string-to-terminal (concat "\033]2;emacs: " (buffer-name) "\007")))
+(add-hook 'post-command-hook 'xterm-title-update)
+#+END_SRC
+
 ** Theme
 
 Install doom-themes and load doom-one-light:

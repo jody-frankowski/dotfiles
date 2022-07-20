@@ -8,8 +8,7 @@ pushd "${script_dir}" > /dev/null
 symlink () {
     package="$1"
 
-    for file in $(find "${package}" -type f)
-    do
+    for file in $(find "${package}" -type f) ; do
         dir=~/"$(dirname ${file} | cut -s -d/ -f2-)"
         filename="$(basename ${file})"
         link="${dir}/${filename}"

@@ -124,9 +124,6 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     symlink karabiner
 fi
 
-# ssh
-[[ -d ~/.ssh ]] || mkdir ~/.ssh && chmod 700 ~/.ssh
-[[ -d ~/.cache/ssh ]] || mkdir ~/.cache/ssh && chmod 700 ~/.cache/ssh
 
 # Symlink the dotfiles
 for dir in alacritty base docker emacs gnupg js mpv ssh tmux ; do
@@ -143,7 +140,11 @@ if [[ "$OSTYPE" == "linux-gnu" ]] ; then
     systemctl --user daemon-reload
 fi
 
-# ssh config
+# ssh
+# This directory will be used for the ControlPath files
+[[ -d ~/.cache/ssh ]] || mkdir -p ~/.cache/ssh
+# Generate ssh's config file. This script's purpose is to concatenate all the ~/.ssh/config-* files
+# so that private ssh configs can be stored in a private location
 ~/.ssh/update
 
 # tpm (tmux-plugin-manager)

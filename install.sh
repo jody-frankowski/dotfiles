@@ -15,13 +15,11 @@ symlink () {
 
         mkdir -p "${dir}"
 
-        if [ -e "${link}" -a ! -L "${link}" ]
-        then
-            echo "${link} exists and is not a symlink. Aborting!"
-            exit 1
-        else
-            ln -f -s "$(pwd)/${file}" "${link}"
+        if [[ -e "${link}" && ! -L "${link}" ]] ; then
+            echo "/!\ ${link} exists and is not a symlink. Moving to ${link}.old!"
+            mv "${link}"{,.old}
         fi
+        ln -f -s "$(pwd)/${file}" "${link}"
     done
 }
 

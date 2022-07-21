@@ -25,6 +25,9 @@ symlink () {
     done
 }
 
+# Set the umask manually in this script as the calling shell may not yet have it configured
+umask 077
+
 ### Config for normal and root users
 
 for terminfo in ./base/.terminfo/*.terminfo ; do

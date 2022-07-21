@@ -82,7 +82,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     done
 
     ### coreutils
-    # Replace some macOS's coreutils binaries with a GNU one
+    # Replace some macOS's coreutils binaries with GNU ones. We do this because some of our zsh
+    # aliases depend on specific GNU's coreutils flags.
     for symlink in date dircolors ls rm sort ; do
         [[ -L ~/.usr/bin/$symlink ]] || ln -s g$symlink ~/.usr/bin/$symlink
     done

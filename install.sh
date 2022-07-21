@@ -139,7 +139,7 @@ ls -d *-"$(hostname | cut -d. -f2-)" &>/dev/null && symlink *-"$(hostname | cut 
 
 # Linux Specific
 if [[ "$OSTYPE" == "linux-gnu" ]] ; then
-    # Reload systemd because of systemd units
+    # Reload systemd because of the potentially newly installed or modified systemd units
     systemctl --user daemon-reload
 fi
 

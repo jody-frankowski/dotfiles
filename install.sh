@@ -26,8 +26,6 @@ symlink () {
 # Set the umask manually in this script as the calling shell may not yet have it configured
 umask 077
 
-### Config for normal and root users
-
 for terminfo in ./base/.terminfo/*.terminfo ; do
     tic -x -o ~/.terminfo $terminfo
 done
@@ -42,15 +40,6 @@ fi
 for file in completion.zsh key-bindings.zsh ; do
     [[ -L ~/.usr/share/fzf/${file} ]] || ln -s ${fzf_path}/${file} ~/.usr/share/fzf/${file}
 done
-
-symlink zsh
-
-# Stop there for root
-if [[ `id -u` -eq 0 ]] ; then
-    exit 0
-fi
-
-### Config for normal users only
 
 for dir in ~/.usr/bin/ ~/.usr/opt/ ~/.usr/share/ ~/.usr/var/log/ ; do
     [[ -d "${dir}" ]] || mkdir -p "${dir}"
@@ -126,7 +115,7 @@ fi
 
 
 # Symlink the dotfiles
-for dir in alacritty base docker emacs gnupg js mpv ssh tmux ; do
+for dir in alacritty base docker emacs gnupg js mpv ssh tmux zsh ; do
     symlink ${dir}
 done
 

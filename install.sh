@@ -154,7 +154,7 @@ fi
 # This needs to be done after tmux's symlinking because tpm searches for its
 # config in tmux.conf
 [[ -d ~/.tmux/plugins/tpm ]] || git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
-# install plugins. buggy, better use prefix + I
-~/.tmux/plugins/tpm/scripts/install_plugins.sh > /dev/null
+# Install plugins
+~/.tmux/plugins/tpm/scripts/install_plugins.sh
 
 popd > /dev/null

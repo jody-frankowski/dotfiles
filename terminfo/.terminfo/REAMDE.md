@@ -43,7 +43,7 @@ The main reasons for creating these custom terminfos are:
 - By advertising a common 256color profile, but by actually enabling True colors
   support we don't need to override $TERM when we use ssh. If the remote has our
   custom terminfo, True colors will be supported. If not, the remote will
-  properly fallback to the true 256color terminfo.
+  properly fallback to the real 256color terminfo.
 - Emacs 26 needs the specific capabilities `setb24` and `setf24` in order to
   show True colors. Emacs 27 only needs that the now standard `RGB` capability
   be defined. At the time of writing this, Emacs 27 hasn't been released yet.

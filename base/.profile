@@ -30,7 +30,7 @@ export CARGO_HOME=~/.cache/cargo
 ### PATH
 # Homebrew
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    export PATH="$HOME/.brew/bin:$PATH"
+    export PATH="/opt/homebrew/bin:$PATH"
 fi
 # Node
 export PATH="$HOME/.cache/npm/bin:$PATH"

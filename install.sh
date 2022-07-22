@@ -26,13 +26,13 @@ symlink () {
 # Set the umask manually in this script as the calling shell may not yet have it configured
 umask 077
 
-for terminfo in ./base/.terminfo/*.terminfo ; do
-    tic -x -o ~/.terminfo $terminfo
-done
+# terminfo
+# Symlink terminfo's capabilities files early so that macOS' specific configuration works
+symlink terminfo
 
 # fzf
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    fzf_path=~/.brew/opt/fzf/shell/
+    fzf_path=/opt/homebrew/opt/fzf/shell/
 else
     fzf_path=/usr/share/fzf/
 fi
@@ -47,9 +47,9 @@ done
 
 # macOS Specific
 if [[ "$OSTYPE" == "darwin"* ]]; then
-    export PATH="~/.brew/bin/:$PATH"
+    export PATH="/opt/homebrew/bin:$PATH"
 
-    [[ -d ~/.brew ]] || git clone --depth=1 https://github.com/Homebrew/brew ~/.brew
+    [[ -d /opt/homebrew ]] || git clone --depth=1 https://github.com/Homebrew/brew /opt/homebrew
 
     packages=(
         atool
@@ -65,32 +65,42 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         syncthing
         tmux
     )
+    casks=(
+        firefox
+        karabiner-elements
+    )
 
     for package in ${packages[@]} ; do
-        [[ -d ~/.brew/opt/$package ]] || brew install $package
+        [[ -d /opt/homebrew/opt/$package ]] || brew install $package
+    done
+    for cask in ${casks[@]} ; do
+        [[ -d /opt/homebrew/Caskroom/$cask ]] || brew install $cask
     done
 
     ### coreutils
     # Replace some macOS's coreutils binaries with GNU ones. We do this because some of our zsh
     # aliases depend on specific GNU's coreutils flags.
     for symlink in date dircolors ls rm sort ; do
-        [[ -L ~/.usr/bin/$symlink ]] || ln -s g$symlink ~/.usr/bin/$symlink
+        [[ -L ~/.usr/bin/$symlink ]] || ln -s /opt/homebrew/opt/coreutils/bin/g$symlink ~/.usr/bin/$symlink
     done
 
     ### terminfo
     # We need the terminfo capabilites of tmux-256color, however macOS doesn't
-    # provide one.  The one that is in the homebrew's ncurses is incompatible
-    # with macOS ncurses tools (tic/terminfo). So we export the terminfo
-    # capabilities with homebrew's ncurses tools and compile them with macOS'
+    # provide one. The one in homebrew's ncurses package is incompatible
+    # with macOS' ncurses tools (tic/terminfo). So we export the terminfo
+    # capabilities with homebrew's ncurses' infocmp and compile them with macOS'
     # tic.
-    [[ -d ~/.terminfo ]] || mkdir ~/.terminfo
-    latest_ncurses=$(ls -t ~/.brew/Cellar/ncurses/ | head -n1)
-    PATH="~/.brew/opt/ncurses/bin:$PATH" TERMINFO_DIRS=~/.brew/Cellar/ncurses/$latest_ncurses/share/terminfo/ infocmp -x tmux-256color > ~/.terminfo/tmux-256color
-    tic -x ~/.terminfo/tmux-256color
+    /opt/homebrew/opt/ncurses/bin/infocmp -x tmux-256color > ~/.terminfo/tmux-256color.ncurses.terminfo
+    # This command will generate a binary terminfo database in ~/.terminfo and the next one
+    # will generate a terminfo database with the same name, however since our custom version
+    # includes the same terminfo database (use=tmux-256color), our capabilities will be added to
+    # the former one.
+    tic -x ~/.terminfo/tmux-256color.ncurses.terminfo
+    tic -x ~/.terminfo/tmux-256color.terminfo
 
     brew services list | grep 'syncthing.*started' > /dev/null || brew services start syncthing
 
-    ### screensaver
+    ### Screensaver
     # Require a password immediately after enabling the screensaver
     defaults write com.apple.screensaver askForPassword -bool true
     defaults write com.apple.screensaver askForPasswordDelay -int 0
@@ -113,6 +123,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     symlink karabiner
 fi
 
+# terminfo
+for terminfo in ~/.terminfo/*.terminfo ; do
+    tic -x ${terminfo}
+done
 
 # Symlink the dotfiles
 for dir in alacritty base docker emacs gnupg js mpv ssh tmux zsh ; do

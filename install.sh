@@ -67,6 +67,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     )
     casks=(
         firefox
+        iterm2
         karabiner-elements
     )
 

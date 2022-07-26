@@ -48,9 +48,9 @@ Enable the refresh for dired views too:
 * Backups and Saving
 
 With a combination of =undo-fu= (~u~ and ~C-r~) and auto-saving, a loss of work should be pretty
-small. Emacs auto-save is configured to save every 300 keystrokes or 30 seconds of idle time, in the
-edited file, and not in an external one that we might forget to restore from! We will also configure
-Emacs to save and restore the last point position.
+small. Emacs auto-save is configured to save every 300 keystrokes or 30 seconds of idle time or when
+the focus is lost. It saves the buffer in the actual file, and not in an external one that we might
+forget to restore from! We will also configure Emacs to save and restore the last point position.
 
 Enable and configure persistent undo with undo-fu:
 
@@ -72,6 +72,12 @@ Configure Emcas to auto-save in the edited file:
 
 #+BEGIN_SRC emacs-lisp
 (auto-save-visited-mode)
+#+END_SRC
+
+Auto-save the current buffer when it loses focus:
+
+#+BEGIN_SRC emacs-lisp
+(add-function :after after-focus-change-function 'save-buffer)
 #+END_SRC
 
 Disable "backup~" files, persistent undo should be enough:

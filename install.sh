@@ -121,6 +121,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # Reload
     killall Dock
 
+    ### Menu Bar
+    # Auto Hide (Will need a logout to take effect in all apps. Or we could restart every app.)
+    defaults write NSGlobalDomain _HIHideMenuBar -bool true
+
     ### Karabiner
     symlink karabiner
 fi

@@ -77,7 +77,10 @@ Configure Emcas to auto-save in the edited file:
 Auto-save the current buffer when it loses focus:
 
 #+BEGIN_SRC emacs-lisp
-(add-function :after after-focus-change-function 'save-buffer)
+(defun save-buffer-if-is-backed-by-file ()
+  (if (buffer-file-name)
+      (save-buffer)))
+(add-function :after after-focus-change-function 'save-buffer-if-is-backed-by-file)
 #+END_SRC
 
 Disable "backup~" files, persistent undo should be enough:

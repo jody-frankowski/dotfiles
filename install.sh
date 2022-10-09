@@ -100,6 +100,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     tic -x ~/.terminfo/tmux-256color.ncurses.terminfo
     tic -x ~/.terminfo/tmux-256color.terminfo
 
+    ### Syncthing
+    # Start and enable
     brew services list | grep 'syncthing.*started' > /dev/null || brew services start syncthing
 
     ### Screensaver

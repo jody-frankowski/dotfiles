@@ -129,6 +129,11 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
 
     ### Karabiner
     symlink karabiner
+
+    ### Student service (if the mac was bought by a school or with a student account)
+    # Disable and stop
+    launchctl disable gui/$(uid -u)/com.apple.studentd
+    launchctl stop com.apple.studentd
 fi
 
 # terminfo

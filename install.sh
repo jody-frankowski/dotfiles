@@ -56,8 +56,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         coreutils
         editorconfig
         emacs
-        gnupg
         fzf
+        gnupg
         mosh
         myrepos
         python3

@@ -128,6 +128,11 @@ fi
 
 ### Plugins
 # fzf
-source ~/.usr/share/fzf/completion.zsh
-source ~/.usr/share/fzf/key-bindings.zsh
+if [[ "$OSTYPE" == "darwin"* ]]; then
+    fzf_path=/opt/homebrew/opt/fzf/shell/
+else
+    fzf_path=/usr/share/fzf/
+fi
+source ${fzf_path}/completion.zsh
+source ${fzf_path}/key-bindings.zsh
 ###

@@ -30,17 +30,6 @@ umask 077
 # Symlink terminfo's capabilities files early so that macOS' specific configuration works
 symlink terminfo
 
-# fzf
-if [[ "$OSTYPE" == "darwin"* ]]; then
-    fzf_path=/opt/homebrew/opt/fzf/shell/
-else
-    fzf_path=/usr/share/fzf/
-fi
-[[ -d ~/.usr/share/fzf ]] || mkdir -p ~/.usr/share/fzf
-for file in completion.zsh key-bindings.zsh ; do
-    [[ -L ~/.usr/share/fzf/${file} ]] || ln -s ${fzf_path}/${file} ~/.usr/share/fzf/${file}
-done
-
 for dir in ~/.usr/bin/ ~/.usr/opt/ ~/.usr/share/ ~/.usr/var/log/ ; do
     [[ -d "${dir}" ]] || mkdir -p "${dir}"
 done

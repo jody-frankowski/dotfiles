@@ -69,6 +69,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         font-noto-sans-mono
         iterm2
         karabiner-elements
+        stats
     )
 
     for package in ${packages[@]} ; do
@@ -146,6 +147,40 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # Disable and stop
     launchctl disable gui/$(uid -u)/com.apple.studentd
     launchctl stop com.apple.studentd
+
+    ### Stats
+    # Configure basic settings
+    defaults write eu.exelban.Stats runAtLoginInitialized 1
+    defaults write eu.exelban.Stats setupProcess 1
+    defaults write eu.exelban.Stats update-interval "At start"
+    # Needed otherwise the defaults will be reset
+    defaults write eu.exelban.Stats version "2.8.3"
+    # Enable some widgets
+    stats_widgets=(Battery CPU RAM GPU Network Sensors Disk)
+    for widget in ${stats_widgets[@]} ; do
+        defaults write eu.exelban.Stats ${widget}_state 1
+    done
+    # Configure some widgets
+    stats_widgets=(CPU RAM GPU)
+    for widget in ${stats_widgets[@]} ; do
+        defaults write eu.exelban.Stats ${widget}_widget mini
+        defaults write eu.exelban.Stats ${widget}_mini_color utilization
+    done
+    # Battery
+    defaults write eu.exelban.Stats Battery_battery_additional innerPercentage
+    defaults write eu.exelban.Stats Battery_battery_color 1
+    defaults write eu.exelban.Stats Battery_battery_lowPowerMode 1
+    defaults write eu.exelban.Stats Battery_widget battery
+    # Disk
+    defaults write eu.exelban.Stats Disk_widget mini
+    defaults write eu.exelban.Stats SSD_mini_color utilization
+    # Network
+    defaults write eu.exelban.Stats Network_speed_value 1
+    defaults write eu.exelban.Stats Network_speed_valueColor 1
+    # Sensors
+    defaults write eu.exelban.Stats Sensors_widget sensors
+    defaults write eu.exelban.Stats "sensor_Average CPU" 1
+    defaults write eu.exelban.Stats "sensor_Average System Total" 1
 fi
 
 # terminfo

@@ -62,6 +62,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         syncthing
         tmux
         wget
+        zsh-completions
     )
     casks=(
         firefox
@@ -106,6 +107,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     # the former one.
     tic -x ~/.terminfo/tmux-256color.ncurses.terminfo
     tic -x ~/.terminfo/tmux-256color.terminfo
+
+    ### zsh-completions
+    # Link only the completion files we need
+    ln -s /opt/homebrew/share/zsh-completions/_node ~/.zshrc.d/completion/
 
     ### Syncthing
     # Start and enable

@@ -54,16 +54,23 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     packages=(
         atool
         coreutils
+        dfc
         editorconfig
         emacs
         fzf
         gnupg
+        jq
         mosh
+        # We use the formula and not the cask because the cask is an unofficial build:
+        # https://github.com/Homebrew/homebrew-cask/issues/86226
+        mpv
         myrepos
+        pinentry-mac
         python3
         ripgrep
         syncthing
         tmux
+        wget
     )
     casks=(
         firefox

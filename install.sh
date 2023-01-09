@@ -54,6 +54,8 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     packages=(
         atool
         coreutils
+        # Mainly for the zsh completion
+        curl
         dfc
         editorconfig
         emacs
@@ -86,12 +88,21 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         [[ -d /opt/homebrew/Caskroom/$cask ]] || brew install $cask
     done
 
+    # Make sure this folder exists before linking completion files
+    [ -d ~/.zshrc.d/completion/ ] || mkdir ~/.zshrc.d/completion
+
     ### coreutils
     # Replace some macOS's coreutils binaries with GNU ones. We do this because some of our zsh
     # aliases depend on specific GNU's coreutils flags.
     for symlink in date dircolors ls rm sort ; do
         [[ -L ~/.usr/bin/$symlink ]] || ln -s /opt/homebrew/opt/coreutils/bin/g$symlink ~/.usr/bin/$symlink
     done
+
+    ### curl
+    # Use homebrew's curl so that we can use its zsh completion and have a binary with a matching
+    # version
+    ln -s /opt/homebrew/opt/curl/bin/curl ~/.usr/bin/
+    ln -s /opt/homebrew/opt/curl/share/zsh/site-functions/_curl ~/.zshrc.d/completion/
 
     ### terminfo
     # We need the terminfo capabilites of tmux-256color, however macOS doesn't

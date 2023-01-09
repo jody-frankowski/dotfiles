@@ -85,7 +85,7 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
         [[ -d /opt/homebrew/opt/$package ]] || brew install $package
     done
     for cask in ${casks[@]} ; do
-        [[ -d /opt/homebrew/Caskroom/$cask ]] || brew install $cask
+        [[ -d /opt/homebrew/Caskroom/$cask ]] || brew install --cask $cask
     done
 
     # Make sure this folder exists before linking completion files

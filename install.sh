@@ -95,6 +95,10 @@ if [[ "$OSTYPE" == "darwin"* ]]; then
     ln -s /opt/homebrew/opt/curl/bin/curl ~/.usr/bin/
     ln -s /opt/homebrew/opt/curl/share/zsh/site-functions/_curl ~/.zshrc.d/completion/
 
+    ### pinentry-mac
+    # Disable the default behavior of saving the passphrase in the keychain
+    defaults write org.gpgtools.common UseKeychain NO
+
     ### terminfo
     # We need the terminfo capabilites of tmux-256color, however macOS doesn't
     # provide one. The one in homebrew's ncurses package is incompatible

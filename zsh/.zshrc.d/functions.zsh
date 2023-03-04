@@ -170,34 +170,6 @@ gcl () {
     fi
 }
 
-_clip () {
-    # Shamelessly stolen and adapted from http://www.passwordstore.org/
-    # This base64 business is because bash/zsh cannot store binary data in a shell
-    # variable. Specifically, it cannot store nulls nor (non-trivally) store
-    # trailing new lines.
-
-    local sleep_argv0="$1 sleep on display $DISPLAY"
-
-    # Kill concurrent _clip sleep. Wait 0.5 seconds to let concurrent _clip
-    # old clipboard data.
-    pkill -f "^$sleep_argv0" 2>/dev/null && sleep 0.5
-
-    local before="$(xsel -ob 2>/dev/null | base64)"
-    echo -n "$2" | xsel -ib
-
-    # Create two subshells. The interior one is used to get killed by
-    # concurrent _clip functions. The exterior one is used to restore the old
-    # clipboard data.
-    (
-        ( ARGV0=$sleep_argv0 sleep 60 )
-        local now="$(xsel -ob | base64)"
-        [[ $now != $(echo -n "$2" | base64) ]] && before="$now"
-
-        echo "$before" | base64 -d | xsel -ib
-    ) &!
-    echo "Will clear in 60 seconds."
-}
-
 gen-passphrase () {
     local use_clipboard=true
     if [[ "$1" == "--no-clipboard" ]] ; then
@@ -212,8 +184,7 @@ gen-passphrase () {
 
     passphrase=$(echo $(LC_COLLATE=C grep "^[a-z0-9]\{3,7\}$" /usr/share/dict/$dict | shuf -n4))
     if [[ "${use_clipboard}" = true ]] ; then
-        echo "Passphrase copied to clipboard."
-        _clip gen-passphrase $(echo $passphrase | tr -d ' ')
+        clipboard $(echo $passphrase | tr -d ' ') && echo Copied to clipboard
     else
         echo $passphrase | tr -d ' '
     fi
@@ -234,8 +205,7 @@ gen-password () {
     password=$(dd if=/dev/urandom bs=1 count=$((length * 2)) 2>/dev/null |
                    base64 | head -c ${length})
     if [[ "${use_clipboard}" = true ]] ; then
-        echo "Password copied to clipboard."
-        _clip gen-password $password
+        clipboard $password && echo Copied to clipboard
     else
         echo $password
     fi

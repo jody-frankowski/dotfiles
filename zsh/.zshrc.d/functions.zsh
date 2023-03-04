@@ -182,11 +182,11 @@ gen-passphrase () {
         dict=$1
     fi
 
-    passphrase=$(echo $(LC_COLLATE=C grep "^[a-z0-9]\{3,7\}$" /usr/share/dict/$dict | shuf -n4))
+    passphrase=$(LC_COLLATE=C grep "^[a-z0-9]\{3,7\}$" /usr/share/dict/$dict | shuf -n4 | tr -d '\n')
     if [[ "${use_clipboard}" = true ]] ; then
-        clipboard $(echo $passphrase | tr -d ' ') && echo Copied to clipboard
+        clipboard $passphrase && echo Copied to clipboard
     else
-        echo $passphrase | tr -d ' '
+        echo $passphrase
     fi
 }
 

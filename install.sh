@@ -93,8 +93,8 @@ if _onmacos ; then
     ### curl
     # Use homebrew's curl so that we can use its zsh completion and have a binary with a matching
     # version
-    ln -s /opt/homebrew/opt/curl/bin/curl ~/.usr/bin/
-    ln -s /opt/homebrew/opt/curl/share/zsh/site-functions/_curl ~/.zshrc.d/completion/
+    [[ -L ~/.usr/bin/curl ]] || ln -s /opt/homebrew/opt/curl/bin/curl ~/.usr/bin/
+    [[ -L ~/.zshrc.d/completion/_curl ]] || ln -s /opt/homebrew/opt/curl/share/zsh/site-functions/_curl ~/.zshrc.d/completion/
 
     ### pinentry-mac
     # Disable the default behavior of saving the passphrase in the keychain
@@ -116,7 +116,7 @@ if _onmacos ; then
 
     ### zsh-completions
     # Link only the completion files we need
-    ln -s /opt/homebrew/share/zsh-completions/_node ~/.zshrc.d/completion/
+    [[ -L ~/.zshrc.d/completion/_node ]] || ln -s /opt/homebrew/share/zsh-completions/_node ~/.zshrc.d/completion/
 
     ### Syncthing
     # Start and enable

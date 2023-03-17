@@ -150,7 +150,7 @@ if _onmacos ; then
 
     ### Student service (if the mac was bought by a school or with a student account)
     # Disable and stop
-    launchctl disable gui/$(uid -u)/com.apple.studentd
+    launchctl disable gui/$(id -u)/com.apple.studentd
     launchctl stop com.apple.studentd
 
     ### Stats

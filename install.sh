@@ -35,7 +35,8 @@ for dir in ~/.usr/bin/ ~/.usr/opt/ ~/.usr/share/ ~/.usr/var/log/ ; do
 done
 
 # macOS Specific
-if [[ "$OSTYPE" == "darwin"* ]]; then
+source zsh/.zshrc.d/_lib.zsh
+if _onmacos ; then
     export PATH="/opt/homebrew/bin:$PATH"
 
     [[ -d /opt/homebrew ]] || git clone --depth=1 https://github.com/Homebrew/brew /opt/homebrew

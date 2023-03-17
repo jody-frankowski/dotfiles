@@ -29,7 +29,7 @@ export CARGO_HOME=~/.cache/cargo
 
 ### PATH
 # Homebrew
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if ~/.usr/bin/_onmacos ; then
     export PATH="/opt/homebrew/bin:$PATH"
 fi
 # Node
@@ -45,7 +45,7 @@ export PATH="$HOME/.usr/bin:$PATH"
 ### PATH
 
 # Disable Homebrew's auto update
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if ~/.usr/bin/_onmacos ; then
     export HOMEBREW_NO_AUTO_UPDATE=1
 fi
 

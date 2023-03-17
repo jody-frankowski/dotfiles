@@ -17,7 +17,7 @@ EOF
     exit 1
 fi
 
-if [[ $OSTYPE == darwin* ]] ; then
+if _onmacos ; then
     local copy_cmd=( pbcopy )
     local paste_cmd=( pbpaste )
 else

@@ -1,0 +1,4 @@
+#!/bin/sh
+
+[[ "$OSTYPE" == linux-gnu ]]
+exit $?

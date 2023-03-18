@@ -145,7 +145,10 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write NSGlobalDomain _HIHideMenuBar -bool true
 
     ### Karabiner
-    symlink karabiner
+    # We can't symlink it because Karabiner overwrites the symlink
+    osascript -e 'quit app "Karabiner-Elements"'
+    cp -f karabiner/.config/karabiner/karabiner.json ~/.config/karabiner/
+    osascript -e 'tell application "Karabiner-Elements" to activate'
 
     ### Student service (if the mac was bought by a school or with a student account)
     # Disable and stop

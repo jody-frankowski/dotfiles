@@ -35,8 +35,7 @@ for dir in ~/.usr/bin/ ~/.usr/opt/ ~/.usr/share/ ~/.usr/var/log/ ; do
 done
 
 # macOS Specific
-source zsh/.zshrc.d/_lib.zsh
-if _onmacos ; then
+if ./base/.usr/bin/_onmacos ; then
     export PATH="/opt/homebrew/bin:$PATH"
 
     [[ -d /opt/homebrew ]] || git clone --depth=1 https://github.com/Homebrew/brew /opt/homebrew
@@ -186,6 +185,11 @@ if _onmacos ; then
     defaults write eu.exelban.Stats Sensors_widget sensors
     defaults write eu.exelban.Stats "sensor_Average CPU" 1
     defaults write eu.exelban.Stats "sensor_Average System Total" 1
+
+    # Symlink macOS specific dotfiles
+    for dir in *-macos ; do
+        symlink ${dir}
+    done
 fi
 
 # terminfo

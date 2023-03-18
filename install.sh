@@ -203,7 +203,7 @@ for dir in alacritty base docker emacs gnupg js mpv ssh tmux zsh ; do
 done
 
 # Linux specific
-if [[ "$OSTYPE" == "linux-gnu" ]] ; then
+if ./base/.usr/bin/_onlinux ; then
     # Symlink Linux specific dotfiles
     for dir in *-linux ; do
         symlink ${dir}

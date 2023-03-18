@@ -150,6 +150,11 @@ if ./base/.usr/bin/_onmacos ; then
     cp -f karabiner/.config/karabiner/karabiner.json ~/.config/karabiner/
     osascript -e 'tell application "Karabiner-Elements" to activate'
 
+    ### Compose key keybindings
+    # Symlinking doesn't work
+    # /!\ This depends on the Karabiner right_command -> non_us_backslash modification
+    cp -f base-macos/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings
+
     ### Student service (if the mac was bought by a school or with a student account)
     # Disable and stop
     launchctl disable gui/$(id -u)/com.apple.studentd

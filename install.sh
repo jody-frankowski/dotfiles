@@ -202,8 +202,12 @@ for dir in alacritty base docker emacs gnupg js mpv ssh tmux zsh ; do
     symlink ${dir}
 done
 
-# Linux Specific
+# Linux specific
 if [[ "$OSTYPE" == "linux-gnu" ]] ; then
+    # Symlink Linux specific dotfiles
+    for dir in *-linux ; do
+        symlink ${dir}
+    done
     # Reload systemd because of the potentially newly installed or modified systemd units
     systemctl --user daemon-reload
 fi

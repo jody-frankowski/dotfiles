@@ -202,10 +202,6 @@ for dir in alacritty base docker emacs gnupg js mpv ssh tmux zsh ; do
     symlink ${dir}
 done
 
-# Symlink *-hostname or *-domain
-ls -d *-"$(hostname)" &>/dev/null && symlink *-"$(hostname)"
-ls -d *-"$(hostname | cut -d. -f2-)" &>/dev/null && symlink *-"$(hostname | cut -d. -f2-)"
-
 # Linux Specific
 if [[ "$OSTYPE" == "linux-gnu" ]] ; then
     # Reload systemd because of the potentially newly installed or modified systemd units

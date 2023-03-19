@@ -194,6 +194,10 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write eu.exelban.Stats "sensor_Average CPU" 1
     defaults write eu.exelban.Stats "sensor_Average System Total" 1
 
+    ### Siri
+    # Disable background listening for "Hey Siri"
+    defaults write com.apple.Siri VoiceTriggerUserEnabled -bool false
+
     # Symlink macOS specific dotfiles
     for dir in *-macos ; do
         symlink ${dir}

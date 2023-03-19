@@ -2,7 +2,7 @@
 
 set -euxo pipefail
 
-script_dir=$(dirname $0)
+script_dir=$(realpath $(dirname $0))
 pushd "${script_dir}" > /dev/null
 
 symlink () {

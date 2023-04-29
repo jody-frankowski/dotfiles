@@ -274,6 +274,74 @@ git-browse () {
     fi
 }
 
+compdef _git git-multiple-remote-clone=git-clone
+git-multiple-remote-clone () {
+(
+    set -e
+
+    usage () {
+        echo "Usage: $0 [GIT_OPTIONS --] REPO_NAME [DEST]"
+        echo -n "Clone a repo from the first remote set in \$(git config remotes.list) and set its "
+        echo "push origin to all of the others too"
+        echo "Example config:"
+        echo "[remotes]"
+        echo "    list = \"git@github.com:username git@gitlab.com:username\""
+    }
+    if [[ $# -lt 1 ]] || [[ "$1" == -h ]] || ; then
+        usage
+        return 1
+    fi
+    if [[ -z "$(git config remotes.list)" ]] ; then
+        usage
+        echo "\nError: Set remotes.list in git config first"
+        return 1
+    fi
+
+    local args=()
+    if [[ "$*" == *" -- "* ]] || [[ "$1" == -- ]]; then
+        for arg in "$@" ; do
+            shift
+            if [[ "$arg" == "--" ]] ; then
+                break
+            fi
+            args+=("$arg")
+        done
+    fi
+
+    local remotes=($(git config remotes.list))
+
+    if [[ -z "$2" ]] ; then
+        git clone "${args[@]}" ${remotes[1]}/"$1"
+        cd "$1"
+    else
+        git clone "${args[@]}" ${remotes[1]}/"$1" "$2"
+        cd "$2"
+    fi
+
+    for remote in ${remotes[@]} ; do
+        git remote set-url --add --push origin "${remote}"/"$1"
+    done
+)
+    if [[ $? -ne 0 ]] ; then
+        return $?
+    fi
+
+    if [[ "$*" == *" -- "* ]] || [[ "$1" == -- ]]; then
+        for arg in "$@" ; do
+            shift
+            if [[ "$arg" == "--" ]] ; then
+                break
+            fi
+        done
+    fi
+
+    if [[ -z "$2" ]] ; then
+        cd "$1"
+    else
+        cd "$2"
+    fi
+}
+
 hgcl () {
     hg clone $1
     cd "$(basename $1)"

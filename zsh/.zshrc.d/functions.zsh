@@ -274,8 +274,8 @@ git-browse () {
     fi
 }
 
-compdef _git git-multiple-remote-clone=git-clone
-git-multiple-remote-clone () {
+compdef _git git-clone-multiple-remotes=git-clone
+git-clone-multiple-remotes () {
 (
     set -e
 

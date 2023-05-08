@@ -1164,7 +1164,7 @@ launch ~find-file~:
 (defun window-right-or-split ()
   "Split the window vertically, focus the new window and launch `find-file'."
   (interactive)
-  (let ((other-window (windmove-find-other-window 'right (selected-window))))
+  (let ((other-window (window-in-direction 'right (selected-window))))
     (cond
       ((null other-window)
         (split-window-right)
@@ -1175,7 +1175,7 @@ launch ~find-file~:
 (defun window-down-or-split ()
   "Split the window horizontally, focus the new window and launch `find-file'."
   (interactive)
-  (let ((other-window (windmove-find-other-window 'down (selected-window))))
+  (let ((other-window (window-in-direction 'down (selected-window))))
     (cond
       ((or (null other-window) (window-minibuffer-p other-window))
         (split-window-below)

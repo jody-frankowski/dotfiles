@@ -40,6 +40,9 @@ if ./base/.usr/bin/_onmacos ; then
 
     [[ -d /opt/homebrew ]] || git clone --depth=1 https://github.com/Homebrew/brew /opt/homebrew
 
+    # Disable Homebrew's analytics
+    brew analytics off
+
     packages=(
         atool
         coreutils

@@ -375,6 +375,14 @@ gpg-agent and let us enter the passphrase in a proper Emacs miniwindow:
 
 * Indentation
 
+Set the default indentation to 4 spaces instead of the mix of tabs and spaces default
+[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Just-Spaces.html]]:
+
+#+BEGIN_SRC emacs-lisp
+(csetq tab-width 4)
+(csetq indent-tabs-mode nil)
+#+END_SRC
+
 Add editorconfig which will configure the proper indentation settings based on
 the ~.editorconfig~ files (if no file is found emacs defaults will be applied):
 
@@ -424,13 +432,6 @@ https://github.com/hlissner/doom-emacs/blob/develop/modules/tools/editorconfig/c
                        "")))))
       (funcall orig-fn)))
 (advice-add #'editorconfig-call-editorconfig-exec :around #'editorconfig-smart-detection)
-#+END_SRC
-
-Set indentation to spaces instead of the mix of tabs and spaces default
-[[https://www.gnu.org/software/emacs/manual/html_node/emacs/Just-Spaces.html]]:
-
-#+BEGIN_SRC emacs-lisp
-(csetq indent-tabs-mode nil)
 #+END_SRC
 
 * Line and Column Numbers

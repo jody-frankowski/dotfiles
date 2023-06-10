@@ -98,6 +98,10 @@ if ./base/.usr/bin/_onmacos ; then
     [[ -L ~/.usr/bin/curl ]] || ln -s /opt/homebrew/opt/curl/bin/curl ~/.usr/bin/
     [[ -L ~/.zshrc.d/completion/_curl ]] || ln -s /opt/homebrew/opt/curl/share/zsh/site-functions/_curl ~/.zshrc.d/completion/
 
+    ### Finder
+    # Show the path bar
+    defaults write com.apple.finder ShowPathbar -bool YES
+
     ### pinentry-mac
     # Disable the default behavior of saving the passphrase in the keychain
     defaults write org.gpgtools.common UseKeychain NO

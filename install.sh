@@ -59,6 +59,8 @@ if ./base/.usr/bin/_onmacos ; then
         # https://github.com/Homebrew/homebrew-cask/issues/86226
         mpv
         myrepos
+        pass
+        pass-otp
         pinentry-mac
         python3
         ripgrep

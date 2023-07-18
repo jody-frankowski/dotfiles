@@ -42,6 +42,13 @@ if ./base/.usr/bin/_onmacos ; then
     # Disable Homebrew's analytics
     brew analytics off
 
+    taps=(
+        homebrew/cask-fonts
+    )
+    for tap in ${taps[@]} ; do
+        [[ -d /opt/homebrew/Library/Taps/$tap ]] || brew tap $tap
+    done
+
     packages=(
         atool
         coreutils
@@ -70,7 +77,7 @@ if ./base/.usr/bin/_onmacos ; then
     )
     casks=(
         firefox
-        font-noto-sans-mono
+        font-sauce-code-pro-nerd-font
         google-chrome
         iterm2
         karabiner-elements

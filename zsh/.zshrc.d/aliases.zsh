@@ -3,7 +3,7 @@
 # Global aliases
 alias -g C='| hexdump -C'
 alias -g H='| head'
-alias -g G='| rg'
+alias -g G='| rg -S'
 alias -g J='| jq'
 alias -g L='| less'
 alias -g S='| sort'

@@ -161,12 +161,9 @@ forward-port () {
 
 gcl () {
     if git clone --recursive "$@" ; then
-        # cd into a given directory or into the one git created
-        if [[ -d "$2" ]] ; then
-            cd "$2"
-        else
-            cd "$(basename ${@:-1} .git)"
-        fi
+        # cd into the last modified directory. This is simple than trying to parse git arguments and
+        # their order.
+        cd "$(ls -t | head -n1)"
     fi
 }
 

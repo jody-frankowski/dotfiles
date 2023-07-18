@@ -176,6 +176,8 @@ if ./base/.usr/bin/_onmacos ; then
     # Symlinking doesn't work
     # /!\ This depends on the Karabiner right_command -> non_us_backslash modification
     cp -f base-macos/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings
+    # Disable the character palette when holding a key (applications need to be restarted)
+    defaults write -g ApplePressAndHoldEnabled -bool false
 
     ### Student service (if the mac was bought by a school or with a student account)
     # Disable and stop

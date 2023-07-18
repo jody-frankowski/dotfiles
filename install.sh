@@ -75,6 +75,7 @@ if ./base/.usr/bin/_onmacos ; then
         iterm2
         karabiner-elements
         stats
+        vlc
     )
 
     for package in ${packages[@]} ; do

@@ -72,6 +72,7 @@ if ./base/.usr/bin/_onmacos ; then
     casks=(
         firefox
         font-noto-sans-mono
+        google-chrome
         iterm2
         karabiner-elements
         stats

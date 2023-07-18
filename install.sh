@@ -94,7 +94,7 @@ if ./base/.usr/bin/_onmacos ; then
     done
 
     # Make sure this folder exists before linking completion files
-    [ -d ~/.zshrc.d/completion/ ] || mkdir ~/.zshrc.d/completion
+    [ -d ~/.zshrc.d/completion/ ] || mkdir -p ~/.zshrc.d/completion
 
     ### coreutils
     # Replace some macOS's coreutils binaries with GNU ones. We do this because some of our zsh
@@ -165,10 +165,14 @@ if ./base/.usr/bin/_onmacos ; then
     ### Karabiner
     # We can't symlink it because Karabiner overwrites the symlink
     osascript -e 'quit app "Karabiner-Elements"'
+    # Needed for a first run
+    mkdir -p ~/.config/karabiner/
     cp -f karabiner/.config/karabiner/karabiner.json ~/.config/karabiner/
     osascript -e 'tell application "Karabiner-Elements" to activate'
 
     ### Compose key keybindings
+    # Needed for a first run
+    mkdir -p ~/Library/KeyBindings
     # Symlinking doesn't work
     # /!\ This depends on the Karabiner right_command -> non_us_backslash modification
     cp -f base-macos/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings

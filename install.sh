@@ -36,9 +36,8 @@ done
 
 # macOS Specific
 if ./base/.usr/bin/_onmacos ; then
+    # Make sure brew is in our PATH in case it's an early installation
     export PATH="/opt/homebrew/bin:$PATH"
-
-    [[ -d /opt/homebrew ]] || git clone --depth=1 https://github.com/Homebrew/brew /opt/homebrew
 
     # Disable Homebrew's analytics
     brew analytics off

@@ -234,6 +234,10 @@ if ./base/.usr/bin/_onlinux ; then
     systemctl --user daemon-reload
 fi
 
+# emacs
+# Directory used for custom .el files
+[[ -d ~/.emacs.d/lisp ]] || mkdir -p ~/.emacs.d/lisp
+
 # ssh
 # This directory will be used for the ControlPath files
 [[ -d ~/.cache/ssh ]] || mkdir -p ~/.cache/ssh

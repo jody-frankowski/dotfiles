@@ -62,9 +62,6 @@ if ./base/.usr/bin/_onmacos ; then
         gnupg
         jq
         mosh
-        # We use the formula and not the cask because the cask is an unofficial build:
-        # https://github.com/Homebrew/homebrew-cask/issues/86226
-        mpv
         myrepos
         pass
         pass-otp
@@ -80,6 +77,7 @@ if ./base/.usr/bin/_onmacos ; then
         firefox
         font-sauce-code-pro-nerd-font
         google-chrome
+        iina
         iterm2
         karabiner-elements
         stats

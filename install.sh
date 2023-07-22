@@ -73,6 +73,10 @@ if ./base/.usr/bin/_onmacos ; then
         wget
         zsh-completions
     )
+    for package in ${packages[@]} ; do
+        [[ -d /opt/homebrew/opt/$package ]] || brew install $package
+    done
+
     casks=(
         firefox
         font-sauce-code-pro-nerd-font
@@ -84,10 +88,6 @@ if ./base/.usr/bin/_onmacos ; then
         visual-studio-code
         vlc
     )
-
-    for package in ${packages[@]} ; do
-        [[ -d /opt/homebrew/opt/$package ]] || brew install $package
-    done
     for cask in ${casks[@]} ; do
         [[ -d /opt/homebrew/Caskroom/$cask ]] || brew install --cask $cask
     done

@@ -132,7 +132,9 @@ if ./base/.usr/bin/_onmacos ; then
 
     ### zsh-completions
     # Link only the completion files we need
-    [[ -L ~/.zshrc.d/completion/_node ]] || ln -s /opt/homebrew/share/zsh-completions/_node ~/.zshrc.d/completion/
+    for completion in node ; do
+        [[ -L ~/.zshrc.d/completion/_"${completion}" ]] || ln -s /opt/homebrew/share/zsh-completions/_"${completion}" ~/.zshrc.d/completion/
+    done
 
     ### Syncthing
     # Start and enable

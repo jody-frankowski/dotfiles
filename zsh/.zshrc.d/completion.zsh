@@ -3,7 +3,7 @@
 # Adapted from https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
 
 if _onmacos ; then
-    fpath=($(brew --prefix)/share/zsh/site-functions $fpath)
+    fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
 fi
 fpath=(~/.zshrc.d/completion $fpath)
 

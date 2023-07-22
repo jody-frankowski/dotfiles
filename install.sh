@@ -51,6 +51,7 @@ if ./base/.usr/bin/_onmacos ; then
 
     packages=(
         atool
+        borgbackup
         coreutils
         # Mainly for the zsh completion
         curl

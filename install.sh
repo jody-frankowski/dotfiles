@@ -132,7 +132,7 @@ if ./base/.usr/bin/_onmacos ; then
 
     ### zsh-completions
     # Link only the completion files we need
-    for completion in node ; do
+    for completion in cmake gpgconf node ; do
         [[ -L ~/.zshrc.d/completion/_"${completion}" ]] || ln -s /opt/homebrew/share/zsh-completions/_"${completion}" ~/.zshrc.d/completion/
     done
 

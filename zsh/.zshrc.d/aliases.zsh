@@ -1,10 +1,10 @@
 # -*- mode: sh -*-
 
 # Global aliases
-alias -g C='| hexdump -C'
 alias -g H='| head'
 alias -g G='| rg -S'
 alias -g GV='| rg -Sv'
+alias -g HD='| hexdump -C'
 alias -g J='| jq'
 alias -g L='| less'
 alias -g S='| sort'

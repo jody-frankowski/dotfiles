@@ -37,7 +37,7 @@ done
 # macOS Specific
 if ./base/.usr/bin/_onmacos ; then
     # Make sure brew is in our PATH in case it's an early installation
-    export PATH="/opt/homebrew/bin:$PATH"
+    export PATH="/opt/homebrew/bin:${PATH}"
 
     # Disable Homebrew's analytics
     brew analytics off
@@ -45,8 +45,8 @@ if ./base/.usr/bin/_onmacos ; then
     taps=(
         homebrew/cask-fonts
     )
-    for tap in ${taps[@]} ; do
-        [[ -d /opt/homebrew/Library/Taps/$tap ]] || brew tap $tap
+    for tap in "${taps[@]}" ; do
+        [[ -d /opt/homebrew/Library/Taps/"${tap}" ]] || brew tap "${tap}"
     done
 
     packages=(
@@ -73,8 +73,8 @@ if ./base/.usr/bin/_onmacos ; then
         wget
         zsh-completions
     )
-    for package in ${packages[@]} ; do
-        [[ -d /opt/homebrew/opt/$package ]] || brew install $package
+    for package in "${packages[@]}" ; do
+        [[ -d /opt/homebrew/opt/"${package}" ]] || brew install "${package}"
     done
 
     casks=(
@@ -89,8 +89,8 @@ if ./base/.usr/bin/_onmacos ; then
         visual-studio-code
         vlc
     )
-    for cask in ${casks[@]} ; do
-        [[ -d /opt/homebrew/Caskroom/$cask ]] || brew install --cask $cask
+    for cask in "${casks[@]}" ; do
+        [[ -d /opt/homebrew/Caskroom/"${cask}" ]] || brew install --cask "${cask}"
     done
 
     # Make sure this folder exists before linking completion files
@@ -100,7 +100,7 @@ if ./base/.usr/bin/_onmacos ; then
     # Replace some macOS's coreutils binaries with GNU ones. We do this because some of our zsh
     # aliases depend on specific GNU's coreutils flags.
     for symlink in date dircolors ls rm sort ; do
-        [[ -L ~/.usr/bin/$symlink ]] || ln -s /opt/homebrew/opt/coreutils/bin/g$symlink ~/.usr/bin/$symlink
+        [[ -L ~/.usr/bin/"${symlink}" ]] || ln -s /opt/homebrew/opt/coreutils/bin/g"${symlink}" ~/.usr/bin/"${symlink}"
     done
 
     ### curl
@@ -195,14 +195,14 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write eu.exelban.Stats version "2.8.3"
     # Enable some widgets
     stats_widgets=(Battery CPU RAM GPU Network Sensors Disk)
-    for widget in ${stats_widgets[@]} ; do
-        defaults write eu.exelban.Stats ${widget}_state 1
+    for widget in "${stats_widgets[@]}" ; do
+        defaults write eu.exelban.Stats "${widget}"_state 1
     done
     # Configure some widgets
     stats_widgets=(CPU RAM GPU)
-    for widget in ${stats_widgets[@]} ; do
-        defaults write eu.exelban.Stats ${widget}_widget mini
-        defaults write eu.exelban.Stats ${widget}_mini_color utilization
+    for widget in "${stats_widgets[@]}" ; do
+        defaults write eu.exelban.Stats "${widget}"_widget mini
+        defaults write eu.exelban.Stats "${widget}"_mini_color utilization
     done
     # Battery
     defaults write eu.exelban.Stats Battery_battery_additional innerPercentage
@@ -226,25 +226,25 @@ if ./base/.usr/bin/_onmacos ; then
 
     # Symlink macOS specific dotfiles
     for dir in *-macos ; do
-        symlink ${dir}
+        symlink "${dir}"
     done
 fi
 
 # terminfo
 for terminfo in ~/.terminfo/*.terminfo ; do
-    tic -x ${terminfo}
+    tic -x "${terminfo}"
 done
 
 # Symlink the dotfiles
 for dir in alacritty base docker emacs gnupg js mpv ssh tmux zsh ; do
-    symlink ${dir}
+    symlink "${dir}"
 done
 
 # Linux specific
 if ./base/.usr/bin/_onlinux ; then
     # Symlink Linux specific dotfiles
     for dir in *-linux ; do
-        symlink ${dir}
+        symlink "${dir}"
     done
     # Reload systemd because of the potentially newly installed or modified systemd units
     systemctl --user daemon-reload

@@ -10,6 +10,12 @@ bak () {
     done
 }
 
+# This will shadow the `col` binary
+col () {
+    # print columns 1 2 3 ... n
+    awk "{ print ${(j:,:):-\$${^@}}  }"
+}
+
 capitalize () {
     for arg in "$@" ; do
         new=$(echo "$arg" | sed 's/[^ .-_]*/\L\u&/g')
@@ -691,11 +697,6 @@ share () {
     cd - &>/dev/null
 }
 
-slit () {
-    # print columns 1 2 3 ... n
-    awk "{ print ${(j:,:):-\$${^@}}  }"
-}
-
 sprunge () {
     if [ -t 0 ]; then
         if [ "$*" ]; then
@@ -724,3 +725,7 @@ sshrc () {
 }
 alias s=sshrc
 compdef s="ssh"
+
+# watch () {
+#     watch "$@"
+# }

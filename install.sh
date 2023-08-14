@@ -117,6 +117,10 @@ if ./base/.usr/bin/_onmacos ; then
     # Disable the default behavior of saving the passphrase in the keychain
     defaults write org.gpgtools.common UseKeychain NO
 
+    ### python
+    # Add a python symlink so we can call python3 with `python` like on Arch Linux
+    [[ -L ~/.usr/bin/python ]] || ln -s /opt/homebrew/bin/python3 ~/.usr/bin/python
+
     ### terminfo
     # We need the terminfo capabilites of tmux-256color, however macOS doesn't
     # provide one. The one in homebrew's ncurses package is incompatible

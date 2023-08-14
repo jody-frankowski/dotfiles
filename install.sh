@@ -240,7 +240,8 @@ if ./base/.usr/bin/_onmacos ; then
         defaults write eu.exelban.Stats "${widget}"_position "${position}"
         position=$(( position + 1 ))
     done
-    killall Stats || true
+    osascript -e 'tell application "Stats" to quit'
+    osascript -e 'tell application "System Events"' -e 'repeat while (application process "Stats" exists)' -e 'delay 0.2' -e 'end repeat' -e 'end tell'
     open /Applications/Stats.app
 
     ### Siri

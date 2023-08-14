@@ -30,7 +30,7 @@ umask 077
 # Symlink terminfo's capabilities files early so that macOS' specific configuration works
 symlink terminfo
 
-for dir in ~/.usr/bin/ ~/.usr/opt/ ~/.usr/share/ ~/.usr/var/log/ ; do
+for dir in ~/.usr/bin/ ~/.usr/logs/ ~/.usr/opt/ ~/.usr/share/ ; do
     [[ -d "${dir}" ]] || mkdir -p "${dir}"
 done
 

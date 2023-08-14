@@ -109,6 +109,12 @@ if ./base/.usr/bin/_onmacos ; then
     [[ -L ~/.usr/bin/curl ]] || ln -s /opt/homebrew/opt/curl/bin/curl ~/.usr/bin/
     [[ -L ~/.zshrc.d/completion/_curl ]] || ln -s /opt/homebrew/opt/curl/share/zsh/site-functions/_curl ~/.zshrc.d/completion/
 
+    ### Clock
+    # Don't show day of week
+    defaults write com.apple.menuextra.clock ShowDayOfWeek -bool false
+    # Never show date
+    defaults write com.apple.menuextra.clock ShowDate 2
+
     ### Finder
     # Show the path bar
     defaults write com.apple.finder ShowPathbar -bool YES

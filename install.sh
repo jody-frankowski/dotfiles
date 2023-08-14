@@ -200,16 +200,19 @@ if ./base/.usr/bin/_onmacos ; then
     # Configure basic settings
     defaults write eu.exelban.Stats runAtLoginInitialized 1
     defaults write eu.exelban.Stats setupProcess 1
+    defaults write eu.exelban.Stats telemetry 0
     defaults write eu.exelban.Stats update-interval "At start"
     # Needed otherwise the defaults will be reset
-    defaults write eu.exelban.Stats version "2.8.3"
+    defaults write eu.exelban.Stats version 2.9.4
+    # Enable combined modules display
+    defaults write eu.exelban.Stats CombinedModules 1
     # Enable some widgets
     stats_widgets=(Battery CPU RAM GPU Network Sensors Disk)
     for widget in "${stats_widgets[@]}" ; do
         defaults write eu.exelban.Stats "${widget}"_state 1
     done
     # Configure some widgets
-    stats_widgets=(CPU RAM GPU)
+    stats_widgets=(CPU RAM GPU Disk)
     for widget in "${stats_widgets[@]}" ; do
         defaults write eu.exelban.Stats "${widget}"_widget mini
         defaults write eu.exelban.Stats "${widget}"_mini_color utilization
@@ -229,6 +232,16 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write eu.exelban.Stats Sensors_widget sensors
     defaults write eu.exelban.Stats "sensor_Average CPU" 1
     defaults write eu.exelban.Stats "sensor_Average System Total" 1
+    # Set widgets positions
+    stats_widgets=(Network Disk GPU CPU RAM Sensors Battery Bluetooth Clock)
+    position=0
+    for widget in "${stats_widgets[@]}" ; do
+        echo $widget
+        defaults write eu.exelban.Stats "${widget}"_position "${position}"
+        position=$(( position + 1 ))
+    done
+    killall Stats || true
+    open /Applications/Stats.app
 
     ### Siri
     # Disable background listening for "Hey Siri"

@@ -2,21 +2,21 @@
 
 set -euxo pipefail
 
-script_dir=$(realpath $(dirname $0))
+script_dir="$(realpath "$(dirname "$0")")"
 pushd "${script_dir}" > /dev/null
 
 symlink () {
     package="$1"
 
-    for file in $(find "${package}" -type f) ; do
-        dir=~/"$(dirname ${file} | cut -s -d/ -f2-)"
-        filename="$(basename ${file})"
+    find "${package}" -type f | while IFS= read -r file ; do
+        dir=~/"$(dirname "${file}" | cut -s -d/ -f2-)"
+        filename="$(basename "${file}")"
         link="${dir}/${filename}"
 
         mkdir -p "${dir}"
 
         if [[ -e "${link}" && ! -L "${link}" ]] ; then
-            echo "/!\ ${link} exists and is not a symlink. Moving to ${link}.old!"
+            echo "${link}" exists and is not a symlink. Moving to "${link}".old! >&2
             mv "${link}"{,.old}
         fi
         ln -f -s "$(pwd)/${file}" "${link}"

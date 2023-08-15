@@ -50,6 +50,7 @@ if ./base/.usr/bin/_onmacos ; then
     done
 
     formulae=(
+        7zip
         atool
         borgbackup
         coreutils

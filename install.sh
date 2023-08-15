@@ -49,7 +49,7 @@ if ./base/.usr/bin/_onmacos ; then
         [[ -d /opt/homebrew/Library/Taps/"${tap}" ]] || brew tap "${tap}"
     done
 
-    packages=(
+    formulae=(
         atool
         borgbackup
         coreutils
@@ -73,8 +73,8 @@ if ./base/.usr/bin/_onmacos ; then
         wget
         zsh-completions
     )
-    for package in "${packages[@]}" ; do
-        [[ -d /opt/homebrew/opt/"${package}" ]] || brew install "${package}"
+    for formula in "${formulae[@]}" ; do
+        [[ -d /opt/homebrew/opt/"${formula}" ]] || brew install "${formula}"
     done
 
     casks=(

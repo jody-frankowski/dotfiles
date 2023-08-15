@@ -231,7 +231,7 @@ if ./base/.usr/bin/_onmacos ; then
     # Sensors
     defaults write eu.exelban.Stats Sensors_widget sensors
     defaults write eu.exelban.Stats "sensor_Average CPU" 1
-    defaults write eu.exelban.Stats "sensor_Average System Total" 1
+    defaults write eu.exelban.Stats sensor_PSTR 1
     # Set widgets positions
     stats_widgets=(Network Disk GPU CPU RAM Sensors Battery Bluetooth Clock)
     position=0

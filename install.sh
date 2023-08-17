@@ -267,6 +267,10 @@ done
 
 # Linux specific
 if ./base/.usr/bin/_onlinux ; then
+    # Make a symlink from open to xdg-open, so that `open` or the `o` alias work the same on Linux
+    # or macOS
+    ln -s /usr/bin/xdg-open ~/.usr/bin/open
+
     # Symlink Linux specific dotfiles
     for dir in *-linux ; do
         symlink "${dir}"

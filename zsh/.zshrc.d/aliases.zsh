@@ -40,7 +40,7 @@ alias info='info --vi-keys'
 alias ip='ip -c'
 alias k='kubectl'
 alias mkdir='mkdir -pv'
-alias o='xdg-open'
+alias o='open'
 alias pass='EDITOR=vim pass'
 alias rdesktop='rdesktop -g 1680x1050'
 alias rg="easy-grep -S --color=always"

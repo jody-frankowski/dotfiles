@@ -104,7 +104,8 @@ chpwd() {
 }
 
 # Search the command in available packages and if found install the package
-# and retry to execute the command
+# and retry to execute the command. Note that this function will be executed
+# in a subshell so `rehash` won't have any effect on the calling shell.
 if type pacman > /dev/null ; then
 command_not_found_handler() {
     pkgs=($(pkgfile -b -- "$1"))

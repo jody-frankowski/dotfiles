@@ -2447,6 +2447,17 @@
 					<key>Text</key>
 					<string>0x7f</string>
 				</dict>
+				<key>0x3a-0x120000-0x29</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Label</key>
+					<string></string>
+					<key>Text</key>
+					<string>:</string>
+					<key>Version</key>
+					<integer>1</integer>
+				</dict>
 				<key>0x44-0x120000-0x2</key>
 				<dict>
 					<key>Action</key>

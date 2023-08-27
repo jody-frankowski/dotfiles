@@ -7,6 +7,8 @@ alias -g GV='| rg -Sv'
 alias -g HD='| hexdump -C'
 alias -g J='| jq'
 alias -g L='| less'
+# Pipe Print: Print stdin and if the user accepts forward it to stdout
+alias -g PP='| tee "$(tty)" | { _pp_var="$(< /dev/stdin)" } ; echo -n "Is this content ok for the next commands? Press Enter to continue or C-c to abort. " ; read ; echo -n "${_pp_var}"'
 alias -g S='| sort'
 alias -g SU='| sort -u'
 alias -g T='| tail'

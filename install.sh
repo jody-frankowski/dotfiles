@@ -52,6 +52,7 @@ if ./base/.usr/bin/_onmacos ; then
     formulae=(
         7zip
         atool
+        bfs
         borgbackup
         coreutils
         # Mainly for the zsh completion

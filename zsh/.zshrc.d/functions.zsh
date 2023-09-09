@@ -58,6 +58,10 @@ decode64 () {
 alias d64=decode64
 alias e64=encode64
 
+find-broken-symlinks () {
+    bfs . -xtype l
+}
+
 flac-encode () {
     local metadata
     local output
@@ -591,7 +595,7 @@ type systemctl > /dev/null && compdef sc="systemctl"
 
 search () {
     to_search=$(echo $* | sed "s/ /*/g")
-    find . -iname "*${to_search}*"
+    bfs . -iname "*${to_search}*"
 }
 alias f=search
 

@@ -6,6 +6,9 @@ umask 077
 export EDITOR='emacsclient -a "" --tty'
 export VISUAL='emacsclient -a "" --tty'
 
+# FZF
+export FZF_DEFAULT_OPTS='--bind=esc:,ctrl-a:toggle-all,ctrl-u:preview-half-page-up,ctrl-d:preview-half-page-down --cycle --layout=reverse --scroll-off=20'
+
 # Pager
 export PAGER=moar
 # Set the default moar options

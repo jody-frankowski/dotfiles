@@ -7,6 +7,7 @@ alias -g GV='| rg -Sv'
 alias -g HD='| hexdump -C'
 alias -g J='| jq'
 alias -g L='| less'
+alias -g M='| moar'
 # Pipe Print: Print stdin and if the user accepts forward it to stdout
 alias -g PP='| tee "$(tty)" | { _pp_var="$(< /dev/stdin)" } ; echo -n "Is this content ok for the next commands? Press Enter to continue or C-c to abort. " ; read ; echo -n "${_pp_var}"'
 alias -g S='| sort'
@@ -102,14 +103,6 @@ alias glog='git log --graph --pretty=format:"%Cred%h%Creset -%C(yellow)%d%Creset
 alias gp='git push --follow-tags'
 alias gst='git status -sb'
 alias gsu='git submodule update'
-
-# Mercurial
-alias hga='hg add'
-alias hgc='hg commit -m'
-alias hgd='hg diff -g'
-alias hgl='hg pull -u'
-alias hgp='hg push'
-alias hgs='hg status'
 
 # Pacman
 alias pac='pacman'

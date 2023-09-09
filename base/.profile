@@ -7,8 +7,10 @@ export EDITOR='emacsclient -a "" --tty'
 export VISUAL='emacsclient -a "" --tty'
 
 # Pager
-export PAGER='less'
-# Sets the default Less options.
+export PAGER=moar
+# Set the default moar options
+export MOAR='--no-linenumbers --no-statusbar'
+# Set the default less options
 # -i smart case search
 # -M show line numbers in prompt
 # -R interpret ANSI color escape sequences

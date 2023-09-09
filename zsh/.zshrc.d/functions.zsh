@@ -349,18 +349,7 @@ git-clone-multiple-remotes () {
     fi
 }
 
-hgcl () {
-    hg clone $1
-    cd "$(basename $1)"
-}
 
-hglo () {
-    hg log -p | less
-}
-
-hglog () {
-    hg log -g | less
-}
 
 loc () {
     to_search=$(echo $* | sed "s/ /*/g")

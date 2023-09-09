@@ -63,6 +63,7 @@ if ./base/.usr/bin/_onmacos ; then
         fzf
         gnupg
         jq
+        moar
         mosh
         myrepos
         pass

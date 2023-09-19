@@ -27,7 +27,7 @@ export GOPATH=~/.cache/go
 export NPM_PACKAGES=~/.cache/npm
 
 # Python
-export PYTHONPATH="$HOME/.usr/lib/:$PYTHONPATH"
+export PYTHONPATH="${HOME}/.usr/lib/:${PYTHONPATH}"
 
 # Rust
 export CARGO_HOME=~/.cache/cargo
@@ -35,18 +35,18 @@ export CARGO_HOME=~/.cache/cargo
 ### PATH
 # Homebrew
 if ~/.usr/bin/_onmacos ; then
-    export PATH="/opt/homebrew/bin:$PATH"
+    export PATH="/opt/homebrew/bin:${PATH}"
 fi
 # Node
-export PATH="$HOME/.cache/npm/bin:$PATH"
+export PATH="${HOME}/.cache/npm/bin:${PATH}"
 # Python
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="${HOME}/.local/bin:${PATH}"
 # Go
-export PATH="$HOME/.cache/go/bin:$PATH"
+export PATH="${HOME}/.cache/go/bin:${PATH}"
 # Rust
-export PATH="$HOME/.cache/cargo/bin:$PATH"
+export PATH="${HOME}/.cache/cargo/bin:${PATH}"
 # Custom scripts and symlinks
-export PATH="$HOME/.usr/bin:$PATH"
+export PATH="${HOME}/.usr/bin:${PATH}"
 ### PATH
 
 # Disable Homebrew's auto update

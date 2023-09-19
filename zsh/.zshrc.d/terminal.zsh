@@ -50,6 +50,7 @@ _terminal-set-titles-with-command () {
         title="${job_cmd_array[1]}"
     else
         # Set the command name, or in the case of mosh/s/ssh/sshrc/sudo, the next command
+        # FIXME Is it possible to describe the pipe? Now `cmd1 -o ; cmd2` shows `cmd1;` we'd like `cmd1;cmd2`.
         title="${title}${${2[(wr)^(*=*|mosh|s|ssh|sshrc|sudo|-*)]}:t}"
     fi
     _set-window-title "${title}"

@@ -119,8 +119,15 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write com.apple.menuextra.clock ShowDate 2
 
     ### Finder
+    # Show all the extensions
+    defaults write com.apple.finder AppleShowAllExtensions -bool true
+    # Show the folders first
+    defaults write com.apple.finder _FXSortFoldersFirst -bool true
     # Show the path bar
-    defaults write com.apple.finder ShowPathbar -bool YES
+    defaults write com.apple.finder ShowPathbar -bool true
+    # Automatically empty the Bin after 30 days
+    defaults write com.apple.finder FXRemoveOldTrashItems -bool true
+    killall Finder || true
 
     ### pinentry-mac
     # Disable the default behavior of saving the passphrase in the keychain

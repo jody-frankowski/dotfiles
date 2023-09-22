@@ -129,6 +129,18 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write com.apple.finder FXRemoveOldTrashItems -bool true
     killall Finder || true
 
+    ### iina
+    # Move the OSC at the bottom. It also makes it much larger.
+    defaults write com.colliderli.iina oscPosition 2
+    # Remove the settings button from the OSC
+    defaults write com.colliderli.iina controlBarToolbarButtons '(2,1)'
+    # Show the chapters markers in the OSC
+    defaults write com.colliderli.iina showChapterPos -bool true
+    # Quit the application when all windows have closed
+    defaults write com.colliderli.iina quitWhenNoOpenedWindow -bool true
+    # Move SubRip subtitles in the video matte
+    defaults write com.colliderli.iina displayInLetterBox -bool true
+
     ### pinentry-mac
     # Disable the default behavior of saving the passphrase in the keychain
     defaults write org.gpgtools.common UseKeychain NO

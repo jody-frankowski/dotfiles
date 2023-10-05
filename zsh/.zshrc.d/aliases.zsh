@@ -58,12 +58,11 @@ alias jctlu='journalctl --user'
 alias scu='systemctl --user'
 
 # ls
-alias ls='ls --color=auto --group-directories-first'
-alias l='ls -lFh'     # size,show type,human readable
-alias la='ls -lAFh'   # long list,show almost all,show type,human readable
-alias lat='\ls --color=auto -lat'
-alias latr='\ls --color=auto -latr'
-alias sl=ls
+alias ls='lsd --group-directories-first'
+alias l='ls -l'
+alias la='l -a'
+alias lat='la -t'
+alias latr='lat -r'
 
 # ps and free
 alias free='free -h'

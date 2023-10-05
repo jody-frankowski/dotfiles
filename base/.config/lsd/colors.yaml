@@ -1,0 +1,11 @@
+user: 15
+group: 15
+size:
+  none: 233
+  small: 15
+  medium: 15
+  large: 196
+date:
+  hour-old: 40
+  day-old: 42
+  older: 36

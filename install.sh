@@ -50,7 +50,6 @@ if ./base/.usr/bin/_onmacos ; then
     done
 
     formulae=(
-        7zip
         atool
         bfs
         borgbackup
@@ -67,6 +66,7 @@ if ./base/.usr/bin/_onmacos ; then
         moar
         mosh
         myrepos
+        p7zip
         pass
         pass-otp
         pinentry-mac

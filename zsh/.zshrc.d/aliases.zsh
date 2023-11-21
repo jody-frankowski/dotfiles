@@ -1,6 +1,7 @@
 # -*- mode: sh -*-
 
 # Global aliases
+alias -g C='| clipboard'
 alias -g COL='| col'
 alias -g F='| fzf'
 alias -g FM='| fzf -m'

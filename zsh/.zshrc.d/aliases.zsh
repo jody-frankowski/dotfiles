@@ -1,9 +1,9 @@
 # -*- mode: sh -*-
 
 # Global aliases
+alias -g G='| rg'
+alias -g GV='| rg -v'
 alias -g H='| head'
-alias -g G='| rg -S'
-alias -g GV='| rg -Sv'
 alias -g HD='| hexdump -C'
 alias -g J='| jq'
 alias -g L='| less'
@@ -32,9 +32,9 @@ alias -g NUL='> /dev/null 2>&1'
 alias -g JJ='--output json | jq'
 alias -g YY='-o yaml | highlight --syntax yaml -O ansi'
 
-# Grep
-alias grep='grep --color=auto'
-alias cgrep='grep --color=never -E "^\s*[^#$;]|^\s*$"'
+# grep / rg
+alias grep='grep --color=auto -i'
+alias rg='rg -S'
 
 # Misc
 alias dd='dd status=progress'
@@ -47,7 +47,6 @@ alias mkdir='mkdir -pv'
 alias o='open'
 alias pass='EDITOR=vim pass'
 alias rdesktop='rdesktop -g 1680x1050'
-alias rg="easy-grep -S --color=always"
 alias umount='sudo umount'
 
 # Systemd

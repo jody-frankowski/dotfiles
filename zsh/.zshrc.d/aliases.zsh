@@ -33,7 +33,6 @@ alias -g JJ='--output json | jq'
 alias -g YY='-o yaml | highlight --syntax yaml -O ansi'
 
 # Grep
-export GREP_COLORS='mt=37;45'
 alias grep='grep --color=auto'
 alias cgrep='grep --color=never -E "^\s*[^#$;]|^\s*$"'
 

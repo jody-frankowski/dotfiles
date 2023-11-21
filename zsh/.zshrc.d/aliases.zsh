@@ -1,6 +1,8 @@
 # -*- mode: sh -*-
 
 # Global aliases
+alias -g F='| fzf'
+alias -g FM='| fzf -m'
 alias -g G='| rg'
 alias -g GV='| rg -v'
 alias -g H='| head'

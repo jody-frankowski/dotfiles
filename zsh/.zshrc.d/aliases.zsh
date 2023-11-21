@@ -1,6 +1,7 @@
 # -*- mode: sh -*-
 
 # Global aliases
+alias -g COL='| col'
 alias -g F='| fzf'
 alias -g FM='| fzf -m'
 alias -g G='| rg'

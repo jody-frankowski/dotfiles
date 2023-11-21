@@ -48,6 +48,8 @@ alias get='curl --continue-at - --location --remote-name --remote-time'
 alias info='info --vi-keys'
 alias ip='ip -c'
 alias k='kubectl'
+# Don't convert network numbers to hostnames
+alias lsof='lsof -n'
 alias mkdir='mkdir -pv'
 alias o='open'
 alias pass='EDITOR=vim pass'

@@ -1,10 +1,8 @@
 # -*- mode: sh -*-
 
 bak () {
-    for arg in "$@" ; do
-        # Clean up the path in case it contains a trailing /, eg. "dir/"
-        arg="$(dirname $arg)/$(basename $arg)"
-
+    # ${@%/} removes trailing slashes
+    for arg in "${@%/}" ; do
         cp -a "${arg}" "${arg}-$(date -u +%F%H%M%S).bak"
     done
 }

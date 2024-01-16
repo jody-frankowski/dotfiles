@@ -92,7 +92,6 @@ alias docker-cleanup='docker system prune'
 alias docker-full-cleanup='docker system prune --all --volumes'
 
 # Git
-# cat ~/.zsh/repos/*oh-my-zsh*/plugins/git/git.plugin.zsh
 alias ga='git add'
 alias gb='git branch'
 alias gbb='git bisect bad'

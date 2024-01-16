@@ -39,7 +39,6 @@ curlh () {
     curl -s -v -o /dev/null $@
 }
 
-# https://github.com/robbyrussell/oh-my-zsh/blob/master/plugins/encode64/encode64.plugin.zsh
 encode64 () {
     if [[ $# -eq 0 ]]; then
         cat | base64

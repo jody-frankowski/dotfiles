@@ -55,6 +55,7 @@ alias o='open'
 alias pass='EDITOR=vim pass'
 alias rdesktop='rdesktop -g 1680x1050'
 alias umount='sudo umount'
+_onmacos && alias ifconfig='ifconfig -f inet:cidr,inet6:cidr'
 
 # Systemd
 alias jctl='journalctl'

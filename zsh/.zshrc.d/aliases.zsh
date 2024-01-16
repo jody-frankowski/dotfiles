@@ -85,7 +85,7 @@ alias mv='mv -i'
 alias rm='rm --one-file-system -i'
 
 # Docker
-[[ "${OSTYPE}" = "linux"* ]] && alias docker='sudo docker'
+_onlinux && alias docker='sudo docker'
 # Removes all unused containers, images and networks
 alias docker-cleanup='docker system prune'
 # Removes all containers, images, networks and volumes

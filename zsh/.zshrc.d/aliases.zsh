@@ -82,7 +82,7 @@ alias v=vim
 # Safer commands
 alias cp='cp -i'
 alias mv='mv -i'
-alias rm='rm --one-file-system -i'
+alias rm='rm --one-file-system -I'
 
 # Docker
 _onlinux && alias docker='sudo docker'

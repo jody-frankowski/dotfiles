@@ -199,6 +199,10 @@ for keymap in 'emacs' 'viins'; do
 
     # Insert 'sudo ' at the beginning of the line.
     bindkey -M "$keymap" "$key_info[Control]X$key_info[Control]S" prepend-sudo
+
+    bindkey -M "$keymap" "$key_info[Control]n" down-history
+
+    bindkey -M "$keymap" "$key_info[Control]p" up-history
 done
 unset keymap
 

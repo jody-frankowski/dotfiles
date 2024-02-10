@@ -634,6 +634,13 @@ Upscale latex previews (even on FHD screens they are too small):
 (setq org-format-latex-options (plist-put org-format-latex-options :scale 2.0))
 #+END_SRC
 
+Force org-mode tab-width to 8. Some modes might change it to another value (e.g. editorconfig). This
+is now a required value, see https://list.orgmode.org/orgmode/8734y5d2gs.fsf@localhost/:
+
+#+BEGIN_SRC emacs-lisp
+(add-hook 'org-mode-hook (lambda () (csetq tab-width 8)))
+#+END_SRC
+
 ** org-drill
 
 #+BEGIN_SRC emacs-lisp

@@ -214,6 +214,12 @@ gen-password () {
     fi
 }
 
+get () {
+    for url in "$@" ; do
+        curl --continue-at - --location --remote-name --remote-time "${url}"
+    done
+}
+
 getip () {
     dig +short myip.opendns.com @resolver1.opendns.com
 }

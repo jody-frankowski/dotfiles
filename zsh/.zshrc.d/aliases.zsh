@@ -44,7 +44,6 @@ alias rg='rg -S'
 # Misc
 alias dd='dd status=progress'
 alias diff='diff -u'
-alias get='curl --continue-at - --location --remote-name --remote-time'
 alias info='info --vi-keys'
 alias ip='ip -c'
 alias k='kubectl'

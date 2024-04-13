@@ -113,12 +113,13 @@ command_not_found_handler() {
         echo "Command not found but package found!" >&2
         echo "Installing ${pkgs[1]}\n" >&2
 
-        sudo pacman -S ${pkgs[1]} >&2
-
-        echo "\nExecuting $@" >&2
-
-        "$@"
-        return $?
+        # Use the closest tty's stdin because when this function is called as part of a pipe chain
+        # it won't have a tty set
+        if <"${GPG_TTY}" sudo pacman -S ${pkgs[1]} >&2 ; then
+            echo "\nExecuting $@" >&2
+            "$@"
+            return $?
+        fi
     else
         echo "Command or package not found: $1" >&2
         return 127

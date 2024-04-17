@@ -215,6 +215,7 @@ bindkey -e
 # switch to vi modal bindings with escape
 bindkey -M "emacs" "\e" vi-cmd-mode
 
+# Make M-backspace delete path components (and not the whole word/path) by stopping at '/'
 backward-kill-dir () {
     local WORDCHARS=${WORDCHARS/\/}
     zle backward-kill-word

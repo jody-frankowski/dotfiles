@@ -213,7 +213,7 @@ bindkey -M isearch . self-insert 2> /dev/null
 bindkey -e
 
 # switch to vi modal bindings with escape
-bindkey -M "emacs" "\e" vi-cmd-mode
+bindkey -M "emacs" "$key_info[Escape]" vi-cmd-mode
 
 # Make M-backspace delete path components (and not the whole word/path) by stopping at '/'
 backward-kill-dir () {
@@ -221,4 +221,4 @@ backward-kill-dir () {
     zle backward-kill-word
 }
 zle -N backward-kill-dir
-bindkey '^[^?' backward-kill-dir
+bindkey "$key_info[Escape]$key_info[Backspace]" backward-kill-dir

@@ -3,6 +3,9 @@
 ### Zsh line editor config
 # Adapted from https://github.com/sorin-ionescu/prezto/blob/master/modules/editor/init.zsh
 
+# Set '|' as a between-word character
+WORDCHARS="${WORDCHARS}|"
+
 # Beep on error in line editor.
 setopt BEEP
 

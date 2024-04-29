@@ -44,6 +44,7 @@ alias rg='rg -S'
 # Misc
 alias dd='dd status=progress'
 alias diff='diff -u'
+alias hash=xxhsum
 alias info='info --vi-keys'
 alias ip='ip -c'
 alias k='kubectl'

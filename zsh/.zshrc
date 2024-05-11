@@ -130,7 +130,7 @@ fi
 
 ### Plugins
 # fzf
-if [[ "$OSTYPE" == "darwin"* ]]; then
+if _onmacos ; then
     fzf_path=/opt/homebrew/opt/fzf/shell/
 else
     fzf_path=/usr/share/fzf/

@@ -469,6 +469,16 @@ pacs () {
     rehash
 }
 
+ping-gw () {
+    if _onmacos; then
+        gw="$(netstat -nr G default G en0 COL 2)"
+    else
+        gw="$(route -n G 'UG\b' COL 2)"
+    fi
+
+    ping "${gw}"
+}
+
 if _onmacos; then
     plutil-to-json () {
         if [[ $# -lt 1 ]]; then

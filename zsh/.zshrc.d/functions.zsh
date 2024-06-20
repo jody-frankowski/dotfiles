@@ -469,6 +469,19 @@ pacs () {
     rehash
 }
 
+if _onmacos; then
+    plutil-to-json () {
+        if [[ $# -lt 1 ]]; then
+            echo "Usage: $0 PLIST_FILE..." >&2
+            return 1
+        fi
+
+        for f in "$@"; do
+            plutil -convert json "$f"
+        done
+    }
+fi
+
 pssh () {
     # Takes a list of host as arguments
     # For each host:

@@ -169,7 +169,7 @@ gcl () {
     if git clone --recursive "$@" ; then
         # cd into the last modified directory. This is simpler than trying to parse git arguments and
         # their order.
-        cd "$(ls -t | head -n1)"
+        cd "$(\ls -t | head -n1)"
     fi
 }
 

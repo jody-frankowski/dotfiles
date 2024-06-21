@@ -15,7 +15,7 @@ col () {
 
 capitalize () {
     for arg in "$@" ; do
-        new=$(echo "$arg" | sed 's/[^ .-_]*/\L\u&/g')
+        new="${(C)arg}"
         mv "$arg" "$new"
     done
 }

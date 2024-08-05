@@ -18,3 +18,10 @@ color:
 # Possible values: date, relative, '+<date_format>'
 # `date_format` will be a `strftime` formatted value. e.g. `date: '+%d %b %y %X'` will give you a date like this: 17 Jun 21 20:14:55
 date: relative
+
+# == Icons ==
+icons:
+  # When to use icons.
+  # When "classic" is set, this is set to "never".
+  # Possible values: always, auto, never
+  when: never

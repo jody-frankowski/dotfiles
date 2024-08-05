@@ -1,10 +1,12 @@
 #!/bin/sh
 
-if [[ $# -lt 2 ]] ; then
-    echo "$0 expects at least one source and one destination." >&2
-    return 1
+set -euo pipefail
+
+if [[ "$#" == 0 ]] || [[ "$1" == -h ]] || [[ "$1" == --help ]] ; then
+    echo Use rsync to move files and directories to a destination owned by root. >&2
+    echo >&2
+    echo "Usage: $(basename $0) [RSYNC_OPTIONS] FILE|DIR... DESTINATION" >&2
+    exit 1
 fi
 
-if rsync -avPih --remove-source-files --rsync-path="sudo rsync" "$@" ; then
-    find "${@:1:$(($# - 1))}" -type d -empty -delete
-fi
+exec mvv --rsync-path="sudo rsync" "$@"

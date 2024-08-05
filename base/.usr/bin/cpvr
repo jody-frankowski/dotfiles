@@ -1,5 +1,18 @@
-#!/bin/sh
+#!/bin/bash
 
+set -eu
+
+if [[ $# == 0 || "$1" == -h || "$1" == --help ]] ; then
+    echo Use rsync to copy files and directories to a \"remote\" destination. >&2
+    echo A \"remote\" destination is anything that requires ssh. >&2
+    echo The transfer won\'t use temporary files and will compare files based on their size only. >&2
+    echo >&2
+    echo "Usage: $(basename $0) [RSYNC_OPTIONS] FILE|DIR... DESTINATION" >&2
+    exit 1
+fi
+
+# With rsync 2.*, --append will always do a checksum and with rsync 3.+, --append won't do a
+# checksum. Use --append-verify to force the checksum.
 # Using `--inplace` might be dangerous in some cases, see
 # https://lists.samba.org/archive/rsync/2010-June/025178.html
-exec rsync -avPih --inplace --size-only --stats "$@"
+exec cpv --append --inplace --size-only --stats "$@"

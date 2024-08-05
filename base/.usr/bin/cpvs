@@ -1,3 +1,12 @@
-#!/bin/sh
+#!/bin/bash
 
-exec rsync -avPih --rsync-path="sudo rsync" "$@"
+set -eu
+
+if [[ $# == 0 || "$1" == -h || "$1" == --help ]] ; then
+    echo Use rsync to copy files and directories to a destination owned by root. >&2
+    echo >&2
+    echo "Usage: $(basename $0) [RSYNC_OPTIONS] FILE|DIR... DESTINATION" >&2
+    exit 1
+fi
+
+exec cpv --rsync-path="sudo rsync" "$@"

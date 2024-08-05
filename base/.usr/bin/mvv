@@ -1,10 +1,19 @@
 #!/bin/sh
 
-if [[ $# -lt 2 ]] ; then
-    echo "$0 expects at least one source and one destination." >&2
-    return 1
+set -euo pipefail
+
+if [[ "$#" == 0 ]] || [[ "$1" == -h ]] || [[ "$1" == --help ]] ; then
+    echo Use rsync to move files and directories. >&2
+    echo >&2
+    echo "Usage: $(basename $0) [RSYNC_OPTIONS] FILE|DIR... DESTINATION" >&2
+    exit 1
 fi
 
+dirs=()
+for src in "${@:1:$# - 1}" ; do
+    [[ -d "${src}" ]] && dirs+=("${src}")
+done
+
 if rsync -avPih --remove-source-files "$@" ; then
-    find "${@:1:$(($# - 1))}" -type d -empty -delete
+    [[ ${#dirs[@]} -gt 0 ]] && find "${dirs[@]}" -type d -empty -delete
 fi

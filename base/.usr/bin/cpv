@@ -1,3 +1,12 @@
-#!/bin/sh
+#!/bin/bash
+
+set -eu
+
+if [[ $# == 0 || "$1" == -h || "$1" == --help ]] ; then
+    echo Use rsync to copy files and directories. >&2
+    echo >&2
+    echo "Usage: $(basename $0) [RSYNC_OPTIONS] FILE|DIR... DESTINATION" >&2
+    exit 1
+fi
 
 exec rsync -avPih "$@"

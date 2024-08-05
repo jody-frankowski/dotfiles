@@ -36,6 +36,31 @@ curlh () {
     curl -s -v -o /dev/null $@
 }
 
+dbg () {
+    # /!\ If the command is part of a conditional (e.g. true || false), the exit value ($?) will be
+    # the condition result
+    local -r ps4_bash='+ $? \w ${BASH_SOURCE##*/}:${LINENO} ${FUNCNAME[0]:+${FUNCNAME[0]}() }\n> '
+    local -r ps4_zsh='%D{%H:%M:%S} %(?::%B%F{red}%?%f%b )%~ %1x:%I %-1N():%i%D{%n}> '
+
+    if [[ "$(whence -w "$1")" =~ alias$ || "$(whence -w "$1")" =~ function$ ]] ; then
+        (PS4="${ps4_zsh}"; set -x; "$@")
+        return
+    fi
+
+    script_path="$(which "$1")"
+    shell="$(head -n1 "${script_path}" | cut -d! -f2)"
+
+    if [[ "${shell}" == *bash ]] ; then
+      export PS4="${ps4_bash}"
+    elif [[ "${shell}" == *zsh ]] ; then
+      export PS4="${ps4_zsh}"
+    fi
+
+    "${shell}" -x "${script_path}" "${@:2}"
+
+    unset PS4
+}
+
 encode64 () {
     if [[ $# -eq 0 ]]; then
         cat | base64

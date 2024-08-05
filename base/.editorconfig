@@ -8,6 +8,9 @@ indent_size = 4
 max_line_length = 100
 trim_trailing_whitespace = true
 
+[*.org]
+indent_size = 8
+
 [{Makefile,*.mk}]
 indent_size = 4
 indent_style = tab

@@ -3,6 +3,7 @@
 # Global aliases
 alias -g C='| clipboard'
 alias -g COL='| col'
+alias -g E='2>&1|'
 alias -g F='| fzf'
 alias -g FM='| fzf -m'
 alias -g G='| rg'
@@ -29,9 +30,10 @@ alias -g XN='X -n'
 alias -g Y='| highlight --syntax yaml -O ansi'
 
 alias -g CA='2>&1 | cat -A'
-alias -g NE='2> /dev/null'
-alias -g NO='> /dev/null'
-alias -g NUL='> /dev/null 2>&1'
+alias -g NE='2>/dev/null'
+alias -g NO='>/dev/null'
+alias -g NOE='NO NE'
+alias -g NIN='</dev/null'
 
 # For aws/kubectl
 alias -g JJ='--output json | jq'

@@ -132,6 +132,14 @@ STICKY_OTHER_WRITABLE 48;5;64;38;5;230
 .wav  38;5;166
 .xspf 38;5;166
 
+# Subtitle files (orange)
+.idx 38;5;166
+.mks 38;5;166
+.srt 38;5;166
+.ssa 38;5;166
+.sub 38;5;166
+.vtt 38;5;166
+
 # Video files (as audio + bold)
 .MOV  01;38;5;166
 .avi  01;38;5;166

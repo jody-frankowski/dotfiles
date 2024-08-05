@@ -5,6 +5,9 @@ they run on supports. 24-bit colors support is a bit of a new development and is
 tricky to get properly on all layers. These terminfo are an attempt at making
 most things work!
 
+The terminfo source format, and associated capabilities are defined here:
+https://pubs.opengroup.org/onlinepubs/7908799/xcurses/terminfo.html
+
 ## History
 
 24-bit colors started being supported by some terminals without a corresponding

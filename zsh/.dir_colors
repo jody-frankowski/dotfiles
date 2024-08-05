@@ -116,6 +116,7 @@ STICKY_OTHER_WRITABLE 48;5;64;38;5;230
 
 # Audio files (orange)
 .aac  38;5;166
+.ac3  38;5;166
 .flac 38;5;166
 .m3u  38;5;166
 .m3u8 38;5;166

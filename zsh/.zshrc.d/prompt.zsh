@@ -437,14 +437,7 @@ function prompt_build_prompt {
 }
 
 function prompt_pwd {
-    local pwd="${PWD/#$HOME/~}"
-
-    if [[ "$pwd" == (#m)[/~] ]]; then
-        _prompt_pwd="$MATCH"
-        unset MATCH
-    else
-        _prompt_pwd="$pwd"
-    fi
+    _prompt_pwd="${PWD/#$HOME/~}"
 }
 
 function prompt_print_elapsed_time {

@@ -97,6 +97,8 @@ _onlinux && alias docker='sudo docker'
 alias docker-cleanup='docker system prune'
 # Removes all containers, images, networks and volumes
 alias docker-full-cleanup='docker system prune --all --volumes'
+# Get Docker host shell with privileged container
+alias docker-host='docker run -it --privileged --pid=host debian nsenter -t 1 -a'
 
 # Git
 alias ga='git add'

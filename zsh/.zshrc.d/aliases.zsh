@@ -84,7 +84,7 @@ alias psmem='ps auxf | sort -n -k 4'
 
 # Editors
 alias e='emacsclient -a "" --tty'
-alias v=vim
+alias v=nvim
 
 # Safer commands
 alias cp='cp -i'

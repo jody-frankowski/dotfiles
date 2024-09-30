@@ -55,9 +55,11 @@ alias k='kubectl'
 alias lsof='lsof -n'
 alias mkdir='mkdir -pv'
 alias o='open'
-alias pass='EDITOR=vim pass'
 alias p='pueue'
 alias pw='p wait'
+# Use Neovim instead of Emacs for pass because our Emacs config saves the buffers history on disk
+# and that could lead to password leaks
+alias pass='EDITOR=nvim pass'
 alias rdesktop='rdesktop -g 1680x1050'
 alias umount='sudo umount'
 _onmacos && alias ifconfig='ifconfig -f inet:cidr,inet6:cidr'

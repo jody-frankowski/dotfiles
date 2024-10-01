@@ -51,8 +51,7 @@ alias hash=xxhsum
 alias info='info --vi-keys'
 alias ip='ip -c'
 alias k='kubectl'
-# Don't convert network numbers to hostnames
-alias lsof='lsof -n'
+alias lsof='lsof -nP' # Preserve network and port numbers
 alias mkdir='mkdir -pv'
 alias o='open'
 alias p='pueue'

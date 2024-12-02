@@ -255,8 +255,9 @@ yasnippet expanding things while in normal mode):
 Install evil-numbers to make C-a and C-x among others work:
 
 #+BEGIN_SRC emacs-lisp
-(straight-use-package
-  '(el-patch :type git :host github :repo "dieggsy/evil-numbers"))
+(use-package evil-numbers
+  :config
+  (csetq evil-numbers-pad-default t))
 #+END_SRC
 
 Note that we don't set =evil-search-module= to =evil-search= because it's much

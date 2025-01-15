@@ -638,8 +638,14 @@ search () {
         return 1
     fi
 
+    local dir_to_search="."
+    if [[ -d "$1" ]]; then
+        dir_to_search="$1"
+        shift
+    fi
+
     to_search=$(echo $* | sed "s/ /*/g")
-    bfs . -iname "*${to_search}*"
+    bfs "${dir_to_search}" -iname "*${to_search}*"
 }
 alias f=search
 

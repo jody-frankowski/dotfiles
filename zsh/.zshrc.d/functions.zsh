@@ -633,6 +633,11 @@ sc () {
 type systemctl > /dev/null && compdef sc="systemctl"
 
 search () {
+    if [[ $# -eq 0 ]]; then
+        echo Usage: $0 [DIR] PATTERN... >&2
+        return 1
+    fi
+
     to_search=$(echo $* | sed "s/ /*/g")
     bfs . -iname "*${to_search}*"
 }

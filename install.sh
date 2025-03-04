@@ -190,6 +190,9 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write com.apple.dock static-only -bool true
     # Auto hide
     defaults write com.apple.dock autohide -bool true
+    # Disable bottom right Hot Corner
+    defaults write com.apple.dock wvous-br-corner -int 1
+    defaults write com.apple.dock wvous-br-modifier -int 0
     # Reload
     killall Dock
 

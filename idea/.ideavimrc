@@ -2,4 +2,7 @@ set clipboard+=unnamed
 set ignorecase
 set incsearch
 
+map D d$
+map Y y$
+
 Plug 'tpope/vim-surround'

@@ -1249,7 +1249,7 @@ Misc keybindings with General:
   :prefix "SPC"
   "SPC" 'counsel-M-x
   "bb"  'counsel-ibuffer
-  "bd"  'kill-this-buffer
+  "bd"  'kill-current-buffer
   "bn"  'next-buffer
   "bp"  'previous-buffer
   "cy"  'evilnc-copy-and-comment-operator

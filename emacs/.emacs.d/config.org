@@ -312,6 +312,17 @@ support of the '%' operator:
 (global-evil-matchit-mode 1)
 #+END_SRC
 
+** evil-surround
+
+Install [[https://github.com/emacs-evil/evil-surround][evil-surround]] to provide surround operators:
+
+#+BEGIN_SRC emacs-lisp
+(use-package evil-surround
+  :ensure t
+  :config
+  (global-evil-surround-mode 1))
+#+END_SRC
+
 * Eyebrowse
 
 Add the ~eyebrowse~ package that helps us manage window configurations and hence

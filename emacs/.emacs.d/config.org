@@ -22,7 +22,9 @@ https://lists.gnu.org/archive/html/help-gnu-emacs/2015-12/msg00097.html
 
 * Auto Pairs
 
-Enable =electric-pair-mode= to automatically insert matching brackets or quotes:
+Enable =electric-pair-mode= to automatically insert matching brackets or quotes.
+/!\ If you try to insert a ="= at the end of a line and if the next one starts with one,
+=electric-pair= will consider it to be its closing twin and jump to one char after it.
 
 #+BEGIN_SRC emacs-lisp
 (electric-pair-mode)

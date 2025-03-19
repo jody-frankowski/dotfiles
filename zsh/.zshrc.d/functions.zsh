@@ -783,3 +783,20 @@ compdef s="ssh"
 # watch () {
 #     watch "$@"
 # }
+
+rgg () {
+    local file_or_dir=
+    local options=()
+    while [[ $# -gt 0 ]] ; do
+        case "$1" in
+            -*) options+=("$1"); shift;;
+            *) file_or_dir="$1"; shift; break;;
+        esac
+    done
+    if [[ -z "${file_or_dir}" || $# -gt 1 ]]; then
+        echo "Inverted rg: $0 [RG_OPTION...] PATH PATTERN" >&2
+        return 1
+    fi
+
+    rg "${options[@]}" "$@" "${file_or_dir}"
+}

@@ -30,6 +30,17 @@ Enable =electric-pair-mode= to automatically insert matching brackets or quotes.
 (electric-pair-mode)
 #+END_SRC
 
+Disable =electric-pair-mode= in command prompt (evil's ex mode):
+
+#+BEGIN_SRC emacs-lisp
+(defun my-disable-electric-pair ()
+  (electric-pair-mode -1))
+(defun my-enable-electric-pair ()
+  (electric-pair-mode 1))
+(add-hook 'minibuffer-setup-hook 'my-disable-electric-pair)
+(add-hook 'minibuffer-exit-hook  'my-enable-electric-pair)
+#+END_SRC
+
 * Auto Refresh Buffers
 
 Set Emacs to auto refresh the file backed buffers if the file changed,

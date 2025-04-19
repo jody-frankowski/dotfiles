@@ -246,7 +246,7 @@ get () {
 }
 
 getip () {
-    dig +short myip.opendns.com @resolver1.opendns.com
+    dig +short ANY myip.opendns.com @resolver1.opendns.com
 }
 
 _git-branch-current () {

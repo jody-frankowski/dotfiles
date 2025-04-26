@@ -179,6 +179,9 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write com.apple.screensaver askForPassword -bool true
     defaults write com.apple.screensaver askForPasswordDelay -int 0
 
+    ### Alert Sound
+    defaults write "Apple Global Domain" com.apple.sound.beep.sound -string /System/Library/Sounds/Purr.aiff
+
     ### iterm2
     # Specify the preferences directory
     defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${script_dir}/iterm2"

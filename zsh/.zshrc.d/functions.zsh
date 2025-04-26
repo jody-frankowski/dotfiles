@@ -7,6 +7,11 @@ bak () {
     done
 }
 
+brew () {
+    command brew "$@"
+    rehash
+}
+
 # This will shadow the `col` binary
 col () {
     # print columns 1 2 3 ... n

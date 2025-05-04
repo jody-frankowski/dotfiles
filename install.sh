@@ -311,6 +311,10 @@ fi
 # Directory used for custom .el files
 [[ -d ~/.emacs.d/lisp ]] || mkdir -p ~/.emacs.d/lisp
 
+# nvim
+# base16-theme
+git clone --depth 1 https://github.com/RRethy/base16-nvim ~/.local/share/nvim/site/pack/misc/start/base16-nvim
+
 # ssh
 # This directory will be used for the ControlPath files
 [[ -d ~/.cache/ssh ]] || mkdir -p ~/.cache/ssh

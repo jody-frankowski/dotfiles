@@ -177,6 +177,13 @@ _load_minikube_completion () {
 }
 compdef _load_minikube_completion minikube
 
+# lazyload podman completion
+_load_podman_completion () {
+    source <(podman completion zsh)
+    _main_complete
+}
+compdef _load_podman_completion podman
+
 # lazyload vault completion
 _load_vault_completion () {
     complete -o nospace -C vault vault

@@ -11,8 +11,10 @@ setopt CDABLE_VARS          # Change directory to a path stored in a variable.
 setopt AUTO_NAME_DIRS       # Auto add variable-stored paths to ~ list.
 setopt MULTIOS              # Write to multiple descriptors.
 setopt EXTENDED_GLOB        # Use extended globbing syntax.
-unsetopt CLOBBER            # Do not overwrite existing files with > and >>.
-                            # Use >! and >>! to bypass.
+
+# Redirection Options
+unsetopt CLOBBER       # Use >! to force overwriting existing files
+setopt   APPEND_CREATE # Let >> create non-existing files
 
 # History options
 # https://github.com/sorin-ionescu/prezto/blob/master/modules/history/init.zsh

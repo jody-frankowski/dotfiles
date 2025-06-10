@@ -36,7 +36,7 @@
 
 ;; Pull the org packages
 (straight-use-package '(org-plus-contrib :type git :repo "https://git.sr.ht/~bzg/org-contrib"))
-(straight-use-package '(org :type git :repo "https://git.savannah.gnu.org/git/emacs/org-mode.git"))
+(straight-use-package '(org :type git :repo "https://github.com/emacs-straight/org-mode"))
 
 ;; The lastest version of org-babel-load-file doesn't follow symlinks when it
 ;; checks if the org file is newer :/

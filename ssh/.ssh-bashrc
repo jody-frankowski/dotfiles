@@ -132,12 +132,14 @@ PROMPT_COMMAND=__prompt_command
 __prompt_command() {
     local -r exit_code=$?
 
-    local -r term_bold="$(tput bold)"
-    local -r term_reset="$(tput sgr0)"
-    local -r term_blue="$(tput setaf 4)"
-    local -r term_red="$(tput setaf 1)"
-    local -r term_green="$(tput setaf 2)"
-    local -r term_standout="$(tput smso)"
+    # Since Bash knows the cursor position by counting the number of characters *printed*, we need
+    # to enclose term control sequences between `\[` and `\]` (man -P "$PAGER -p '^PROMPTING'" bash)
+    local -r term_bold="\[$(tput bold)\]"
+    local -r term_reset="\[$(tput sgr0)\]"
+    local -r term_blue="\[$(tput setaf 4)\]"
+    local -r term_red="\[$(tput setaf 1)\]"
+    local -r term_green="\[$(tput setaf 2)\]"
+    local -r term_standout="\[$(tput smso)\]"
 
     local -r time="${term_blue}[${term_green}$(date +%H:%M:%S)${term_blue}]${term_reset}"
     local -r user="${term_blue}\u${term_reset}"

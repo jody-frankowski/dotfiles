@@ -128,31 +128,27 @@ vdiff-fw () {
 }
 
 ### prompt ###
-PROMPT_COMMAND=__prompt_command
-__prompt_command() {
-    local -r exit_code=$?
+# Since Bash only knows the cursor position by counting the number of characters *printed*, we need
+# to "escape" terminal control sequences with `\[` and `\]` (man -P "$PAGER -p '^PROMPTING'" bash)
+_term_bold="\[$(tput bold)\]"
+_term_reset="\[$(tput sgr0)\]"
+_term_blue="\[$(tput setaf 4)\]"
+_term_red="\[$(tput setaf 1)\]"
+_term_green="\[$(tput setaf 2)\]"
+_term_standout="\[$(tput smso)\]"
+_prompt_user="${_term_blue}\u${_term_reset}"
+_prompt_at="${_term_red}@${_term_reset}"
+_prompt_host="${_term_green}\h${_term_reset}"
+_prompt_symbol="${_term_blue}"
+[[ "${UID}" -eq 0 ]] && _prompt_symbol+="#" || _prompt_symbol+="$"
+_prompt_symbol+="${_term_reset}"
+PROMPT_COMMAND=_prompt_command
+_prompt_command() {
+    [[ $? -ne 0 ]] && local -r exit_code="${_term_red}$?${_term_reset} "
+    local -r time="${_term_green}$(date +%H:%M:%S)${_term_reset}"
+    local -r dir="${_term_standout}${_term_blue} \w ${_term_reset}"
 
-    # Since Bash knows the cursor position by counting the number of characters *printed*, we need
-    # to enclose term control sequences between `\[` and `\]` (man -P "$PAGER -p '^PROMPTING'" bash)
-    local -r term_bold="\[$(tput bold)\]"
-    local -r term_reset="\[$(tput sgr0)\]"
-    local -r term_blue="\[$(tput setaf 4)\]"
-    local -r term_red="\[$(tput setaf 1)\]"
-    local -r term_green="\[$(tput setaf 2)\]"
-    local -r term_standout="\[$(tput smso)\]"
-
-    local -r time="${term_blue}[${term_green}$(date +%H:%M:%S)${term_blue}]${term_reset}"
-    local -r user="${term_blue}\u${term_reset}"
-    local -r host="${term_green}\h${term_reset}"
-    local -r dir="${term_standout}${term_blue} \w ${term_reset}"
-
-    local exit_indicator=""
-    [[ "${exit_code}" -ne 0 ]] && exit_indicator="${term_red}${exit_code}${term_reset} "
-
-    local prompt_symbol="❯"
-    [[ "${UID}" -eq 0 ]] && prompt_symbol="#"
-
-    PS1="${time} ${exit_indicator}${user}${term_red}@${term_reset}${host} ${dir}\n${term_blue}${prompt_symbol}${term_reset} "
+    PS1="${time} ${exit_code}${_prompt_user}${_prompt_at}${_prompt_host} ${dir}\n${_prompt_symbol} "
 }
 
 

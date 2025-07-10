@@ -1317,8 +1317,12 @@ Misc keybindings with General:
   "C-j" 'ivy-next-line
   "C-k" 'ivy-previous-line)
 
+;; Make the usual Emacs movement keybindings work in Evil Ex mode.
+;; Otherwise, they would respectively, jump at the beginning of the command-line or open the Evil
+;; command-line window.
 (general-def evil-ex-completion-map
-  "C-b" 'backward-char)
+  "C-b" 'backward-char
+  "C-f" 'forward-char)
 
 (general-def 'normal dired-mode-map
   "h" 'dired-up-directory

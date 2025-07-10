@@ -780,7 +780,14 @@ sprunge () {
 }
 
 sshrc () {
-    ssh -o ControlPath=none -o PermitLocalCommand=yes -o LocalCommand="scp -C ~/.ssh-bashrc %n:/tmp/" -t $@ "bash --rcfile /tmp/.ssh-bashrc -i"
+    ssh -o ControlPath=none \
+        -o PermitLocalCommand=yes \
+        -o LocalCommand="scp -qC ~/.ssh-bashrc %n:/tmp/" \
+        -t $@ -- \
+        "(tmux new -A -s ssh-\$(whoami) \
+               \"tmux set -s default-command 'bash --rcfile /tmp/.ssh-bashrc'
+                 bash --rcfile /tmp/.ssh-bashrc\") \
+         || bash --rcfile /tmp/.ssh-bashrc"
 }
 alias s=sshrc
 compdef s="ssh"

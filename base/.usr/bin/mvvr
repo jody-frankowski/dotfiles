@@ -1,12 +1,17 @@
-#!/bin/sh
+#!/bin/zsh
 
-if [[ $# -lt 2 ]] ; then
-    echo "$0 expects at least one source and one destination." >&2
-    return 1
+if [[ $# -lt 2 || $1 == -h || $1 == --help ]]; then
+    echo "Usage: $(basename $0) [RSYNC_OPTIONS] FILE|DIR... DESTINATION" >&2
+    echo 'Moves files and directories to a slow destination that may require resuming.' >&2
+    echo 'Files will be written in-place and will be compared based only on their size.' >&2
+    exit 1
 fi
+
+dirs=()
+for src in "${@:1:$# - 1}"; do
+    if [[ -d "${src}" ]] dirs+=("${src}")
+done
 
 # Using `--inplace` might be dangerous in some cases, see
 # https://lists.samba.org/archive/rsync/2010-June/025178.html
-if rsync -avPih --inplace --size-only --stats --remove-source-files "$@" ; then
-    find "${@:1:$(($# - 1))}" -type d -empty -delete
-fi
+exec mvv --inplace --size-only --stats "$@"

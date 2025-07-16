@@ -1,11 +1,10 @@
-#!/bin/bash
+#!/bin/zsh
 
-set -eu
+set -euo pipefail
 
-if [[ $# == 0 || "$1" == -h || "$1" == --help ]] ; then
-    echo Use rsync to copy files and directories to a destination owned by root. >&2
-    echo >&2
+if [[ $# -lt 2 || $1 == -h || $1 == --help ]]; then
     echo "Usage: $(basename $0) [RSYNC_OPTIONS] FILE|DIR... DESTINATION" >&2
+    echo 'Copies files and directories to a root-owned destination.' >&2
     exit 1
 fi
 

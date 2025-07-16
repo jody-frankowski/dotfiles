@@ -1,19 +1,18 @@
-#!/bin/sh
+#!/bin/zsh
 
 set -euo pipefail
 
-if [[ "$#" == 0 ]] || [[ "$1" == -h ]] || [[ "$1" == --help ]] ; then
-    echo Use rsync to move files and directories. >&2
-    echo >&2
+if [[ $# -lt 2 || $1 == -h || $1 == --help ]]; then
     echo "Usage: $(basename $0) [RSYNC_OPTIONS] FILE|DIR... DESTINATION" >&2
+    echo 'Moves files and directories.' >&2
     exit 1
 fi
 
 dirs=()
-for src in "${@:1:$# - 1}" ; do
-    [[ -d "${src}" ]] && dirs+=("${src}")
+for src in "${@:1:$# - 1}"; do
+    if [[ -d "${src}" ]] dirs+=("${src}")
 done
 
-if rsync -avPih --remove-source-files "$@" ; then
-    [[ ${#dirs[@]} -gt 0 ]] && find "${dirs[@]}" -type d -empty -delete
+if rsync -avPih --remove-source-files "$@"; then
+    bfs $dirs -type d -empty -delete
 fi

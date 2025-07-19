@@ -58,11 +58,14 @@ STICKY_OTHER_WRITABLE 48;5;64;38;5;230
 .tlz  38;5;63
 .txz  38;5;63
 .tz   38;5;63
+.tzst 38;5;63
 .xz   38;5;63
 .z    38;5;63
 .zip  38;5;63
 .zoo  38;5;63
 .zpaq 38;5;63
+.zst  38;5;63
+.zstd 38;5;63
 
 # Image files (yellow)
 .CR2  38;5;136

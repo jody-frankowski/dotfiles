@@ -2,7 +2,7 @@
 
 REPOS_DIR="$HOME/.zshrc.d/repos"
 
-[[ ! -d $REPOS_DIR ]] && mkdir -p $REPOS_DIR
+[[ -d $REPOS_DIR ]] || return
 
 completion () {
     _clone $PLUGINS_REPO

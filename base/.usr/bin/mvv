@@ -14,5 +14,5 @@ for src in "${@:1:$# - 1}"; do
 done
 
 if rsync -avPih --remove-source-files "$@"; then
-    bfs $dirs -type d -empty -delete
+    if [[ -n $dirs ]] bfs $dirs -type d -empty -delete
 fi

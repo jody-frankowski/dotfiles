@@ -1,0 +1,14 @@
+#!/bin/zsh
+
+if [[ $# -lt 2 || $1 == -h || $1 == --help ]]; then
+    echo "Usage: $(basename $0) [RSYNC_OPTIONS] FILE|DIR... DESTINATION" >&2
+    echo 'Moves files and directories to a slow destination that may require resuming.' >&2
+    echo 'Files will be appended in-place and will be compared based only on their size.' >&2
+    exit 1
+fi
+
+# With rsync 2.*, --append will always do a checksum and with rsync 3.+, --append won't do a
+# checksum. Use --append-verify to force the checksum.
+# Using `--inplace` might be dangerous in some cases, see
+# https://lists.samba.org/archive/rsync/2010-June/025178.html
+exec mvvr --append "$@"

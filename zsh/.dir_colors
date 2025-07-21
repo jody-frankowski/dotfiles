@@ -137,6 +137,7 @@ STICKY_OTHER_WRITABLE 48;5;64;38;5;230
 .xspf 38;5;166
 
 # Subtitle files (orange)
+.ass 38;5;166
 .idx 38;5;166
 .mks 38;5;166
 .srt 38;5;166

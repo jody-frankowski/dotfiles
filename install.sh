@@ -278,7 +278,7 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write com.apple.Siri VoiceTriggerUserEnabled -bool false
 
     # Symlink macOS specific dotfiles
-    for dir in *-macos ; do
+    for dir in *-macos iterm2 ; do
         symlink "${dir}"
     done
 fi
@@ -289,7 +289,7 @@ for terminfo in ~/.terminfo/*.terminfo ; do
 done
 
 # Symlink the dotfiles
-for dir in alacritty base docker emacs js mpv ssh tmux zed zsh ; do
+for dir in base docker emacs idea iina js karabiner mpv nvim ssh tmux zed zsh ; do
     symlink "${dir}"
 done
 
@@ -300,7 +300,7 @@ if ./base/.usr/bin/_onlinux ; then
     [[ -L ~/.usr/bin/open ]] || ln -s /usr/bin/xdg-open ~/.usr/bin/open
 
     # Symlink Linux specific dotfiles
-    for dir in *-linux ; do
+    for dir in *-linux alacritty ; do
         symlink "${dir}"
     done
     # Reload systemd because of the potentially newly installed or modified systemd units

@@ -1,0 +1,3 @@
+[macosx] # Mac OS X interface
+# Display VLC status menu icon (boolean)
+macosx-statusicon=0

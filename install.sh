@@ -289,7 +289,7 @@ for terminfo in ~/.terminfo/*.terminfo ; do
 done
 
 # Symlink the dotfiles
-for dir in alacritty base docker emacs gnupg js mpv ssh tmux zsh ; do
+for dir in alacritty base docker emacs js mpv ssh tmux zed zsh ; do
     symlink "${dir}"
 done
 

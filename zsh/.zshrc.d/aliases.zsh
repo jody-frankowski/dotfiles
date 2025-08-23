@@ -42,7 +42,7 @@ alias -g YY='-o yaml | highlight --syntax yaml -O ansi'
 
 # grep / rg
 alias grep='grep --color=auto -i'
-alias rg='rg -S'
+alias rg='rg -iz'
 
 # Misc
 alias dd='dd status=progress'

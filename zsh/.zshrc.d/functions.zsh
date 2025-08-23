@@ -381,6 +381,17 @@ git-clone-multiple-remotes () {
     fi
 }
 
+hash () {
+    local cmd=xxhsum
+    if [[ "$#" -ge 1 ]]; then
+        "${cmd}" "$@" | sort -k2
+        return
+    fi
+
+    bfs . -type f -print0 | xargs -0 "${cmd}" | sort -k2
+}
+compdef _files hash
+
 
 
 loc () {

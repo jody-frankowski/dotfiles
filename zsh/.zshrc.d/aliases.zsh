@@ -46,7 +46,6 @@ alias rg='rg -iz'
 
 # Misc
 alias dd='dd status=progress'
-alias hash=xxhsum
 alias diff='diff --color -u'
 alias info='info --vi-keys'
 alias ip='ip -c'

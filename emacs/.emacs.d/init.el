@@ -38,8 +38,8 @@
 ;; (customize-set-variable 'straight-vc-git-default-clone-depth 1)
 
 ;; Pull the org packages
-(straight-use-package '(org-plus-contrib :type git :repo "https://git.sr.ht/~bzg/org-contrib"))
-(straight-use-package '(org :type git :repo "https://github.com/emacs-straight/org-mode"))
+(straight-use-package '(org-plus-contrib :type git :host sourcehut :repo "bzg/org-contrib"))
+(straight-use-package '(org :type git :host github :repo "emacs-straight/org-mode"))
 
 ;; The lastest version of org-babel-load-file doesn't follow symlinks when it
 ;; checks if the org file is newer :/

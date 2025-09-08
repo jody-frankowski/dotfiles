@@ -65,6 +65,7 @@ if ./base/.usr/bin/_onmacos ; then
         lsd
         moar
         mosh
+        mpv
         myrepos
         p7zip
         pass

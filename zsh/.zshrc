@@ -108,26 +108,31 @@ chpwd() {
 # Search the command in available packages and if found install the package
 # and retry to execute the command. Note that this function will be executed
 # in a subshell so `rehash` won't have any effect on the calling shell.
-if type pacman > /dev/null ; then
 command_not_found_handler() {
-    pkgs=($(pkgfile -b -- "$1"))
-    if [[ -n "$pkgs" ]] ; then
-        echo "Command not found but package found!" >&2
-        echo "Installing ${pkgs[1]}\n" >&2
+    local pkgs=()
+    local install_cmd=()
+    if type pacman > /dev/null; then
+       pkgs=($(pkgfile -b -- "$1"))
+       install_cmd=(sudo pacman -S)
+    fi
+    if type brew > /dev/null; then
+        pkgs=($(brew which-formula -- "$1"))
+        install_cmd=(brew install)
+    fi
 
-        # Use the closest tty's stdin because when this function is called as part of a pipe chain
-        # it won't have a tty set
-        if <"${GPG_TTY}" sudo pacman -S ${pkgs[1]} >&2 ; then
-            echo "\nExecuting $@" >&2
-            "$@"
-            return $?
-        fi
-    else
-        echo "Command or package not found: $1" >&2
+    if [[ -z "$pkgs" ]]; then
+        echo Command or package not found: $1 >&2
         return 127
     fi
+
+    echo "Package found! Installing ${pkgs[1]}:\n" >&2
+
+    if ${install_cmd[@]} ${pkgs[1]} >&2; then
+        echo "\nExecuting $@" >&2
+        "$@"
+        return $?
+    fi
 }
-fi
 ###
 
 ### Plugins

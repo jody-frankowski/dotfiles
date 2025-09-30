@@ -7,10 +7,12 @@ bak () {
     done
 }
 
+if _onmacos; then
 brew () {
     command brew "$@"
     rehash
 }
+fi
 
 # This will shadow the `col` binary
 col () {

@@ -1,0 +1,65 @@
+#!/bin/sh
+
+bwrap_command=(
+    /usr/bin/bwrap
+        # Environment variables
+        --clearenv
+        --setenv HOME "${HOME}"
+        --setenv PATH "/usr/bin"
+        --setenv XDG_RUNTIME_DIR "${XDG_RUNTIME_DIR}"
+
+        # Essentials
+        --dev-bind /dev{,}
+        --dev-bind /sys{,}
+        --proc /proc
+        --unshare-all
+
+        # Binaries, libraries and global configs
+        --ro-bind-try /etc{,}
+        --ro-bind-try /usr/bin{,}
+        --ro-bind-try /usr/lib{,}
+        --ro-bind-try /usr/share{,}
+        --symlink /usr/bin /bin
+        --symlink /usr/lib /lib
+        --symlink /usr/lib /lib64
+        --symlink /usr/lib /usr/lib64
+
+        # mpv watch_later cache
+        --bind-try "${HOME}"/.{cache,config}/mpv/watch_later
+
+        # Fonts
+        --bind-try "${HOME}"/.cache/fontconfig{,}
+        --ro-bind-try /var/cache/fontconfig{,}
+
+        # Media
+        --bind-try "${HOME}"/.cache/mesa_shader_cache{,}
+        --ro-bind-try "${XDG_RUNTIME_DIR}"/"$WAYLAND_DISPLAY"{,}
+        --ro-bind-try "${XDG_RUNTIME_DIR}"/pipewire-0{,}
+        --ro-bind-try "${XDG_RUNTIME_DIR}"/pulse{,}
+)
+
+# Enable networking if an argument looks like an url
+needs_network=false
+for arg in "$@"; do
+    if [[ "${arg}" =~ ^https?:// ]]; then
+        needs_network=true
+        break
+    fi
+done
+[[ "${needs_network}" == true ]] && bwrap_command+=(--share-net)
+
+# Bind the config files
+for file in $(find ~/.config/mpv -type l); do
+    bwrap_command+=(--ro-bind-try "$(realpath "${file}")" "${file}")
+done
+
+# Bind the file or directory arguments
+for arg in "$@"; do
+    if [[ -e "${arg}" ]]; then
+        bwrap_command+=( --ro-bind-try "$(realpath "${arg}")" "$(realpath "${arg}")" )
+    fi
+done
+
+bwrap_command+=(/usr/bin/mpv "$@")
+
+exec "${bwrap_command[@]}"

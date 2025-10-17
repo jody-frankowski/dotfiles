@@ -116,7 +116,7 @@ command_not_found_handler() {
        install_cmd=(sudo pacman -S)
     fi
     if type brew > /dev/null; then
-        pkgs=($(brew which-formula -- "$1"))
+        pkgs=($(brew which-formula "$1"))
         install_cmd=(brew install)
     fi
 

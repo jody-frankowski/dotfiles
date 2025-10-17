@@ -68,23 +68,20 @@ dbg () {
     unset PS4
 }
 
-encode64 () {
+d64 () {
     if [[ $# -eq 0 ]]; then
-        cat | base64
-    else
-        printf '%s' $1 | base64
-    fi
-}
-
-decode64 () {
-    if [[ $# -eq 0 ]]; then
-        cat | base64 --decode
+        base64 --decode
     else
         printf '%s' $1 | base64 --decode
     fi
 }
-alias d64=decode64
-alias e64=encode64
+e64 () {
+    if [[ $# -eq 0 ]]; then
+        base64
+    else
+        printf '%s' $1 | base64
+    fi
+}
 
 find-broken-symlinks () {
     bfs . -xtype l

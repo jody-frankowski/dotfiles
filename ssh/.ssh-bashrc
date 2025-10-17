@@ -151,6 +151,7 @@ _prompt_command() {
     PS1="${time} ${exit_code}${_prompt_user}${_prompt_at}${_prompt_host} ${dir}\n${_prompt_symbol} "
 }
 
+[[ "$OSTYPE" == darwin* ]] && export BASH_SILENCE_DEPRECATION_WARNING=1
 
 ### init ###
 motd

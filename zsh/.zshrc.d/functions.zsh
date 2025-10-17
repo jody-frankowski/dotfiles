@@ -214,41 +214,53 @@ gcl () {
 }
 
 gen-passphrase () {
-    local use_clipboard=true
-    if [[ "$1" == "--no-clipboard" ]] ; then
-        use_clipboard=false
-        shift
-    fi
-    if [[ -z $1 ]] ; then
-        dict="words"
-    else
-        dict=$1
+    if [[ $1 == -h ]]; then
+        echo "Usage: $0 [--no-clipboard] [DICTFILE]" >&2
+        return 1
     fi
 
-    passphrase=$(LC_COLLATE=C grep "^[a-z0-9]\{3,7\}$" /usr/share/dict/$dict | shuf -n4 | tr -d '\n')
-    if [[ "${use_clipboard}" = true ]] ; then
-        clipboard $passphrase && echo Copied to clipboard
+    local use_clipboard=true
+    if [[ "$1" == --no-clipboard ]]; then
+        use_clipboard=false; shift
+    fi
+    local dict=words
+    if [[ -n "$1" ]]; then
+        dict="$1"
+    fi
+
+    local -r dict_file="/usr/share/dict/${dict}"
+    if ! [[ -f "${dict_file}" ]]; then
+        echo "Error: ${dict_file} doesn't exist!" >&2
+        return 1
+    fi
+
+    passphrase="$(shuf -n4 "${dict_file}" | tr '\n' ' ' | head -c-1)"
+    if [[ "${use_clipboard}" == true ]]; then
+        clipboard "${passphrase}" && echo Passphrase copied to clipboard
     else
         echo $passphrase
     fi
 }
 
 gen-password () {
-    local use_clipboard=true
-    if [[ "$1" == "--no-clipboard" ]] ; then
-        use_clipboard=false
-        shift
-    fi
-    if [[ -z $1 ]] ; then
-        length="16"
-    else
-        length=$1
+    if [[ $1 == -h ]]; then
+        echo "Usage: $0 [--no-clipboard] [LENGTH]" >&2
+        return 1
     fi
 
-    password=$(dd if=/dev/urandom bs=1 count=$((length * 2)) 2>/dev/null |
-                   base64 | head -c ${length})
-    if [[ "${use_clipboard}" = true ]] ; then
-        clipboard $password && echo Copied to clipboard
+    local use_clipboard=true
+    if [[ "$1" == --no-clipboard ]]; then
+        use_clipboard=false; shift
+    fi
+    local length=16
+    if [[ -n "$1" ]]; then
+        length="$1"
+    fi
+
+    password="$(dd if=/dev/urandom bs=1 count=$((length * 2)) 2>/dev/null |
+                   base64 | head -c "${length}")"
+    if [[ "${use_clipboard}" == true ]]; then
+        clipboard "${password}" && echo Password copied to clipboard
     else
         echo $password
     fi

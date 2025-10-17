@@ -49,9 +49,9 @@ export PATH="${HOME}/.cache/cargo/bin:${PATH}"
 export PATH="${HOME}/.usr/bin:${PATH}"
 ### PATH
 
-# Disable Homebrew's auto update
-if ~/.usr/bin/_onmacos ; then
-    export HOMEBREW_NO_AUTO_UPDATE=1
+if ~/.usr/bin/_onmacos; then
+    export HOMEBREW_NO_AUTO_UPDATE=1     # Disable automatic updates
+    export HOMEBREW_NO_INSTALL_CLEANUP=1 # Disable automatic formulae cleanup
 fi
 
 # Set the locale

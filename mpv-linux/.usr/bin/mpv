@@ -39,14 +39,12 @@ bwrap_command=(
 )
 
 # Enable networking if an argument looks like an url
-needs_network=false
 for arg in "$@"; do
     if [[ "${arg}" =~ ^https?:// ]]; then
-        needs_network=true
+        bwrap_command+=(--share-net)
         break
     fi
 done
-[[ "${needs_network}" == true ]] && bwrap_command+=(--share-net)
 
 # Bind the config files
 for file in $(find ~/.config/mpv -type l); do
@@ -60,6 +58,4 @@ for arg in "$@"; do
     fi
 done
 
-bwrap_command+=(/usr/bin/mpv "$@")
-
-exec "${bwrap_command[@]}"
+exec "${bwrap_command[@]}" /usr/bin/mpv "$@"

@@ -17,7 +17,8 @@ fi
 # This will shadow the `col` binary
 col () {
     # print columns 1 2 3 ... n
-    awk "{ print ${(j:,:):-\$${^@}}  }"
+    # "${^@}" is "$@" with RC_EXPAND_PARAM turned off
+    awk "{ print ${(j:,:):-\$${^@}} }" # Turns into `awk { print $1,$2 }`
 }
 
 capitalize () {

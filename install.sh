@@ -60,6 +60,7 @@ if ./base/.usr/bin/_onmacos ; then
         diffutils # Because macOS' diff doesn't support `--color`
         editorconfig
         emacs
+        fx
         fzf
         gnupg
         jq

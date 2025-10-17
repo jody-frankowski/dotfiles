@@ -47,6 +47,8 @@ export PATH="${HOME}/.local/bin:${PATH}"
 export PATH="${HOME}/.cache/go/bin:${PATH}"
 # Rust
 export PATH="${HOME}/.cache/cargo/bin:${PATH}"
+# Nix
+export PATH="${HOME}/.nix-profile/bin:${PATH}"
 # Custom scripts and symlinks
 export PATH="${HOME}/.usr/bin:${PATH}"
 ### PATH

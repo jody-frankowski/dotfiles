@@ -67,6 +67,7 @@ dbg () {
 
     unset PS4
 }
+_dbg () { shift words; (( CURRENT-- )); _normal -P }; compdef _dbg dbg
 
 d64 () {
     if [[ $# -eq 0 ]]; then

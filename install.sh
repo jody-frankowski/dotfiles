@@ -222,6 +222,9 @@ if ./base/.usr/bin/_onmacos ; then
     # Disable the character palette when holding a key (applications need to be restarted)
     defaults write -g ApplePressAndHoldEnabled -bool false
 
+    ## Disable `Add period with double-space`
+    defaults write "Apple Global Domain" NSAutomaticPeriodSubstitutionEnabled -bool false
+
     ### Student service (if the mac was bought by a school or with a student account)
     # Disable and stop
     launchctl disable gui/$(id -u)/com.apple.studentd

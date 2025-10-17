@@ -35,6 +35,7 @@ export CARGO_HOME=~/.cache/cargo
 ### PATH
 # Homebrew
 if ~/.usr/bin/_onmacos ; then
+    export PATH="/opt/homebrew/sbin:${PATH}"
     export PATH="/opt/homebrew/bin:${PATH}"
 fi
 # Bun

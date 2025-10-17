@@ -84,16 +84,10 @@ e64 () {
 }
 
 find-dead-symlinks () {
-    if [[ $1 == -h ]]; then
-        echo Usage: $0 [DIR] [OPTIONS] >&2
-        return 1
-    fi
+    [[ $1 == -h ]] && { echo "Usage: $0 [DIR] [OPTIONS]" >&2; return 1 }
 
-    if [[ -d "$1" ]]; then
-        dir=$1; shift
-    else
-        dir=.
-    fi
+    local dir=.
+    [[ -d "$1" ]] && { dir=$1; shift }
 
     bfs "$dir" -xtype l "$@"
 }

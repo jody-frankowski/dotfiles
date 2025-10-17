@@ -83,8 +83,19 @@ e64 () {
     fi
 }
 
-find-broken-symlinks () {
-    bfs . -xtype l
+find-dead-symlinks () {
+    if [[ $1 == -h ]]; then
+        echo Usage: $0 [DIR] [OPTIONS] >&2
+        return 1
+    fi
+
+    if [[ -d "$1" ]]; then
+        dir=$1; shift
+    else
+        dir=.
+    fi
+
+    bfs "$dir" -xtype l "$@"
 }
 
 flac-encode () {

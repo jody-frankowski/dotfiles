@@ -432,15 +432,10 @@ mount () {
 }
 
 mv-merge () {
-    local dst
-    local dst_realpath
-    local src
-    local src_realpath
-
-    if (( $# < 2 )) ; then
-        echo "Usage: mv-merge DIR... DST"
-        echo "If DIR exists in DST, the two directories will be merged."
-        echo "Example:"
+    if (( $# < 2 )); then
+        echo Usage: mv-merge DIR... DST
+        echo If DIR exists in DST, the two directories will be merged
+        echo Example:
         cat <<- EOF
 			$ tree
 			.
@@ -460,30 +455,23 @@ mv-merge () {
         return 1
     fi
 
-    dst="${@[-1]}"
-    for src in "${@[0,-2]}"
-    do
-        dst_realpath="$(realpath ${dst})"
-        src_realpath="$(realpath ${src})"
-        if echo "${src_realpath}" |
-                grep "^$(realpath ${dst_realpath}/$(basename ${src}))" > /dev/null ||
-           echo "$(realpath ${dst_realpath}/$(basename ${src}))" |
-                grep "^${src_realpath}" > /dev/null
-        then
-            echo "Possible directory cycle detected!" 1>&2
-            return -1
-        fi
+    local dst="${@[-1]}"
+    local srcs=("${@[0,-2]}")
 
-        # We "protect" this command with a timeout, in case one of the checks
-        # above misses another problem.
-        if ! timeout 1 find "${src}" -type d -exec mkdir -p "${dst_realpath}/{}" \;
-        then
-            echo "mkdir timeout! Possible undetected directory cycle!"
-            return -1
+    rsync -ai --remove-source-files --link-dest="$(realpath "${dst}")" "${srcs[@]}" "${dst}"
+
+    find "${srcs[@]}" -type d -empty -delete
+
+    error=false
+    for src in "$src[@]"; do
+        if [[ -d "${src}" ]]; then
+            error=true
+            echo "${src} couldn't be removed!" >&2
         fi
-        find "${src}" -type f -exec sh -c "mv '{}' \"${dst_realpath}/\$(basename \$(dirname {}))\"" \;
-        find "${src}" -type d -empty -delete
     done
+    if [[ "${error}" == true ]]; then
+        return 1
+    fi
 }
 
 pacman-list-disowned () {

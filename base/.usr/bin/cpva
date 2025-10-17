@@ -9,8 +9,8 @@ if [[ $# -lt 2 || $1 == -h || $1 == --help ]]; then
     exit 1
 fi
 
-# With rsync 2.*, --append will always do a checksum and with rsync 3.+, --append won't do a
-# checksum. Use --append-verify to force the checksum.
+# With rsync 2.+, --append will always do a checksum and with rsync 3.+, --append will only check
+# that the remote file is shorter than the sent file. Use --append-verify to force the checksum.
 # Using `--inplace` might be dangerous in some cases, see
 # https://lists.samba.org/archive/rsync/2010-June/025178.html
 exec cpvr --append "$@"

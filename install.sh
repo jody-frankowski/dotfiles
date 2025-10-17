@@ -75,6 +75,9 @@ if ./base/.usr/bin/_onmacos ; then
         pinentry-mac
         python3
         ripgrep
+        # Install rsync 3.+ (macOS' only has 2.+) which supports --append and --append-verify.
+        # More infos in the cpva script.
+        rsync
         syncthing
         tmux
         wget

@@ -398,9 +398,23 @@ hash () {
 }
 compdef _files hash
 
-
-
 loc () {
+    if [[ $# -le 0 ]]; then
+        echo Usage: loc KEYWORD...  Search for paths that match the keywords
+        return 1
+    fi
+
+    if _onmacos; then
+        # /!\ mdfind won't match symlinks
+        local query="kMDItemFSName == '*$1*'cdw"
+        for arg in "${@[@]:2}"
+            query="${query} && kMDItemFSName == '*${arg}*'cdw"
+
+        mdfind $query
+
+        return
+    fi
+
     to_search=$(echo $* | sed "s/ /*/g")
     locate -i -e "*${to_search}*"
 }

@@ -57,6 +57,7 @@ if ./base/.usr/bin/_onmacos ; then
         # Mainly for the zsh completion
         curl
         dfc
+        diffutils # Because macOS' diff doesn't support `--color`
         editorconfig
         emacs
         fzf
@@ -104,7 +105,7 @@ if ./base/.usr/bin/_onmacos ; then
     ### coreutils
     # Replace some macOS's coreutils binaries with GNU ones. We do this because some of our zsh
     # aliases depend on specific GNU's coreutils flags.
-    for symlink in date dircolors du head rm sort; do
+    for symlink in date diff dircolors du head rm sort; do
         [[ -L ~/.usr/bin/"${symlink}" ]] || ln -s /opt/homebrew/opt/coreutils/bin/g"${symlink}" ~/.usr/bin/"${symlink}"
     done
 

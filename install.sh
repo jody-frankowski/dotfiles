@@ -225,6 +225,10 @@ if ./base/.usr/bin/_onmacos ; then
     ## Disable `Add period with double-space`
     defaults write "Apple Global Domain" NSAutomaticPeriodSubstitutionEnabled -bool false
 
+    ### Terminal.app
+    # Use Option as Meta key
+    /usr/libexec/PlistBuddy -c 'Set :"Window Settings":Basic:useOptionAsMetaKey 1' ~/Library/Preferences/com.apple.Terminal.plist
+
     ### Student service (if the mac was bought by a school or with a student account)
     # Disable and stop
     launchctl disable gui/$(id -u)/com.apple.studentd

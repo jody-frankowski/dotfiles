@@ -27,31 +27,34 @@ export GOPATH=~/.cache/go
 export NPM_PACKAGES=~/.cache/npm
 
 # Python
-export PYTHONPATH="${HOME}/.usr/lib/:${PYTHONPATH}"
+export PYTHONPATH=~/.usr/lib/:${PYTHONPATH}
 
 # Rust
 export CARGO_HOME=~/.cache/cargo
 
 ### PATH
+# The PATH variable is read left-to-right, so we put the directories that are most likely to
+# override others at the beginning of the variable
 # Homebrew
-if ~/.usr/bin/_onmacos ; then
-    export PATH="/opt/homebrew/sbin:${PATH}"
-    export PATH="/opt/homebrew/bin:${PATH}"
+if ~/.usr/bin/_onmacos; then
+    PATH=/opt/homebrew/sbin:${PATH}
+    PATH=/opt/homebrew/bin:${PATH}
 fi
 # Bun
-export PATH="${HOME}/.bun/bin:${PATH}"
+PATH=~/.bun/bin:${PATH}
 # Node
-export PATH="${HOME}/.cache/npm/bin:${PATH}"
+PATH=~/.cache/npm/bin:${PATH}
 # Python
-export PATH="${HOME}/.local/bin:${PATH}"
+PATH=~/.local/bin:${PATH}
 # Go
-export PATH="${HOME}/.cache/go/bin:${PATH}"
+PATH=~/.cache/go/bin:${PATH}
 # Rust
-export PATH="${HOME}/.cache/cargo/bin:${PATH}"
+PATH=~/.cache/cargo/bin:${PATH}
 # Nix
-export PATH="${HOME}/.nix-profile/bin:${PATH}"
+PATH=~/.nix-profile/bin:${PATH}
 # Custom scripts and symlinks
-export PATH="${HOME}/.usr/bin:${PATH}"
+PATH=~/.usr/bin:${PATH}
+export PATH
 ### PATH
 
 if ~/.usr/bin/_onmacos; then

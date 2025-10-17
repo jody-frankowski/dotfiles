@@ -159,7 +159,9 @@ compdef _load_docker_completion docker
 
 # lazyload gcloud completion
 _load_gcloud_completion () {
-    source /opt/google-cloud-sdk/completion.zsh.inc
+    _onmacos \
+        && source /opt/homebrew/share/google-cloud-sdk/completion.zsh.inc \
+        || source /opt/google-cloud-cli/completion.zsh.inc
     _main_complete
 }
 compdef _load_gcloud_completion gcloud

@@ -267,9 +267,10 @@ gen-password () {
 }
 
 get () {
-    for url in "$@" ; do
+    [[ $# -eq 0 ]] && { echo "Usage: $0 URL..."; return 1 }
+
+    for url
         curl --continue-at - --location --remote-name --remote-time "${url}"
-    done
 }
 
 getip () {

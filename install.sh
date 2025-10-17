@@ -205,10 +205,6 @@ if ./base/.usr/bin/_onmacos ; then
     # Reload
     killall Dock
 
-    ### Menu Bar
-    # Auto Hide (Will need a logout to take effect in all apps. Or we could restart every app.)
-    defaults write NSGlobalDomain _HIHideMenuBar -bool true
-
     ### Karabiner
     # We can't symlink it because Karabiner overwrites the symlink
     osascript -e 'quit app "Karabiner-Elements"'

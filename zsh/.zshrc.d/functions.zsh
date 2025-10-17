@@ -21,9 +21,8 @@ col () {
 }
 
 capitalize () {
-    for arg in "$@" ; do
-        new="${(C)arg}"
-        mv "$arg" "$new"
+    for arg in "$@"; do
+        mv "${arg}" "${(C)arg}"
     done
 }
 

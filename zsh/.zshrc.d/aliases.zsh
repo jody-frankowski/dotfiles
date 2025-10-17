@@ -63,6 +63,12 @@ alias rdesktop='rdesktop -g 1680x1050'
 alias umount='sudo umount'
 _onmacos && alias ifconfig='ifconfig -f inet:cidr,inet6:cidr'
 
+# cat / less
+alias cat=zstdcat
+alias zcat=zstdcat
+alias less='zless --follow-name'
+alias zless=zstdless
+
 # Systemd
 alias jctl='journalctl'
 alias jctlu='journalctl --user'

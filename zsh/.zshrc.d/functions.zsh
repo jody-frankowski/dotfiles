@@ -208,25 +208,14 @@ gcl () {
 }
 
 gen-passphrase () {
-    if [[ $1 == -h ]]; then
-        echo "Usage: $0 [--no-clipboard] [DICTFILE]" >&2
-        return 1
-    fi
+    [[ $1 == -h ]] && { echo "Usage: $0 [--no-clipboard] [DICTFILE]" >&2; return 1 }
 
     local use_clipboard=true
-    if [[ "$1" == --no-clipboard ]]; then
-        use_clipboard=false; shift
-    fi
+    [[ "$1" == --no-clipboard ]] && { use_clipboard=false; shift }
     local dict=words
-    if [[ -n "$1" ]]; then
-        dict="$1"
-    fi
-
-    local -r dict_file="/usr/share/dict/${dict}"
-    if ! [[ -f "${dict_file}" ]]; then
-        echo "Error: ${dict_file} doesn't exist!" >&2
-        return 1
-    fi
+    [[ -n "$1" ]] && { dict="$1" }
+    local dict_file="/usr/share/dict/${dict}"
+    [[ ! -f "${dict_file}" ]] && { echo "Error: ${dict_file} doesn't exist!" >&2; return 1 }
 
     passphrase="$(shuf -n4 "${dict_file}" | tr '\n' ' ' | head -c-1)"
     if [[ "${use_clipboard}" == true ]]; then
@@ -237,19 +226,12 @@ gen-passphrase () {
 }
 
 gen-password () {
-    if [[ $1 == -h ]]; then
-        echo "Usage: $0 [--no-clipboard] [LENGTH]" >&2
-        return 1
-    fi
+    [[ $1 == -h ]] && { echo "Usage: $0 [--no-clipboard] [LENGTH]" >&2; return 1 }
 
     local use_clipboard=true
-    if [[ "$1" == --no-clipboard ]]; then
-        use_clipboard=false; shift
-    fi
+    [[ "$1" == --no-clipboard ]] && { use_clipboard=false; shift }
     local length=16
-    if [[ -n "$1" ]]; then
-        length="$1"
-    fi
+    [[ -n "$1" ]] && { length="$1" }
 
     password="$(dd if=/dev/urandom bs=1 count=$((length * 2)) 2>/dev/null |
                    base64 | head -c "${length}")"

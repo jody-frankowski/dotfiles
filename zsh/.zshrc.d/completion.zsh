@@ -150,6 +150,13 @@ _load_aws_completion () {
 }
 compdef _load_aws_completion aws
 
+# lazyload docker completion
+_load_docker_completion () {
+    source <(docker completion zsh)
+    _main_complete
+}
+compdef _load_docker_completion docker
+
 # lazyload gcloud completion
 _load_gcloud_completion () {
     source /opt/google-cloud-sdk/completion.zsh.inc

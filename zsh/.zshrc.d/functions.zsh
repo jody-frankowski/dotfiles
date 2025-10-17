@@ -273,6 +273,13 @@ get () {
         curl --continue-at - --location --remote-name --remote-time "${url}"
 }
 
+getdir () {
+    [[ $# -eq 0 ]] && { echo "Usage: $0 URL..."; return 1 }
+
+    for url
+        wget -r -nd -np -N -P "$(basename ${url})" "${url}"
+}
+
 getip () {
     curl https://ip.me || dig +short ANY myip.opendns.com @resolver1.opendns.com
 }

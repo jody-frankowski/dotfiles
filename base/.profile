@@ -20,6 +20,10 @@ export MOAR='--no-linenumbers --no-statusbar'
 # -j4 search results will be 4 lines lower than the top of the screen
 export LESS='-i -M -R -j4'
 
+# Fix broken man page colors on Linux after roff update
+# https://web.archive.org/web/20250309205344/https://bbs.archlinux.org/viewtopic.php?pid=2113876#p2113876
+export MANROFFOPT=-c
+
 # Go
 export GOPATH=~/.cache/go
 

@@ -145,7 +145,7 @@ compdef mvvs=rsync
 
 # lazyload aws completion
 _load_aws_completion () {
-    source /usr/bin/aws_zsh_completer.sh
+    complete -C aws_completer aws
     _main_complete
 }
 compdef _load_aws_completion aws

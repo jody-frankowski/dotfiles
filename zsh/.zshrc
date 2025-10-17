@@ -98,11 +98,12 @@ typeset -gU cdpath fpath mailpath path
 
 ### Hooks
 # Auto ls when cd
-chpwd() {
-    # Make sure we are not in anything else than in shell/chpwd.
-    [[ $ZSH_EVAL_CONTEXT == "toplevel:shfunc" ]] || return
-    emulate -L zsh
-    ls --color=auto --group-directories-first
+chpwd () {
+    # Make sure we are not in anything else than in a top-level shell call
+    [[ -t 1 && $ZSH_EVAL_CONTEXT == toplevel:shfunc ]] || return 0
+    # Set a small timeout to drastically reduce waiting time when cding in large or remote and slow
+    # directories
+    timeout 0.1 lsd --color=auto --group-directories-first -h
 }
 
 # Search the command in available packages and if found install the package

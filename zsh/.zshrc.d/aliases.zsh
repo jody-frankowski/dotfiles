@@ -97,13 +97,14 @@ alias mv='mv -i'
 alias rm='rm --one-file-system -I'
 
 # Docker
-_onlinux && alias docker='sudo docker'
-# Removes all unused containers, images and networks
-alias docker-cleanup='docker system prune'
-# Removes all containers, images, networks and volumes
-alias docker-full-cleanup='docker system prune --all --volumes'
+# Remove all unused containers, images and networks
+alias docker-prune='docker system prune'
+# Remove all containers, images, networks and volumes
+alias docker-prune-all='docker system prune --all --volumes'
 # Get Docker host shell with privileged container
 alias docker-host='docker run -it --privileged --pid=host debian nsenter -t 1 -a'
+alias doc=docker
+alias pod=podman
 
 # Git
 alias ga='git add'

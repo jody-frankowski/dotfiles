@@ -37,6 +37,8 @@ export CARGO_HOME=~/.cache/cargo
 if ~/.usr/bin/_onmacos ; then
     export PATH="/opt/homebrew/bin:${PATH}"
 fi
+# Bun
+export PATH="${HOME}/.bun/bin:${PATH}"
 # Node
 export PATH="${HOME}/.cache/npm/bin:${PATH}"
 # Python

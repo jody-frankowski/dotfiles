@@ -1,0 +1,18 @@
+# /!\ Comments must start with `# `! Otherwise they may be confused with sections like `#line-edit`.
+
+# This file won't be sourced by Apple's less:
+# https://github.com/apple-oss-distributions/less/blob/1d9d3d76fbafe888998bd5130defd193b87f0812/defines.h#L71
+# However it will be read by zstdless!
+
+#line-edit
+^A home
+^E end
+^B left
+^F right
+^P up
+^N down
+\eb word-left
+\ef word-right
+
+\e\177 word-backspace
+^W     word-backspace

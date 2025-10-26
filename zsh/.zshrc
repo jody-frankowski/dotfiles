@@ -136,13 +136,4 @@ command_not_found_handler() {
 }
 ###
 
-### Plugins
-# fzf
-if _onmacos ; then
-    fzf_path=/opt/homebrew/opt/fzf/shell/
-else
-    fzf_path=/usr/share/fzf/
-fi
-source ${fzf_path}/completion.zsh
-source ${fzf_path}/key-bindings.zsh
-###
+eval "$(atuin init zsh)" # History search backed by an SQLite DB

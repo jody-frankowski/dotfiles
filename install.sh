@@ -51,6 +51,7 @@ if ./base/.usr/bin/_onmacos ; then
 
     formulae=(
         atool
+        atuin
         bfs
         borgbackup
         coreutils

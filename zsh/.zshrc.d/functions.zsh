@@ -420,6 +420,27 @@ loc () {
     locate -i -e "*${to_search}*"
 }
 
+if _onmacos; then
+mac-plist-convert () {
+    if [[ $# -ne 2 || ! $2 =~ "binary1|json|xml1" ]]; then
+        echo "USAGE: $0 PLIST_FILE binary1|json|xml1" >&2
+        return 1
+    fi
+    plutil -convert "$2" "$1"
+}
+
+mac-plist-print () {
+    plutil -p "$1"
+}
+
+mac-plist-services-list () {
+    bfs ~/Library/LaunchAgents \
+        /Library/Launch{Agents,Daemons} \
+        /System/Library/Launch{Agents,Daemons} \
+        -type f -printf "%T@ %Tc %p\n" COL {2..9} | sort -n
+}
+fi
+
 mkcd () {
     [[ -n "$1"  ]] && mkdir -p "$1" && builtin cd "$1"
 }

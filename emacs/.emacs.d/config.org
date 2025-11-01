@@ -1042,9 +1042,9 @@ Disable useless UI elements:
 Change the terminal window title to "emacs: (buffer-name)":
 
 #+BEGIN_SRC emacs-lisp
-(defun xterm-title-update ()
-  (send-string-to-terminal (concat "\033]2;emacs: " (buffer-name) "\007")))
-(add-hook 'post-command-hook 'xterm-title-update)
+(defun term-title-update ()
+  (send-string-to-terminal (concat "\033]2;emacs " (buffer-name) "\007")))
+(add-hook 'post-command-hook 'term-title-update)
 #+END_SRC
 
 ** Theme

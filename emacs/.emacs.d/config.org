@@ -632,7 +632,7 @@ Change the TODO workflow:
 
 #+BEGIN_SRC emacs-lisp
 (csetq org-todo-keywords
-  '((sequence "TODO" "DOING" "WAITING" "|" "DONE" "CANCELLED" "OBSOLETE")))
+  '((sequence "TODO" "DOING" "WAITING" "|" "DONE" "CANCELLED" "OBSOLETE" "PAUSED")))
 #+END_SRC
 
 Install ~evil-org~ so that keybindings like ~>~ or ~<~ behave as

@@ -43,13 +43,6 @@ if ./base/.usr/bin/_onmacos ; then
     # Disable Homebrew's analytics
     brew analytics off
 
-    taps=(
-        homebrew/cask-fonts
-    )
-    for tap in "${taps[@]}" ; do
-        [[ -d "${BREW_PREFIX}/Library/Taps/${tap}" ]] || brew tap "${tap}"
-    done
-
     formulae=(
         atool
         atuin

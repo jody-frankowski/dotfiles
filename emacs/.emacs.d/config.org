@@ -750,7 +750,8 @@ Enable more languages for babel code execution:
  'org-babel-load-languages
  '((emacs-lisp . t)
    (python . t)
-   (scheme . t)))
+   (scheme . t)
+   (shell . t)))
 #+END_SRC
 
 Stolen from http://kitchingroup.cheme.cmu.edu/blog/2015/03/19/Restarting-org-babel-sessions-in-org-mode-more-effectively/

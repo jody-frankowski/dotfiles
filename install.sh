@@ -96,6 +96,7 @@ if ./base/.usr/bin/_onmacos ; then
         iterm2
         karabiner-elements
         lulu
+        rectangle
         stats
         visual-studio-code
         vlc

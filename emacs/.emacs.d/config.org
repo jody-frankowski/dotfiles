@@ -1192,7 +1192,7 @@ newline.
 * Windows
 
 Add two window functions that either switch to an existing window or split and
-launch ~find-file~:
+launch ~projectile-find-file~ if in a project or ~counsel-recentf~ ortherwise:
 
 #+BEGIN_SRC emacs-lisp
 (defun window-right-or-split ()
@@ -1203,7 +1203,9 @@ launch ~find-file~:
       ((null other-window)
         (split-window-right)
         (windmove-right)
-        (counsel-find-file))
+        (if (projectile-project-p)
+            (projectile-find-file)
+          (counsel-recentf)))
       (t (select-window other-window)))))
 
 (defun window-down-or-split ()
@@ -1214,7 +1216,9 @@ launch ~find-file~:
       ((or (null other-window) (window-minibuffer-p other-window))
         (split-window-below)
         (windmove-down)
-        (counsel-find-file))
+        (if (projectile-project-p)
+            (projectile-find-file)
+          (counsel-recentf)))
       (t
         (select-window other-window)))))
 #+END_SRC

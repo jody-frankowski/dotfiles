@@ -68,6 +68,10 @@ PATH=~/.usr/bin:${PATH}
 export PATH
 ### PATH
 
+
+# Disable the `[mosh]` prefix
+export MOSH_TITLE_NOPREFIX=
+
 if ~/.usr/bin/_onmacos; then
     export HOMEBREW_NO_AUTO_UPDATE=1     # Disable automatic updates
     export HOMEBREW_NO_INSTALL_CLEANUP=1 # Disable automatic formulae cleanup

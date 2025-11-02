@@ -5,50 +5,50 @@ die() {
     exit 1
 }
 
-if [[ "$1" == -h || "$1" == --help ]] ; then
-    cat << EOF
+if [[ "$1" == -h || "$1" == --help ]]; then
+    echo "\
 Usage: clipboard [--paste]  Print the content of the clipboard to stdout
        clipboard TEXT       Copy the first argument to the clipboard
        CMD | clipboard      Copy stdin to the clipboard
-       clipboard -h|--help  Print the help message
-EOF
+       clipboard -h|--help  Print the help message\
+" >&2
     exit 1
 fi
 
-if _onmacos ; then
-    local copy_cmd=( pbcopy )
-    local paste_cmd=( pbpaste )
+if _onmacos; then
+    copy_cmd=(  pbcopy  )
+    paste_cmd=( pbpaste )
 else
     if [[ -n $WAYLAND_DISPLAY ]]; then
-        local copy_cmd=( wl-copy )
-        local paste_cmd=( wl-paste -n )
+        copy_cmd=(  wl-copy     )
+        paste_cmd=( wl-paste -n )
     elif [[ -n $DISPLAY ]]; then
-        if which xclip > /dev/null ; then
-            local copy_cmd=( xclip -selection clipboard )
-            local paste_cmd=( xclip -o -selection clipboard )
-        elif which xsel > /dev/null ; then
-            local copy_cmd=( xsel -ib )
-            local paste_cmd=( xsel -ob )
+        if which xclip > /dev/null; then
+            copy_cmd=(  xclip -selection clipboard    )
+            paste_cmd=( xclip -selection clipboard -o )
+        elif which xsel > /dev/null; then
+            copy_cmd=(  xsel -bi )
+            paste_cmd=( xsel -bo )
         else
             die Error: xclip or xsel not available
         fi
-    elif [[ -n $TMUX ]] ; then
-        echo No X11 or Wayland display detected. Falling back to tmux. >&2
+    elif [[ -n $TMUX ]]; then
+        echo No Wayland or X11 display detected. Falling back to tmux. >&2
 
-        local copy_cmd=( tmux load-buffer - )
-        local paste_cmd=( tmux show-buffer )
+        copy_cmd=(  tmux load-buffer - )
+        paste_cmd=( tmux show-buffer   )
     else
-        die Error: No X11 or Wayland display detected
+        die Error: No tmux, Wayland or X11 system detected
     fi
 fi
 
-if [[ "$1" == --paste ]] ; then
-    "${paste_cmd[@]}"
-elif [[ -n "$1" ]] ; then
+if [[ "$1" == --paste ]]; then
+    exec "${paste_cmd[@]}"
+elif [[ -n "$1" ]]; then
     echo -n $1 | "${copy_cmd[@]}"
 elif [[ ! -t 0 ]]; then
     # /!\ Do not use cat /dev/stdin as this won't work!
     exec "${copy_cmd[@]}"
 else
-    "${paste_cmd[@]}"
+    exec "${paste_cmd[@]}"
 fi

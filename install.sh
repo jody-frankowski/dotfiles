@@ -107,6 +107,12 @@ if ./base/.usr/bin/_onmacos ; then
     # Make sure this folder exists before linking completion files
     [ -d ~/.zshrc.d/completion/ ] || mkdir -p ~/.zshrc.d/completion
 
+    ### Accessibility
+    # `Display/Reduce transparency`
+    # Requires logout
+    defaults write com.apple.Accessibility EnhancedBackgroundContrastEnabled -bool true
+    defaults write com.apple.universalaccess reduceTransparency -bool true
+
     ### coreutils
     # Replace some macOS's coreutils binaries with GNU ones. We do this because some of our zsh
     # aliases depend on specific GNU's coreutils flags.
@@ -291,6 +297,8 @@ if ./base/.usr/bin/_onmacos ; then
     for dir in *-macos iterm2 ; do
         symlink "${dir}"
     done
+
+    echo Some macOS settings require a logout\! >&2
 fi
 
 # terminfo

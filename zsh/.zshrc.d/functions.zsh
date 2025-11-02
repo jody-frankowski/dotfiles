@@ -870,4 +870,38 @@ rgg () {
     fi
 
     rg "${options[@]}" "$@" "${file_or_dir}"
+
+xsh () {
+    # /!\ XSH expects blank separated ipnput.
+    # /!\ XSH won't work with inputs that have unescaped/unquoted quotes or spaces.
+    # /!\ Use XSH0 instead.
+
+    # The caller needs to use $1 (quoting isn't required as there is only one parameter) instead of
+    # {}. With {} it's xargs' job to insert the parameter, and this can result in a situation where
+    # escaping would be required, for example with filenames that includes a `'` or `"`.
+    # If we let zsh do that as part of arguments parsing, we keep total control of quoting.
+    # The only thing that needs special care is `$` in the arguments. Escape or quote it. Apart from
+    # no quoting is needed.
+    # Don't forget to pass a single quoted string or escape the `$` if passing in a double quoted
+    # one.
+
+    # Example:
+    # bfs . -type f -print0 XSH0 ls \$1
+    # './abc def'
+    # './"'
+
+    # Return 255 so that xargs stops at the first error.
+    # The last argument becomes the $0 of the executed command.
+
+    local xargs_flags=()
+    if [[ $# -ge 1 && "$1" == "-0" ]]; then
+        xargs_flags+=(-0)
+        shift
+    fi
+    # We start an interactive and non-login shell with `-i` in order to use our aliases
+    # (~/.zshrc will be sourced, but not ~/.zprofile)
+    xargs "${xargs_flags[@]}" -n1 -- \
+          zsh -ieuo pipefail -c -- "($*) || (echo $0 failed with: \$@ >&2 && return 255)" "$0"
 }
+alias -g XSH='| xsh'
+alias -g XSH0='| xsh -0'

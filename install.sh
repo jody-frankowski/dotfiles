@@ -37,7 +37,8 @@ done
 # macOS Specific
 if ./base/.usr/bin/_onmacos ; then
     # Make sure brew is in our PATH in case it's an early installation
-    export PATH="/opt/homebrew/bin:${PATH}"
+    export BREW_PREFIX=/opt/homebrew
+    export PATH="${BREW_PREFIX}/bin:${PATH}"
 
     # Disable Homebrew's analytics
     brew analytics off
@@ -46,7 +47,7 @@ if ./base/.usr/bin/_onmacos ; then
         homebrew/cask-fonts
     )
     for tap in "${taps[@]}" ; do
-        [[ -d /opt/homebrew/Library/Taps/"${tap}" ]] || brew tap "${tap}"
+        [[ -d "${BREW_PREFIX}/Library/Taps/${tap}" ]] || brew tap "${tap}"
     done
 
     formulae=(
@@ -85,7 +86,7 @@ if ./base/.usr/bin/_onmacos ; then
         zsh-completions
     )
     for formula in "${formulae[@]}" ; do
-        [[ -d /opt/homebrew/opt/"${formula}" ]] || brew install "${formula}"
+        [[ -d "${BREW_PREFIX}/opt/${formula}" ]] || brew install "${formula}"
     done
 
     casks=(
@@ -102,7 +103,7 @@ if ./base/.usr/bin/_onmacos ; then
         vlc
     )
     for cask in "${casks[@]}" ; do
-        [[ -d /opt/homebrew/Caskroom/"${cask}" ]] || brew install --cask "${cask}"
+        [[ -d "${BREW_PREFIX}/Caskroom/${cask}" ]] || brew install --cask "${cask}"
     done
 
     # Make sure this folder exists before linking completion files
@@ -118,14 +119,14 @@ if ./base/.usr/bin/_onmacos ; then
     # Replace some macOS's coreutils binaries with GNU ones. We do this because some of our zsh
     # aliases depend on specific GNU's coreutils flags.
     for symlink in date diff dircolors du head rm sort; do
-        [[ -L ~/.usr/bin/"${symlink}" ]] || ln -s /opt/homebrew/opt/coreutils/bin/g"${symlink}" ~/.usr/bin/"${symlink}"
+        [[ -L ~/.usr/bin/"${symlink}" ]] || ln -s "${BREW_PREFIX}/opt/coreutils/bin/g${symlink}" ~/.usr/bin/"${symlink}"
     done
 
     ### curl
     # Use homebrew's curl so that we can use its zsh completion and have a binary with a matching
     # version
-    [[ -L ~/.usr/bin/curl ]] || ln -s /opt/homebrew/opt/curl/bin/curl ~/.usr/bin/
-    [[ -L ~/.zshrc.d/completion/_curl ]] || ln -s /opt/homebrew/opt/curl/share/zsh/site-functions/_curl ~/.zshrc.d/completion/
+    [[ -L ~/.usr/bin/curl ]] || ln -s "${BREW_PREFIX}/opt/curl/bin/curl" ~/.usr/bin/
+    [[ -L ~/.zshrc.d/completion/_curl ]] || ln -s "${BREW_PREFIX}/opt/curl/share/zsh/site-functions/_curl" ~/.zshrc.d/completion/
 
     ### Clock
     # Don't show day of week
@@ -162,7 +163,7 @@ if ./base/.usr/bin/_onmacos ; then
 
     ### python
     # Add a python symlink so we can call python3 with `python` like on Arch Linux
-    [[ -L ~/.usr/bin/python ]] || ln -s /opt/homebrew/bin/python3 ~/.usr/bin/python
+    [[ -L ~/.usr/bin/python ]] || ln -s "${BREW_PREFIX}/bin/python3" ~/.usr/bin/python
 
     ### terminfo
     # We need the terminfo capabilites of tmux-256color, however macOS doesn't
@@ -170,7 +171,7 @@ if ./base/.usr/bin/_onmacos ; then
     # with macOS' ncurses tools (tic/terminfo). So we export the terminfo
     # capabilities with homebrew's ncurses' infocmp and compile them with macOS'
     # tic.
-    /opt/homebrew/opt/ncurses/bin/infocmp -x tmux-256color > ~/.terminfo/tmux-256color.ncurses.terminfo
+    "${BREW_PREFIX}/opt/ncurses/bin/infocmp" -x tmux-256color > ~/.terminfo/tmux-256color.ncurses.terminfo
     # This command will generate a binary terminfo database in ~/.terminfo and the next one
     # will generate a terminfo database with the same name, however since our custom version
     # includes the same terminfo database (use=tmux-256color), our capabilities will be added to
@@ -181,7 +182,7 @@ if ./base/.usr/bin/_onmacos ; then
     ### zsh-completions
     # Link only the completion files we need
     for completion in cmake gpgconf node ; do
-        [[ -L ~/.zshrc.d/completion/_"${completion}" ]] || ln -s /opt/homebrew/share/zsh-completions/_"${completion}" ~/.zshrc.d/completion/
+        [[ -L ~/.zshrc.d/completion/_"${completion}" ]] || ln -s "${BREW_PREFIX}/share/zsh-completions/_${completion}" ~/.zshrc.d/completion/
     done
 
     ### Syncthing

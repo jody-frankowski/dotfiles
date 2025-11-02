@@ -3,8 +3,8 @@
 # Adapted from https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
 
 if _onmacos ; then
-    fpath=(/opt/homebrew/share/zsh/site-functions $fpath)
-    fpath=(/opt/homebrew/share/zsh-completions $fpath)
+    fpath=(${BREW_PREFIX}/share/zsh/site-functions $fpath)
+    fpath=(${BREW_PREFIX}/share/zsh-completions $fpath)
 fi
 fpath=(~/.zshrc.d/completion $fpath)
 
@@ -160,7 +160,7 @@ compdef _load_docker_completion docker
 # lazyload gcloud completion
 _load_gcloud_completion () {
     _onmacos \
-        && source /opt/homebrew/share/google-cloud-sdk/completion.zsh.inc \
+        && source ${BREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc \
         || source /opt/google-cloud-cli/completion.zsh.inc
     _main_complete
 }

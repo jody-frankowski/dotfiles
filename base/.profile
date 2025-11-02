@@ -41,8 +41,9 @@ export CARGO_HOME=~/.cache/cargo
 # override others at the beginning of the variable
 # Homebrew
 if ~/.usr/bin/_onmacos; then
-    PATH=/opt/homebrew/sbin:${PATH}
-    PATH=/opt/homebrew/bin:${PATH}
+    export BREW_PREFIX=/opt/homebrew
+    PATH=${BREW_PREFIX}/sbin:${PATH}
+    PATH=${BREW_PREFIX}/bin:${PATH}
 fi
 # Bun
 PATH=~/.bun/bin:${PATH}

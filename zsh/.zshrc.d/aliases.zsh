@@ -47,6 +47,7 @@ alias rg='rg -iz'
 
 # Misc
 alias dd='dd status=progress'
+alias deno='deno --check -q' # -q mutes the `Check file:...` message
 alias diff='diff --color -u'
 alias info='info --vi-keys'
 alias ip='ip -c'

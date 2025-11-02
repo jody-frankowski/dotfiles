@@ -53,6 +53,7 @@ alias ip='ip -c'
 alias k='kubectl'
 alias lsof='lsof -nP' # Preserve network and port numbers
 alias mkdir='mkdir -pv'
+alias nix-shell='nix-shell --run /bin/zsh'
 alias o='open'
 alias p='pueue'
 alias pw='p wait'

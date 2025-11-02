@@ -27,6 +27,12 @@ export MANROFFOPT=-c
 # Go
 export GOPATH=~/.cache/go
 
+# Nix
+if ~/.usr/bin/_onmacos; then
+  [[ -f /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh ]] \
+    && . /nix/var/nix/profiles/default/etc/profile.d/nix-daemon.sh
+fi
+
 # Npm
 export NPM_PACKAGES=~/.cache/npm
 

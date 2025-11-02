@@ -46,8 +46,9 @@ if [[ "$1" == --paste ]] ; then
     "${paste_cmd[@]}"
 elif [[ -n "$1" ]] ; then
     echo -n $1 | "${copy_cmd[@]}"
-elif [[ ! -t 0 ]] ; then
-    cat /dev/stdin | "${copy_cmd[@]}"
+elif [[ ! -t 0 ]]; then
+    # /!\ Do not use cat /dev/stdin as this won't work!
+    exec "${copy_cmd[@]}"
 else
     "${paste_cmd[@]}"
 fi

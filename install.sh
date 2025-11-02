@@ -210,21 +210,17 @@ if ./base/.usr/bin/_onmacos ; then
 
     ### Keyboard
     ## Karabiner
-    # We can't symlink the config files because Karabiner overwrites the symlink
     osascript -e 'quit app "Karabiner-Elements"'
-    # Needed for a first run
-    mkdir -p ~/.config/karabiner/
-    cp -f karabiner/.config/karabiner/karabiner.json ~/.config/karabiner/
+    [[ -d ~/.config/karabiner ]] || mkdir -p ~/.config/karabiner/
+    # /!\ Symlinking doesn't work for this file
+    cp -fR karabiner/.config/karabiner/karabiner.json ~/.config/karabiner/
     osascript -e 'tell application "Karabiner-Elements" to activate'
 
     ## Compose key keybindings
-    # Needed for a first run
-    mkdir -p ~/Library/KeyBindings
-    # Symlinking doesn't work
-    # /!\ This depends on the Karabiner right_command -> non_us_backslash modification
-    if [[ "$(md5sum base-macos/Library/KeyBindings/DefaultKeyBinding.dict | cut -d' ' -f1)" != "$(md5sum ~/Library/KeyBindings/DefaultKeyBinding.dict | cut -d' ' -f1)" ]] ; then
-        cp -f base-macos/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings
-    fi
+    [[ -d ~/Library/KeyBindings ]] || mkdir -p ~/Library/KeyBindings
+    # /!\ This requires Karabiner's `right_command -> non_us_backslash` mapping
+    # /!\ Symlinking doesn't work for this file
+    cp -fR base-macos/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings
     # Disable the character palette when holding a key (applications need to be restarted)
     defaults write -g ApplePressAndHoldEnabled -bool false
 

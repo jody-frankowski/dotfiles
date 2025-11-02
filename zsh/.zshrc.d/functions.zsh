@@ -201,10 +201,12 @@ forward-port () {
 }
 
 gcl () {
-    if git clone --recursive "$@" ; then
+    if git clone --recursive "$@"; then
         # cd into the last modified directory. This is simpler than trying to parse git arguments and
         # their order.
         cd "$(\ls -t | head -n1)"
+        # Remove the useless default ssh `git@` user and the common `.git` suffix
+        sed -Ei 's/git@|\.git//g' .git/config
     fi
 }
 

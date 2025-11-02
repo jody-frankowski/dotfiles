@@ -839,6 +839,22 @@ compdef s="ssh"
 #     watch "$@"
 # }
 
+rdap () {
+    [[ $# -eq 0 ]] && { command rdap; return 1 }
+
+    domain="${1#*://}" # Remove https?://
+    domain="${domain%%/*}" # Remove /* suffix
+    # TODO Handle ccSLD (e.g. .co.uk)
+    domain="${(j/./)${(s/./)domain}[-2,-1]}" # Keep only the second-level domain
+
+    command rdap -j "${domain}" || command whois "${domain}"
+}
+whois () {
+    echo "Deprecated, call rdap:"
+    echo "rdap $1"
+    return 1
+}
+
 rgg () {
     local file_or_dir=
     local options=()

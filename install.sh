@@ -64,6 +64,7 @@ if ./base/.usr/bin/_onmacos ; then
         mosh
         mpv
         myrepos
+        neovim
         p7zip
         pass
         pass-otp

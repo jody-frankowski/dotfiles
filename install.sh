@@ -312,7 +312,7 @@ for terminfo in ~/.terminfo/*.terminfo ; do
 done
 
 # Symlink the dotfiles
-for dir in base docker emacs idea iina js karabiner mpv nvim ssh tmux zed zsh ; do
+for dir in base docker emacs idea js karabiner mpv nvim ssh tmux zed zsh; do
     symlink "${dir}"
 done
 

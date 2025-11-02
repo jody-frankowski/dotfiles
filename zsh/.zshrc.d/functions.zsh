@@ -855,7 +855,7 @@ whois () {
     return 1
 }
 
-rgg () {
+ugg () {
     local file_or_dir=
     local options=()
     while [[ $# -gt 0 ]] ; do
@@ -865,11 +865,12 @@ rgg () {
         esac
     done
     if [[ -z "${file_or_dir}" || $# -gt 1 ]]; then
-        echo "Inverted rg: $0 [RG_OPTION...] PATH PATTERN" >&2
+        echo "Inverted ug: $0 [UG_OPTION...] PATH... PATTERN..." >&2
         return 1
     fi
 
-    rg "${options[@]}" "$@" "${file_or_dir}"
+    ug "${options[@]}" "--regexp=$^@" "${file_or_dir}"
+}
 
 xsh () {
     # /!\ XSH expects blank separated ipnput.

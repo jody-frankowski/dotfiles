@@ -411,28 +411,28 @@ function git-info {
 
 function prompt_segment {
     local bg fg
-    if [[ -n "$2" ]] && [[ "$2" != "NONE" ]] ; then
+    if [[ $# -ge 2 && -n "$2" ]]; then
         bg="%K{$2}"
     fi
-    if [[ -n "$3" ]] && [[ "$3" != "NONE" ]] ; then
+    if [[ $# -ge 3 && -n "$3" ]]; then
         fg="%F{$3}"
     fi
     print -n "$bg$fg$1%f%k"
 }
 
 function prompt_build_prompt {
-    # http://zsh.sourceforge.net/Doc/Release/Prompt-Expansion.html
-    # in order, show, the last command error code, if the shell is privileged
-    # and if there are jobs running
-    prompt_segment ' %(?::%F{red}%? )%(!:%F{yellow}⚡  :)%(1j:⚙  :)%F{blue}%n%F{red}@%F{green}%m%f '
+    # man -P "$PAGER -p '^SIMPLE PROMPT ESCAPES'" zshmisc
+    # Show the last command error code, if it's a root session, if there are any jobs running and
+    # the hostname.
+    prompt_segment '%(?::%F{red}%? )%(!:%F{yellow}⚡ :)%(1j:%F{red}⚙%f :)%F{blue}%m%f '
 
-    # %S aka standout mode, by inverting the colors, lets us have blue as
-    # %background and default background as foreground. Hence this prompt will
-    # %work with light terminal themes that don't invert black and white colors.
-    prompt_segment '%S $_prompt_pwd %s' NONE blue
+    # %S aka standout mode, which by inverting the colors, lets us have blue as background and
+    # default background as foreground. Hence this prompt will work with light terminal themes that
+    # don't invert black and white colors.
+    prompt_segment '%S $_prompt_pwd %s' "" blue
 
     if [[ -n "$git_info" ]]; then
-        prompt_segment '%S ${(e)git_info[ref]}${(e)git_info[status]} %s' NONE green
+        prompt_segment '%S ${(e)git_info[ref]}${(e)git_info[status]} %s' "" green
     fi
 }
 
@@ -518,11 +518,9 @@ function prompt_setup {
         'status' '%s%D%A%B%S%a%d%m%r%U%u'
 
     # Define prompts.
-    PROMPT='%F{blue}[%F{green}%D{%H:%M:%S}%F{blue}]%f${(e)$(prompt_build_prompt)}
- ${editor_info[keymap]} '
-    # In PROMPT until we find an *easy* solution to put it on the right of PROMPT
-    # RPROMPT='%F{blue}[%F{green}%D{%H:%M:%S}%F{blue}]%f'
-    SPROMPT='zsh: correct %F{red}%R%f to %F{green}%r%f [nyae]? '
+    PROMPT='${(e)$(prompt_build_prompt)}
+${editor_info[keymap]} '
+    SPROMPT='Correct %F{red}%R%f to %F{green}%r%f [nyae]? '
 }
 
 # needed to evaluate functions inside prompt strings

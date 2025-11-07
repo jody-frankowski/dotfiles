@@ -51,24 +51,29 @@ if ./base/.usr/bin/_onmacos ; then
         coreutils
         # Mainly for the zsh completion
         curl
+        devbox
         dfc
         diffutils # Because macOS' diff doesn't support `--color`
         editorconfig
         emacs
+        fd
         fx
         fzf
         gnupg
         jq
         lsd
         moar
+        mise
         mosh
         mpv
         myrepos
+        ncdu
         neovim
         p7zip
         pass
         pass-otp
         pinentry-mac
+        pstree
         python3
         ripgrep
         # Install rsync 3.+ (macOS' only has 2.+) which supports --append and --append-verify.
@@ -76,7 +81,11 @@ if ./base/.usr/bin/_onmacos ; then
         rsync
         syncthing
         tmux
+        ugrep
+        usage # Required for mise's completion
+        uv # Modern Python package manager
         wget
+        yq
         zsh-completions
     )
     for formula in "${formulae[@]}" ; do

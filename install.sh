@@ -79,6 +79,7 @@ if ./base/.usr/bin/_onmacos ; then
         # Install rsync 3.+ (macOS' only has 2.+) which supports --append and --append-verify.
         # More infos in the cpva script.
         rsync
+        starship
         syncthing
         tmux
         ugrep

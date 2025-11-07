@@ -683,7 +683,7 @@ type systemctl > /dev/null && compdef sc="systemctl"
 
 search () {
     if [[ $# -eq 0 ]]; then
-        echo Usage: $0 [DIR] PATTERN... >&2
+        echo Usage: $0 [DIR] OPTION|PATTERN... >&2
         return 1
     fi
 
@@ -693,8 +693,15 @@ search () {
         shift
     fi
 
-    to_search=$(echo $* | sed "s/ /*/g")
-    bfs "${dir_to_search}" -iname "*${to_search}*"
+    local args=()
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+            -*) args+=("$1" "$2"); shift; shift;;
+            *) args+=(--and "$1"); shift;;
+        esac
+    done
+
+    fd --search-path "${dir_to_search}" "${args[@]}"
 }
 alias f=search
 

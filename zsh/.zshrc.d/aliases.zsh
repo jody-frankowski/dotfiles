@@ -63,6 +63,7 @@ alias pw='p wait'
 # and that could lead to password leaks
 alias pass='EDITOR=nvim pass'
 alias rdesktop='rdesktop -g 1680x1050'
+alias strings='strings -' # Search strings in all bytes of the files
 alias umount='sudo umount'
 _onmacos && alias ifconfig='ifconfig -f inet:cidr,inet6:cidr'
 

@@ -880,6 +880,14 @@ ugg () {
     ug "${options[@]}" "--regexp=$^@" "${file_or_dir}"
 }
 
+watch () {
+    while true; do
+        clear
+        zsh -i -c "$*"
+        sleep 2
+    done
+}
+
 xsh () {
     # /!\ XSH expects blank separated ipnput.
     # /!\ XSH won't work with inputs that have unescaped/unquoted quotes or spaces.

@@ -208,6 +208,9 @@ gcl () {
         cd "$(\ls -t | head -n1)"
         # Remove the useless default ssh `git@` user and the common `.git` suffix
         sed -Ei 's/git@|\.git//g' .git/config
+        # Remove the sample hook scripts
+        bfs .git -type f -ipath '.git/hooks/*sample' -delete
+        bfs .git -type f -ipath '.git/modules/*/hooks/*sample' -delete
     fi
 }
 

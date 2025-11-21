@@ -62,6 +62,7 @@ alias pw='p wait'
 # Use Neovim instead of Emacs for pass because our Emacs config saves the buffers history on disk
 # and that could lead to password leaks
 alias pass='EDITOR=nvim pass'
+alias py='python3'
 alias rdesktop='rdesktop -g 1680x1050'
 alias strings='strings -' # Search strings in all bytes of the files
 alias umount='sudo umount'

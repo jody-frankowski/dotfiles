@@ -225,3 +225,50 @@ backward-kill-dir () {
 }
 zle -N backward-kill-dir
 bindkey "$key_info[Escape]$key_info[Backspace]" backward-kill-dir
+
+# Rewrite some mistakenly typed commands
+typeset -A COMMAND_REWRITE_TABLE=(
+  brwe brew
+  bwre brew
+  gti  git
+  sl   ls
+)
+COMMAND_SEPARATORS=('|' '||' '&&' ';')
+command_rewrite_on_space() {
+    # NOTE Doesn't support replacements in nested commands contexts ($() & ``)
+    local buf="$BUFFER"
+    local -a parts
+    parts=("${(z)buf}") # Split on high-level token parsed
+
+    # Find the last command token: Scan backwards to last separator
+    local cmd_index=${#parts}
+    local i s
+    for (( i=${#parts}; i>0; i-- )); do
+        if (( $COMMAND_SEPARATORS[(Ie)${parts[i]}] )); then
+            cmd_index=$((i+1))
+            break
+        fi
+    done
+
+    # Skip leading env vars assignments after separator
+    while (( cmd_index <= ${#parts} )) && [[ ${parts[cmd_index]} == *=* ]]; do
+        ((cmd_index++))
+    done
+
+    # Rebuild command while replacing command token if needed
+    if (( cmd_index <= ${#parts} )); then
+        local cmd=${parts[cmd_index]}
+        if (( ${+COMMAND_REWRITE_TABLE[$cmd]} )); then
+            parts[cmd_index]=${COMMAND_REWRITE_TABLE[$cmd]}
+
+            BUFFER=""
+            [[ $buf == ' '* ]] && BUFFER=" "
+            BUFFER+="${(j: :)parts}"
+            CURSOR=${#BUFFER}
+        fi
+    fi
+
+    zle .self-insert
+}
+zle -N command_rewrite_on_space
+bindkey ' ' command_rewrite_on_space

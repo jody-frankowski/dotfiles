@@ -12,7 +12,6 @@ brew () {
     command brew "$@"
     rehash
 }
-alias brwe=brew
 fi
 
 # This will shadow the `col` binary

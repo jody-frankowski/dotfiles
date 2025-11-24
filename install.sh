@@ -145,8 +145,12 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write com.apple.finder _FXSortFoldersFirst -bool true
     # Show the path bar
     defaults write com.apple.finder ShowPathbar -bool true
+    # Allow quitting (lets us hide Finder from the App Switcher)
+    defaults write com.apple.finder QuitMenuItem -bool true
     # Automatically empty the Bin after 30 days
     defaults write com.apple.finder FXRemoveOldTrashItems -bool true
+    # Open new windows in home directory
+    defaults write com.apple.finder NewWindowTarget PfHm
     killall Finder || true
 
     ### iina

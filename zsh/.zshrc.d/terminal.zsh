@@ -82,3 +82,15 @@ add-zsh-hook precmd _terminal-set-titles-with-path
 
 # Sets the window title before command execution
 add-zsh-hook preexec _terminal-set-titles-with-command
+_terminal-osc7-set-cwd() {
+    # Used by tmux's `pane_path`.
+    # It's not standard, but we follow this dead proposal:
+    # https://gitlab.freedesktop.org/terminal-wg/specifications/-/merge_requests/7/diffs
+    # Contrary to the discussion in the PR, there is actually an advantage for paths on UNIX
+    # systems: The system primitives used to get the subprocess path always result in their
+    # realpath. It works with symlinks, but can be surprising.
+    # e.g. `mkdir real; ln -s real symlink; cd symlink; ls -la /proc/$$/cwd` >> `[...]/real`
+    printf "\e]7;file://$HOST/$PWD\e\\"
+}
+add-zsh-hook chpwd _terminal-osc7-set-cwd
+_terminal-osc7-set-cwd # Call it at least once when the shell starts

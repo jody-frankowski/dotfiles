@@ -1040,12 +1040,16 @@ Disable useless UI elements:
 (setq inhibit-startup-screen t)
 #+END_SRC
 
-Change the terminal window title to "emacs: (buffer-name)":
+Set the outer terminal window title to the current buffer filename (or to the last one when in a
+minibuffer):
 
 #+BEGIN_SRC emacs-lisp
-(defun term-title-update ()
-  (send-string-to-terminal (concat "\033]2;emacs " (buffer-name) "\007")))
-(add-hook 'post-command-hook 'term-title-update)
+(defun set-term-title ()
+  (send-string-to-terminal
+   (concat "\e]2;e "
+           (buffer-name (window-buffer (minibuffer-selected-window)))
+           "\a")))
+(add-hook 'post-command-hook 'set-term-title)
 #+END_SRC
 
 ** Theme

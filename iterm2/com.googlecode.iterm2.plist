@@ -3067,6 +3067,10 @@
 	<integer>0</integer>
 	<key>TabStyleWithAutomaticOption</key>
 	<integer>6</integer>
+	<key>TerminalMargin</key>
+	<integer>0</integer>
+	<key>TerminalVMargin</key>
+	<integer>0</integer>
 	<key>Use background pattern indicator</key>
 	<false/>
 	<key>UseBorder</key>

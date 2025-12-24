@@ -1,3 +1,4 @@
+vim.opt.ignorecase = true -- Ignore case in search patterns
 vim.opt.number = true     -- Enable line numbers
 
 vim.opt.background = "light"

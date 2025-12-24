@@ -1817,6 +1817,8 @@
 	<true/>
 	<key>HotkeyMigratedFromSingleToMulti</key>
 	<true/>
+	<key>HotkeyTermAnimationDuration</key>
+	<real>0.0</real>
 	<key>JobName</key>
 	<true/>
 	<key>MakeSomePowerlineSymbolsWide</key>

@@ -1821,6 +1821,10 @@
 	<true/>
 	<key>MakeSomePowerlineSymbolsWide</key>
 	<true/>
+	<key>NeverWarnAboutShortLivedSessions_E5D6280F-E41E-42D8-8832-DB850C24E620</key>
+	<true/>
+	<key>NeverWarnAboutShortLivedSessions_E5D6280F-E41E-42D8-8832-DB850C24E620_selection</key>
+	<integer>0</integer>
 	<key>NeverWarnAboutShortLivedSessions_F707FF4A-6735-43C0-A895-45E5C6736019</key>
 	<true/>
 	<key>NeverWarnAboutShortLivedSessions_F707FF4A-6735-43C0-A895-45E5C6736019_selection</key>
@@ -2031,8 +2035,8 @@
 				<key>Red Component</key>
 				<real>1</real>
 			</dict>
-			<key>Background Image Location</key>
-			<string></string>
+			<key>Background Image Mode</key>
+			<integer>2</integer>
 			<key>Badge Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -2388,7 +2392,7 @@
 			<key>Rows</key>
 			<integer>25</integer>
 			<key>Screen</key>
-			<integer>-1</integer>
+			<integer>-2</integer>
 			<key>Scrollback Lines</key>
 			<integer>1000</integer>
 			<key>Selected Text Color</key>
@@ -2682,10 +2686,8 @@
 				<key>Red Component</key>
 				<real>1</real>
 			</dict>
-			<key>Background Image Location</key>
-			<string></string>
 			<key>Background Image Mode</key>
-			<integer>0</integer>
+			<integer>2</integer>
 			<key>Badge Color</key>
 			<dict>
 				<key>Alpha Component</key>
@@ -2837,38 +2839,198 @@
 			</array>
 			<key>Keyboard Map</key>
 			<dict>
-				<key>0x62-0x100000-0xb</key>
+				<key>0x30-0x100000-0x1d</key>
 				<dict>
 					<key>Action</key>
 					<integer>10</integer>
-					<key>Label</key>
-					<string></string>
-					<key>Text</key>
-					<string>b</string>
-					<key>Version</key>
-					<integer>1</integer>
-				</dict>
-				<key>0x66-0x100000-0x3</key>
-				<dict>
-					<key>Action</key>
-					<integer>10</integer>
-					<key>Label</key>
-					<string></string>
-					<key>Text</key>
-					<string>f</string>
-					<key>Version</key>
-					<integer>1</integer>
-				</dict>
-				<key>0x74-0x100000-0x11</key>
-				<dict>
-					<key>Action</key>
-					<integer>27</integer>
 					<key>Apply Mode</key>
 					<integer>0</integer>
 					<key>Escaping</key>
 					<integer>2</integer>
 					<key>Text</key>
-					<string>E5D6280F-E41E-42D8-8832-DB850C24E620</string>
+					<string>0</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x3a-0x120000-0x29</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>:</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x44-0x120000-0x2</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>D</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x48-0x120000-0x4</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>H</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x4c-0x120000-0x25</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>L</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x53-0x120000-0x1</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>S</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x54-0x120000-0x11</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>T</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x62-0x100000-0xb</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>b</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x66-0x100000-0x3</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>f</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x68-0x100000-0x4</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>h</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x6a-0x100000-0x26</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>j</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x6b-0x100000-0x28</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>k</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x6c-0x100000-0x25</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>l</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x73-0x100000-0x1</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>s</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x74-0x100000-0x11</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>t</string>
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
@@ -2923,7 +3085,7 @@
 			<key>Non-ASCII Anti Aliased</key>
 			<true/>
 			<key>Normal Font</key>
-			<string>SauceCodeProNF 12</string>
+			<string>AdwaitaMonoNF 12</string>
 			<key>Only The Default BG Color Uses Transparency</key>
 			<false/>
 			<key>Option Key Sends</key>
@@ -2935,7 +3097,7 @@
 			<key>Rows</key>
 			<integer>25</integer>
 			<key>Screen</key>
-			<integer>-1</integer>
+			<integer>-2</integer>
 			<key>Scrollback Lines</key>
 			<integer>1000</integer>
 			<key>Selected Text Color</key>
@@ -2973,7 +3135,7 @@
 			<key>Silence Bell</key>
 			<true/>
 			<key>Space</key>
-			<integer>-1</integer>
+			<integer>0</integer>
 			<key>Sync Title</key>
 			<false/>
 			<key>Tags</key>
@@ -2982,6 +3144,8 @@
 			<string>xterm-256color</string>
 			<key>Thin Strokes</key>
 			<integer>4</integer>
+			<key>Title Components</key>
+			<integer>1</integer>
 			<key>Transparency</key>
 			<real>0.29999999999999999</real>
 			<key>Unicode Version</key>

@@ -3,8 +3,10 @@
 
 # Don't insert a blank line between shell prompts
 add_newline = false
-# Decrease timeout from the 500ms default
+# Decrease command timeout (default: 500ms)
 command_timeout = 100
+# Decrease scan timeout (default: 30ms)
+scan_timeout = 10
 
 # $hostname will only be shown in ssh session
 format = """

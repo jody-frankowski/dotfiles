@@ -126,7 +126,8 @@ style  = 'green bold'
 format = '[$hash$tag ]($style)'
 
 [git_status]
-format  = '[($all_status$ahead_behind )]($style)'
+# Removed cosmetic brackets and $stashed as we extensively use stashes
+format = '[($conflicted$deleted$renamed$modified$typechanged$staged$untracked$ahead_behind )]($style)'
 deleted = 'X'
 
 [golang]

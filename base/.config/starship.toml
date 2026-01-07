@@ -3,6 +3,8 @@
 
 # Don't insert a blank line between shell prompts
 add_newline = false
+# Decrease timeout from the 500ms default
+command_timeout = 100
 
 # $hostname will only be shown in ssh session
 format = """

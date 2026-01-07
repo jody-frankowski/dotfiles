@@ -53,15 +53,6 @@ unsetopt BG_NICE          # Don't run all background jobs at a lower priority.
 unsetopt HUP              # Don't kill jobs on shell exit.
 unsetopt CHECK_JOBS       # Don't report on jobs when shell exit.
 
-# Less termcap config that enables colored man pages
-export LESS_TERMCAP_mb=$'\E[01;31m'      # Begins blinking.
-export LESS_TERMCAP_md=$'\E[01;31m'      # Begins bold.
-export LESS_TERMCAP_me=$'\E[0m'          # Ends mode.
-export LESS_TERMCAP_se=$'\E[0m'          # Ends standout-mode.
-export LESS_TERMCAP_so=$'\E[00;47;30m'   # Begins standout-mode.
-export LESS_TERMCAP_ue=$'\E[0m'          # Ends underline.
-export LESS_TERMCAP_us=$'\E[01;32m'      # Begins underline.
-
 ### GPG Agent
 # The following applies for a GPG Agent configured with
 # pinentry-tty. For the others it's probably much easier.

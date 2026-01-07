@@ -372,6 +372,12 @@ Install Magit:
 (use-package magit)
 #+END_SRC
 
+Rename magit buffers from =magit(-MODE): PROJECT= to =PROJECT magit(-MODE)=
+
+#+BEGIN_SRC emacs-lisp
+(csetq magit-buffer-name-format "%t %M")
+#+END_SRC
+
 Install git-gutter for a git diff margin:
 
 #+BEGIN_SRC emacs-lisp

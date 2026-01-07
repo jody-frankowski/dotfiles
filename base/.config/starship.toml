@@ -62,7 +62,6 @@ $swift\
 $terraform\
 $typst\
 $vlang\
-$vagrant\
 $zig\
 $buf\
 $nix_shell\
@@ -187,4 +186,6 @@ disabled = true
 [swift]
 disabled = true
 [username]
+disabled = true
+[vagrant]
 disabled = true

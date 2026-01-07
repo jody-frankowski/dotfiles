@@ -104,7 +104,7 @@ format = '[$duration]($style) '
 min_time = 10_000
 
 [directory]
-format = '[ $path ]($style)([ $read_only]($read_only_style)) '
+format = '[ $path ]($style) '
 # Remove when https://github.com/starship/starship/issues/5924 is fixed?
 read_only = '󰉐'
 style = 'blue bold inverted'

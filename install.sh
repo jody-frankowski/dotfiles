@@ -153,6 +153,10 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write com.apple.finder NewWindowTarget PfHm
     killall Finder || true
 
+    ### Preview
+    # Disable named annotations
+    defaults write com.apple.preview PVGeneralUseUserName -bool false
+
     ### iina
     # Move the OSC at the bottom. It also makes it much larger.
     defaults write com.colliderli.iina oscPosition 2

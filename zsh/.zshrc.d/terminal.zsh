@@ -21,67 +21,100 @@ if ! infocmp &> /dev/null ; then
     fi
 fi
 
-# Sets the terminal window title
-# Make sure you have this in your tmux config, for this to work
-# setw -g window-status-current-format "#I:#T#F"
-# setw -g window-status-format "#I:#T#F"
 _set-window-title () {
-    printf '\e]2;%s\a' "$argv"
+    # Sets the terminal window title with the following OSC:
+    # https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h3-Operating-System-Commands
+    # Works with most terminals however some might need further configuration.
+    # In tmux, it sets the #{pane_title} variable.
+
+    printf '\e]2;%s\a' "$@"
 }
 
-# Sets the window title with the current command
-_terminal-set-titles-with-command () {
-    emulate -L zsh
-    setopt EXTENDED_GLOB
+_term-title-cmd () {
+    # Sets the window title with the current command
+
+    # $1 contains the full command line as-is, e.g. `f () { vim } ; la`
+    # $2 contains the expanded command with function bodies elided, e.g. `f () { ... } ; ls -la`
+    # $3 contains the full expanded command:
+    # f () {
+    #   vim
+    # }
+    # ls -la
+
+    # Zsh subscript expressions used in this function:
+    # - ${var[(i)PATTERN]}: Get the index of the first element in the array that matches PATTERN
+    # - ${var[(r)PATTERN]}: Get the first element in the array that matches PATTERN
+    # - ${var[(w)INDEX]}:   Split a string on space separated words
+    # - Example: ${var[(wr)^(*=*|-*)]}
+    #   - (w)        $var is split on space separated words
+    #   - (r)        Get the first word that matches the pattern `^(*=*|-*)`
+    #   - ^(*=*|-*)  Matches anything that isn't assignements (e.g. a=1) or command flags (e.g. -v)
+
+    local cmdline=(${(z)1}) # Split on whitespace separated words
+    local cmd_index=(${cmdline[(i)^(\(|*=*)]}) # Get index of first command-like word (skipping `(` and `var=...`)
+    cmdline=(${cmdline[$cmd_index,-1]}) # Skip `(` and `var=...`
+    local cmd=${cmdline[1]:t} # Take only the tail of the command (e.g. Removes /usr/bin/)
+    local args=(${cmdline[2,-1]})
 
     local title=""
-    # If we're connected with ssh and we're not in tmux
-    if [[ -n ${SSH_CLIENT} && -z ${TMUX} ]] ; then
-        title="${USER}@${HOST}: "
-    fi
+    [[ $USER == root || $cmd == (run0|sudo) ]] && title+="⚡ "
 
-    # Get the command name that is under job control
-    if [[ "${3[(w)1]}" == (fg|%*) ]]; then
-        # Get the job id, and, if missing, set it to the current job (%%)
-        local job_id="${${2[(wr)%*(\;|)]}:-%%}"
+    if [[ $cmd == (%*|fg) ]]; then
+        # Set title to job's command
+        # Get the job id (%%/%1/%2...), or if missing, set it to the current job (%%)
+        local job_id="${${cmd[(wr)%?]}:-%%}"
+        title+="${jobtexts[$job_id]}"
+    elif [[ $cmd == (apropos|man) ]]; then
+        # Set title to manpage
+        [[ ${args[1]} =~ "^[0-9]+$" ]] && shift args # Skip manpage section (e.g. `man 3 printf`)
+        title+="$cmd ${args[1]}"
+    elif [[ $cmd == (mosh|s|ssh|sshrc) ]]; then
+        # Set title to remote hostname and executed command
+        local remote=${args[(r)^(-*)]}
+        local remote_host=$remote
+        if [[ $remote == *@* ]]; then
+            local remote_user=${${(@s:@:)remote}[1]}
+            local remote_host=${${(@s:@:)remote}[2]}
+        fi
+        local remote_index=${args[(i)^(-*)]}
+        local remote_cmd=${args[$remote_index + 1]}
 
-        local job_cmd=${jobtexts[$job_id]}
-        local job_cmd_array=(${(s/ /)job_cmd})
-        title="${job_cmd_array[1]}"
+        [[ $remote_user == root ]] && title+="⚡ "
+        title+=$remote_host
+        [[ -n $remote_cmd ]] && title+=" $remote_cmd"
+    elif [[ $cmd == (run0|sudo) ]]; then
+        # Set title to the sudo command
+        title+="${args[(r)^(-*)]}"
     else
-        # Set the command name, or in the case of mosh/s/ssh/sshrc/sudo, the next command
-        # FIXME Is it possible to describe the pipe? Now `cmd1 -o ; cmd2` shows `cmd1;` we'd like `cmd1;cmd2`.
-        title="${title}${${2[(wr)^(*=*|mosh|s|ssh|sshrc|sudo|-*)]}:t}"
+        # Set title to the command name
+        title+=$cmd
     fi
-    _set-window-title "${title}"
+
+    _set-window-title $title
 }
 
-# Sets the window title with the current path
-_terminal-set-titles-with-path () {
-    emulate -L zsh
-    setopt EXTENDED_GLOB
+_term-title-path () {
+    # Sets the window title with the current path
 
     local title=""
-    # If we're connected with ssh and we're not in tmux
-    if [[ -n ${SSH_CLIENT} && -z ${TMUX} ]] ; then
-       title="${USER}@${HOST}: "
-    fi
+    [[ $USER == root ]] && title+="⚡ "
 
     local pwd="${PWD/#$HOME/~}"
     if [[ "$pwd" == "~" ]]; then
-        title="${title}~"
+        title+="~"
     else
-        # Paths like "$HOME/.config/something" will show as "~/.c/something"
-        title="${title}${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
+        # Paths like `$HOME/.config/something` will be transformed into `~/.c/something`
+        title+="${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
     fi
-    _set-window-title "${title}"
+
+    _set-window-title $title
 }
 
-# Sets the window title before the prompt is displayed
-add-zsh-hook precmd _terminal-set-titles-with-path
+# Set the window title before command execution
+add-zsh-hook preexec _term-title-cmd
+# Set the window title before displaying the prompt
+add-zsh-hook precmd  _term-title-path
 
-# Sets the window title before command execution
-add-zsh-hook preexec _terminal-set-titles-with-command
 _terminal-osc7-set-cwd() {
     # Used by tmux's `pane_path`.
     # It's not standard, but we follow this dead proposal:

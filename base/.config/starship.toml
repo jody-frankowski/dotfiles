@@ -96,8 +96,8 @@ $shell\
 $character"""
 
 [character]
-error_symbol   = '[✖](bold red)'
-vimcmd_symbol  = '[❮](bold red)'
+error_symbol  = '[✖](bold red)'
+vimcmd_symbol = '[❮](bold red)'
 
 [cmd_duration]
 format = '[$duration]($style) '

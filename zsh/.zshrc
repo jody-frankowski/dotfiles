@@ -136,5 +136,9 @@ command_not_found_handler() {
 }
 ###
 
-eval "$(atuin init zsh)" # History search backed by an SQLite DB
-eval "$(starship init zsh)" # Prompt
+# History search backed by an SQLite DB
+eval "$(atuin init zsh --disable-up-arrow)"
+
+# Prompt
+export STARSHIP_LOG=error
+eval "$(starship init zsh)"

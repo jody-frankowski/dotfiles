@@ -241,6 +241,10 @@ if ./base/.usr/bin/_onmacos ; then
     ## Disable `Add period with double-space`
     defaults write "Apple Global Domain" NSAutomaticPeriodSubstitutionEnabled -bool false
 
+    ## Keyboard Shortcuts
+    # App Shortcuts: Always paste with current style (disregard source style) with ⌘+v
+    defaults write -g NSUserKeyEquivalents -dict-add "Paste and Match Style" "@v"
+
     ### Terminal.app
     # Use Option as Meta key
     /usr/libexec/PlistBuddy -c 'Set :"Window Settings":Basic:useOptionAsMetaKey 1' ~/Library/Preferences/com.apple.Terminal.plist

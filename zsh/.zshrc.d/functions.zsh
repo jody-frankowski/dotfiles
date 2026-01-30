@@ -201,7 +201,14 @@ forward-port () {
 }
 
 gcl () {
-    if git clone --recursive "$@"; then
+    # Transform GH/GL https urls in ssh ones
+    local url=$1; shift
+    if [[ $url == https://github.com/* || $url == https://gitlab.com/* ]]; then
+        local url_parts=(${(@s:/:)url})
+        url="${url_parts[2]}:${url_parts[3]}/${url_parts[4]}"
+    fi
+
+    if git clone --recursive "${url}" "$@"; then
         # cd into the last modified directory. This is simpler than trying to parse git arguments and
         # their order.
         cd "$(\ls -t | head -n1)"

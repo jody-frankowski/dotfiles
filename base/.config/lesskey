@@ -16,3 +16,8 @@
 
 \e\177 word-backspace
 ^W     word-backspace
+
+# Wrap around the file when searching
+#command
+/ forw-search ^W
+? back-search ^W

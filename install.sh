@@ -260,6 +260,22 @@ if ./base/.usr/bin/_onmacos ; then
     # Launch on login
     defaults write com.knollsoft.Rectangle launchOnLogin -bool true
 
+    ### Spotlight
+    ## Requires a logout!
+    # Show Related Content: Disabled
+    defaults write com.apple.Spotlight EnabledPreferenceRules -array-add Custom.relatedContents
+    # Results from App: Disabled
+    defaults write com.apple.Spotlight EnabledPreferenceRules -array-add \
+        com.apple.AppStore \
+        com.apple.iBooksX \
+        com.apple.mail \
+        com.apple.podcasts \
+        com.apple.Safari \
+        com.apple.stocks \
+        com.apple.VoiceMemos \
+        System.documents \
+        System.folders
+
     ### Student service (if the mac was bought by a school or with a student account)
     # Disable and stop
     launchctl disable gui/$(id -u)/com.apple.studentd

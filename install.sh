@@ -81,6 +81,7 @@ if ./base/.usr/bin/_onmacos ; then
         rsync
         starship
         syncthing
+        tldr
         tmux
         ugrep
         usage # Required for mise's completion

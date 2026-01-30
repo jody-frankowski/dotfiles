@@ -283,18 +283,18 @@ if ./base/.usr/bin/_onmacos ; then
 
     ### Stats
     # Configure basic settings
-    defaults write eu.exelban.Stats runAtLoginInitialized 1
-    defaults write eu.exelban.Stats setupProcess 1
-    defaults write eu.exelban.Stats telemetry 0
+    defaults write eu.exelban.Stats runAtLoginInitialized -bool true
+    defaults write eu.exelban.Stats setupProcess -bool true
+    defaults write eu.exelban.Stats telemetry -bool false
     defaults write eu.exelban.Stats update-interval "At start"
     # Needed otherwise the defaults will be reset
-    defaults write eu.exelban.Stats version 2.9.4
+    defaults write eu.exelban.Stats version 2.11.64
     # Enable combined modules display
-    defaults write eu.exelban.Stats CombinedModules 1
+    defaults write eu.exelban.Stats CombinedModules -bool true
     # Enable some widgets
     stats_widgets=(Battery CPU RAM GPU Network Sensors Disk)
-    for widget in "${stats_widgets[@]}" ; do
-        defaults write eu.exelban.Stats "${widget}"_state 1
+    for widget in "${stats_widgets[@]}"; do
+        defaults write eu.exelban.Stats "${widget}"_state -bool true
     done
     # Configure some widgets
     stats_widgets=(CPU RAM GPU Disk)
@@ -304,19 +304,19 @@ if ./base/.usr/bin/_onmacos ; then
     done
     # Battery
     defaults write eu.exelban.Stats Battery_battery_additional innerPercentage
-    defaults write eu.exelban.Stats Battery_battery_color 1
-    defaults write eu.exelban.Stats Battery_battery_lowPowerMode 1
+    defaults write eu.exelban.Stats Battery_battery_color -bool true
+    defaults write eu.exelban.Stats Battery_battery_lowPowerMode -bool true
     defaults write eu.exelban.Stats Battery_widget battery
     # Disk
     defaults write eu.exelban.Stats Disk_widget mini
     defaults write eu.exelban.Stats SSD_mini_color utilization
     # Network
-    defaults write eu.exelban.Stats Network_speed_value 1
-    defaults write eu.exelban.Stats Network_speed_valueColor 1
+    defaults write eu.exelban.Stats Network_speed_value -bool true
+    defaults write eu.exelban.Stats Network_speed_valueColor -bool true
     # Sensors
     defaults write eu.exelban.Stats Sensors_widget sensors
-    defaults write eu.exelban.Stats "sensor_Average CPU" 1
-    defaults write eu.exelban.Stats sensor_PSTR 1
+    defaults write eu.exelban.Stats "sensor_Average CPU" -bool true
+    defaults write eu.exelban.Stats sensor_PSTR -bool true
     # Set widgets positions
     stats_widgets=(Network Disk GPU CPU RAM Sensors Battery Bluetooth Clock)
     position=0

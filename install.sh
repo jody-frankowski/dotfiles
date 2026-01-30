@@ -138,6 +138,10 @@ if ./base/.usr/bin/_onmacos ; then
     # Never show date
     defaults write com.apple.menuextra.clock ShowDate 2
 
+    ### Desktop & Dock
+    # Windows/Prefer tabs when opening documents: Always
+    defaults write "Apple Global Domain" AppleWindowTabbingMode always
+
     ### Finder
     # Show all the extensions
     defaults write com.apple.finder AppleShowAllExtensions -bool true

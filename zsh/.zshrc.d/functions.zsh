@@ -212,6 +212,9 @@ gcl () {
         bfs .git -type f -ipath '.git/modules/*/hooks/*sample' -delete
     fi
 }
+git-open () {
+    o "https://$(git remote get-url origin | sed -e 's/git@//' -e 's/\.git$//' -e 's#:#/#')"
+}
 
 gen-passphrase () {
     [[ $1 == -h ]] && { echo "Usage: $0 [--no-clipboard] [DICTFILE]" >&2; return 1 }

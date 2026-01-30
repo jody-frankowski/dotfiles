@@ -254,6 +254,12 @@ if ./base/.usr/bin/_onmacos ; then
     # Use Option as Meta key
     /usr/libexec/PlistBuddy -c 'Set :"Window Settings":Basic:useOptionAsMetaKey 1' ~/Library/Preferences/com.apple.Terminal.plist
 
+    ### Rectangle
+    # Hide menu bar icon
+    defaults write com.knollsoft.Rectangle hideMenubarIcon -bool true
+    # Launch on login
+    defaults write com.knollsoft.Rectangle launchOnLogin -bool true
+
     ### Student service (if the mac was bought by a school or with a student account)
     # Disable and stop
     launchctl disable gui/$(id -u)/com.apple.studentd

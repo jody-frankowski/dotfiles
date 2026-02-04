@@ -228,6 +228,38 @@ if ./base/.usr/bin/_onmacos ; then
     killall Dock
 
     ### Keyboard
+    ## Delay until repeat: Short
+    defaults write "Apple Global Domain" InitialKeyRepeat 15
+    ## Key repeat rate: Fast
+    defaults write "Apple Global Domain" KeyRepeat 2
+    ## Keyboard Shortcuts
+    # App Shortcuts: Always paste with current style (disregard source style) with ⌘+v
+    defaults write -g NSUserKeyEquivalents -dict-add "Paste and Match Style" "@v"
+    # Input Sources: Select the previous/next input source
+    /usr/libexec/PlistBuddy -c 'Set AppleSymbolicHotKeys:60:enabled 0' ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    /usr/libexec/PlistBuddy -c 'Set AppleSymbolicHotKeys:61:enabled 0' ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    ## Text Input > Text Replacements
+    /usr/libexec/PlistBuddy -x \
+        -c 'Delete :NSUserDictionaryReplacementItems' \
+        -c 'Add :NSUserDictionaryReplacementItems array' \
+        -c 'Add :NSUserDictionaryReplacementItems: dict' \
+            -c 'Add :NSUserDictionaryReplacementItems:0:on integer 1' \
+            -c 'Add :NSUserDictionaryReplacementItems:0:replace string "omw"' \
+            -c 'Add :NSUserDictionaryReplacementItems:0:with string "On my way!"' \
+        -c 'Add :NSUserDictionaryReplacementItems: dict' \
+            -c 'Add :NSUserDictionaryReplacementItems:1:on integer 1' \
+            -c 'Add :NSUserDictionaryReplacementItems:1:replace string "---"' \
+            -c 'Add :NSUserDictionaryReplacementItems:1:with string "(-|_)"' \
+        -c 'Add :NSUserDictionaryReplacementItems: dict' \
+            -c 'Add :NSUserDictionaryReplacementItems:2:on integer 1' \
+            -c 'Add :NSUserDictionaryReplacementItems:2:replace string "shrug"' \
+            -c 'Add :NSUserDictionaryReplacementItems:2:with string "¯\\_(ツ)_/¯"' \
+        ~/Library/Preferences/.GlobalPreferences.plist
+    ## Input Sources > Disable `Add period with double-space`
+    defaults write "Apple Global Domain" NSAutomaticPeriodSubstitutionEnabled -bool false
+    ## Reload config
+    /System/Library/PrivateFrameworks/SystemAdministration.framework/Resources/activateSettings -u
+
     ## Karabiner
     osascript -e 'quit app "Karabiner-Elements"'
     [[ -d ~/.config/karabiner ]] || mkdir -p ~/.config/karabiner/
@@ -242,13 +274,6 @@ if ./base/.usr/bin/_onmacos ; then
     cp -fR base-macos/Library/KeyBindings/DefaultKeyBinding.dict ~/Library/KeyBindings
     # Disable the character palette when holding a key (applications need to be restarted)
     defaults write -g ApplePressAndHoldEnabled -bool false
-
-    ## Disable `Add period with double-space`
-    defaults write "Apple Global Domain" NSAutomaticPeriodSubstitutionEnabled -bool false
-
-    ## Keyboard Shortcuts
-    # App Shortcuts: Always paste with current style (disregard source style) with ⌘+v
-    defaults write -g NSUserKeyEquivalents -dict-add "Paste and Match Style" "@v"
 
     ### Terminal.app
     # Use Option as Meta key

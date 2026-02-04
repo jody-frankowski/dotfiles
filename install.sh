@@ -301,11 +301,6 @@ if ./base/.usr/bin/_onmacos ; then
         System.documents \
         System.folders
 
-    ### Student service (if the mac was bought by a school or with a student account)
-    # Disable and stop
-    launchctl disable gui/$(id -u)/com.apple.studentd
-    launchctl stop com.apple.studentd
-
     ### Stats
     # Configure basic settings
     defaults write eu.exelban.Stats runAtLoginInitialized -bool true

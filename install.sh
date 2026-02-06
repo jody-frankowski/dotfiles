@@ -48,12 +48,10 @@ if ./base/.usr/bin/_onmacos ; then
         atuin
         bfs
         borgbackup
-        coreutils gnu-sed
         # Mainly for the zsh completion
         curl
         devbox
         dfc
-        diffutils # Because macOS' diff doesn't support `--color`
         editorconfig
         emacs
         fd
@@ -89,6 +87,11 @@ if ./base/.usr/bin/_onmacos ; then
         wget
         yq
         zsh-completions
+
+        # Utils
+        gnu-sed
+        uutils-coreutils
+        uutils-diffutils # Because macOS' diff doesn't support `--color`
     )
     for formula in "${formulae[@]}" ; do
         [[ -d "${BREW_PREFIX}/opt/${formula}" ]] || brew install "${formula}"
@@ -119,13 +122,6 @@ if ./base/.usr/bin/_onmacos ; then
     # Requires logout
     defaults write com.apple.Accessibility EnhancedBackgroundContrastEnabled -bool true
     defaults write com.apple.universalaccess reduceTransparency -bool true
-
-    ### coreutils
-    # Replace some macOS's coreutils binaries with GNU ones. We do this because some of our zsh
-    # aliases depend on specific GNU's coreutils flags.
-    for symlink in date diff dircolors du head rm sed sort; do
-        [[ -L ~/.usr/bin/"${symlink}" ]] || ln -s "${BREW_PREFIX}/opt/coreutils/bin/g${symlink}" ~/.usr/bin/"${symlink}"
-    done
 
     ### curl
     # Use homebrew's curl so that we can use its zsh completion and have a binary with a matching
@@ -352,6 +348,16 @@ if ./base/.usr/bin/_onmacos ; then
     ### Siri
     # Disable background listening for "Hey Siri"
     defaults write com.apple.Siri VoiceTriggerUserEnabled -bool false
+
+    ### Utils
+    # Replace some of macOS' utils with GNU or uutils ones. We do this because some of our zsh
+    # aliases depend on specific GNU's coreutils flags. It's also useful when quickly copying
+    # commands from guides that target Linux systems only.
+    [[ -L ~/.usr/bin/sed ]] || ln -s "${BREW_PREFIX}/opt/coreutils/bin/gsed" ~/.usr/bin/sed
+    for bin in cmp date diff dircolors du head rm sort timeout; do
+        [[ -L ~/.usr/bin/"${bin}" ]] || \
+            ln -s "${BREW_PREFIX}/opt/uutils-coreutils/bin/uu-${bin}" ~/.usr/bin/"${bin}"
+    done
 
     # Symlink macOS specific dotfiles
     for dir in *-macos iterm2 ; do

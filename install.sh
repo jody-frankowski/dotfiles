@@ -354,9 +354,13 @@ if ./base/.usr/bin/_onmacos ; then
     # aliases depend on specific GNU's coreutils flags. It's also useful when quickly copying
     # commands from guides that target Linux systems only.
     [[ -L ~/.usr/bin/sed ]] || ln -s "${BREW_PREFIX}/opt/coreutils/bin/gsed" ~/.usr/bin/sed
-    for bin in cmp date diff dircolors du head rm sort timeout; do
+    for bin in date dircolors du head rm sort timeout; do
         [[ -L ~/.usr/bin/"${bin}" ]] || \
             ln -s "${BREW_PREFIX}/opt/uutils-coreutils/bin/uu-${bin}" ~/.usr/bin/"${bin}"
+    done
+    for bin in cmp diff; do
+        [[ -L ~/.usr/bin/"${bin}" ]] || \
+            ln -s "${BREW_PREFIX}/opt/uutils-diffutils/bin/uu-${bin}" ~/.usr/bin/"${bin}"
     done
 
     # Symlink macOS specific dotfiles

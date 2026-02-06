@@ -43,6 +43,17 @@ curlh () {
     curl -s -v -o /dev/null $@
 }
 
+date-unix () {
+    date +%s
+}
+date-unix-to-real () {
+    if (( $# != 1 )); then
+        echo "Usage: $0 UNIX_TIMESTAMP"
+        return 1
+    fi
+    date -ud @$1
+}
+
 dbg () {
     # /!\ If the command is part of a conditional (e.g. true || false), the exit value ($?) will be
     # the condition result

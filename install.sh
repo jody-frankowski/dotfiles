@@ -194,10 +194,6 @@ if ./base/.usr/bin/_onmacos ; then
         [[ -L ~/.zshrc.d/completion/_"${completion}" ]] || ln -s "${BREW_PREFIX}/share/zsh-completions/_${completion}" ~/.zshrc.d/completion/
     done
 
-    ### Syncthing
-    # Start and enable
-    brew services list | grep 'syncthing.*started' > /dev/null || brew services start syncthing
-
     ### Screensaver
     # Require a password immediately after enabling the screensaver
     defaults write com.apple.screensaver askForPassword -bool true
@@ -367,6 +363,10 @@ if ./base/.usr/bin/_onmacos ; then
     for dir in *-macos iterm2 ; do
         symlink "${dir}"
     done
+
+    ### Services
+    # Start and enable
+    brew services start atuin syncthing >/dev/null
 
     echo Some macOS settings require a logout\! >&2
 fi

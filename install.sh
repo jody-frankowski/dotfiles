@@ -231,22 +231,29 @@ if ./base/.usr/bin/_onmacos ; then
     /usr/libexec/PlistBuddy -c 'Set AppleSymbolicHotKeys:60:enabled 0' ~/Library/Preferences/com.apple.symbolichotkeys.plist
     /usr/libexec/PlistBuddy -c 'Set AppleSymbolicHotKeys:61:enabled 0' ~/Library/Preferences/com.apple.symbolichotkeys.plist
     ## Text Input > Text Replacements
-    /usr/libexec/PlistBuddy -x \
-        -c 'Delete :NSUserDictionaryReplacementItems' \
-        -c 'Add :NSUserDictionaryReplacementItems array' \
+    declare -A replacements
+    replacements=(
+        [---]="(-|_)"
+        [cmd]="⌘"
+        [shrug]="¯\\_(ツ)_/¯"
+    )
+    replacement_cmd=(
+        /usr/libexec/PlistBuddy -x
+        -c 'Delete :NSUserDictionaryReplacementItems'
+        -c 'Add :NSUserDictionaryReplacementItems array'
+    )
+    i=0
+    for src dst in ${(kv)replacements}; do
+        replacement_cmd+=(
         -c 'Add :NSUserDictionaryReplacementItems: dict' \
-            -c 'Add :NSUserDictionaryReplacementItems:0:on integer 1' \
-            -c 'Add :NSUserDictionaryReplacementItems:0:replace string "omw"' \
-            -c 'Add :NSUserDictionaryReplacementItems:0:with string "On my way!"' \
-        -c 'Add :NSUserDictionaryReplacementItems: dict' \
-            -c 'Add :NSUserDictionaryReplacementItems:1:on integer 1' \
-            -c 'Add :NSUserDictionaryReplacementItems:1:replace string "---"' \
-            -c 'Add :NSUserDictionaryReplacementItems:1:with string "(-|_)"' \
-        -c 'Add :NSUserDictionaryReplacementItems: dict' \
-            -c 'Add :NSUserDictionaryReplacementItems:2:on integer 1' \
-            -c 'Add :NSUserDictionaryReplacementItems:2:replace string "shrug"' \
-            -c 'Add :NSUserDictionaryReplacementItems:2:with string "¯\\_(ツ)_/¯"' \
-        ~/Library/Preferences/.GlobalPreferences.plist
+            -c "Add :NSUserDictionaryReplacementItems:${i}:on integer 1" \
+            -c "Add :NSUserDictionaryReplacementItems:${i}:replace string \"${src}\"" \
+            -c "Add :NSUserDictionaryReplacementItems:${i}:with string \"${dst}\"" \
+        )
+        (( i++ ))
+    done
+    replacement_cmd+=( ~/Library/Preferences/.GlobalPreferences.plist )
+    "${replacement_cmd[@]}"
     ## Input Sources > Disable `Add period with double-space`
     defaults write "Apple Global Domain" NSAutomaticPeriodSubstitutionEnabled -bool false
     ## Reload config

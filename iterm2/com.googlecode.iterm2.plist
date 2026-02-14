@@ -42,6 +42,8 @@
 	<string>https://api.openai.com/v1/responses</string>
 	<key>AllowClipboardAccess</key>
 	<true/>
+	<key>ClickToSelectCommand</key>
+	<false/>
 	<key>Custom Color Presets</key>
 	<dict>
 		<key>base16-google-light-256</key>
@@ -2471,6 +2473,8 @@
 			<integer>2</integer>
 			<key>Shortcut</key>
 			<string></string>
+			<key>Show Mark Indicators</key>
+			<false/>
 			<key>Show Status Bar</key>
 			<false/>
 			<key>Silence Bell</key>
@@ -3176,6 +3180,8 @@
 			<integer>2</integer>
 			<key>Shortcut</key>
 			<string></string>
+			<key>Show Mark Indicators</key>
+			<false/>
 			<key>Silence Bell</key>
 			<true/>
 			<key>Space</key>

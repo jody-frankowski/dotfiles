@@ -2377,6 +2377,19 @@
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>
+				<key>0x79-0x100000-0x10</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>y</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
 				<key>0x7f-0x100000-0x33</key>
 				<dict>
 					<key>Action</key>
@@ -3081,6 +3094,19 @@
 					<integer>2</integer>
 					<key>Text</key>
 					<string>t</string>
+					<key>Version</key>
+					<integer>2</integer>
+				</dict>
+				<key>0x79-0x100000-0x10</key>
+				<dict>
+					<key>Action</key>
+					<integer>10</integer>
+					<key>Apply Mode</key>
+					<integer>0</integer>
+					<key>Escaping</key>
+					<integer>2</integer>
+					<key>Text</key>
+					<string>y</string>
 					<key>Version</key>
 					<integer>2</integer>
 				</dict>

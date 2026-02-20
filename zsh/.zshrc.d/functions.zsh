@@ -866,10 +866,6 @@ sshrc () {
 alias s=sshrc
 compdef s="ssh"
 
-# watch () {
-#     watch "$@"
-# }
-
 rdap () {
     [[ $# -eq 0 ]] && { command rdap; return 1 }
 
@@ -905,8 +901,9 @@ ugg () {
 
 watch () {
     while true; do
+        out=$(unbuffer zsh -i -c "$*")
         clear
-        zsh -i -c "$*"
+        echo $out
         sleep 2
     done
 }

@@ -142,11 +142,12 @@ _prompt_symbol="${_term_blue}"
 _prompt_symbol+="${_term_reset}"
 PROMPT_COMMAND=_prompt_command
 _prompt_command() {
-    [[ $? -ne 0 ]] && local -r exit_code="${_term_red}$?${_term_reset} "
+    local -r exit_code=$?
+    (( ${exit_code} != 0 )) && local -r error_code="${_term_red}${exit_code}${_term_reset} "
     local -r time="${_term_green}$(date +%H:%M:%S)${_term_reset}"
     local -r dir="${_term_standout}${_term_blue} \w ${_term_reset}"
 
-    PS1="${time} ${exit_code}${_prompt_user}${_prompt_at}${_prompt_host} ${dir}\n${_prompt_symbol} "
+    PS1="${time} ${error_code}${_prompt_user}${_prompt_at}${_prompt_host} ${dir}\n${_prompt_symbol} "
 }
 
 [[ "$OSTYPE" == darwin* ]] && export BASH_SILENCE_DEPRECATION_WARNING=1

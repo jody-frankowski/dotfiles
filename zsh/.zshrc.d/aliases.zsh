@@ -30,7 +30,6 @@ alias -g X='| xargs -r'
 alias -g XI='X -I{}'
 alias -g XIN='X -I{} -n'
 alias -g XN='X -n'
-alias -g Y='| highlight --syntax yaml -O ansi'
 
 # Output Parsing
 alias -g JQ='| jq'
@@ -43,11 +42,17 @@ alias -g NO='>/dev/null'
 alias -g NEO='NE NO'
 alias -g NIN='</dev/null'
 
-# For aws/kubectl
-alias -g JJ='--output json | jq'
-alias -g YY='-o yaml | highlight --syntax yaml -O ansi'
+# Tools Output Format (docker, kubectl)
+alias -g FJ='--format json'
+alias -g FT='--format table'
+alias -g OJ='-o json'
+alias -g ON='-o name'
+alias -g OW='-o wide'
+alias -g OY='-o yaml'
+alias -g HJ='| highlight -O ansi --syntax json'
+alias -g HY='| highlight -O ansi --syntax yaml'
 
-# grep / rg
+# grep / rg / ug
 alias grep='grep --color=auto -i'
 alias rg='rg -iz'
 

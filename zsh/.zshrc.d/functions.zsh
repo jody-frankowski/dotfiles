@@ -39,6 +39,11 @@ clifu () {
     curl -s "https://www.commandlinefu.com/commands/matching/$1/`echo -n $1 | base64`/plaintext" | less
 }
 
+
+curlg () {
+    for url
+        curl --continue-at - --location --remote-name --remote-time "${url}"
+}
 curlh () {
     curl -s -v -o /dev/null $@
 }
@@ -267,13 +272,6 @@ gen-password () {
     else
         echo $password
     fi
-}
-
-get () {
-    [[ $# -eq 0 ]] && { echo "Usage: $0 URL..."; return 1 }
-
-    for url
-        curl --continue-at - --location --remote-name --remote-time "${url}"
 }
 
 getdir () {

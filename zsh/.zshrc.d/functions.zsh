@@ -47,6 +47,18 @@ curlg () {
 curlh () {
     curl -s -v -o /dev/null $@
 }
+curlt () {
+    curl -o /dev/null -s -w @- "$@" <<EOF
+namelookup:    %{time_namelookup}s\n
+connect:       %{time_connect}s\n
+appconnect:    %{time_appconnect}s\n
+pretransfer:   %{time_pretransfer}s\n
+redirect:      %{time_redirect}s\n
+starttransfer: %{time_starttransfer}s\n
+------------------------\n
+total:         %{time_total}s\n
+EOF
+}
 
 date-unix () {
     date +%s

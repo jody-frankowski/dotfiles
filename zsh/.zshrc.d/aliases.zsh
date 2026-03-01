@@ -13,7 +13,6 @@ alias -g FXT='| fx --toml'
 alias -g FXY='| fx --yaml'
 alias -g H='| head'
 alias -g HD='| hexdump -C'
-alias -g J='| jq'
 alias -g L='2>&1 | zless'
 alias -g LNE='| zless'
 alias -g M='2>&1 | moor'
@@ -33,6 +32,11 @@ alias -g XIN='X -I{} -n'
 alias -g XN='X -n'
 alias -g Y='| highlight --syntax yaml -O ansi'
 
+# Output Parsing
+alias -g JQ='| jq'
+alias -g YQ='| yq'
+
+# Output Redirection
 alias -g CA='2>&1 | cat -A'
 alias -g NE='2>/dev/null'
 alias -g NO='>/dev/null'

@@ -2,6 +2,7 @@
 
 # Global aliases
 alias -g C='| clipboard'
+alias -g COA='--color=always' # Works with fd and ug
 alias -g COL='| col'
 alias -g E='2>&1|'
 alias -g F='| fzf'

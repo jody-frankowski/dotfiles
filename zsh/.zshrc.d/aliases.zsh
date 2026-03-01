@@ -21,6 +21,7 @@ alias -g MNE='| moor'
 # Pipe Print: Print stdin and if the user accepts forward it to stdout.
 # TODO Print input split on `\0` for commands that expect `\0` separated input.
 alias -g PP='| tee "$(tty)" | { _pp_var="$(< /dev/stdin)" } ; echo -n "Is this content ok for the next commands? Press Enter to continue or C-c to abort. " >&2 ; read ; echo -n "${_pp_var}"'
+alias -g SK='| sk'
 alias -g S='| sort'
 alias -g SU='| sort -u'
 alias -g T='| tail'
@@ -76,6 +77,7 @@ alias pw='p wait'
 alias pass='EDITOR=nvim pass'
 alias py='python3'
 alias rdesktop='rdesktop -g 1680x1050'
+alias sk='sk --color=16 -m --bind "alt-a:select-all,alt-d:deselect-all" --layout reverse'
 alias strings='strings -' # Search strings in all bytes of the files
 alias umount='sudo umount'
 _onmacos && alias ifconfig='ifconfig -f inet:cidr,inet6:cidr'

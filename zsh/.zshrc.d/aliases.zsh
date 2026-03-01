@@ -7,10 +7,10 @@ alias -g E='2>&1|'
 alias -g F='| fzf'
 alias -g FM='| fzf -m'
 alias -g FX='| fx'
-alias -g G='| rg'
-alias -g GV='| rg -v'
 alias -g FXT='| fx --toml'
 alias -g FXY='| fx --yaml'
+alias -g G='| g'
+alias -g GV='| g -v'
 alias -g H='| head'
 alias -g HD='| hexdump -C'
 alias -g L='2>&1 | zless'
@@ -55,6 +55,7 @@ alias -g HY='| highlight -O ansi --syntax yaml'
 # grep / rg / ug
 alias grep='grep --color=auto -i'
 alias rg='rg -iz'
+alias ug='ug --hidden -iz'
 
 # Misc
 alias dd='dd status=progress'
@@ -99,8 +100,8 @@ alias latr='lat -r'
 # ps and free
 alias free='free -h'
 alias pscpu='ps auxf | sort -n -k 3'
-alias psg='ps aux | rg'
 alias psmem='ps auxf | sort -n -k 4'
+alias psg='ps aux G'
 
 # Editors
 alias e='emacsclient -a "" --tty'

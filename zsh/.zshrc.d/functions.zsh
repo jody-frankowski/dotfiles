@@ -228,6 +228,64 @@ forward-port () {
     return 0
 }
 
+f () {
+    local path_to_search=.
+    local patterns=()
+    local options=()
+
+    [[ $# -eq 0 || $1 == -h || $1 == --help ]] && {
+        echo "Usage: $0 [PATH] PATTERN... [FD_OPTION...]" >&2;
+        return 1
+    }
+
+    [[ -d "$1" ]] && { path_to_search="$1"; shift }
+
+    while [[ $# -gt 0 && $1 != -* ]]; do
+        patterns+=(--and "$1")
+        shift
+    done
+    options+=("$@")
+
+    fd --search-path "${path_to_search}" "${patterns[@]}" "${options[@]}"
+}
+g () {
+    local ug_bin=ugrep
+    local input=.
+    local patterns=()
+    local options=(--decompress)
+    # -j can't override -i, so we inject only the required one at the end
+    # https://github.com/Genivia/ugrep/issues/453
+    local option_case="-i"
+
+    usage () { echo "Usage: g [PATH] PATTERN... [UG_OPTION...]" >&2 }
+
+    [[ $# -eq 0 || $1 == -h || $1 == --help ]] && { usage; return 1 }
+
+    if [[ ! -t 0 ]]; then
+        input=-
+    elif [[ -e "$1" ]]; then
+        input=$1; shift
+    fi
+    [[ "${input}" != - ]] && options+=(--dereference-recursive --heading --hidden -n)
+
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            -+) ug_bin+=+ ;;
+            -i|-j) option_case="$1" ;;
+            -*) options+=("$1") ;;
+            *\**|*+*|*\[*\]*) patterns+=("$1") ;; # Regex
+            *) patterns+=("\"$1\"") ;;            # Fixed-String
+        esac
+        shift
+    done
+
+    ! (( ${#patterns} )) && { usage; return 1 }
+
+    options+=("${option_case}")
+
+    "${ug_bin}" "${options[@]}" -% "${patterns[*]}" "${input}"
+}
+
 gcl () {
     # Transform GH/GL https urls in ssh ones
     local url=$1; shift
@@ -754,30 +812,6 @@ sc () {
 }
 type systemctl > /dev/null && compdef sc="systemctl"
 
-search () {
-    if [[ $# -eq 0 ]]; then
-        echo Usage: $0 [DIR] OPTION|PATTERN... >&2
-        return 1
-    fi
-
-    local dir_to_search="."
-    if [[ -d "$1" ]]; then
-        dir_to_search="$1"
-        shift
-    fi
-
-    local args=()
-    while [[ $# -gt 0 ]]; do
-        case $1 in
-            -*) args+=("$1" "$2"); shift; shift;;
-            *) args+=(--and "$1"); shift;;
-        esac
-    done
-
-    fd --search-path "${dir_to_search}" "${args[@]}"
-}
-alias f=search
-
 share () {
     if [[ $1 = "-h" || $1 = "--help" ]] ; then
         echo "Usage: $0 [--auth[=PASSWORD]] [--expose] [DIR|FILE...]"
@@ -930,23 +964,6 @@ whois () {
     echo "Deprecated, call rdap:"
     echo "rdap $1"
     return 1
-}
-
-ugg () {
-    local file_or_dir=
-    local options=()
-    while [[ $# -gt 0 ]] ; do
-        case "$1" in
-            -*) options+=("$1"); shift;;
-            *) file_or_dir="$1"; shift; break;;
-        esac
-    done
-    if [[ -z "${file_or_dir}" || $# -gt 1 ]]; then
-        echo "Inverted ug: $0 [UG_OPTION...] PATH... PATTERN..." >&2
-        return 1
-    fi
-
-    ug "${options[@]}" "--regexp=$^@" "${file_or_dir}"
 }
 
 watch () {

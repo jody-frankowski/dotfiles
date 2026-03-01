@@ -425,6 +425,46 @@ hash () {
 }
 compdef _files hash
 
+k () {
+    local cmd=()
+
+    while (( $# )); do
+        case "$1" in
+            a)  cmd+=(apply)    ; shift; break ;;
+            d)  cmd+=(describe) ; shift; break ;;
+            e)  cmd+=(edit)     ; shift; break ;;
+            g)  cmd+=(get)      ; shift; break ;;
+            l)  cmd+=(logs)     ; shift; break ;;
+            rm) cmd+=(delete)   ; shift; break ;;
+            sh) cmd+=(exec -it) ; shift; set -- "$@" -- bash; break ;;
+        esac
+        cmd+=("$1"); shift
+    done
+
+    KUBECTL_EXTERNAL_DIFF="diff --color=always -N -U 15" \
+        kubectl "${cmd[@]}" "$@"
+}
+_k () {
+    words[1]=kubectl
+
+    local arg=2
+    while (( arg <= CURRENT )); do
+        case "$words[$arg]" in
+            a)  words[$arg]=apply    ; break ;;
+            d)  words[$arg]=describe ; break ;;
+            e)  words[$arg]=edit     ; break ;;
+            g)  words[$arg]=get      ; break ;;
+            l)  words[$arg]=logs     ; break ;;
+            rm) words[$arg]=delete   ; break ;;
+            sh) words[$arg]=exec     ; break ;;
+        esac
+        ((arg++))
+    done
+
+    _kubectl
+}
+compdef _k k
+
 loc () {
     if [[ $# -le 0 ]]; then
         echo Usage: loc KEYWORD...  Search for paths that match the keywords

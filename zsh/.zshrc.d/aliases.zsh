@@ -63,7 +63,6 @@ alias diff='diff --color -u'
 alias fd='fd --hidden'
 alias info='info --vi-keys'
 alias ip='ip -c'
-alias k='kubectl'
 alias lsof='lsof -nP' # Preserve network and port numbers
 alias mkdir='mkdir -pv'
 alias nix-shell='nix-shell --run /bin/zsh'

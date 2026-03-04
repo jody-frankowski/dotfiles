@@ -266,7 +266,7 @@ g () {
     elif [[ -e "$1" ]]; then
         input=$1; shift
     fi
-    [[ "${input}" != - ]] && options+=(--dereference-recursive --heading --hidden -n)
+    [[ "${input}" != - ]] && options+=(--dereference-recursive --heading --hidden --ignore-files -n)
 
     while [[ $# -gt 0 ]]; do
         case "$1" in

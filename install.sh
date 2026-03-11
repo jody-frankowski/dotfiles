@@ -142,6 +142,8 @@ if ./base/.usr/bin/_onmacos ; then
     ### Finder
     # Show all the extensions
     defaults write com.apple.finder AppleShowAllExtensions -bool true
+    # Show hidden files
+    defaults write com.apple.finder AppleShowAllFiles -bool true
     # Show the folders first
     defaults write com.apple.finder _FXSortFoldersFirst -bool true
     # Show the path bar

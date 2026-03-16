@@ -955,14 +955,6 @@ Set geiser default scheme implementation (mit for now):
 (csetq geiser-default-implementation 'mit)
 #+END_SRC
 
-*** Rust
-
-#+BEGIN_SRC emacs-lisp
-(use-package rustic)
-(csetq rustic-format-on-save t)
-(csetq rustic-format-trigger 'on-save)
-#+END_SRC
-
 ** LSP
 
 Install =lsp-mode= and =lsp-ui=:

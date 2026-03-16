@@ -516,6 +516,15 @@ Load all the .el files from ~/.emacs.d/lisp:
 (use-package markdown-mode)
 #+END_SRC
 
+* Minibuffers
+
+Increase minibuffers inputs history. This history is shared between evil-ex-history, ivy-history
+and more:
+
+#+BEGIN_SRC emacs-lisp
+(csetq history-length 1000)
+#+END_SRC
+
 * Minibuffer Completion
 
 Install Ivy, Counsel and Swiper:

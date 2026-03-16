@@ -290,10 +290,8 @@ Enable motioned alignments with evil-lion:
 
 ** Comments
 
-Install
-[[https://github.com/redguardtoo/evil-nerd-commenter][evil-nerd-commenter]] to
-provide =SPC ;= and =SPC c y= operators (=SPC ;= is a bit faster to type than
-=SPC c c=):
+Install [[https://github.com/redguardtoo/evil-nerd-commenter][evil-nerd-commenter]] for
+NERDCommenter-like keybindings:
 
 #+BEGIN_SRC emacs-lisp
 (use-package evil-nerd-commenter)

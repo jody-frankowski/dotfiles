@@ -1305,7 +1305,8 @@ Misc keybindings with General:
   "pf"  'projectile-find-file
   "pr"  'projectile-recentf
   "pR"  'projectile-replace
-  "qq"  'save-buffers-kill-emacs
+  "QQ"  'save-buffers-kill-emacs
+  "qq"  'delete-frame
   "ry"  'counsel-yank-pop
   "tw"  'whitespace-mode
   "wd"  'delete-window

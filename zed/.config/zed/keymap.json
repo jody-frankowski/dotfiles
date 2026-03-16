@@ -8,9 +8,7 @@
 [
   {
     "context": "Workspace",
-    "bindings": {
-      "shift shift": "command_palette::Toggle"
-    }
+    "bindings": { "shift shift": "command_palette::Toggle" },
   },
   {
     "context": "Terminal",

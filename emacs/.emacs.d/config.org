@@ -1205,9 +1205,9 @@ Misc keybindings with General:
   ;; opening the *Messages* buffer but work as soon as you switch out and back
   ;; in the window!
 
-  :states '(emacs motion normal visual)
+  :states  '(emacs motion normal visual)
   :keymaps '(override)
-  :prefix "SPC"
+  :prefix  "SPC"
   "SPC" 'counsel-M-x
   "bb"  'counsel-ibuffer
   "bd"  'kill-current-buffer

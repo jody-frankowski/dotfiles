@@ -12,12 +12,19 @@
   },
   {
     "context": "Terminal",
-    "bindings": { "cmd-b": ["terminal::SendText", "\u001bb"] }
+    "bindings": { "cmd-b": ["terminal::SendText", "\u001bb"] },
   },
   {
     "context": "Terminal",
-    "bindings": { "cmd-f": ["terminal::SendText", "\u001bf"] }
-  }
+    "bindings": { "cmd-f": ["terminal::SendText", "\u001bf"] },
+  },
+  {
+    "bindings": { "cmd-0": "terminal_panel::Toggle" },
+  },
+  {
+    "context": "Terminal",
+    "bindings": { "escape": "editor::ToggleFocus" },
+  },
   {
     "context": "VimControl && !menu && vim_mode == normal",
     "bindings": {

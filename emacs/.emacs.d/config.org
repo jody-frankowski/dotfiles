@@ -1249,11 +1249,6 @@ Misc keybindings with General:
   "C-a" 'evil-numbers/inc-at-pt
   "C-x" 'evil-numbers/dec-at-pt)
 
-(general-define-key
-  :states '(insert)
-  :keymaps '(override)
-  "C-h" nil)
-
 (general-def ivy-minibuffer-map
   "C-j" 'ivy-next-line
   "C-k" 'ivy-previous-line)

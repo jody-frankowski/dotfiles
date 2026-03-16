@@ -605,6 +605,12 @@ Tells org-mode to indent trees visually even if they aren't really:
 (csetq org-startup-indented t)
 #+END_SRC
 
+Decrease the headlines indentation from 2 to 1 character:
+
+#+BEGIN_SRC emacs-lisp
+(csetq org-indent-indentation-per-level 1)
+#+END_SRC
+
 Tells org-mode to preserve indentation when exporting code
 blocks. Also a way not to have indentation in code blocks.
 

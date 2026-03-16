@@ -1314,8 +1314,12 @@ Misc keybindings with General:
   "wj"  'window-down-or-split
   "wk"  'windmove-up
   "wl"  'window-right-or-split
-  ";"   'evilnc-comment-operator
   "/"   'counsel-rg)
+
+(general-define-key
+  :states  '(emacs motion normal visual)
+  :keymaps '(override)
+  "gc"  'evilnc-comment-operator)
 
 (general-define-key
   :states  '(normal)

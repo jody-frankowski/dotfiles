@@ -6,3 +6,11 @@ map D d$
 map Y y$
 
 Plug 'tpope/vim-surround'
+
+" Comments
+Plug 'tpope/vim-commentary'
+" Copy Comment Paste
+" We use IdeaVim command-line instructions to make the binding action atomic in order to be able to
+" undo it in a single `u` action.
+nmap <Space>cyy  :<C-u>norm yygccp<CR>
+vmap <Space>cy  y:<C-u>norm gvgc'>p<CR>

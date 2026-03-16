@@ -18,3 +18,10 @@ vim.api.nvim_create_autocmd({ "BufEnter" }, {
     vim.opt.titlestring = title
   end,
 })
+
+-- Keybindings
+-- Leader
+vim.g.mapleader = " "
+-- Copy, Comment, Paste
+vim.keymap.set("n", "<leader>cyy", "yygccp", { remap = true, desc = "Copy line, comment, paste below" })
+vim.keymap.set("x", "<leader>cy", "ygvgc'>p", { remap = true, desc = "Copy selection, comment, paste below" })

@@ -20,4 +20,16 @@
     "context": "Terminal",
     "bindings": { "cmd-f": ["terminal::SendText", "\u001bf"] }
   }
+  {
+    "context": "VimControl && !menu && vim_mode == normal",
+    "bindings": {
+      "space c y y": ["workspace::SendKeystrokes", "y y g c c p"],
+    },
+  },
+  {
+    "context": "VimControl && !menu && vim_mode == visual",
+    "bindings": {
+      "space c y": ["workspace::SendKeystrokes", "y g v g c ' > p"],
+    },
+  },
 ]

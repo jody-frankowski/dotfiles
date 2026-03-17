@@ -51,8 +51,10 @@ alias -g OJ='-o json'
 alias -g ON='-o name'
 alias -g OW='-o wide'
 alias -g OY='-o yaml'
-alias -g HJ='| highlight -O ansi --syntax json'
-alias -g HY='| highlight -O ansi --syntax yaml'
+alias -g HJ='| highlight -O ansi --syntax-by-name json'
+alias -g HY='| highlight -O ansi --syntax-by-name yaml'
+alias -g OJH='OJ HJ'
+alias -g OYH='OY HY'
 
 # grep / rg / ug
 alias grep='grep --color=auto -i'

@@ -170,14 +170,11 @@ zle -N expand-or-complete-with-indicator
 # Reset to default key bindings.
 bindkey -d
 
-# Allow command line editing in an external editor.
-autoload -Uz edit-command-line
-zle -N edit-command-line
-
 #
 # Vi Key Bindings
 #
-# Edit command in an external editor.
+# Press "v" in Vi Mode to edit command line with $VISUAL or $EDITOR
+autoload -Uz edit-command-line; zle -N edit-command-line
 bindkey -M vicmd "v" edit-command-line
 
 #

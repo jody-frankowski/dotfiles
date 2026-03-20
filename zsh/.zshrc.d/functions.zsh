@@ -273,8 +273,10 @@ g () {
             -+) ug_bin+=+ ;;
             -i|-j) option_case="$1" ;;
             -*) options+=("$1") ;;
-            *\**|*+*|*\[*\]*) patterns+=("$1") ;; # Regex
-            *) patterns+=("\"$1\"") ;;            # Fixed-String
+            # Regex
+            *\**|*+*|*\[*\]*|*\|*|*(*)*) patterns+=("$1") ;;
+            # Fixed-String
+            *) patterns+=("\"$1\"") ;;
         esac
         shift
     done

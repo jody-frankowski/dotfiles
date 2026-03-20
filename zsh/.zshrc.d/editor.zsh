@@ -178,6 +178,7 @@ bindkey -M vicmd "v" edit-command-line
 # Emacs and Vi Key Bindings
 #
 for keymap in 'emacs' 'viins'; do
+    # Delete the char under the cursor (`fn + delete` on macOS)
     bindkey -M "$keymap" "$key_info[Delete]" delete-char
 
     # Duplicate the previous word.

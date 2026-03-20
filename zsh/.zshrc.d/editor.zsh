@@ -194,9 +194,6 @@ for keymap in 'emacs' 'viins'; do
     # Bind Shift + Tab to go to the previous completion menu item.
     bindkey -M "$keymap" "$key_info[BackTab]" reverse-menu-complete
 
-    # Complete in the middle of word.
-    bindkey -M "$keymap" "$key_info[Control]I" expand-or-complete
-
     # Expand .... to ../..
     bindkey -M "$keymap" "." expand-dot-to-parent-directory-path
 

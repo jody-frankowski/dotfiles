@@ -143,6 +143,9 @@ compdef mvv=rsync
 compdef mvvr=rsync
 compdef mvvs=rsync
 
+# Use the proper completion function for overridden binaries
+for bin (date dircolors du head rm sort timeout) compdef _uu-$bin $bin
+
 # lazyload aws completion
 _load_aws_completion () {
     complete -C aws_completer aws

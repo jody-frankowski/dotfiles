@@ -112,6 +112,12 @@ e64 () {
     fi
 }
 
+diff () {
+    # Defined as a function instead of an alias becasue otherwise the completion will keep
+    # suggesting options instead of files
+    command diff --color -u "$@"
+}
+
 find-dead-symlinks () {
     [[ $1 == -h ]] && { echo "Usage: $0 [DIR] [OPTIONS]" >&2; return 1 }
 

@@ -64,7 +64,6 @@ alias ug='ug --hidden -iz'
 # Misc
 alias dd='dd status=progress'
 alias deno='deno --check -q' # -q mutes the `Check file:...` message
-alias diff='diff --color -u'
 alias fd='fd --hidden'
 alias info='info --vi-keys'
 alias ip='ip -c'

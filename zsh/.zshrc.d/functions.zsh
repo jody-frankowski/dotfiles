@@ -507,7 +507,7 @@ git-clone-multiple-remotes () {
 }
 
 hash () {
-    local cmd=xxhsum
+    local cmd=xxh3sum
     if [[ "$#" -ge 1 ]]; then
         "${cmd}" "$@" | sort -k2
         return

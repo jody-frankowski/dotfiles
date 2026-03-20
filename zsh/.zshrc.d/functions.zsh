@@ -733,6 +733,9 @@ psg () {
     local -r out=$(ps auxww)
     <<<$out grcat conf.ps | g "$@" --color=never
 }
+pst () {
+    pstree -w "$@" | grcat conf.ps
+}
 
 pssh () {
     # Takes a list of host as arguments

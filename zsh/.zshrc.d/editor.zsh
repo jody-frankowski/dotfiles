@@ -207,7 +207,7 @@ for keymap in 'emacs' 'viins'; do
 
     bindkey -M "$keymap" "$key_info[Control]p" up-history
 
-    bindkey -M "$keymap" "$key_info[Control]X?" _complete_debug
+    bindkey -M "$keymap" "$key_info[Control]x?" _complete_debug
 done
 unset keymap
 

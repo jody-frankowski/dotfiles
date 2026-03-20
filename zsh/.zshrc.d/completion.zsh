@@ -2,6 +2,10 @@
 
 # Adapted from https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
 
+# Show a cmd/function completion with `echo $_comps[CMD]`
+#
+# Debug completion with `C-x ?`
+
 if _onmacos; then
     fpath=(
         ${BREW_PREFIX}/share/zsh-completions

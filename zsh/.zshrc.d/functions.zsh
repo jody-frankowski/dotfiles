@@ -525,13 +525,17 @@ k () {
 
     while (( $# )); do
         case "$1" in
-            a)  cmd+=(apply)    ; shift; break ;;
-            d)  cmd+=(describe) ; shift; break ;;
-            e)  cmd+=(edit)     ; shift; break ;;
-            g)  cmd+=(get)      ; shift; break ;;
-            l)  cmd+=(logs)     ; shift; break ;;
-            rm) cmd+=(delete)   ; shift; break ;;
-            sh) cmd+=(exec -it) ; shift; set -- "$@" -- bash; break ;;
+            a)  cmd+=(apply)        ; shift; break ;;
+            d)  cmd+=(describe)     ; shift; break ;;
+            e)  cmd+=(edit)         ; shift; break ;;
+            g)  cmd+=(get)          ; shift; break ;;
+            l)  cmd+=(logs)         ; shift; break ;;
+            pf) cmd+=(port-forward) ; shift; break ;;
+            rm) cmd+=(delete)       ; shift; break ;;
+            sh) cmd+=(exec -it)     ; shift
+                # Allow specifying a custom command with `k sh ... -- CMD ARGS...`
+                (( ${@[(I)--]} )) && break
+                set -- "$@" -- bash; break
         esac
         cmd+=("$1"); shift
     done

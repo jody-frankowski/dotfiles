@@ -167,15 +167,6 @@ function expand-or-complete-with-indicator {
 }
 zle -N expand-or-complete-with-indicator
 
-# Inserts 'sudo ' at the beginning of the line.
-function prepend-sudo {
-    if [[ "$BUFFER" != su(do|)\ * ]]; then
-        BUFFER="sudo $BUFFER"
-        (( CURSOR += 5 ))
-    fi
-}
-zle -N prepend-sudo
-
 # Reset to default key bindings.
 bindkey -d
 
@@ -209,9 +200,6 @@ for keymap in 'emacs' 'viins'; do
 
     # Expand .... to ../..
     bindkey -M "$keymap" "." expand-dot-to-parent-directory-path
-
-    # Insert 'sudo ' at the beginning of the line.
-    bindkey -M "$keymap" "$key_info[Control]X$key_info[Control]S" prepend-sudo
 
     bindkey -M "$keymap" "$key_info[Control]n" down-history
 

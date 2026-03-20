@@ -92,7 +92,6 @@ if ./base/.usr/bin/_onmacos ; then
         # Utils
         gnu-sed
         uutils-coreutils
-        uutils-diffutils # Because macOS' diff doesn't support `--color`
     )
     for formula in "${formulae[@]}" ; do
         [[ -d "${BREW_PREFIX}/opt/${formula}" ]] || brew install "${formula}"
@@ -363,10 +362,6 @@ if ./base/.usr/bin/_onmacos ; then
     for bin in date dircolors du head rm sort timeout; do
         [[ -L ~/.usr/bin/"${bin}" ]] || \
             ln -s "${BREW_PREFIX}/opt/uutils-coreutils/bin/uu-${bin}" ~/.usr/bin/"${bin}"
-    done
-    for bin in cmp diff; do
-        [[ -L ~/.usr/bin/"${bin}" ]] || \
-            ln -s "${BREW_PREFIX}/opt/uutils-diffutils/bin/uu-${bin}" ~/.usr/bin/"${bin}"
     done
 
     # Symlink macOS specific dotfiles

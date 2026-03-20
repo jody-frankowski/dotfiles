@@ -180,9 +180,6 @@ bindkey -M vicmd "v" edit-command-line
 for keymap in 'emacs' 'viins'; do
     bindkey -M "$keymap" "$key_info[Delete]" delete-char
 
-    # Expand history on space.
-    bindkey -M "$keymap" ' ' magic-space
-
     # Duplicate the previous word.
     for key in "$key_info[Escape]"{M,m}
         bindkey -M "$keymap" "$key" copy-prev-shell-word

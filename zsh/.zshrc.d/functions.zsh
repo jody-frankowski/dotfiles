@@ -297,6 +297,18 @@ g () {
 
     "${ug_bin}" "${options[@]}" -% "${patterns[*]}" "${input}"
 }
+_g() {
+    _files && return 0
+
+    local -a custom_opts=(
+        '-+:Use ugrep+'
+    )
+    _describe -t custom-options 'wrapper options' custom_opts
+
+    local service=ugrep
+    _ugrep "$@"
+}
+compdef _g g
 
 gcl () {
     # Transform GH/GL https urls in ssh ones

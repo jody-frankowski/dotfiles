@@ -332,6 +332,9 @@ gcl () {
 git-open () {
     o "https://$(git remote get-url origin | sed -e 's/git@//' -e 's/\.git$//' -e 's#:#/#')"
 }
+git-pull-r () {
+    bfs . -type d -iname '\.git' -printf '%h\n' -execdir git pull \;
+}
 
 gen-passphrase () {
     [[ $1 == -h ]] && { echo "Usage: $0 [--no-clipboard] [DICTFILE]" >&2; return 1 }

@@ -3,6 +3,21 @@
 ### Zsh line editor config
 # Adapted from https://github.com/sorin-ionescu/prezto/blob/master/modules/editor/init.zsh
 
+# https://en.wikipedia.org/wiki/ANSI_escape_code#C0_control_codes
+# ^[ is Escape
+# ^I is Tab
+# ^X is Control
+# ^[[3~ is CSI (ESC [) 3 ~
+#
+# 0x08 = ^H/BS
+# 0x7f = ^?/DEL
+#
+# iTerm2: If "Delete key sends ^H" is enabled, the delete key will send
+# `0x08/BS/^H` instead of `0x7f/DEL/^?`
+#
+# Use bindkey -L to list the Zsh keybindings
+# Use showkey -a on Linux to debug the keys pressed
+
 # Set '|' as a between-word character
 WORDCHARS="${WORDCHARS}|"
 

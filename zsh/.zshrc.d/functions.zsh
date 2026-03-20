@@ -266,7 +266,17 @@ g () {
     elif [[ -e "$1" ]]; then
         input=$1; shift
     fi
-    [[ "${input}" != - ]] && options+=(--dereference-recursive --heading --hidden --ignore-files -n)
+    [[ "${input}" == - ]] &&
+        options+=(--binary-files=with-hex)
+    [[ "${input}" != - ]] &&
+        options+=(
+        --dereference-recursive
+        --heading
+        --hidden
+        --ignore-binary
+        --ignore-files
+        --line-number
+    )
 
     while [[ $# -gt 0 ]]; do
         case "$1" in

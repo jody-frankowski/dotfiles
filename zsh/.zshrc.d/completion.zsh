@@ -136,12 +136,8 @@ zstyle ':completion:*:(ssh|scp|rsync):*:hosts-host' ignored-patterns '*(.|:)*' l
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-domain' ignored-patterns '<->.<->.<->.<->' '^[-[:alnum:]]##(.[-[:alnum:]]##)##' '*@*'
 zstyle ':completion:*:(ssh|scp|rsync):*:hosts-ipaddr' ignored-patterns '^(<->.<->.<->.<->|(|::)([[:xdigit:].]##:(#c,2))##(|%*))' '127.0.0.<->' '255.255.255.255' '::1' 'fe80::*'
 
-compdef cpv=rsync
-compdef cpvr=rsync
-compdef cpvs=rsync
-compdef mvv=rsync
-compdef mvvr=rsync
-compdef mvvs=rsync
+# These wrappers use rsync
+for bin (cpv cpvr cpvs mvv mvvr mvvs) compdef $bin=rsync
 
 # Use the proper completion function for overridden binaries
 for bin (date dircolors du head rm sort timeout) compdef _uu-$bin $bin

@@ -2,9 +2,12 @@
 
 # Adapted from https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
 
-if _onmacos ; then
-    fpath=(${BREW_PREFIX}/share/zsh/site-functions $fpath)
-    fpath=(${BREW_PREFIX}/share/zsh-completions $fpath)
+if _onmacos; then
+    fpath=(
+        ${BREW_PREFIX}/share/zsh-completions
+        ${BREW_PREFIX}/share/zsh/site-functions
+        $fpath
+    )
 fi
 fpath=(~/.zshrc.d/completion $fpath)
 

@@ -58,6 +58,7 @@ if ./base/.usr/bin/_onmacos ; then
         fx
         fzf
         gnupg
+        grc
         jq
         lsd
         moar

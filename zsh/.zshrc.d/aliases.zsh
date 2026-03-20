@@ -106,7 +106,6 @@ alias latr='lat -r'
 alias free='free -h'
 alias pscpu='ps auxf | sort -n -k 3'
 alias psmem='ps auxf | sort -n -k 4'
-alias psg='ps aux G'
 
 # Editors
 alias e='emacsclient -a "" --tty'

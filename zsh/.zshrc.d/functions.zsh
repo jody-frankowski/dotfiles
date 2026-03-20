@@ -728,6 +728,12 @@ if _onmacos; then
     }
 fi
 
+psg () {
+    # Capture the output before searching to avoid capturing the filtering cmd
+    local -r out=$(ps auxww)
+    <<<$out grcat conf.ps | g "$@" --color=never
+}
+
 pssh () {
     # Takes a list of host as arguments
     # For each host:

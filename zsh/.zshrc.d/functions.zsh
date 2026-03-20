@@ -1007,6 +1007,9 @@ whois () {
 }
 
 watch () {
+    sleep_sec=2
+    [[ $1 =~ ^[0-9]*$ ]] && { sleep_sec=$1; shift }
+
     while true; do
         out=$(unbuffer zsh -i -c "$*")
         clear

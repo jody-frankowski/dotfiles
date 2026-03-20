@@ -156,17 +156,6 @@ function expand-dot-to-parent-directory-path {
 }
 zle -N expand-dot-to-parent-directory-path
 
-# Displays an indicator when completing.
-# TODO works?
-function expand-or-complete-with-indicator {
-    local indicator
-    zstyle -s ':editor:info:completing' format 'indicator'
-    print -Pn "$indicator"
-    zle expand-or-complete
-    zle redisplay
-}
-zle -N expand-or-complete-with-indicator
-
 # Reset to default key bindings.
 bindkey -d
 

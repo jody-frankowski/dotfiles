@@ -79,11 +79,6 @@ eval `dircolors ~/.dir_colors`
 # Needed by some loaded scripts
 autoload -Uz add-zsh-hook
 
-# Loads aliases, functions , the prompt theme and others
-for script in ~/.zshrc.d/*.zsh ; do
-    source ${script}
-done
-
 # Ensure path arrays do not contain duplicates.
 typeset -gU cdpath fpath mailpath path
 
@@ -133,3 +128,8 @@ eval "$(atuin init zsh --disable-up-arrow)"
 # Prompt
 export STARSHIP_LOG=error
 eval "$(starship init zsh)"
+
+# Loads aliases, functions , the prompt theme and others
+for script in ~/.zshrc.d/*.zsh ; do
+    source ${script}
+done

@@ -169,24 +169,17 @@ bindkey -M vicmd "v" edit-command-line
 #
 # Emacs and Vi Key Bindings
 #
-for keymap in 'emacs' 'viins'; do
-    # Delete the char under the cursor (`fn + delete` on macOS)
-    bindkey -M "$keymap" "$key_info[Delete]" delete-char
+# Delete the char under the cursor (`fn + delete` on macOS)
+bindkey -M emacs "$key_info[Delete]" delete-char
 
-    # Duplicate the previous word.
-    for key in "$key_info[Escape]"{M,m}
-        bindkey -M "$keymap" "$key" copy-prev-shell-word
+# Bind Shift + Tab to go to the previous completion menu item.
+bindkey -M emacs "$key_info[BackTab]" reverse-menu-complete
 
-    # Bind Shift + Tab to go to the previous completion menu item.
-    bindkey -M "$keymap" "$key_info[BackTab]" reverse-menu-complete
+# Expand .... to ../..
+bindkey -M emacs "." expand-dot-to-parent-directory-path
 
-    # Expand .... to ../..
-    bindkey -M "$keymap" "." expand-dot-to-parent-directory-path
-
-    bindkey -M "$keymap" "$key_info[Control]x?" _complete_debug
-done
-unset keymap
-
+# Generate completion trace
+bindkey -M emacs "$key_info[Control]x?" _complete_debug
 
 # use emacs keys by default
 bindkey -e

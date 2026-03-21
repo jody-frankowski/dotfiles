@@ -187,10 +187,6 @@ for keymap in 'emacs' 'viins'; do
     # Expand .... to ../..
     bindkey -M "$keymap" "." expand-dot-to-parent-directory-path
 
-    bindkey -M "$keymap" "$key_info[Control]n" down-history
-
-    bindkey -M "$keymap" "$key_info[Control]p" up-history
-
     bindkey -M "$keymap" "$key_info[Control]x?" _complete_debug
 done
 unset keymap

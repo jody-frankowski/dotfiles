@@ -168,3 +168,9 @@ alias pacman-remove-orphans='sudo pacman --remove --recursive $(pacman --quiet -
 # Url tools
 alias urlencode='python3 -c "import sys, urllib.parse as up; print(up.quote_plus(sys.argv[1]))"'
 alias urldecode='python3 -c "import sys, urllib.parse as up; print(up.unquote_plus(sys.argv[1]))"'
+
+# Directory aliases
+# dev     > cd ~/Dev
+# ls ~dev > ls ~/Dev
+export dev=~/Dev
+export dl=~/Downloads

@@ -28,35 +28,35 @@ setopt BEEP
 zmodload zsh/terminfo
 typeset -gA key_info
 key_info=(
-  'Control'      '\C-'
-  'ControlLeft'  '\e[1;5D \e[5D \e\e[D \eOd'
-  'ControlRight' '\e[1;5C \e[5C \e\e[C \eOc'
-  'Escape'       '\e'
-  'Meta'         '\M-'
-  'Backspace'    "^?"
-  'Delete'       "^[[3~"
-  'F1'           "$terminfo[kf1]"
-  'F2'           "$terminfo[kf2]"
-  'F3'           "$terminfo[kf3]"
-  'F4'           "$terminfo[kf4]"
-  'F5'           "$terminfo[kf5]"
-  'F6'           "$terminfo[kf6]"
-  'F7'           "$terminfo[kf7]"
-  'F8'           "$terminfo[kf8]"
-  'F9'           "$terminfo[kf9]"
-  'F10'          "$terminfo[kf10]"
-  'F11'          "$terminfo[kf11]"
-  'F12'          "$terminfo[kf12]"
-  'Insert'       "$terminfo[kich1]"
-  'Home'         "$terminfo[khome]"
-  'PageUp'       "$terminfo[kpp]"
-  'End'          "$terminfo[kend]"
-  'PageDown'     "$terminfo[knp]"
-  'Up'           "$terminfo[kcuu1]"
-  'Left'         "$terminfo[kcub1]"
-  'Down'         "$terminfo[kcud1]"
-  'Right'        "$terminfo[kcuf1]"
-  'BackTab'      "$terminfo[kcbt]"
+  Control      '\C-'
+  ControlLeft  '\e[1;5D \e[5D \e\e[D \eOd'
+  ControlRight '\e[1;5C \e[5C \e\e[C \eOc'
+  Escape       '\e'
+  Meta         '\M-'
+  Backspace    "^?"
+  Delete       "^[[3~"
+  F1           "$terminfo[kf1]"
+  F2           "$terminfo[kf2]"
+  F3           "$terminfo[kf3]"
+  F4           "$terminfo[kf4]"
+  F5           "$terminfo[kf5]"
+  F6           "$terminfo[kf6]"
+  F7           "$terminfo[kf7]"
+  F8           "$terminfo[kf8]"
+  F9           "$terminfo[kf9]"
+  F10          "$terminfo[kf10]"
+  F11          "$terminfo[kf11]"
+  F12          "$terminfo[kf12]"
+  Insert       "$terminfo[kich1]"
+  Home         "$terminfo[khome]"
+  PageUp       "$terminfo[kpp]"
+  End          "$terminfo[kend]"
+  PageDown     "$terminfo[knp]"
+  Up           "$terminfo[kcuu1]"
+  Left         "$terminfo[kcub1]"
+  Down         "$terminfo[kcud1]"
+  Right        "$terminfo[kcuf1]"
+  BackTab      "$terminfo[kcbt]"
 )
 
 # Set empty $key_info values to an invalid UTF-8 sequence to induce silent
@@ -75,12 +75,12 @@ function editor-info {
     unset editor_info
     typeset -gA editor_info
 
-    if [[ "$KEYMAP" == 'vicmd' ]]; then
-        zstyle -s ':editor:info:keymap:alternate' format 'REPLY'
-        editor_info[keymap]="$REPLY"
+    if [[ $KEYMAP == vicmd ]]; then
+        zstyle -s :editor:info:keymap:alternate format REPLY
+        editor_info[keymap]=$REPLY
     else
-        zstyle -s ':editor:info:keymap:primary' format 'REPLY'
-        editor_info[keymap]="$REPLY"
+        zstyle -s :editor:info:keymap:primary format REPLY
+        editor_info[keymap]=$REPLY
     fi
 
     unset REPLY
@@ -158,34 +158,29 @@ zle -N expand-dot-to-parent-directory-path
 
 # Reset to default key bindings.
 bindkey -d
-
-#
-# Vi Key Bindings
-#
-# Press "v" in Vi Mode to edit command line with $VISUAL or $EDITOR
-autoload -Uz edit-command-line; zle -N edit-command-line
-bindkey -M vicmd "v" edit-command-line
-
-#
-# Emacs and Vi Key Bindings
-#
-# Delete the char under the cursor (`fn + delete` on macOS)
-bindkey -M emacs "$key_info[Delete]" delete-char
-
-# Bind Shift + Tab to go to the previous completion menu item.
-bindkey -M emacs "$key_info[BackTab]" reverse-menu-complete
-
-# Expand .... to ../..
-bindkey -M emacs "." expand-dot-to-parent-directory-path
-
-# Generate completion trace
-bindkey -M emacs "$key_info[Control]x?" _complete_debug
-
-# use emacs keys by default
+# Use emacs keys by default
 bindkey -e
 
-# switch to vi modal bindings with escape
-bindkey -M "emacs" "$key_info[Escape]" vi-cmd-mode
+### `vicmd` keymap
+# Press `v` in Vi Mode to edit command line with $VISUAL or $EDITOR
+autoload -Uz edit-command-line; zle -N edit-command-line
+bindkey -M vicmd v edit-command-line
+
+### `emacs` keymap
+# Delete the char under the cursor (`fn + delete` on macOS)
+bindkey $key_info[Delete] delete-char
+
+# Bind Shift + Tab to go to the previous completion menu item.
+bindkey $key_info[BackTab] reverse-menu-complete
+
+# Expand .... to ../..
+bindkey . expand-dot-to-parent-directory-path
+
+# Generate completion trace
+bindkey $key_info[Control]x\? _complete_debug
+
+# Select the vicmd keymap
+bindkey $key_info[Escape] vi-cmd-mode
 
 # Make M-backspace delete path components (and not the whole word/path) by stopping at '/'
 backward-kill-dir () {

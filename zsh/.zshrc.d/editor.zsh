@@ -195,8 +195,6 @@ for keymap in 'emacs' 'viins'; do
 done
 unset keymap
 
-# Do not expand .... to ../.. during incremental search.
-bindkey -M isearch . self-insert 2> /dev/null
 
 # use emacs keys by default
 bindkey -e

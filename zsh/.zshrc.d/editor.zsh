@@ -156,9 +156,7 @@ function expand-dot-to-parent-directory-path {
 }
 zle -N expand-dot-to-parent-directory-path
 
-# Reset to default key bindings.
-bindkey -d
-# Use emacs keys by default
+# Use the `emacs` keymap by default
 bindkey -e
 
 ### `vicmd` keymap

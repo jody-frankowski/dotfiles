@@ -177,10 +177,6 @@ for keymap in 'emacs' 'viins'; do
     for key in "$key_info[Escape]"{M,m}
         bindkey -M "$keymap" "$key" copy-prev-shell-word
 
-    # Use a more flexible push-line.
-    for key in "$key_info[Control]Q" "$key_info[Escape]"{q,Q}
-        bindkey -M "$keymap" "$key" push-line-or-edit
-
     # Bind Shift + Tab to go to the previous completion menu item.
     bindkey -M "$keymap" "$key_info[BackTab]" reverse-menu-complete
 

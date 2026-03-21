@@ -136,3 +136,9 @@ _terminal-osc7-set-cwd() {
 }
 add-zsh-hook chpwd _terminal-osc7-set-cwd
 _terminal-osc7-set-cwd # Call it at least once when the shell starts
+
+# Set OSC 133 prompt mark
+# Tmux only supports OSC 133 A & C:
+# https://github.com/tmux/tmux/blob/bef4865d91ff8e549a3a4d63563f0ef1a39a1a39/input.c#L3083
+# Use Tmux's `next-prompt` for `A` & `next-prompt -o` for `C`
+PS1+=$'%{\e]133;A\a%}'

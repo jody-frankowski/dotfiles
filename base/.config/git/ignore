@@ -314,3 +314,6 @@ tags
 ### VisualStudioCode Patch ###
 # Ignore all local history of files
 .history
+
+### ugrep ###
+._UG#_Store

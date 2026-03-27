@@ -110,6 +110,11 @@ flycheck_*.el
 # network security
 /network-security.data
 
+### Git ###
+# Make `fd --hidden` & `ug --ignore-files=~/.config/git/ignore` ignore .git dirs
+.git
+# Worktrees
+.wt
 
 ### Go ###
 # Binaries for programs and plugins

@@ -39,7 +39,6 @@ clifu () {
     curl -s "https://www.commandlinefu.com/commands/matching/$1/`echo -n $1 | base64`/plaintext" | less
 }
 
-
 curlg () {
     for url
         curl --continue-at - --location --remote-name --remote-time "${url}"

@@ -281,6 +281,7 @@ g () {
         --hidden
         --ignore-binary
         --ignore-files
+        --ignore-files=~/.config/git/ignore
         --line-number
     )
 

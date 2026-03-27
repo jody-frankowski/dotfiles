@@ -71,8 +71,9 @@ alias lsof='lsof -nP' # Preserve network and port numbers
 alias mkdir='mkdir -pv'
 alias nix-shell='nix-shell --run /bin/zsh'
 alias o='open'
-alias p='pueue'
-alias pw='p wait'
+alias p='print'
+alias pu='pueue'
+alias puw='pu wait'
 # Use Neovim instead of Emacs for pass because our Emacs config saves the buffers history on disk
 # and that could lead to password leaks
 alias pass='EDITOR=nvim pass'

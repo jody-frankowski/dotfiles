@@ -1,3 +1,6 @@
+# -*- mode: gitignore; -*-
+# vim: ft=gitignore
+
 ### Ansible ###
 *.retry
 
@@ -59,7 +62,6 @@ Mkfile.old
 dkms.conf
 
 ### Emacs ###
-# -*- mode: gitignore; -*-
 *~
 \#*\#
 /.emacs.desktop

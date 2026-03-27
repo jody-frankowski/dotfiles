@@ -229,9 +229,16 @@ if ./base/.usr/bin/_onmacos ; then
     ## Keyboard Shortcuts
     # App Shortcuts: Always paste with current style (disregard source style) with ⌘+v
     defaults write -g NSUserKeyEquivalents -dict-add "Paste and Match Style" "@v"
-    # Input Sources: Select the previous/next input source
-    /usr/libexec/PlistBuddy -c 'Set AppleSymbolicHotKeys:60:enabled 0' ~/Library/Preferences/com.apple.symbolichotkeys.plist
-    /usr/libexec/PlistBuddy -c 'Set AppleSymbolicHotKeys:61:enabled 0' ~/Library/Preferences/com.apple.symbolichotkeys.plist
+    # Disable some keybindings
+    keybindings=(
+        # Input Sources: `Select the previous/next input source` (C-Space)
+        60 61
+        # Mission Control: `Switch to Desktop 1/2` (C-1/2)
+        118 119
+    )
+    for i ($keybindings) /usr/libexec/PlistBuddy -c \
+          "Set AppleSymbolicHotKeys:${i}:enabled 0" \
+          ~/Library/Preferences/com.apple.symbolichotkeys.plist
     ## Text Input > Text Replacements
     declare -A replacements
     replacements=(

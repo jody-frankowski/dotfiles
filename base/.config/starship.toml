@@ -139,6 +139,7 @@ version_format = '${major}.${minor}'
 
 [hostname]
 format = '[$hostname]($style) '
+style = 'green bold'
 
 [kubernetes]
 format = '[$symbol$context(:$namespace)]($style) '

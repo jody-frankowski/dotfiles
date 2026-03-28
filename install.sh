@@ -339,8 +339,10 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write eu.exelban.Stats Disk_widget mini
     defaults write eu.exelban.Stats SSD_mini_color utilization
     # Network
+    defaults write eu.exelban.Stats Network_publicIPRefreshInterval hour
     defaults write eu.exelban.Stats Network_speed_value -bool true
     defaults write eu.exelban.Stats Network_speed_valueColor -bool true
+    defaults write eu.exelban.Stats Network_updateICMPInterval 10
     # Sensors
     defaults write eu.exelban.Stats Sensors_widget sensors
     defaults write eu.exelban.Stats "sensor_Average CPU" -bool true

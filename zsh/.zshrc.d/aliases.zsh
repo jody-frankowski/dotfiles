@@ -73,6 +73,7 @@ alias nix-shell='nix-shell --run /bin/zsh'
 alias o='open'
 alias p='print'
 alias pu='pueue'
+alias puf='pu follow'
 alias puw='pu wait'
 # Use Neovim instead of Emacs for pass because our Emacs config saves the buffers history on disk
 # and that could lead to password leaks

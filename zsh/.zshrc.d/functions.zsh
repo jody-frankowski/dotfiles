@@ -385,7 +385,8 @@ getdir () {
 }
 
 getip () {
-    curl https://ip.me || dig +short ANY myip.opendns.com @resolver1.opendns.com
+    curl -4 ip.me 2>/dev/null || curl -4 ifconfig.co
+    curl -6 ip.me 2>/dev/null || curl -6 ifconfig.co
 }
 
 _git-branch-current () {

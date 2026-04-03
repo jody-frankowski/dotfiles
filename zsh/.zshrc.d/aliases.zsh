@@ -65,6 +65,7 @@ alias ug='ug --hidden -iz'
 alias dd='dd status=progress'
 alias deno='deno --check -q' # -q mutes the `Check file:...` message
 alias fd='fd --hidden'
+alias fzf='fzf --color=light,hl:blue:bold,selected-hl:blue:bold,hl+:blue:bold,current-bg:254'
 alias info='info --vi-keys'
 alias ip='ip -c'
 alias lsof='lsof -nP' # Preserve network and port numbers

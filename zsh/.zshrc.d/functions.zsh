@@ -117,6 +117,13 @@ diff () {
     command diff --color -u "$@"
 }
 
+dig () {
+    # Can be called with an URL (e.g. https://www.domain.tld/*) from which the domain to query will
+    # be extracted (e.g. www.domain.tld)
+    # Removes https?:// prefix & /* suffix
+    command dig ${${@#*://}%%/*}
+}
+
 find-dead-symlinks () {
     [[ $1 == -h ]] && { echo "Usage: $0 [DIR] [OPTIONS]" >&2; return 1 }
 

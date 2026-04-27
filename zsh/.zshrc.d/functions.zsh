@@ -328,6 +328,8 @@ _g() {
 
     local -a custom_opts=(
         '-+:Use ugrep+'
+        '-HH:Search hidden files'
+        '-II:Search ignored files'
     )
     _describe -t custom-options 'wrapper options' custom_opts
 

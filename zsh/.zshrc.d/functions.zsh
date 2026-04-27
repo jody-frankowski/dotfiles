@@ -256,7 +256,16 @@ f () {
         patterns+=(--and "$1")
         shift
     done
-    options+=("$@")
+    while [[ $# -gt 0 ]]; do
+        case "$1" in
+            # Custom flags
+            -HH) options+=(--hidden) ;;
+            -II) options+=(--no-ignore) ;;
+            # Normal flags
+            *) options+=("$1") ;;
+        esac
+        shift
+    done
 
     fd --search-path "${path_to_search}" "${patterns[@]}" "${options[@]}"
 }
@@ -293,6 +302,10 @@ g () {
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
+            # Custom flags
+            -HH) options+=(--hidden) ;;
+            -II) options+=(--no-ignore-files) ;;
+            # Normal flags
             -+) ug_bin+=+ ;;
             -i|-j) option_case="$1" ;;
             -*) options+=("$1") ;;

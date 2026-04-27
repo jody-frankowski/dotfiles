@@ -3,7 +3,7 @@
 bak () {
     # ${@%/} removes trailing slashes
     for arg in "${@%/}" ; do
-        cp -a "${arg}" "${arg}-$(date -u +%F%H%M%S).bak"
+        rsync -avP -f '- node_modules' -f '- .venv' "${arg}" "${arg}-$(date -u +%F%H%M%S).bak"
     done
 }
 

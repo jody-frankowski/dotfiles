@@ -81,6 +81,7 @@ alias puw='pu wait'
 alias pass='EDITOR=nvim pass'
 alias py='python3'
 alias rdesktop='rdesktop -g 1680x1050'
+alias rsync='rsync --old-args' # See cpv's comment for more infos
 alias sk='sk --color=16 -m --bind "alt-a:select-all,alt-d:deselect-all" --layout reverse'
 alias strings='strings -' # Search strings in all bytes of the files
 alias umount='sudo umount'

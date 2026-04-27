@@ -323,6 +323,18 @@ g () {
 
     "${ug_bin}" "${options[@]}" -% "${patterns[*]}" "${input}"
 }
+_f() {
+    _files && return 0
+
+    local -a custom_opts=(
+        '-HH:Search hidden files'
+        '-II:Search ignored files'
+    )
+    _describe -t custom-options 'wrapper options' custom_opts
+
+    local service=fd
+    _fd "$@"
+}
 _g() {
     _files && return 0
 
@@ -336,6 +348,7 @@ _g() {
     local service=ugrep
     _ugrep "$@"
 }
+compdef _f f
 compdef _g g
 
 gcl () {

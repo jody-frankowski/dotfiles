@@ -54,6 +54,7 @@ export MANROFFOPT=-c
 
 # Go
 export GOPATH=~/.cache/go
+export GOROOT=$(go env GOROOT)
 
 # Nix
 if ~/.usr/bin/_onmacos; then

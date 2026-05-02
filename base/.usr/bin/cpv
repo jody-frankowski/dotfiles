@@ -8,4 +8,7 @@ if [[ $# -lt 2 || $1 == -h || $1 == --help ]]; then
     exit 1
 fi
 
-exec rsync -avPih "$@"
+# --old-args: On Linux and macOS, the default rsync installed completion complete remote paths with
+# triple backslash escaped spaces while the recent rsync versions accept single escaped args.
+# Note that with this config, quoted spaces in paths will need to be single escaped.
+exec rsync --old-args -avPih "$@"

@@ -1,6 +1,34 @@
 # More restrictive umask
 umask 077
 
+### PATH
+# /!\ Keep this at the top of the file because some commands below may rely on PATH including their
+# bin (e.g. `go env`)
+# The PATH variable is read left-to-right, so we put the directories that are most likely to
+# override others at the beginning of the variable
+# Homebrew
+if ~/.usr/bin/_onmacos; then
+    export BREW_PREFIX=/opt/homebrew
+    PATH=${BREW_PREFIX}/sbin:${PATH}
+    PATH=${BREW_PREFIX}/bin:${PATH}
+fi
+# Bun
+PATH=~/.bun/bin:${PATH}
+# Node
+PATH=~/.cache/npm/bin:${PATH}
+# Python
+PATH=~/.local/bin:${PATH}
+# Go
+PATH=~/.cache/go/bin:${PATH}
+# Rust
+PATH=~/.cache/cargo/bin:${PATH}
+# Nix
+PATH=~/.nix-profile/bin:${PATH}
+# Custom scripts and symlinks
+PATH=~/.usr/bin:${PATH}
+export PATH
+### PATH
+
 # Emacs as default editor
 # https://unix.stackexchange.com/questions/4859/visual-vs-editor-whats-the-difference
 export EDITOR='emacsclient -a "" --tty'
@@ -41,32 +69,6 @@ export PYTHONPATH=~/.usr/lib/:${PYTHONPATH}
 
 # Rust
 export CARGO_HOME=~/.cache/cargo
-
-### PATH
-# The PATH variable is read left-to-right, so we put the directories that are most likely to
-# override others at the beginning of the variable
-# Homebrew
-if ~/.usr/bin/_onmacos; then
-    export BREW_PREFIX=/opt/homebrew
-    PATH=${BREW_PREFIX}/sbin:${PATH}
-    PATH=${BREW_PREFIX}/bin:${PATH}
-fi
-# Bun
-PATH=~/.bun/bin:${PATH}
-# Node
-PATH=~/.cache/npm/bin:${PATH}
-# Python
-PATH=~/.local/bin:${PATH}
-# Go
-PATH=~/.cache/go/bin:${PATH}
-# Rust
-PATH=~/.cache/cargo/bin:${PATH}
-# Nix
-PATH=~/.nix-profile/bin:${PATH}
-# Custom scripts and symlinks
-PATH=~/.usr/bin:${PATH}
-export PATH
-### PATH
 
 
 # Disable the `[mosh]` prefix

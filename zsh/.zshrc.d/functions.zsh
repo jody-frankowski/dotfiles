@@ -9,6 +9,14 @@ bak () {
 
 if _onmacos; then
 brew () {
+    if [[ $1 == up ]]; then
+        brew update
+        brew outdated
+        p Enter To Continue. C-c To Abort.
+        read
+        brew upgrade
+        return
+    fi
     command brew "$@"
     rehash
 }

@@ -48,8 +48,7 @@ clifu () {
 }
 
 curlg () {
-    for url
-        curl --continue-at - --location --remote-name --remote-time "${url}"
+    curl --continue-at - --location --remote-name --remote-time $@
 }
 curlh () {
     curl -s -v -o /dev/null $@

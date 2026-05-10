@@ -574,14 +574,15 @@ k () {
 
     while (( $# )); do
         case "$1" in
-            a)  cmd+=(apply)        ; shift; break ;;
-            d)  cmd+=(describe)     ; shift; break ;;
-            e)  cmd+=(edit)         ; shift; break ;;
-            g)  cmd+=(get)          ; shift; break ;;
-            l)  cmd+=(logs)         ; shift; break ;;
-            pf) cmd+=(port-forward) ; shift; break ;;
-            rm) cmd+=(delete)       ; shift; break ;;
-            sh) cmd+=(exec -it)     ; shift
+            -c) cmd+=(--context "$2") ; shift 2; continue ;;
+            a)  cmd+=(apply)          ; shift ; break ;;
+            d)  cmd+=(describe)       ; shift ; break ;;
+            e)  cmd+=(edit)           ; shift ; break ;;
+            g)  cmd+=(get)            ; shift ; break ;;
+            l)  cmd+=(logs)           ; shift ; break ;;
+            pf) cmd+=(port-forward)   ; shift ; break ;;
+            rm) cmd+=(delete)         ; shift ; break ;;
+            sh) cmd+=(exec -it)       ; shift
                 # Allow specifying a custom command with `k sh ... -- CMD ARGS...`
                 (( ${@[(I)--]} )) && break
                 set -- "$@" -- bash; break
@@ -598,13 +599,14 @@ _k () {
     local arg=2
     while (( arg <= CURRENT )); do
         case "$words[$arg]" in
-            a)  words[$arg]=apply    ; break ;;
-            d)  words[$arg]=describe ; break ;;
-            e)  words[$arg]=edit     ; break ;;
-            g)  words[$arg]=get      ; break ;;
-            l)  words[$arg]=logs     ; break ;;
-            rm) words[$arg]=delete   ; break ;;
-            sh) words[$arg]=exec     ; break ;;
+            -c) words[$arg]=--context ; break ;;
+            a)  words[$arg]=apply     ; break ;;
+            d)  words[$arg]=describe  ; break ;;
+            e)  words[$arg]=edit      ; break ;;
+            g)  words[$arg]=get       ; break ;;
+            l)  words[$arg]=logs      ; break ;;
+            rm) words[$arg]=delete    ; break ;;
+            sh) words[$arg]=exec      ; break ;;
         esac
         ((arg++))
     done

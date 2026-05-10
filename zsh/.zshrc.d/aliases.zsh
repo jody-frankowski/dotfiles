@@ -100,8 +100,8 @@ alias scu='systemctl --user'
 
 # ls
 alias ls='lsd --group-directories-first'
-alias l='ls -l'
-alias la='l -a'
+alias l='ls -hl'
+alias la='l -A'
 alias lat='la -t'
 alias latr='lat -r'
 

@@ -379,9 +379,6 @@ if ./base/.usr/bin/_onmacos ; then
         symlink "${dir}"
     done
 
-    ### Services
-    # Start and enable
-    brew services start atuin syncthing >/dev/null
 
     echo Some macOS settings require a logout\! >&2
 fi

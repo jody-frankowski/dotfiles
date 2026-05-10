@@ -45,7 +45,8 @@ ignored_commands = [
   "l", "la", "ls",
 ]
 
-[daemon] # Start with `atuin daemon`
+[daemon]
+autostart = true
 enabled = true
 
 [search]

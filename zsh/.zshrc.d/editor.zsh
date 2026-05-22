@@ -194,6 +194,7 @@ typeset -A COMMAND_REWRITE_TABLE=(
   bwre brew
   gti  git
   sl   ls
+  tdlr tldr
 )
 COMMAND_SEPARATORS=('|' '||' '&&' ';')
 command_rewrite_on_space() {

@@ -92,33 +92,46 @@ chpwd () {
     timeout 0.1 lsd --color=auto --group-directories-first -h
 }
 
-# Search the command in available packages and if found install the package
-# and retry to execute the command. Note that this function will be executed
-# in a subshell so `rehash` won't have any effect on the calling shell.
-command_not_found_handler() {
+
+_cmd-related-packages () {
     local pkgs=()
+
+    type brew   >/dev/null && pkgs=($(command brew which-formula "$1"))
+    type pacman >/dev/null && pkgs=($(pkgfile -b -- "$1"))
+
+    printf '%s\n' $pkgs
+}
+_install-if-found () {
+    local -r cmd=$1
+
+    local -r pkgs=($(_cmd-related-packages "$cmd"))
+    if (( ${#pkgs} == 0 )); then
+        echo "No such command or package found!" >&2
+        return 1
+    fi
+    echo "Package(s) found: $pkgs\nInstalling $pkgs[1] ..." >&2
+
     local install_cmd=()
-    if type pacman > /dev/null; then
-       pkgs=($(pkgfile -b -- "$1"))
-       install_cmd=(sudo pacman -S)
-    fi
-    if type brew > /dev/null; then
-        pkgs=($(brew which-formula "$1"))
-        install_cmd=(brew install)
+    type brew   >/dev/null && install_cmd=(command brew install)
+    type pacman >/dev/null && install_cmd=(sudo pacman -S --noconfirm)
+
+    if ! output=$($install_cmd $pkgs[1] 2>&1); then
+        echo Failed to install package:
+        echo $output >&2
+        return 1
     fi
 
-    if [[ -z "$pkgs" ]]; then
-        echo Command or package not found: $1 >&2
-        return 127
-    fi
+    echo Done >&2
+}
+# Search the command binary in available packages and if found, install the package and execute the
+# original command. Note that this function executes in a subshell so `rehash` won't have any effect
+# on the calling shell.
+command_not_found_handler () {
+    _install-if-found "$1" || return 1
 
-    echo "Package found! Installing ${pkgs[1]}:\n" >&2
-
-    if ${install_cmd[@]} ${pkgs[1]} >&2; then
-        echo "\nExecuting $@" >&2
-        "$@"
-        return $?
-    fi
+    echo "Executing '$*':" >&2
+    sleep 1
+    "$@"
 }
 ###
 

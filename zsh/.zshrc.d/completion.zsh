@@ -149,60 +149,47 @@ for bin (cpv cpvr cpvs mvv mvvr mvvs) compdef $bin=rsync
 # Use the proper completion function for overridden binaries
 for bin (date dircolors du head rm sort timeout) compdef _uu-$bin $bin
 
-# lazyload aws completion
-_load_aws_completion () {
+# Lazyload completions for some rarely used tools which may slow the shell startup time
+_lazyload_completion () {
+    local cmd=$words[1]
+
+    if ! type $cmd >/dev/null; then
+        local -r pkgs=($(_cmd-related-packages $cmd))
+        if (( ${#pkgs} == 0 )); then
+            return 1
+        fi
+        zle -M "Package(s) found: $pkgs"$'\n'"Installing $pkgs[1] ..."
+
+        if ! output=$(_install-if-found $cmd 2>&1); then
+            zle -M $'Failed to install package:\n'"$output"
+            return 1
+        fi
+    fi
+
+    rehash
+    source <($cmd completion zsh)
+    _main_complete
+}
+# Even if some of the following packages include a completion file, defining their completion like
+# so will let us complete commands that have just been installed with Zsh's
+# command_not_found_handler.
+for comp (devbox helm kubectl minikube podman) compdef _lazyload_completion $comp
+
+## Cloud Tools
+_ll_aws () {
     complete -C aws_completer aws
     _main_complete
 }
-compdef _load_aws_completion aws
-
-# lazyload docker completion
-_load_docker_completion () {
-    source <(docker completion zsh)
-    _main_complete
-}
-compdef _load_docker_completion docker
-
-# lazyload gcloud completion
-_load_gcloud_completion () {
-    _onmacos \
-        && source ${BREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc \
+compdef _ll_aws aws
+_ll_gcloud () {
+    _onmacos && source ${BREW_PREFIX}/share/google-cloud-sdk/completion.zsh.inc \
         || source /opt/google-cloud-cli/completion.zsh.inc
     _main_complete
 }
-compdef _load_gcloud_completion gcloud
-
-# lazyload helm completion
-_load_helm_completion () {
-    source <(helm completion zsh)
-    _main_complete
-}
-compdef _load_helm_completion helm
-
-# lazyload kubectl completion
-_load_kubectl_completion () {
-    source <(kubectl completion zsh)
-    _main_complete
-}
-compdef _load_kubectl_completion kubectl
-
-# lazyload minikube completion
-_load_minikube_completion () {
-    source <(minikube completion zsh)
-    _main_complete
-}
-compdef _load_minikube_completion minikube
-
-# lazyload podman completion
-_load_podman_completion () {
-    source <(podman completion zsh)
-    _main_complete
-}
-compdef _load_podman_completion podman
-
-# lazyload vault completion
-_load_vault_completion () {
+compdef _ll_gcloud gcloud
+compdef _ll_gcloud gsutil
+_ll_vault () {
     complete -o nospace -C vault vault
     _main_complete
 }
-compdef _load_vault_completion vault
+compdef _ll_vault vault

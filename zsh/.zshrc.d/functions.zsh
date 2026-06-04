@@ -248,7 +248,7 @@ forward-port () {
 }
 
 f () {
-    local path_to_search=.
+    local path_to_search=(.)
     local patterns=()
     local options=()
 
@@ -257,7 +257,10 @@ f () {
         return 1
     }
 
-    [[ -d "$1" ]] && { path_to_search="$1"; shift }
+    [[ -d $1 ]] && {
+        path_to_search=()
+        while [[ -d $1 ]] { path_to_search+=(--search-path $1); shift }
+    }
 
     while [[ $# -gt 0 && $1 != -* ]]; do
         patterns+=(--and "$1")
@@ -274,11 +277,11 @@ f () {
         shift
     done
 
-    fd --search-path "${path_to_search}" "${patterns[@]}" "${options[@]}"
+    fd $path_to_search $patterns $options
 }
 g () {
     local ug_bin=ugrep
-    local input=.
+    local input=(.)
     local patterns=()
     local options=(--decompress)
     # -j can't override -i, so we inject only the required one at the end
@@ -290,9 +293,10 @@ g () {
     [[ $# -eq 0 || $1 == -h || $1 == --help ]] && { usage; return 1 }
 
     if [[ ! -t 0 ]]; then
-        input=-
-    elif [[ -e "$1" ]]; then
-        input=$1; shift
+        input=(-)
+    elif [[ -e $1 ]]; then
+        input=()
+        while [[ -e $1 ]] { input+=($1); shift }
     fi
     [[ "${input}" == - ]] &&
         options+=(--binary-files=with-hex)
@@ -328,7 +332,7 @@ g () {
 
     options+=("${option_case}")
 
-    "${ug_bin}" "${options[@]}" -% "${patterns[*]}" "${input}"
+    $ug_bin $options -% "${patterns[*]}" -- $input
 }
 _f() {
     _files && return 0

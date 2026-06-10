@@ -9,12 +9,12 @@ bak () {
 
 if _onmacos; then
 brew () {
+    case $1 in
+        i) shift; brew install "$@"; rehash; return;;
+        s) shift; brew search  "$@"; return;;
+    esac
     if [[ $1 == up ]]; then
-        brew update
-        brew outdated
-        p Enter To Continue. C-c To Abort.
-        read
-        brew upgrade
+        HOMEBREW_NO_AUTO_UPDATE= brew upgrade --ask
         return
     fi
     command brew "$@"

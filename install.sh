@@ -105,6 +105,7 @@ if ./base/.usr/bin/_onmacos ; then
         iterm2
         karabiner-elements
         lulu
+        oversight
         rectangle
         stats
         visual-studio-code

@@ -6,6 +6,10 @@
 #
 # Debug completion with `C-x ?`
 
+#
+# Setup
+#
+
 if _onmacos; then
     fpath=(
         ${BREW_PREFIX}/share/zsh-completions

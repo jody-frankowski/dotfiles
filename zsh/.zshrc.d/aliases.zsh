@@ -158,6 +158,13 @@ alias gst='gi status -sb'
 alias gsu='gi submodule'
 alias gsuu='gsu update'
 
+# https://piechowski.io/post/git-commands-before-reading-code/
+alias git-bugs='git log -i -E --grep="fix|bug|broken" --name-only --format="" | sort | uniq -c | sort -nr | head -20'
+alias git-emergencies='git log --oneline --since="1 year ago" | grep -iE "revert|hotfix|emergency|rollback"'
+alias git-velocity='git log --format='%ad' --date=format:"%Y-%m" | sort | uniq -c'
+alias git-where='git log --format=format: --name-only --since="1 year ago" | sort | uniq -c | sort -nr | head -20'
+alias git-who='git shortlog -sn --no-merges'
+
 # Pacman
 alias pac='pacman'
 alias pacqi='pacman -Qi'

@@ -32,13 +32,12 @@ unset _comp_files
 # Options
 #
 
-setopt ALWAYS_TO_END       # Move cursor to the end of a completed word.
-setopt AUTO_LIST           # Automatically list choices on ambiguous completion.
-setopt AUTO_MENU           # Show completion menu on a successive tab press.
-setopt COMPLETE_IN_WORD    # Complete from both ends of a word.
-unsetopt FLOW_CONTROL      # Disable start/stop characters in shell editor.
-unsetopt MENU_COMPLETE     # Do not autoselect the first completion entry.
-setopt PATH_DIRS           # Perform path search even on command names with slashes.
+setopt   ALWAYS_TO_END    # Move cursor to the end of a completed word
+setopt   AUTO_LIST        # Automatically list choices on ambiguous completion
+setopt   COMPLETE_IN_WORD # Complete from both ends of a word
+setopt   PATH_DIRS        # Perform path search even on command names with slashes
+unsetopt FLOW_CONTROL     # Disable flow control (C-s/C-q) keybindings
+unsetopt MENU_COMPLETE    # Do not autoselect the first completion entry
 
 #
 # Styles

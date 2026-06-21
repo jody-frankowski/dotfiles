@@ -1,7 +1,5 @@
 # -*- mode: sh -*-
 
-# Adapted from https://github.com/sorin-ionescu/prezto/blob/master/modules/completion/init.zsh
-
 # Show a cmd/function completion with `echo $_comps[CMD]`
 #
 # Debug completion with `C-x ?`
@@ -96,10 +94,6 @@ zstyle ':completion:*:history-words' menu yes
 
 # Environment Variables
 zstyle ':completion::*:(-command-|export):*' fake-parameters ${${${_comps[(I)-value-*]#*,}%%,*}:#-*-}
-
-# Populate hostname completion. But allow ignoring custom entries from static
-# */etc/hosts* which might be uninteresting.
-zstyle -a ':prezto:module:completion:*:hosts' etc-host-ignores '_etc_host_ignores'
 
 zstyle -e ':completion:*:hosts' hosts 'reply=(
   ${=${=${=${${(f)"$(cat {/etc/ssh/ssh_,~/.ssh/}known_hosts(|2)(N) 2> /dev/null)"}%%[#| ]*}//\]:[0-9]*/ }//,/ }//\[/ }

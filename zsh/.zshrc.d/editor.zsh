@@ -1,7 +1,6 @@
 # -*- mode: sh -*-
 
 ### Zsh line editor config
-# Adapted from https://github.com/sorin-ionescu/prezto/blob/master/modules/editor/init.zsh
 
 # https://en.wikipedia.org/wiki/ANSI_escape_code#C0_control_codes
 # ^[ is Escape

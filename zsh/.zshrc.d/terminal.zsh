@@ -1,7 +1,6 @@
 # -*- mode: sh -*-
 
 ### Terminal window title
-# Apdapted from https://github.com/sorin-ionescu/prezto/blob/master/modules/terminal/init.zsh
 
 # Return if requirements are not found.
 if [[ "$TERM" == (dumb|linux|*bsd*|eterm*) ]]; then

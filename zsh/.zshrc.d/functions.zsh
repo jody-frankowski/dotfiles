@@ -446,7 +446,6 @@ _git-branch-current () {
     fi
 }
 
-# cat ~/.zsh/repos/*prezto*/modules/git/...
 git-browse () {
     if ! git rev-parse --is-inside-work-tree &> /dev/null ; then
         print "$0: not a repository work tree: $PWD" >&2

@@ -17,7 +17,6 @@ unsetopt CLOBBER       # Use >! to force overwriting existing files
 setopt   APPEND_CREATE # Let >> create non-existing files
 
 # History options
-# https://github.com/sorin-ionescu/prezto/blob/master/modules/history/init.zsh
 HISTFILE="${ZDOTDIR:-$HOME}/.zhistory"       # The path to the history file.
 HISTSIZE=10000                   # The maximum number of events to save in the internal history.
 SAVEHIST=10000                   # The maximum number of events to save in the history file.
@@ -33,7 +32,6 @@ setopt HIST_SAVE_NO_DUPS         # Do not write a duplicate event to the history
 setopt HIST_VERIFY               # Do not execute immediately upon history expansion.
 setopt SHARE_HISTORY             # Share history between all sessions.
 
-# https://github.com/sorin-ionescu/prezto/blob/master/modules/environment/init.zsh
 # Smart urls quoting
 autoload -Uz url-quote-magic
 zle -N self-insert url-quote-magic

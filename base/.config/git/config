@@ -1,0 +1,36 @@
+[core]
+	pager = less -F # Don't page if the output is shorter than the terminal height
+[init]
+	defaultBranch = main
+[pull]
+	rebase = true
+[push]
+	default = simple
+	autoSetupRemote = true
+[rebase]
+	autoStash = true
+[rerere]
+	enabled = true
+[magithub]
+	online = false
+[magithub "status"]
+	includeStatusHeader = false
+	includePullRequestsSection = false
+	includeIssuesSection = false
+[pager]
+	stash = false
+[mailmap]
+	file = ~/.config/git/mailmap
+[diff]
+	noPrefix = true
+[color "diff"]
+	old = bold red
+	new = bold green
+[include]
+	path = ~/.config/git/config-private
+[includeIf "gitdir:~/Dev/**"]
+	path = ~/Dev/.gitconfig
+[includeIf "gitdir:~/Dev/me/**"]
+	path = ~/Dev/me/.gitconfig
+[includeIf "gitdir:~/Dev/work/**"]
+	path = ~/Dev/work/.gitconfig

@@ -15,18 +15,19 @@ if _onmacos; then
 fi
 fpath=(~/.zshrc.d/completion $fpath)
 
-# Load and initialize the bash and zsh completion system ignoring
-# insecure directories with a cache time of 24 hours, so it should
-# almost always regenerate the first time a shell is opened each day.
-autoload -Uz bashcompinit compinit
-_comp_files=(${ZDOTDIR:-$HOME}/.zcompdump(Nm-24))
-if (( $#_comp_files )); then
-  compinit -i -C
-else
-  compinit -i
-fi
+# Setup the zsh completion system and the bash compatiblity functions.
+autoload -Uz compinit bashcompinit
+# Cache completions for 24 hours to speed up shell startup
+_comp_dump=~/.zcompdump
+[[ -n ${_comp_dump}(#qNm-24) ]] && compinit -i -C -d ${_comp_dump} \
+                                || compinit -i    -d ${_comp_dump}
+[[ ! -s ${_comp_dump}.zwc || ${_comp_dump} -nt ${_comp_dump}.zwc ]] && \
+    zcompile -R -- ${_comp_dump}.zwc ${_comp_dump}
+unset _comp_dump
 bashcompinit
-unset _comp_files
+
+# Enable `~/.zcompcache` completion directory cache
+zstyle ':completion:*' use-cache on
 
 #
 # Options
@@ -42,10 +43,6 @@ unsetopt MENU_COMPLETE    # Do not autoselect the first completion entry
 #
 # Styles
 #
-
-# Use caching to make completion for commands such as dpkg and apt usable.
-zstyle ':completion::complete:*' use-cache on
-zstyle ':completion::complete:*' cache-path "${ZDOTDIR:-$HOME}/.zcompcache"
 
 # Case-insensitive (all), partial-word, and then substring completion.
 zstyle ':completion:*' matcher-list 'm:{a-zA-Z}={A-Za-z}' 'r:|[._-]=* r:|=*' 'l:|=* r:|=*'

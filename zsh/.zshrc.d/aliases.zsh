@@ -113,6 +113,7 @@ alias psmem='ps auxf | sort -n -k 4'
 # Editors
 alias e='emacsclient -a "" --tty'
 alias v=nvim
+_onlinux && alias hx=helix
 
 # Safer commands
 alias cp='cp -i'

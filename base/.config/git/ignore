@@ -119,20 +119,18 @@ flycheck_*.el
 ### Go ###
 # Binaries for programs and plugins
 *.exe~
-
 # Test binary, built with `go test -c`
 *.test
-
-# Output of the go coverage tool, specifically when used with LiteIDE
+# Zed debug binaries
+__debug_bin*
+# Misc
+/vendor/
+/Godeps/
 
 ### GNU GLOBAL ###
 GPATH
 GRTAGS
 GTAGS
-
-### Go Patch ###
-/vendor/
-/Godeps/
 
 ### macOS ###
 .DS_Store

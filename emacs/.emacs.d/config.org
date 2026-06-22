@@ -1,5 +1,7 @@
 * Helpers
 
+** =csetq=
+
 Add a =csetq= macro that calls the appropriate function to set a variable (the
 custom-set one, set-default, or just set). This should be safer than using
 =setq= because a variable may get "customized" later on. (Don't forget that
@@ -17,6 +19,21 @@ https://lists.gnu.org/archive/html/help-gnu-emacs/2015-12/msg00097.html
                                    'standard-value) 'set-default)
                 'set)
             ',variable ,value))
+#+END_SRC
+
+** Keybindings
+
+Install General, which is used to set keybindings:
+
+#+BEGIN_SRC emacs-lisp
+(use-package general)
+#+END_SRC
+
+Tell general to automatically unbind *prefix* keys that conflict
+(https://github.com/noctuid/general.el#automatic-key-unbinding):
+
+#+BEGIN_SRC emacs-lisp
+(general-auto-unbind-keys)
 #+END_SRC
 
 * Auto Pairs
@@ -1143,19 +1160,6 @@ yasnippet to abort in the default configuration:
 #+END_SRC
 
 * Keybindings
-
-Install General:
-
-#+BEGIN_SRC emacs-lisp
-(use-package general)
-#+END_SRC
-
-Tell general to automatically unbind *prefix* keys that conflict
-(https://github.com/noctuid/general.el#automatic-key-unbinding):
-
-#+BEGIN_SRC emacs-lisp
-(general-auto-unbind-keys)
-#+END_SRC
 
 Misc keybindings with General:
 

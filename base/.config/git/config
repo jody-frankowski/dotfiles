@@ -36,6 +36,7 @@
   f  = fetch --all --prune --tags
   l  = pull --tags
   p  = push --follow-tags # Only push annotated tags
+  pf = p --force-with-lease
   r  = remote
   rv = r -v
   sh = show
@@ -49,6 +50,10 @@
   lo  = log    --abbrev=6 --date='format:%y-%m-%d' --format=format:'%C(bold blue)%h%C(reset) %C(bold green)%ad%C(reset) %C(blue)%aN%C(reset) %C(white)%s%C(reset) %C(auto)%(decorate:pointer=->,prefix=,suffix=,tag=,separator= )%C(reset)'
   lop = log -p --abbrev=6 --date='format:%y-%m-%d' --format=format:'%C(bold blue)%h%C(reset) %C(bold green)%ad%C(reset) %C(blue)%aN%C(reset) %C(auto)%(decorate:pointer=->,prefix=,suffix=,tag=,separator= )%C(reset)%n%B'
   loa = lo --all --graph
+  lot = log --tags --no-walk --abbrev=6 --date='format:%y-%m-%d' --format=format:'%C(bold blue)%h%C(reset) %C(bold green)%ad%C(reset) %C(blue)%aN%C(reset) %C(auto)%(decorate:pointer=->,prefix=,suffix=,tag=,separator= )%C(reset) %C(white)%s%C(reset)'
+
+  o   = !zsh -ic git-open
+  pur = !zsh -ic git-pull-r
 
   s   = stash
   sa  = s apply --index

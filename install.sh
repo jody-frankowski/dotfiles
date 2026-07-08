@@ -108,7 +108,6 @@ if ./base/.usr/bin/_onmacos ; then
         oversight
         rectangle
         stats
-        visual-studio-code
         vlc
     )
     for cask in "${casks[@]}" ; do

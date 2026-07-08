@@ -99,7 +99,7 @@ if ./base/.usr/bin/_onmacos ; then
 
     casks=(
         firefox
-        font-sauce-code-pro-nerd-font
+        font-adwaita-mono-nerd-font
         google-chrome
         iina
         iterm2

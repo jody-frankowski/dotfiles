@@ -52,6 +52,7 @@ if ./base/.usr/bin/_onmacos ; then
         curl
         devbox
         dfc
+        docker
         editorconfig
         emacs
         fd

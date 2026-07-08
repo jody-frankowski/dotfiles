@@ -228,9 +228,6 @@ if ./base/.usr/bin/_onmacos ; then
     ## Key repeat rate: Fast
     defaults write "Apple Global Domain" KeyRepeat 2
     ## Keyboard Shortcuts
-    # App Shortcuts: Always paste with current style (disregard source style) with ⌘+v
-    for shortcut ("Paste and Match Formatting" "Paste and Match Style" "Paste as Plain Text")
-        defaults write -g NSUserKeyEquivalents -dict-add "${shortcut}" "@v"
     # Disable some keybindings
     keybindings=(
         # Input Sources: `Select the previous/next input source` (C-Space)

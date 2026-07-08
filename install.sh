@@ -228,6 +228,9 @@ if ./base/.usr/bin/_onmacos ; then
     ## Key repeat rate: Fast
     defaults write "Apple Global Domain" KeyRepeat 2
     ## Keyboard Shortcuts
+    # App Shortcuts: Remap all the `Minimize Window` shortcuts from `⌘m` to `⌥⇧⌘m`
+    for shortcut ("Minimise" "Minimise All" "Minimise Window" "Minimize" "Minimize Window")
+        defaults write -g NSUserKeyEquivalents -dict-add "${shortcut}" "~\$@m"
     # Disable some keybindings
     keybindings=(
         # Input Sources: `Select the previous/next input source` (C-Space)

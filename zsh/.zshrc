@@ -81,16 +81,6 @@ autoload -Uz add-zsh-hook
 typeset -gU cdpath fpath mailpath path
 
 ### Hooks
-# Auto ls when cd
-chpwd () {
-    # Make sure we are not in anything else than in a top-level shell call
-    [[ -t 1 && $ZSH_EVAL_CONTEXT == toplevel:shfunc ]] || return 0
-    # Set a small timeout to drastically reduce waiting time when cding in large or remote and slow
-    # directories
-    timeout 0.1 lsd --color=auto --group-directories-first -h
-}
-
-
 _cmd-related-packages () {
     local pkgs=()
 
@@ -139,6 +129,33 @@ eval "$(atuin init zsh --disable-up-arrow)"
 # Prompt
 export STARSHIP_LOG=error
 eval "$(starship init zsh)"
+
+### cd/zoxide
+# Inject zoxide into `cd`
+eval "$(zoxide init zsh --cmd cd)"
+
+# Pick and cd into directory with `C-o`
+zoxide_fzf () {
+    local dir
+    dir=$(zoxide query --list | sed "s#^$HOME#~#" | fzf | sed 's/ /\\ /g')
+    [[ -z $dir ]] && return
+
+    BUFFER="cd ${dir}"
+    zle accept-line
+}
+zle -N zoxide_fzf
+bindkey '^o' zoxide_fzf
+
+# List directory content when cd-ing into it
+chpwd () {
+    # # Make sure we are not in anything else than in a top-level shell call
+    # [[ -t 1 && $ZSH_EVAL_CONTEXT == toplevel:shfunc ]] || return 0
+
+    # Set a small timeout to drastically reduce waiting time when cding in large or remote and slow
+    # directories
+    timeout 0.1 lsd --color=auto --group-directories-first -h
+}
+###
 
 # Loads aliases, functions , the prompt theme and others
 for script in ~/.zshrc.d/*.zsh ; do

@@ -50,7 +50,6 @@ if ./base/.usr/bin/_onmacos ; then
         borgbackup
         # Mainly for the zsh completion
         curl
-        devbox
         dfc
         docker
         editorconfig

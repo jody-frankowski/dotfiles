@@ -1866,6 +1866,98 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
+		<key>0x21-0x120000-0x12</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>!</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x28-0x120000-0x19</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>(</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x29-0x120000-0x1d</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>)</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x2a-0x120000-0x1c</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>*</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x2c-0x100000-0x2b</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>,</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x2c-0x80000-0x2b</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>Settings…
+Preferences...</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x2d-0x100000-0x1b</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>-</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
 		<key>0x2e-0x100000-0x2f</key>
 		<dict>
 			<key>Action</key>
@@ -1905,6 +1997,58 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
+		<key>0x3b-0x100000-0x29</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>;</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x41-0x120000-0x0</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>A</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x42-0x120000-0xb</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>B</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x43-0x120000-0x8</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>C</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
 		<key>0x44-0x120000-0x2</key>
 		<dict>
 			<key>Action</key>
@@ -1915,6 +2059,45 @@
 			<integer>2</integer>
 			<key>Text</key>
 			<string>D</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x45-0x120000-0xe</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>E</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x46-0x120000-0x3</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>F</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x47-0x120000-0x5</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>G</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
@@ -1931,6 +2114,45 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
+		<key>0x49-0x120000-0x22</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>I</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x4a-0x120000-0x26</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>J</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x4b-0x120000-0x28</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>K</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
 		<key>0x4c-0x120000-0x25</key>
 		<dict>
 			<key>Action</key>
@@ -1941,6 +2163,71 @@
 			<integer>2</integer>
 			<key>Text</key>
 			<string>L</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x4d-0x120000-0x2e</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>M</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x4e-0x120000-0x2d</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>N</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x4f-0x120000-0x1f</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>O</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x50-0x120000-0x23</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>P</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x52-0x120000-0xf</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>R</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
@@ -1970,6 +2257,110 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
+		<key>0x55-0x120000-0x20</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>U</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x56-0x120000-0x9</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>V</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x57-0x120000-0xd</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>W</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x58-0x120000-0x7</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>X</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x59-0x120000-0x10</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>Y</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x5a-0x120000-0x6</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>Z</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x5f-0x120000-0x1b</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>_</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x61-0x100000-0x0</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>a</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
 		<key>0x62-0x100000-0xb</key>
 		<dict>
 			<key>Action</key>
@@ -1983,6 +2374,32 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
+		<key>0x64-0x100000-0x2</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>d</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x65-0x100000-0xe</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>e</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
 		<key>0x66-0x100000-0x3</key>
 		<dict>
 			<key>Action</key>
@@ -1993,6 +2410,19 @@
 			<integer>2</integer>
 			<key>Text</key>
 			<string>f</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x67-0x100000-0x5</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>g</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
@@ -2061,6 +2491,71 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
+		<key>0x6d-0x100000-0x2e</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>m</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x6e-0x100000-0x2d</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>n</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x6f-0x100000-0x1f</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>o</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x70-0x100000-0x23</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>p</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x72-0x100000-0xf</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>r</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
 		<key>0x73-0x100000-0x1</key>
 		<dict>
 			<key>Action</key>
@@ -2087,6 +2582,45 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
+		<key>0x75-0x100000-0x20</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>u</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x77-0x100000-0xd</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>w</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x78-0x100000-0x7</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>x</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
 		<key>0x79-0x100000-0x10</key>
 		<dict>
 			<key>Action</key>
@@ -2097,6 +2631,32 @@
 			<integer>2</integer>
 			<key>Text</key>
 			<string>y</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x7a-0x100000-0x6</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>z</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x7c-0x120000-0x2a</key>
+		<dict>
+			<key>Action</key>
+			<integer>10</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>|</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
@@ -2126,7 +2686,7 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0xd-0x40000-0x24</key>
+		<key>0xd-0x100000-0x24</key>
 		<dict>
 			<key>Action</key>
 			<integer>11</integer>

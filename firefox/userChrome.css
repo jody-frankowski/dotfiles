@@ -1,0 +1,108 @@
+/*
+ * Requires the following in user.js:
+ * // Enable userChrome.css/userContent.css support
+ * user_pref("toolkit.legacyUserProfileCustomizations.stylesheets", true);
+ * // Turns off native macOS context menus so Firefox uses its own menus (removes "Services")
+ * user_pref("widget.macos.native-context-menus", false);
+*/
+
+/* Hide horizontal top of window tabs except for Private Browsing Mode windows */
+#main-window {
+  #sidebar-main,
+  #customizableui-special-spring1,
+  #customizableui-special-spring2 {
+    visibility: collapse;
+  }
+
+  /* Hides horizontal tabs */
+  &:not([privatebrowsingmode]) {
+    #TabsToolbar {
+      visibility: collapse;
+    }
+  }
+}
+
+
+/* Context Menu */
+#context-back, /* Back */
+#context-forward, /* Forward */
+#context-reload, /* Reload */
+#context-savepage, /* Save Page As... */
+#context-stop, /* Stop */
+#context-viewsource, /* View Page Source */
+#frame-sep, /* Between `Search ...` & `Inspect` */
+#context-sep-navigation,
+#context-sep-sendpagetodevice, /* Between `Inspect` & `Send to Mobile` */
+#context-media-eme-separator, /* Below `Send to Mobile` */
+/* Context Menu: Links */
+#context-openlink, /* Open Link in New Window */
+#context-sep-open, /* Below Open Link in ... */
+#context-bookmarklink, /* Bookmark Link… */
+#context-bookmarkpage, /* Bookmark Page... */
+#context-sep-copylink, /* Below Copy Link */
+#context-sep-sendlinktodevice, /* Below `Send Link to Mobile` */
+/* Context Menu: Audio/Image/Video */
+#context-sendaudio, /* Email Audio... */
+#context-sendimage, /* Email Image... */
+#context-sendvideo, /* Email Video... */
+#context-setDesktopBackground, /* Set Image as Desktop Background… */
+#context-sep-setbackground,
+#context-sep-sharing, /* Between `Set Image...` & `Bookmark Page` */
+/* Context Menu: Text Selection */
+#context-sep-redo, /* Between `Redo` & `Cut` */
+#context-copy, /* Copy */
+#context-selectall, /* Select All */
+#context-print-selection, /* Print Selection */
+#context-viewpartialsource-selection, /* View Selection Source */
+#context-sep-selectall,
+#context-sep-highlights,
+#spell-separator, /* Between `This Frame` & `Check Spelling` */
+#context-sep-bidi, /* Between `Check Spelling` & `Inspect` */
+/* Context Menu: Downloads */
+#downloadsContextMenu > menuseparator
+{
+  display: none !important;
+}
+/* Needs to always be shown, regardless of the context menu separators showing algorithms */
+/* https://searchfox.org/firefox-main/rev/3ed11452652b84dea6d27db877a401a146e44ba3/browser/base/content/nsContextMenu.sys.mjs#1318 */
+#context-media-eme-learnmore + menuseparator /* Below `Send to Mobile` */
+{
+  display: initial !important;
+}
+
+
+/* Copy Link always copies a clean link if possible */
+/* https://joshua.hu/firefox-always-copy-clean-link-url-userchrome-css */
+#context-stripOnShareLink[disabled],
+#context-stripOnShareLink[hidden],
+#context-copylink[hidden],
+#context-copy-clean-link-to-highlight[disabled],
+#context-copy-clean-link-to-highlight[hidden],
+#context-copy-link-to-highlight[hidden]
+{
+  display: none !important;
+}
+#contentAreaContextMenu:has(#context-stripOnShareLink:not([disabled]):not([hidden])) #context-copylink,
+#contentAreaContextMenu:has(#context-copy-clean-link-to-highlight:not([disabled]):not([hidden])) #context-copy-link-to-highlight
+{
+  display: none !important;
+}
+#context-copylink .menu-text,
+#context-stripOnShareLink .menu-text,
+#context-copy-link-to-highlight .menu-text,
+#context-copy-clean-link-to-highlight .menu-text
+{
+  visibility: collapse !important;
+}
+#context-copylink::after,
+#context-stripOnShareLink::after
+{
+  content: "Copy Link" !important;
+  display: -moz-box !important;
+}
+#context-copy-link-to-highlight::after,
+#context-copy-clean-link-to-highlight::after
+{
+  content: "Copy Link to Highlight" !important;
+  display: -moz-box !important;
+}

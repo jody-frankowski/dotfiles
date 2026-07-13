@@ -156,6 +156,13 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write com.apple.finder NewWindowTarget PfHm
     killall Finder || true
 
+    ### Firefox
+    for profile in ~/Library/Application\ Support/Firefox/Profiles/*; do
+        mkdir $profile/chrome
+        ln -s "$(realpath ./firefox/userChrome.css)" $profile/chrome
+        ln -s "$(realpath ./firefox/user.js)"        $profile/
+    done
+
     ### Preview
     # Disable named annotations
     defaults write com.apple.preview PVGeneralUseUserName -bool false

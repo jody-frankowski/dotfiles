@@ -23,9 +23,16 @@ workspaces = true # Enable git workspaces history
 [ai]
 enabled = false
 
+[daemon]
+autostart = true
+enabled = true
+
 [keymap.emacs]
 "alt-backspace" = "delete-word-before"
 "ctrl-a" = "cursor-start"
+
+[search]
+filters = [ "global", "workspace", "directory", "host", "session"]
 
 [stats]
 common_prefix = ["sudo"]
@@ -47,13 +54,6 @@ ignored_commands = [
   "e", "v",
   "l", "la", "ls",
 ]
-
-[daemon]
-autostart = true
-enabled = true
-
-[search]
-filters = [ "global", "workspace", "directory", "host", "session"]
 
 [sync]
 records = true # Sync v2

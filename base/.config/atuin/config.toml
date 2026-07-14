@@ -20,6 +20,9 @@ workspaces = true # Enable git workspaces history
 #   "^innocuous-cmd .*--secret=.+",
 # ]
 
+[ai]
+enabled = false
+
 [keymap.emacs]
 "alt-backspace" = "delete-word-before"
 "ctrl-a" = "cursor-start"

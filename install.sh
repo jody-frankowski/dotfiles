@@ -294,6 +294,17 @@ if ./base/.usr/bin/_onmacos ; then
     ### Terminal.app
     # Use Option as Meta key
     /usr/libexec/PlistBuddy -c 'Set :"Window Settings":Basic:useOptionAsMetaKey 1' ~/Library/Preferences/com.apple.Terminal.plist
+    # Theme
+    defaults write com.apple.Terminal "Default Window Settings" Basic
+    defaults write com.apple.Terminal "Startup Window Settings" Basic
+    # Delete all the other themes
+    plist="$HOME/Library/Preferences/com.apple.Terminal.plist"
+    backup="/tmp/terminal-basic.plist"
+    plutil -extract "Window Settings.Basic" xml1 -o "$backup" "$plist"
+    plutil -remove "Window Settings" "$plist"
+    /usr/libexec/PlistBuddy -c "Add :'Window Settings' dict"            "$plist"
+    /usr/libexec/PlistBuddy -c "Add :'Window Settings':Basic dict"      "$plist"
+    /usr/libexec/PlistBuddy -c "Merge $backup :'Window Settings':Basic" "$plist"
 
     ### Rectangle
     # Hide menu bar icon

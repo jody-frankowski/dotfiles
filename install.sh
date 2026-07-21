@@ -87,6 +87,7 @@ if ./base/.usr/bin/_onmacos ; then
         uv # Modern Python package manager
         wget
         yq
+        zoxide
         zsh-completions
 
         # Utils

@@ -163,3 +163,4 @@ alias urldecode='python3 -c "import sys, urllib.parse as up; print(up.unquote_pl
 # ls ~dev > ls ~/Dev
 export dev=~/Dev
 export dl=~/Downloads
+export las=~/Library/Application\ Support/

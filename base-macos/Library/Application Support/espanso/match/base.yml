@@ -1,0 +1,76 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/match.schema.json
+
+matches:
+  # Dates & Times
+  - trigger: ":8601"
+    replace: "{{datetime}}"
+    vars:
+      - name: datetime
+        type: date
+        params:
+          format: "%+"
+          tz: UTC
+  - trigger: ":date"
+    replace: "{{datetime}}"
+    vars:
+      - name: datetime
+        type: date
+        params:
+          format: "%F"
+  - trigger: ":time"
+    replace: "{{datetime}}"
+    vars:
+      - name: datetime
+        type: date
+        params:
+          format: "%Y-%m-%dT%H:%M:%S%:z"
+  - trigger: ":utc"
+    replace: "{{datetime}}"
+    vars:
+      - name: datetime
+        type: date
+        params:
+          format: "%Y-%m-%dT%H:%M:%SZ"
+          tz: UTC
+  - trigger: ":unix"
+    replace: "{{datetime}}"
+    vars:
+      - name: datetime
+        type: date
+        params:
+          format: "%s"
+
+  # Emoticons
+  - trigger: ":cat"
+    replace: "ฅ(^•ﻌ•^ฅ)"
+  - trigger: ":lenny"
+    replace: "( ͡° ͜ʖ ͡°)"
+  - trigger: ":shrug"
+    replace: "¯\\_(ツ)_/¯"
+  - trigger: ":smile"
+    replace: "ツ"
+  - trigger: ":wtf"
+    replace: "ಠ_ಠ"
+
+  # macOS
+  - trigger: ":command"
+    replace: "⌘"
+  - trigger: ":control"
+    replace: "⌃"
+  - trigger: ":option"
+    replace: "⌥"
+  - trigger: ":shift"
+    replace: "⇧"
+
+  # Regexes
+  - trigger: ":dou"  # Dash or underscore
+    replace: "(-|_)"
+
+  # Tech tools
+  - trigger: ":chg"
+    replace: "\"changed\": true"
+  - trigger: ":k8"
+    replace: "Kubernetes"
+  - trigger: ":tf"
+    replace: "Terraform"

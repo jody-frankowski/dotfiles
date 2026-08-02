@@ -1,0 +1,5 @@
+---
+# yaml-language-server: $schema=https://raw.githubusercontent.com/espanso/espanso/dev/schemas/config.schema.json
+
+show_icon: false
+toggle_key: CTRL

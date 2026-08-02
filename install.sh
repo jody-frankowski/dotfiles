@@ -54,6 +54,7 @@ if ./base/.usr/bin/_onmacos ; then
         docker
         editorconfig
         emacs
+        espanso
         fd
         fx
         fzf
@@ -248,30 +249,6 @@ if ./base/.usr/bin/_onmacos ; then
     for i ($keybindings) /usr/libexec/PlistBuddy -c \
           "Set AppleSymbolicHotKeys:${i}:enabled 0" \
           ~/Library/Preferences/com.apple.symbolichotkeys.plist
-    ## Text Input > Text Replacements
-    declare -A replacements
-    replacements=(
-        [---]="(-|_)"
-        [cmd]="⌘"
-        [shrug]="¯\\_(ツ)_/¯"
-    )
-    replacement_cmd=(
-        /usr/libexec/PlistBuddy -x
-        -c 'Delete :NSUserDictionaryReplacementItems'
-        -c 'Add :NSUserDictionaryReplacementItems array'
-    )
-    i=0
-    for src dst in ${(kv)replacements}; do
-        replacement_cmd+=(
-        -c 'Add :NSUserDictionaryReplacementItems: dict' \
-            -c "Add :NSUserDictionaryReplacementItems:${i}:on integer 1" \
-            -c "Add :NSUserDictionaryReplacementItems:${i}:replace string \"${src}\"" \
-            -c "Add :NSUserDictionaryReplacementItems:${i}:with string \"${dst}\"" \
-        )
-        (( i++ )) || true # `|| true` to avoid triggering `set -e`
-    done
-    replacement_cmd+=( ~/Library/Preferences/.GlobalPreferences.plist )
-    "${replacement_cmd[@]}"
     ## Input Sources > Disable `Add period with double-space`
     defaults write "Apple Global Domain" NSAutomaticPeriodSubstitutionEnabled -bool false
     ## Reload config

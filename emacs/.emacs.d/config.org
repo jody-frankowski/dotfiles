@@ -292,6 +292,13 @@ Install evil-numbers to make C-a and C-x among others work:
 Note that we don't set =evil-search-module= to =evil-search= because it's much
 slower than isearch.
 
+Make splits (=C-w s= & =C-w v=) focus the new window below or to the right:
+
+#+BEGIN_SRC emacs-lisp
+(csetq evil-split-window-below 'true)
+(csetq evil-vsplit-window-right 'true)
+#+END_SRC
+
 ** Alignment
 
 Enable motioned alignments with evil-lion:

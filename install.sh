@@ -403,9 +403,7 @@ if ./base/.usr/bin/_onmacos ; then
 fi
 
 # terminfo
-for terminfo in ~/.terminfo/*.terminfo ; do
-    tic -x "${terminfo}"
-done
+for term (~/.terminfo/*.terminfo) tic -x $term
 
 # Symlink the dotfiles
 for dir in base docker emacs idea js karabiner mpv nvim ssh tmux zed zsh; do

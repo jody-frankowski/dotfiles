@@ -70,6 +70,7 @@ alias info='info --vi-keys'
 alias ip='ip -c'
 alias lsof='lsof -nP' # Preserve network and port numbers
 alias mkdir='mkdir -pv'
+alias nix='nix --extra-experimental-features flakes --extra-experimental-features nix-command'
 alias nix-shell='nix-shell --run /bin/zsh'
 alias o='open'
 alias p='print'

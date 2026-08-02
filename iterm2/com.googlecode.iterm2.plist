@@ -1958,6 +1958,20 @@ Preferences...</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
+		<key>0x2d-0x80000-0x1b</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>Make Text Smaller
+Make Text Smaller</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
 		<key>0x2e-0x100000-0x2f</key>
 		<dict>
 			<key>Action</key>
@@ -1984,6 +1998,20 @@ Preferences...</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
+		<key>0x30-0x80000-0x1d</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>Make Text Normal Size
+Make Text Normal Size</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
 		<key>0x3a-0x120000-0x29</key>
 		<dict>
 			<key>Action</key>
@@ -2007,6 +2035,20 @@ Preferences...</string>
 			<integer>2</integer>
 			<key>Text</key>
 			<string>;</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
+		<key>0x3d-0x80000-0x18</key>
+		<dict>
+			<key>Action</key>
+			<integer>25</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>Make Text Bigger
+Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>

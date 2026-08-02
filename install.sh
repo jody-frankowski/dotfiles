@@ -231,9 +231,9 @@ if ./base/.usr/bin/_onmacos ; then
 
     ### Keyboard
     ## Delay until repeat: Short
-    defaults write "Apple Global Domain" InitialKeyRepeat 15
+    defaults write "Apple Global Domain" InitialKeyRepeat -int 15
     ## Key repeat rate: Fast
-    defaults write "Apple Global Domain" KeyRepeat 2
+    defaults write "Apple Global Domain" KeyRepeat -int 2
     ## Keyboard Shortcuts
     # App Shortcuts: Remap all the `Minimize Window` shortcuts from `⌘m` to `⌥⇧⌘m`
     for shortcut ("Minimise" "Minimise All" "Minimise Window" "Minimize" "Minimize Window")

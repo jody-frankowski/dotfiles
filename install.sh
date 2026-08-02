@@ -95,7 +95,7 @@ if ./base/.usr/bin/_onmacos ; then
         uutils-coreutils
     )
     for formula in "${formulae[@]}" ; do
-        [[ -d "${BREW_PREFIX}/opt/${formula}" ]] || brew install "${formula}"
+        [[ -d "${BREW_PREFIX}/opt/${formula}" ]] || brew install -y "${formula}"
     done
 
     casks=(
@@ -112,7 +112,7 @@ if ./base/.usr/bin/_onmacos ; then
         vlc
     )
     for cask in "${casks[@]}" ; do
-        [[ -d "${BREW_PREFIX}/Caskroom/${cask}" ]] || brew install --cask "${cask}"
+        [[ -d "${BREW_PREFIX}/Caskroom/${cask}" ]] || brew install -y --cask "${cask}"
     done
 
     # Make sure this folder exists before linking completion files

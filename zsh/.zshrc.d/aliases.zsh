@@ -80,6 +80,7 @@ alias puw='pu wait'
 # and that could lead to password leaks
 alias pass='EDITOR=nvim pass'
 alias py='python3'
+alias rc='rclone --fast-list'
 alias rdesktop='rdesktop -g 1680x1050'
 alias rsync='rsync --old-args' # See cpv's comment for more infos
 alias sk='sk --color=16 -m --bind "alt-a:select-all,alt-d:deselect-all" --layout reverse'

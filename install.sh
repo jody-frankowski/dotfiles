@@ -268,7 +268,7 @@ if ./base/.usr/bin/_onmacos ; then
             -c "Add :NSUserDictionaryReplacementItems:${i}:replace string \"${src}\"" \
             -c "Add :NSUserDictionaryReplacementItems:${i}:with string \"${dst}\"" \
         )
-        (( i++ ))
+        (( i++ )) || true # `|| true` to avoid triggering `set -e`
     done
     replacement_cmd+=( ~/Library/Preferences/.GlobalPreferences.plist )
     "${replacement_cmd[@]}"

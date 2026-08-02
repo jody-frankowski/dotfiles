@@ -238,6 +238,17 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
   ;; previously was only "test".
   :config
   (evil-mode 1))
+
+;; Save the current minibuffer content to `evil-ex-history` when aborting
+(defun save-evil-ex-history-on-abort (&rest _)
+  (when (and (minibufferp)
+             (boundp 'evil-ex-history)
+             ;; Check if we are in the evil-ex command line
+             (string= (minibuffer-prompt) ":"))
+    (let ((cmd (minibuffer-contents)))
+      (when (> (length cmd) 0)
+        (add-to-history 'evil-ex-history cmd)))))
+(advice-add 'abort-recursive-edit :before #'save-evil-ex-history-on-abort)
 #+END_SRC
 
 Makes =(= and =)= motions work like with the default Vim settings, namely not

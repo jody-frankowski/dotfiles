@@ -63,10 +63,11 @@
   ss  = s show -u
   ssp = ss -p
 
-  su  = submodule
-  suf = su foreach
-  sus = su sync
-  suu = su update
+  su   = submodule
+  suf  = su foreach
+  sust = su status
+  suu  = su update
+  sus  = su sync
 
 [include]
 	path = ~/.config/git/config-private

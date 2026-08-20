@@ -786,10 +786,13 @@ if _onmacos; then
     }
 fi
 
+ps () {
+    command ps "$@" | grcat conf.ps
+}
 psg () {
     # Capture the output before searching to avoid capturing the filtering cmd
     local -r out=$(ps auxww)
-    <<<$out grcat conf.ps | g "$@" --color=never
+    g "$@" --color=never <<<$out
 }
 pst () {
     pstree -w "$@" | grcat conf.ps

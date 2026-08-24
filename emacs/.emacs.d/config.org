@@ -637,6 +637,62 @@ blocks. Also a way not to have indentation in code blocks.
 (csetq org-edit-src-content-indentation 0)
 #+END_SRC
 
+Decode =extended keys=. This allows us, for example to distinguish =C-RET=
+=(org-insert-heading-respect-content)= and =M-RET= =(org-meta-return)=. Requires Tmux's
+=extended-keys on=.
+https://unix.stackexchange.com/questions/79374/are-there-any-linux-terminals-which-can-handle-all-key-combinations/79561#79561
+https://emacs.stackexchange.com/questions/26699/keycode-for-shift-return-on-os-x-iterm2
+https://emacs.stackexchange.com/questions/1020/problems-with-keybindings-when-using-terminal/13957#13957
+
+#+BEGIN_SRC emacs-lisp
+(defun me/define-extended-key (modifier keycode event)
+  "Decode an xterm modifyOtherKeys sequence as EVENT.
+MODIFIER uses xterm's modifier numbering:
+  2 = Shift, 3 = Meta, 5 = Control.
+KEYCODE is the decimal character code used by the terminal."
+  (define-key input-decode-map
+              (format "\e[27;%d;%d~" modifier keycode)
+              (kbd event)))
+
+(defun me/tty-setup-extended-keys ()
+  ;; Keep S-SPC equivalent to an ordinary space.  Change \"SPC\" to
+  ;; \"S-SPC\" here if it should be a distinct key.
+  (me/define-extended-key 2 32  "SPC")
+
+  (me/define-extended-key 2 13  "S-<return>")
+  (me/define-extended-key 3 13  "M-<return>")
+  (me/define-extended-key 5 13  "C-<return>")
+  (me/define-extended-key 2 127 "S-<backspace>")
+
+  ;; Forward Delete is normally encoded as CSI 3;2~, rather than as
+  ;; modifyOtherKeys character 127.
+  (define-key input-decode-map
+              "\e[3;2~"
+              (kbd "S-<delete>")))
+
+;; Run now for the initial terminal and again for terminals created later,
+;; such as frames created by an Emacs daemon.
+(me/tty-setup-extended-keys)
+(add-hook 'tty-setup-hook #'me/tty-setup-extended-keys)
+
+(global-set-key (kbd "S-<backspace>") #'delete-backward-char)
+(global-set-key (kbd "S-<delete>")    #'delete-forward-char)
+(global-set-key (kbd "S-<return>")    #'newline)
+
+;; Make the intended Org distinction explicit.  Native terminal M-RET is
+;; normally reported as M-RET, while modifyOtherKeys produces M-<return>.
+(with-eval-after-load 'org
+  (define-key org-mode-map
+              (kbd "C-<return>")
+              #'org-insert-heading-respect-content)
+  (define-key org-mode-map
+              (kbd "M-RET")
+              #'org-meta-return)
+  (define-key org-mode-map
+              (kbd "M-<return>")
+              #'org-meta-return))
+#+END_SRC
+
 Enable auto saving of the edit buffer into the original file after 1 second of
 idleness:
 

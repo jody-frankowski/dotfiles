@@ -1177,6 +1177,11 @@ spaces, empty lines, characters after the ~fill-column~ and specials spaces
         ;; If this is a problem for you, please, comment the line below.
         (tab-mark     ?\t    [?› ?\t] [?\\ ?\t]) ; tab - right guillemet
 ))
+
+;; Set fill-column for org-mode's Emacs Lisp code blocks
+(defun me/elisp-fill-column ()
+  (setq-local fill-column 100))
+(add-hook 'emacs-lisp-mode-hook #'me/elisp-fill-column)
 #+END_SRC
 
 Make sure whitespace-mode uses ~fill-column~ value:

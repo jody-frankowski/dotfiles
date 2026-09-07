@@ -227,16 +227,17 @@ Enable evil-mode. This needs to be put before any other evil package is loaded:
   (csetq evil-want-C-u-scroll t)
   ;; Makes Y copy like in vim
   (csetq evil-want-Y-yank-to-eol t)
-  ;; Evil currently has a bug where typing * or # on the first
-  ;; whitespace char of a line doesn't work in some cases. See
-  ;; https://github.com/emacs-evil/evil/issues/1160
-  ;; If you want to "fix" this you could set evil-symbol-word-search
-  ;; as shown:
-  ;;(csetq evil-symbol-word-search t)
-  ;; But note that it would also change the word selection of these
-  ;; commands. Eg. "test-123" would now be considered a word while it
-  ;; previously was only "test".
+
   :config
+  ;; Evil currently has a bug where typing * or # on the first whitespace char of a line doesn't
+  ;; work in some cases. See https://github.com/emacs-evil/evil/issues/1160. If you want to "fix"
+  ;; this you could enable evil-symbol-word-search. But note that it would also change the word
+  ;; selection of these commands. E.g. "test-123" would now be considered a word while it previously
+  ;; was only "test".
+
+  ;; Make `_` a word character as in Vim
+  (modify-syntax-entry ?_ "w")
+
   (evil-mode 1))
 
 ;; Save the current minibuffer content to `evil-ex-history` when aborting

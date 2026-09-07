@@ -76,6 +76,7 @@ export CARGO_HOME=~/.cache/cargo
 export MOSH_TITLE_NOPREFIX=
 
 if ~/.usr/bin/_onmacos; then
+    export HOMEBREW_NO_ENV_HINTS=1       # Disable env vars hints
     export HOMEBREW_NO_INSTALL_CLEANUP=1 # Disable automatic formulae cleanup
 fi
 

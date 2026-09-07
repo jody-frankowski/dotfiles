@@ -18,7 +18,7 @@ brew () {
         s) shift; brew search  "$@"; return;;
     esac
     if [[ $1 == up ]]; then
-        HOMEBREW_NO_AUTO_UPDATE= brew upgrade --ask
+        brew upgrade
         return
     fi
     command brew "$@"

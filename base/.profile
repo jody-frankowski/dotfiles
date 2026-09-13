@@ -45,7 +45,8 @@ export PAGER=less
 # -M show line numbers in prompt
 # -R interpret ANSI color escape sequences
 # -j4 search results will be 4 lines lower than the top of the screen
-export LESS='-i -M -R -j4'
+# --no-paste Enable bracketed paste: E.g. pasting `q` shouldn't exit less.
+export LESS='-i -M -R -j4 --no-paste'
 
 # Fix broken man page colors on Linux after roff update
 # https://web.archive.org/web/20250309205344/https://bbs.archlinux.org/viewtopic.php?pid=2113876#p2113876

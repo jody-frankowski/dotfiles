@@ -66,6 +66,7 @@ if ./base/.usr/bin/_onmacos ; then
         gnupg
         grc
         jq
+        less # Newer less (macOS' is 668 which doesn't support `--no-paste`)
         lsd
         mise
         mosh

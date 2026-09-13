@@ -364,7 +364,7 @@ if ./base/.usr/bin/_onmacos ; then
     # Replace some of macOS' utils with GNU or uutils ones. We do this because some of our zsh
     # aliases depend on specific GNU's coreutils flags. It's also useful when quickly copying
     # commands from guides that target Linux systems only.
-    [[ -L ~/.usr/bin/sed ]] || ln -s "${BREW_PREFIX}/opt/coreutils/bin/gsed" ~/.usr/bin/sed
+    [[ -L ~/.usr/bin/sed ]] || ln -s "${BREW_PREFIX}/bin/gsed" ~/.usr/bin/sed
     for bin in date dircolors du head rm sort timeout; do
         [[ -L ~/.usr/bin/"${bin}" ]] || \
             ln -s "${BREW_PREFIX}/opt/uutils-coreutils/bin/uu-${bin}" ~/.usr/bin/"${bin}"

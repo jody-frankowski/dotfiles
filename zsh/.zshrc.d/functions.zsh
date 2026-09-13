@@ -251,12 +251,12 @@ forward-port () {
     return 0
 }
 
-# f/g() Search hidden and ignored files by default
-# g()   Searches binary stdin and on-demand for files with `-BB`
+# f/g() Searches hidden files by default
+# g()   Searches in binary stdin and on-demand for files with `-BH`/`-BT`
 f () {
     local path_to_search=(.)
     local patterns=()
-    local options=(--hidden --no-ignore)
+    local options=(--hidden)
 
     [[ $# -eq 0 || $1 == -h || $1 == --help ]] && {
         echo "Usage: $0 [PATH] PATTERN... [FD_OPTION...]" >&2;
@@ -275,8 +275,10 @@ f () {
     while [[ $# -gt 0 ]]; do
         case "$1" in
             # Custom flags
-            -HH) options+=(--no-hidden) ;;
             -II) options+=(--ignore) ;;
+            -IN) options+=(--no-ignore) ;;
+            -HH) options+=(--hidden) ;;
+            -HN) options+=(--no-hidden) ;;
             # Normal flags
             *) options+=("$1") ;;
         esac
@@ -300,29 +302,35 @@ g () {
 
     if [[ ! -t 0 ]]; then
         input=(-)
-        options+=(--binary-files=with-hex)
     elif [[ -e $1 ]]; then
         input=()
         while [[ -e $1 ]] { input+=($1); shift }
     fi
+    [[ "${input}" == - ]] &&
+        options+=(--binary-files=with-hex)
     [[ "${input[1]}" != - ]] &&
         options+=(
+        --binary-files=without-match
         --dereference-recursive
         --heading
         --hidden
-        --no-ignore-files
+        --ignore-files=~/.config/git/ignore
         --line-number
     )
 
     while [[ $# -gt 0 ]]; do
         case "$1" in
             # Custom flags
-            -BB) options+=(--binary-files=with-hex) ;;
-            -HH) options+=(--exclude='.*') ;;
-            -II) options+=(--ignore-files=~/.config/git/ignore) ;;
-            # Normal flags
+            -BH) options+=(--binary-files=with-hex) ;;
+            -BI) options+=(--binary-files=without-match) ;;
+            -BT) options+=(--binary-files=text) ;;
+            -FI) options+=(--ignore-files=~/.config/git/ignore) ;;
+            -FN) options+=(--no-ignore-files) ;;
+            -HH) options+=(--hidden) ;;
+            -HN) options+=(--no-hidden) ;; # Undocumented, but it works
             -+) ug_bin+=+ ;;
             -i|-j) option_case="$1" ;;
+            # Normal flags
             -*) options+=("$1") ;;
             # Regex
             *\**|*+*|*\[*\]*|*\|*|*(*)*) patterns+=("$1") ;;

@@ -44,6 +44,11 @@ if ./base/.usr/bin/_onmacos ; then
     brew analytics off
 
     formulae=(
+        # Build tools
+        autoconf # Provides autoreconf
+        automake # Provides aclocal
+        pkgconf  # Provides pkg-config
+
         atool
         atuin
         bfs

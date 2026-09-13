@@ -125,8 +125,13 @@ if ./base/.usr/bin/_onmacos ; then
     [ -d ~/.zshrc.d/completion/ ] || mkdir -p ~/.zshrc.d/completion
 
     ### Accessibility
-    # `Display/Reduce transparency`
-    # Requires logout
+    # `Display/Reduce transparency`: Requires logout & `Full Disk Access` for iTerm2/Terminal
+    # Open `Settings/Privacy & Security/Full Disk Access`
+    echo "\nOpening 'Settings/Privacy & Security/Full Disk Access'"
+    echo "Add 'Full Disk Access' to iTerm2 & Terminal"
+    sleep 2
+    open "x-apple.systempreferences:com.apple.preference.security?Privacy_AllFiles"
+    read "?Press Enter when done: "
     defaults write com.apple.Accessibility EnhancedBackgroundContrastEnabled -bool true
     defaults write com.apple.universalaccess reduceTransparency -bool true
 

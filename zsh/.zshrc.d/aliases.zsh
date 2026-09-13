@@ -16,8 +16,6 @@ alias -g H='| head'
 alias -g HD='| hexdump -C'
 alias -g L='2>&1 | zless'
 alias -g LNE='| zless'
-alias -g M='2>&1 | moor'
-alias -g MNE='| moor'
 # Pipe Print: Print stdin and if the user accepts forward it to stdout.
 # TODO Print input split on `\0` for commands that expect `\0` separated input.
 alias -g PP='| tee "$(tty)" | { _pp_var="$(< /dev/stdin)" } ; echo -n "Is this content ok for the next commands? Press Enter to continue or C-c to abort. " >&2 ; read ; echo -n "${_pp_var}"'

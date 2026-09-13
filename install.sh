@@ -67,7 +67,6 @@ if ./base/.usr/bin/_onmacos ; then
         grc
         jq
         lsd
-        moar
         mise
         mosh
         mpv

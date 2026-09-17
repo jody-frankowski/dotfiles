@@ -53,6 +53,14 @@ matches:
   - trigger: ":wtf"
     replace: "ಠ_ಠ"
 
+  # JS
+  - trigger: ":dgebi"
+    replace: "document.getElementById('$|$')"
+  - trigger: ":dqse"
+    replace: "document.querySelector('$|$')"
+  - trigger: ":dqsa"
+    replace: "document.querySelectorAll('$|$')"
+
   # macOS
   - trigger: ":command"
     replace: "⌘"

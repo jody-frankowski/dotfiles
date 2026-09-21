@@ -65,6 +65,7 @@ if ./base/.usr/bin/_onmacos ; then
         fzf
         gnupg
         grc
+        ispell # Required by Emacs' `z= (ispell-word)`
         jq
         less # Newer less (macOS' is 668 which doesn't support `--no-paste`)
         lsd

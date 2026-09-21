@@ -22,7 +22,7 @@ fi
 
 # Colored less and manpages
 # See `man -P "$PAGER -p '-Dxcolor'" less`
-export LESS='-i -M -R -j4 --use-color -DCb -DEr~ -DNr -DPw~ -DSw~'
+export LESS='-i -M -R -j4 --use-color -DCwk -DEr~ -DNr -DPw~ -DSw~'
 export MANPAGER='less -Dd+r -Dk+r -Dsw~ -Dug*'
 
 _set-window-title () {

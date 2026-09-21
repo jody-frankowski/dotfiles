@@ -20,14 +20,10 @@ if ! infocmp &> /dev/null ; then
     fi
 fi
 
-# Less termcap config that enables colored man pages
-export LESS_TERMCAP_mb=$'\E[01;31m'    # Begins blinking
-export LESS_TERMCAP_md=$'\E[01;31m'    # Begins bold
-export LESS_TERMCAP_me=$'\E[0m'        # Ends mode
-export LESS_TERMCAP_se=$'\E[0m'        # Ends standout-mode
-export LESS_TERMCAP_so=$'\E[00;47;30m' # Begins standout-mode
-export LESS_TERMCAP_ue=$'\E[0m'        # Ends underline
-export LESS_TERMCAP_us=$'\E[01;32m'    # Begins underline
+# Colored less and manpages
+# See `man -P "$PAGER -p '-Dxcolor'" less`
+export LESS='-i -M -R -j4 --use-color -DCb -DEr~ -DNr -DPw~ -DSw~'
+export MANPAGER='less -Dd+r -Dk+r -Dsw~ -Dug*'
 
 _set-window-title () {
     # Sets the terminal window title with the following OSC:

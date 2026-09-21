@@ -2559,6 +2559,19 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
+		<key>0x6e-0x80000-0x2d</key>
+		<dict>
+			<key>Action</key>
+			<integer>26</integer>
+			<key>Apply Mode</key>
+			<integer>0</integer>
+			<key>Escaping</key>
+			<integer>2</integer>
+			<key>Text</key>
+			<string>F707FF4A-6735-43C0-A895-45E5C6736019</string>
+			<key>Version</key>
+			<integer>2</integer>
+		</dict>
 		<key>0x6f-0x100000-0x1f</key>
 		<dict>
 			<key>Action</key>

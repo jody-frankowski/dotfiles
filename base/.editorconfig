@@ -10,7 +10,7 @@ max_line_length = 100
 trim_trailing_whitespace = true
 
 [{Caddyfile,Makefile,*.mk,*.go}]
-indent_size = 4
+indent_size = 2
 indent_style = tab
 
 [*.{bash,sh,zsh,zshrc,c,py}]

@@ -1,11 +1,7 @@
 # -*- mode: sh -*-
 
-### Terminal window title
-
-# Return if requirements are not found.
-if [[ "$TERM" == (dumb|linux|*bsd*|eterm*) ]]; then
-    return 1
-fi
+# Return if requirements aren't met
+[[ ! -t 1 || -z "$TERM" || "$TERM" == (dumb|linux) ]] && return 1
 
 if ! infocmp &> /dev/null ; then
     echo "Terminfo database '$TERM' not found!" >&2

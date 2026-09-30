@@ -30,6 +30,7 @@ enabled = true
 [keymap.emacs]
 "alt-backspace" = "delete-word-before"
 "ctrl-a" = "cursor-start"
+"esc" = "noop"
 
 [search]
 filters = [ "global", "workspace", "directory", "host", "session"]

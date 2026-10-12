@@ -17,8 +17,8 @@
 # Use bindkey -L to list the Zsh keybindings
 # Use showkey -a on Linux to debug the keys pressed
 
-# Set '|' as a between-word character
-WORDCHARS="${WORDCHARS}|"
+# Set `|` as a word character. This makes our Zsh Alt-bs behave more like Bash's.
+WORDCHARS+="|"
 
 # Beep on error in line editor.
 setopt BEEP

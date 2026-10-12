@@ -95,11 +95,6 @@ alias zcat=zstdcat
 alias less='zless --follow-name'
 alias zless=zstdless
 
-# Systemd
-alias jctl='journalctl'
-alias jctlu='journalctl --user'
-alias scu='systemctl --user'
-
 # ls
 alias ls='lsd --group-directories-first'
 alias l='ls -hl'

@@ -903,23 +903,40 @@ rvim () {
 }
 compdef rvim="scp"
 
-_user_commands=(
-    cat help is-active is-enabled list-jobs list-unit-files list-units show
-    show-environment status
-)
-sc () {
-    if [[ $(id -u) -eq 0 ]] ; then
-        systemctl "$@"
-        return
-    fi
+_onlinux && (( $+commands[systemctl] )) && {
+    sc() {
+        emulate -L zsh
+        local -a ro_cmds=(
+            cat help get-default is-active is-enabled is-failed
+            is-system-running list-dependencies list-jobs list-sockets
+            list-timers list-unit-files list-units show show-environment status
+        )
 
-    if (( ${_user_commands[(I)$1]} )) ; then
-        systemctl "$@"
-    else
-        sudo systemctl "$@"
-    fi
+        local cmd i=1
+        # Find the subcommand, skipping options (and values of options that take one)
+        while (( i <= $# )); do
+            case $argv[i] in
+                --user)  systemctl "$@"; return ;;
+                -[tpPsnoHM]|--type|--property|--state|--lines|--output|--host|--machine|--root)
+                         (( i += 2 )); continue ;;
+                -*)      ;;
+                *)       cmd=$argv[i]; break ;;
+            esac
+            (( i++ ))
+        done
+
+        if (( EUID == 0 )) || [[ -z $cmd ]] || (( ${ro_cmds[(Ie)$cmd]} )); then
+            systemctl "$@"
+        else
+            sudo systemctl "$@"
+        fi
+    }
+    compdef sc=systemctl
+
+    alias jc='journalctl'
+    alias jcu='journalctl --user'
+    alias scu='systemctl --user'
 }
-type systemctl > /dev/null && compdef sc="systemctl"
 
 share () {
     if [[ $1 = "-h" || $1 = "--help" ]] ; then

@@ -15,6 +15,12 @@ _onmac () {
 _onmac && export BASH_SILENCE_DEPRECATION_WARNING=1
 
 ### Bash Settings ###
+## Keybindings ##
+# Make Alt-bs stop at whitespaces and `/` making it identical to our Zsh config
+bind '"\e\C-?": unix-filename-rubout'
+bind '"\e\C-h": unix-filename-rubout'
+## Keybindings ##
+
 bind 'set completion-ignore-case on'
 
 # ignore commands starting with spaces and duplicates

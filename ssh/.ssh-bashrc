@@ -21,7 +21,16 @@ bind '"\e\C-?": unix-filename-rubout'
 bind '"\e\C-h": unix-filename-rubout'
 ## Keybindings ##
 
+## Completion ##
+# Insensitive completion
 bind 'set completion-ignore-case on'
+# Activate if possible
+if [[ -f /usr/share/bash-completion/bash_completion ]]; then
+  . /usr/share/bash-completion/bash_completion
+elif [[ -f /etc/bash_completion ]]; then
+  . /etc/bash_completion
+fi
+## Completion ##
 
 # ignore commands starting with spaces and duplicates
 HISTCONTROL=ignoreboth

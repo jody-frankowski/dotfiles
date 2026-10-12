@@ -179,9 +179,10 @@ bindkey $key_info[Control]x\? _complete_debug
 # Select the vicmd keymap
 bindkey $key_info[Escape] vi-cmd-mode
 
-# Make M-backspace delete path components (and not the whole word/path) by stopping at '/'
+# Make Alt-bs delete path components (and not the whole word/path) by stopping at `/`
 backward-kill-dir () {
-    local WORDCHARS=${WORDCHARS/\/}
+    # Set locally so that it applies only to backward-kill-dir and not to movement functions like
+    # backward-word or forward-word
     local WORDCHARS=${WORDCHARS//\/}
     zle backward-kill-word
 }

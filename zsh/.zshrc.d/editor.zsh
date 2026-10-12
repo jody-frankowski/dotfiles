@@ -182,10 +182,12 @@ bindkey $key_info[Escape] vi-cmd-mode
 # Make M-backspace delete path components (and not the whole word/path) by stopping at '/'
 backward-kill-dir () {
     local WORDCHARS=${WORDCHARS/\/}
+    local WORDCHARS=${WORDCHARS//\/}
     zle backward-kill-word
 }
 zle -N backward-kill-dir
 bindkey "$key_info[Escape]$key_info[Backspace]" backward-kill-dir
+bindkey "$key_info[Escape]^H"                   backward-kill-dir
 
 # Rewrite some mistakenly typed commands
 typeset -A COMMAND_REWRITE_TABLE=(

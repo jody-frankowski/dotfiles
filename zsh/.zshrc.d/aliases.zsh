@@ -85,6 +85,7 @@ alias rsync='rsync --old-args' # See cpv's comment for more infos
 alias sk='sk --color=16 -m --bind "alt-a:select-all,alt-d:deselect-all" --layout reverse'
 alias strings='strings -' # Search strings in all bytes of the files
 alias ssu='sudo su'
+alias tf='terraform'
 alias umount='sudo umount'
 _onmacos && alias ifconfig='ifconfig -f inet:cidr,inet6:cidr'
 

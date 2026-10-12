@@ -4,8 +4,17 @@
 [[ $- != *i* ]] && return
 
 [ -f /etc/bash.bashrc ] && . /etc/bash.bashrc
-### bash settings ###
-# insensitive completion
+
+_onlinux () {
+  [[ "$OSTYPE" == linux-gnu ]]
+}
+_onmac () {
+  [[ "$OSTYPE" == darwin* ]]
+}
+
+_onmac && export BASH_SILENCE_DEPRECATION_WARNING=1
+
+### Bash Settings ###
 bind 'set completion-ignore-case on'
 
 # ignore commands starting with spaces and duplicates

@@ -181,13 +181,12 @@ motd () {
     [[ -f /etc/motd ]] && cat /etc/motd && echo
 
     uname -a
-    echo
 
-    free -m
     echo
+    _onlinux && free -m
+    _onmac   && top -l 1 | \grep PhysMem
 
-    w
-    echo
+    echo; w
 }
 
 slit () {

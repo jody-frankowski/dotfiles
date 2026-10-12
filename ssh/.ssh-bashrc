@@ -177,6 +177,11 @@ getip () {
     dig +short myip.opendns.com @resolver1.opendns.com
 }
 
+mkcd () {
+  (( $# == 1 )) || return 1
+  mkdir -p "$1" && builtin cd "$1"
+}
+
 motd () {
     [[ -f /etc/motd ]] && cat /etc/motd && echo
 

@@ -42,60 +42,111 @@ shopt -s checkwinsize
 # TODO needed???
 #shopt -s histappend
 
-### aliases ###
-# platform specific
-if [ $(uname -s) = "OpenBSD" ]; then
-    if command -v gls ; then
-        alias ls='gls --color=auto --group-directories-first'
-    fi
-else
-    alias grep='grep --color=auto'
-    alias ls='ls --color=auto --group-directories-first'
+### Aliases ###
+## Global aliases ##
+if ! $0 --version | grep -q 'version 3.2'; then
+  _magic_space() {
+      local pre=${READLINE_LINE:0:READLINE_POINT}
+      local post=${READLINE_LINE:READLINE_POINT}
+      [[ $pre == *' H' ]] && pre="${pre%' H'} | head"
+      [[ $pre == *' HD' ]] && pre="${pre%' HD'} | hexdump -C"
+      [[ $pre == *' G' ]] && pre="${pre%' G'} | grep"
+      [[ $pre == *' GV' ]] && pre="${pre%' GV'} | grep -v"
+      [[ $pre == *' L' ]] && pre="${pre%' L'} | less"
+      [[ $pre == *' S' ]] && pre="${pre%' S'} | sort"
+      [[ $pre == *' SU' ]] && pre="${pre%' SU'} | sort -u"
+      [[ $pre == *' T' ]] && pre="${pre%' T'} | tail"
+      [[ $pre == *' U' ]] && pre="${pre%' U'} | uniq"
+
+      [[ $pre == *' X' ]]  && pre="${pre%' X'}  | xargs -r"
+      [[ $pre == *' XI' ]] && pre="${pre%' XI'} | xargs -r -I{}"
+      [[ $pre == *' XIN' ]] && pre="${pre%' XIN'} | xargs -r -I{} -n"
+      [[ $pre == *' XN' ]] && pre="${pre%' XN'} | xargs -r -n"
+
+      [[ $pre == *' NE' ]]  && pre="${pre%' NE'}  2>/dev/null"
+      [[ $pre == *' NEO' ]] && pre="${pre%' NEO'} &>/dev/null"
+      [[ $pre == *' NO' ]]  && pre="${pre%' NO'}  >/dev/null"
+
+      [[ $pre == *' JQ' ]] && pre="${pre%' JQ'} | jq"
+
+      [[ $pre == *' OJ' ]] && pre="${pre%' OJ'} -o json"
+      [[ $pre == *' OY' ]] && pre="${pre%' OY'} -o yaml"
+
+      [[ $pre == *' WCC' ]] && pre="${pre%' WCC'} | wc -c"
+      [[ $pre == *' WCL' ]] && pre="${pre%' WCL'} | wc -l"
+      pre+=' '
+      READLINE_LINE=$pre$post
+      READLINE_POINT=${#pre}
+  }
+  bind -x '" ": _magic_space'
 fi
+## Global aliases ##
 
 alias ..='cd ..'
 alias ...='cd ../..'
+
 alias cgrep="grep -Ev '^\s*[#$;]|^$'"
-alias l='ls -lFh'     # size,show type,human readable
-alias la='ls -lAFh'   # long list,show almost all,show type,human readable
-alias latr='ls -latr'
-alias sl=ls
-alias apar='apachectl -k graceful'
-alias apat='apachectl -t && apachectl -t -D DUMP_VHOSTS'
+alias grep='grep --color=auto -i'
+alias g='grep -r'
+
+alias ls='ls --color=auto'
+command -v lsd >/dev/null && alias ls='lsd --color=auto --group-directories-first'
+_onlinux && alias ls='ls --group-directories-first'
+alias l='ls -lh'
+alias la='l -A'
+alias lat='la -t'
+alias latr='lat -r'
+
+# Misc
+command -v zless    >/dev/null && alias less=zless
+command -v zstdless >/dev/null && alias less=zstdless
+
+alias apr='apachectl -k graceful'
+alias apt='apachectl -t && apachectl -t -D DUMP_VHOSTS'
 alias nxr='nginx -s reload'
 alias nxt='nginx -t'
-alias meminfo='free -m -l -t'
-alias pscpu='ps auxf | sort -n -k 3'
-alias psg="ps aux | grep"
-alias psmem='ps auxf | sort -n -k 4'
-alias rm='rm -i'
-alias v=vi
-command -v /usr/bin/vim > /dev/null && alias v=vim
-alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
-alias gst='git status'
+
 alias cpv='rsync -avP'
 alias cpvr='rsync -avP --inplace --size-only -i'
 alias cpvs='rsync -avP --rsync-path="sudo rsync"'
 
-alias docker='sudo docker'
-alias ssu='sudo su -'
+alias meminfo='free -m -l -t'
+alias pscpu='ps auxf | sort -n -k 3'
+alias psg="ps aux | grep"
+alias psmem='ps auxf | sort -n -k 4'
+
+alias glog="git log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset' --abbrev-commit"
+alias gst='git status'
+
+# Safer commands
+alias cp='cp -i'
+alias mv='mv -i'
+alias rm='rm --one-file-system -I'
+
+# Sudo commands
+alias s=sudo
+alias dmesg='sudo dmesg'
+alias doc='sudo docker'
+# Since our tmux config (`set -g set-titles-string "#{host_short} #{pane_title}"`) already preprends
+# the hostname to the window title, we set the TMUX var to bash sessions inside tmux skip adding themselves the hostname
+alias ssu='sudo TMUX=$TMUX bash --rcfile /tmp/$(whoami)-bashrc'
 
 # Systemd
 alias jc='sudo journalctl'
-alias jcu='journalctl --user'
 alias sc='sudo systemctl'
-alias scu='systemctl --user'
+_completion_loader journalctl 2>/dev/null
+_completion_loader systemctl  2>/dev/null
+complete -F _journalctl jc
+complete -F _systemctl  sc
 
 ### env ###
 export LS_COLORS='no=00;38;5;244:rs=0:di=00;38;5;33:ln=01;38;5;37:mh=00:pi=48;5;230;38;5;136;01:so=48;5;230;38;5;136;01:do=48;5;230;38;5;136;01:bd=48;5;230;38;5;244;01:cd=48;5;230;38;5;244;01:or=48;5;235;38;5;160:su=48;5;160;38;5;230:sg=48;5;136;38;5;230:ca=30;41:tw=48;5;64;38;5;230:ow=48;5;235;38;5;33:st=48;5;33;38;5;230:ex=01;38;5;64:*.tar=00;38;5;61:*.tgz=01;38;5;61:*.arj=01;38;5;61:*.taz=01;38;5;61:*.lzh=01;38;5;61:*.lzma=01;38;5;61:*.tlz=01;38;5;61:*.txz=01;38;5;61:*.zip=01;38;5;61:*.z=01;38;5;61:*.Z=01;38;5;61:*.dz=01;38;5;61:*.gz=01;38;5;61:*.lz=01;38;5;61:*.xz=01;38;5;61:*.bz2=01;38;5;61:*.bz=01;38;5;61:*.tbz=01;38;5;61:*.tbz2=01;38;5;61:*.tz=01;38;5;61:*.deb=01;38;5;61:*.rpm=01;38;5;61:*.jar=01;38;5;61:*.rar=01;38;5;61:*.ace=01;38;5;61:*.zoo=01;38;5;61:*.cpio=01;38;5;61:*.7z=01;38;5;61:*.rz=01;38;5;61:*.apk=01;38;5;61:*.gem=01;38;5;61:*.zpaq=01;38;5;61:*.arc=01;38;5;61:*.jpg=00;38;5;136:*.JPG=00;38;5;136:*.jpeg=00;38;5;136:*.gif=00;38;5;136:*.bmp=00;38;5;136:*.pbm=00;38;5;136:*.pgm=00;38;5;136:*.ppm=00;38;5;136:*.tga=00;38;5;136:*.xbm=00;38;5;136:*.xpm=00;38;5;136:*.tif=00;38;5;136:*.tiff=00;38;5;136:*.png=00;38;5;136:*.svg=00;38;5;136:*.svgz=00;38;5;136:*.mng=00;38;5;136:*.pcx=00;38;5;136:*.dl=00;38;5;136:*.xcf=00;38;5;136:*.xwd=00;38;5;136:*.yuv=00;38;5;136:*.cgm=00;38;5;136:*.emf=00;38;5;136:*.eps=00;38;5;136:*.CR2=00;38;5;136:*.ico=00;38;5;136:*.webp=00;38;5;136:*.tex=01;38;5;245:*.rdf=01;38;5;245:*.owl=01;38;5;245:*.n3=01;38;5;245:*.ttl=01;38;5;245:*.nt=01;38;5;245:*.torrent=01;38;5;245:*.xml=01;38;5;245:*Makefile=01;38;5;245:*Rakefile=01;38;5;245:*build.xml=01;38;5;245:*rc=01;38;5;245:*1=01;38;5;245:*.nfo=01;38;5;245:*README=01;38;5;245:*README.txt=01;38;5;245:*readme.txt=01;38;5;245:*.md=01;38;5;245:*.rst=01;38;5;245:*README.markdown=01;38;5;245:*.ini=01;38;5;245:*.yml=01;38;5;245:*.cfg=01;38;5;245:*.conf=01;38;5;245:*.c=01;38;5;245:*.cpp=01;38;5;245:*.cc=01;38;5;245:*.log=00;38;5;240:*.bak=00;38;5;240:*.aux=00;38;5;240:*.bbl=00;38;5;240:*.blg=00;38;5;240:*~=00;38;5;240:*#=00;38;5;240:*.part=00;38;5;240:*.incomplete=00;38;5;240:*.swp=00;38;5;240:*.tmp=00;38;5;240:*.temp=00;38;5;240:*.o=00;38;5;240:*.pyc=00;38;5;240:*.class=00;38;5;240:*.cache=00;38;5;240:*.aac=00;38;5;166:*.au=00;38;5;166:*.flac=00;38;5;166:*.mid=00;38;5;166:*.midi=00;38;5;166:*.mka=00;38;5;166:*.mp3=00;38;5;166:*.mpc=00;38;5;166:*.ogg=00;38;5;166:*.ra=00;38;5;166:*.wav=00;38;5;166:*.m4a=00;38;5;166:*.axa=00;38;5;166:*.oga=00;38;5;166:*.spx=00;38;5;166:*.xspf=00;38;5;166:*.mov=01;38;5;166:*.mpg=01;38;5;166:*.mpeg=01;38;5;166:*.m2v=01;38;5;166:*.mkv=01;38;5;166:*.ogm=01;38;5;166:*.mp4=01;38;5;166:*.m4v=01;38;5;166:*.mp4v=01;38;5;166:*.vob=01;38;5;166:*.qt=01;38;5;166:*.nuv=01;38;5;166:*.wmv=01;38;5;166:*.asf=01;38;5;166:*.rm=01;38;5;166:*.rmvb=01;38;5;166:*.flc=01;38;5;166:*.avi=01;38;5;166:*.fli=01;38;5;166:*.flv=01;38;5;166:*.gl=01;38;5;166:*.m2ts=01;38;5;166:*.divx=01;38;5;166:*.webm=01;38;5;166:*.axv=01;38;5;166:*.anx=01;38;5;166:*.ogv=01;38;5;166:*.ogx=01;38;5;166:'
 
-if command -v vim > /dev/null ; then
-    export EDITOR=$(command -v vim)
-    export VISUAL=$(command -v vim)
-else
-    export EDITOR=$(command -v vi)
-    export VISUAL=$(command -v vi)
-fi
+alias v=vi
+command -v vim >/dev/null && alias v=vim
+command -v vi  >/dev/null && export EDITOR=$(command -v vi)
+command -v vim >/dev/null && export EDITOR=$(command -v vim)
+export VISUAL=$EDITOR
 
 ### functions ###
 bak () {

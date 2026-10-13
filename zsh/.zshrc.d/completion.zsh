@@ -86,6 +86,9 @@ zstyle ':completion:*:*:cd:*:directory-stack' menu yes select
 zstyle ':completion:*:-tilde-:*' group-order 'named-directories' 'path-directories' 'users' 'expand'
 zstyle ':completion:*' squeeze-slashes true
 
+# Git (Avoid the ugly `git log orIG█` completion)
+zstyle ':completion:*:*:git*:*' ignored-patterns '*ORIG_HEAD'
+
 # History
 zstyle ':completion:*:history-words' stop yes
 zstyle ':completion:*:history-words' remove-all-dups yes

@@ -1334,3 +1334,10 @@ Unbind some keybindings that duplicate other evil/vim keybindings:
 (define-key isearch-mode-map (kbd "M-p") nil)
 (define-key minibuffer-local-isearch-map (kbd "M-p") nil)
 #+END_SRC
+
+Unbind some misc bindings:
+
+#+BEGIN_SRC emacs-lisp
+;; Conflicts with Tmux
+(keymap-global-unset "M-j")
+#+END_SRC

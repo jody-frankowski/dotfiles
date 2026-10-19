@@ -135,16 +135,7 @@ dig () {
     command dig ${${@#*://}%%/*}
 }
 
-find-dead-symlinks () {
-    [[ $1 == -h ]] && { echo "Usage: $0 [DIR] [OPTIONS]" >&2; return 1 }
-
-    local dir=.
-    [[ -d "$1" ]] && { dir=$1; shift }
-
-    bfs "$dir" -xtype l "$@"
-}
-
-flac-encode () {
+encode-flac () {
     local metadata
     local output
     local tmp=tmp-$RANDOM.flac
@@ -181,8 +172,7 @@ flac-encode () {
         mv -f "$tmp" "$output"
     fi
 }
-
-flac-encode-dir () {
+encode-flac-dir () {
     local metadata
     local output
     local input="$1"
@@ -217,14 +207,23 @@ flac-encode-dir () {
         filename="${filename%.*}"
         if [[ "$extension" = "flac" || "$extension" = "wav" ]] ; then
             if [[ -n "$metadata" ]] ; then
-                flac-encode "$file" -m "$metadata"/"$filename".* -o "$output"/"$filename".flac
+                encode-flac "$file" -m "$metadata"/"$filename".* -o "$output"/"$filename".flac
             else
-                flac-encode "$file" -o "$output"/"$filename".flac
+                encode-flac "$file" -o "$output"/"$filename".flac
             fi
         else
             cp -v "$file" "$output"
         fi
     done
+}
+
+find-dead-symlinks () {
+    [[ $1 == -h ]] && { echo "Usage: $0 [DIR] [OPTIONS]" >&2; return 1 }
+
+    local dir=.
+    [[ -d "$1" ]] && { dir=$1; shift }
+
+    bfs "$dir" -xtype l "$@"
 }
 
 forward-port () {

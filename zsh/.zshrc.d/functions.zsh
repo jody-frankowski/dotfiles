@@ -12,7 +12,11 @@ bak () {
 }
 
 if _onmacos; then
-brew () {
+brew () {(
+    export HOMEBREW_NO_ENV_HINTS=1          # Disable env vars hints
+    export HOMEBREW_NO_INSTALL_CLEANUP=1    # Disable automatic formulae cleanup
+    export HOMEBREW_NO_UPGRADE_QUIT_CASKS=1 # Disable upgraded casks restart
+
     case $1 in
         i) shift; brew install "$@"; rehash; return;;
         s) shift; brew search  "$@"; return;;
@@ -23,7 +27,7 @@ brew () {
     fi
     command brew "$@"
     rehash
-}
+)}
 fi
 
 # This will shadow the `col` binary

@@ -136,86 +136,135 @@ dig () {
 }
 
 encode-flac () {
-    local metadata
-    local output
-    local tmp=tmp-$RANDOM.flac
-    local input="$1"
-    shift
-    while [[ $# -gt 0 ]] ; do
-        arg="$1"
+    emulate -L zsh
+    local -a opt_output opt_strip
+    zparseopts -D -E -F -- {o,-output}:=opt_output {s,-strip}=opt_strip || return 1
 
-        case $arg in
-            -o|--output)
-                output="$2"
-                shift
-                ;;
-            -m|--metadata)
-                metadata="$2"
-                shift
-                ;;
-        esac
-        shift
-    done
-    if [[ -z "$input" ]] ; then
-        echo "Input not set."
-        return -1
+    if (( $# != 1 )); then
+        print -ru2 "Usage: $0 INPUT [-o OUTPUT] [-s|--strip]"
+        return 1
     fi
-    if [[ -z "$output" ]] ; then
-        output="${input%.*}.flac"
-    fi
-    flac --best --verify --exhaustive-model-search --qlp-coeff-precision-search "$input" -o "$tmp"
-    if [[ -n "$metadata" ]] ; then
-        # ffmpeg -y -i "$input" -map_metadata 0 "${input%.*}.flac"
-        ffmpeg -y -i "$metadata" -i "$tmp" -map_metadata 0 -map 1:a:0 -c:a copy "$output"
-        rm -f "$tmp"
-    else
-        mv -f "$tmp" "$output"
-    fi
-}
-encode-flac-dir () {
-    local metadata
-    local output
-    local input="$1"
-    shift
-    while [[ $# -gt 0 ]] ; do
-        arg="$1"
+    local input=$1
+    [[ -f $input ]] || { print -ru2 "$0: no such file: $input"; return 1 }
 
-        case $arg in
-            -o|--output)
-                output="$2"
-                shift
-                ;;
-            -m|--metadata)
-                metadata="$2"
-                shift
-                ;;
-        esac
-        shift
-    done
-    if [[ -z "$input" ]] ; then
-        echo "Input not set."
-        return -1
-    fi
-    if [[ -z "$output" ]] ; then
-        echo "-o is not set."
-        return -1
-    fi
-    mkdir "$output"
-    for file in "$input"/* ; do
-        filename=$(basename -- "$file")
-        extension="${filename##*.}"
-        filename="${filename%.*}"
-        if [[ "$extension" = "flac" || "$extension" = "wav" ]] ; then
-            if [[ -n "$metadata" ]] ; then
-                encode-flac "$file" -m "$metadata"/"$filename".* -o "$output"/"$filename".flac
-            else
-                encode-flac "$file" -o "$output"/"$filename".flac
-            fi
+    local output=${opt_output[-1]:-${input:r}.flac}
+    local tmp="${output:h}/.${output:t:r}.$$.flac"
+    local tmp2="${tmp:r}.stripped.flac"
+
+    {
+        flac --best --verify --exhaustive-model-search --qlp-coeff-precision-search \
+             --force -o "$tmp" "$input" || return 1
+
+        if (( $#opt_strip )); then
+            ffmpeg -nostdin -loglevel error -y -i "$tmp" -map 0:a -c copy \
+                   -map_metadata -1 -map_chapters -1 -fflags +bitexact \
+                   "$tmp2" || return 1
+            metaflac --add-seekpoint=10s "$tmp2" || return 1
+            mv -f -- "$tmp2" "$output"
         else
-            cp -v "$file" "$output"
+            mv -f -- "$tmp" "$output"
+        fi
+    } always {
+        rm -f -- "$tmp" "$tmp2"
+    }
+}
+encode-opus () {
+    emulate -L zsh
+    local -a opt_output opt_strip
+    zparseopts -D -E -F -- {o,-output}:=opt_output {s,-strip}=opt_strip || return 1
+
+    if (( $# != 1 )); then
+        print -ru2 "Usage: $0 INPUT [-o OUTPUT] [-s|--strip]"
+        return 1
+    fi
+    local input=$1
+    [[ -f $input ]] || { print -ru2 "$0: no such file: $input"; return 1 }
+
+    local output=${opt_output[-1]:-${input:r}.opus}
+    local tmp="${output:h}/.${output:t:r}.$$.opus"
+    local tmp2="${tmp:r}.stripped.opus"
+    # https://wiki.xiph.org/Opus_Recommended_Settings
+    local -a enc_args=( --bitrate 192 --framesize 60 )
+    (( $#opt_strip )) && enc_args+=( --discard-comments --discard-pictures )
+
+    {
+        opusenc $enc_args "$input" "$tmp" || return 1
+        if (( $#opt_strip )); then
+            # opusenc always writes ENCODER/ENCODER_OPTIONS; remux to drop them
+            ffmpeg -nostdin -loglevel error -y -i "$tmp" -map 0:a -c copy \
+                   -map_metadata -1 -map_chapters -1 -fflags +bitexact \
+                   "$tmp2" || return 1
+            mv -f -- "$tmp2" "$output"
+        else
+            mv -f -- "$tmp" "$output"
+        fi
+    } always {
+        rm -f -- "$tmp" "$tmp2"
+    }
+}
+# Usage: _encode-audio-dir NAME ENCODER_FN EXT [args...]
+_encode-audio-dir () {
+    emulate -L zsh
+    local name=$1 encoder=$2 ext=$3
+    shift 3
+
+    local -a opt_output opt_strip
+    zparseopts -D -E -F -- {o,-output}:=opt_output {s,-strip}=opt_strip || return 1
+    if (( $# > 1 )); then
+        print -ru2 "Usage: $name [INPUT_DIR] [-o OUTPUT_DIR] [-s|--strip]"
+        return 1
+    fi
+
+    local input=${1:-.}
+    local output=${opt_output[-1]:-$input}
+    [[ -d $input ]] || { print -ru2 "$name: not a directory: $input"; return 1 }
+    mkdir -p -- "$output" || return 1
+
+    # Writing next to the sources: don't copy non-audio files onto themselves
+    local in_place=0
+    [[ ${input:A} == ${output:A} ]] && in_place=1
+
+    local file out failed=0
+    local -a outs
+    for file in "$input"/*(N); do
+        if [[ -f $file && ${(L)file:e} == (wav|flac|aif|aiff) ]]; then
+            out="$output/${file:t:r}.$ext"
+            if (( ${outs[(Ie)$out]} )); then
+                print -ru2 "$name: skipping $file: $out already written"
+                failed=1
+                continue
+            fi
+            if $encoder "$file" $opt_strip -o "$out"; then
+                outs+=( "$out" )
+            else
+                failed=1
+            fi
+        elif (( ! in_place )); then
+            cp -Rv -- "$file" "$output/" || failed=1
         fi
     done
+    return $failed
 }
+encode-flac-dir () { _encode-audio-dir $0 encode-flac flac "$@" }
+encode-opus-dir () { _encode-audio-dir $0 encode-opus opus "$@" }
+_encode-audio () {
+    local ext=${${service#encode-}%-dir}
+    case $service in
+        *-dir)
+            _arguments \
+                '(-o --output)'{-o,--output}'[Output directory (default: input directory)]:Output directory:_files -/' \
+                '(-s --strip)'{-s,--strip}'[Strip all metadata]' \
+                '1::Input directory (default .):_files -/'
+            ;;
+        *)
+            _arguments \
+                '(-o --output)'{-o,--output}"[Output file]:Output file:_files -g '*.(#i)${ext}(-.)'" \
+                '(-s --strip)'{-s,--strip}'[Strip all metadata]' \
+                "1:Input file:_files -g '*.(#i)(wav|flac|aif|aiff)(-.)'"
+            ;;
+    esac
+}
+compdef _encode-audio encode-flac encode-flac-dir encode-opus encode-opus-dir
 
 find-dead-symlinks () {
     [[ $1 == -h ]] && { echo "Usage: $0 [DIR] [OPTIONS]" >&2; return 1 }

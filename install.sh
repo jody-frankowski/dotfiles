@@ -136,6 +136,9 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write com.apple.Accessibility EnhancedBackgroundContrastEnabled -bool true
     defaults write com.apple.universalaccess reduceTransparency -bool true
 
+    ### Alert Sound
+    defaults write "Apple Global Domain" com.apple.sound.beep.sound -string /System/Library/Sounds/Purr.aiff
+
     ### curl
     # Use homebrew's curl so that we can use its zsh completion and have a binary with a matching
     # version
@@ -151,6 +154,17 @@ if ./base/.usr/bin/_onmacos ; then
     ### Desktop & Dock
     # Windows/Prefer tabs when opening documents: Always
     defaults write "Apple Global Domain" AppleWindowTabbingMode always
+
+    ### Dock
+    # Show only active apps
+    defaults write com.apple.dock static-only -bool true
+    # Auto hide
+    defaults write com.apple.dock autohide -bool true
+    # Disable bottom right Hot Corner
+    defaults write com.apple.dock wvous-br-corner -int 1
+    defaults write com.apple.dock wvous-br-modifier -int 0
+    # Reload
+    killall Dock
 
     ### Finder
     # Show all the extensions
@@ -176,10 +190,6 @@ if ./base/.usr/bin/_onmacos ; then
         ln -s "$(realpath ./firefox/user.js)"        $profile/
     done
 
-    ### Preview
-    # Disable named annotations
-    defaults write com.apple.preview PVGeneralUseUserName -bool false
-
     ### iina
     # Move the OSC at the bottom. It also makes it much larger.
     defaults write com.colliderli.iina oscPosition 2
@@ -192,54 +202,11 @@ if ./base/.usr/bin/_onmacos ; then
     # Move SubRip subtitles in the video matte
     defaults write com.colliderli.iina displayInLetterBox -bool true
 
-    ### pinentry-mac
-    # Disable the default behavior of saving the passphrase in the keychain
-    defaults write org.gpgtools.common UseKeychain NO
-
-    ### terminfo
-    # We need the terminfo capabilites of tmux-256color, however macOS doesn't
-    # provide one. The one in homebrew's ncurses package is incompatible
-    # with macOS' ncurses tools (tic/terminfo). So we export the terminfo
-    # capabilities with homebrew's ncurses' infocmp and compile them with macOS'
-    # tic.
-    "${BREW_PREFIX}/opt/ncurses/bin/infocmp" -x tmux-256color > ~/.terminfo/tmux-256color.ncurses.terminfo
-    # This command will generate a binary terminfo database in ~/.terminfo and the next one
-    # will generate a terminfo database with the same name, however since our custom version
-    # includes the same terminfo database (use=tmux-256color), our capabilities will be added to
-    # the former one.
-    tic -x ~/.terminfo/tmux-256color.ncurses.terminfo
-    tic -x ~/.terminfo/tmux-256color.terminfo
-
-    ### zsh-completions
-    # Link only the completion files we need
-    for completion in cmake gpgconf node ; do
-        [[ -L ~/.zshrc.d/completion/_"${completion}" ]] || ln -s "${BREW_PREFIX}/share/zsh-completions/_${completion}" ~/.zshrc.d/completion/
-    done
-
-    ### Screensaver
-    # Require a password immediately after enabling the screensaver
-    defaults write com.apple.screensaver askForPassword -bool true
-    defaults write com.apple.screensaver askForPasswordDelay -int 0
-
-    ### Alert Sound
-    defaults write "Apple Global Domain" com.apple.sound.beep.sound -string /System/Library/Sounds/Purr.aiff
-
     ### iterm2
     # Specify the preferences directory
     defaults write com.googlecode.iterm2 PrefsCustomFolder -string "${script_dir}/iterm2"
     # Tell iTerm2 to use the custom preferences from this directory
     defaults write com.googlecode.iterm2 LoadPrefsFromCustomFolder -bool true
-
-    ### Dock
-    # Show only active apps
-    defaults write com.apple.dock static-only -bool true
-    # Auto hide
-    defaults write com.apple.dock autohide -bool true
-    # Disable bottom right Hot Corner
-    defaults write com.apple.dock wvous-br-corner -int 1
-    defaults write com.apple.dock wvous-br-modifier -int 0
-    # Reload
-    killall Dock
 
     ### Keyboard
     ## Delay until repeat: Short
@@ -280,33 +247,24 @@ if ./base/.usr/bin/_onmacos ; then
     # Disable the character palette when holding a key (applications need to be restarted)
     defaults write -g ApplePressAndHoldEnabled -bool false
 
-    ### Terminal.app
-    # Font
-    osascript <<EOF
-tell application "Terminal"
-    set font name of settings set Basic to IoskeleyMonoTermNFM
-    set font size of settings set Basic to 12
-end tell
-    EOF
-    # Use Option as Meta key
-    plist="$HOME/Library/Preferences/com.apple.Terminal.plist"
-    /usr/libexec/PlistBuddy -c 'Set :"Window Settings":Basic:useOptionAsMetaKey 1' "$plist"
-    # Theme
-    defaults write com.apple.Terminal "Default Window Settings" Basic
-    defaults write com.apple.Terminal "Startup Window Settings" Basic
-    # Delete all the other themes
-    backup="/tmp/terminal-basic.plist"
-    plutil -extract "Window Settings.Basic" xml1 -o "$backup" "$plist"
-    plutil -remove "Window Settings" "$plist"
-    /usr/libexec/PlistBuddy -c "Add :'Window Settings' dict"            "$plist"
-    /usr/libexec/PlistBuddy -c "Add :'Window Settings':Basic dict"      "$plist"
-    /usr/libexec/PlistBuddy -c "Merge $backup :'Window Settings':Basic" "$plist"
+    ### pinentry-mac
+    # Disable the default behavior of saving the passphrase in the keychain
+    defaults write org.gpgtools.common UseKeychain NO
+
+    ### Preview
+    # Disable named annotations
+    defaults write com.apple.preview PVGeneralUseUserName -bool false
 
     ### Rectangle
     # Hide menu bar icon
     defaults write com.knollsoft.Rectangle hideMenubarIcon -bool true
     # Launch on login
     defaults write com.knollsoft.Rectangle launchOnLogin -bool true
+
+    ### Screensaver
+    # Require a password immediately after enabling the screensaver
+    defaults write com.apple.screensaver askForPassword -bool true
+    defaults write com.apple.screensaver askForPasswordDelay -int 0
 
     ### Spotlight
     ## Requires a logout!
@@ -378,6 +336,42 @@ end tell
     # Disable background listening for "Hey Siri"
     defaults write com.apple.Siri VoiceTriggerUserEnabled -bool false
 
+    ### Terminal.app
+    # Font
+    osascript <<EOF
+tell application "Terminal"
+    set font name of settings set Basic to IoskeleyMonoTermNFM
+    set font size of settings set Basic to 12
+end tell
+    EOF
+    # Use Option as Meta key
+    plist="$HOME/Library/Preferences/com.apple.Terminal.plist"
+    /usr/libexec/PlistBuddy -c 'Set :"Window Settings":Basic:useOptionAsMetaKey 1' "$plist"
+    # Theme
+    defaults write com.apple.Terminal "Default Window Settings" Basic
+    defaults write com.apple.Terminal "Startup Window Settings" Basic
+    # Delete all the other themes
+    backup="/tmp/terminal-basic.plist"
+    plutil -extract "Window Settings.Basic" xml1 -o "$backup" "$plist"
+    plutil -remove "Window Settings" "$plist"
+    /usr/libexec/PlistBuddy -c "Add :'Window Settings' dict"            "$plist"
+    /usr/libexec/PlistBuddy -c "Add :'Window Settings':Basic dict"      "$plist"
+    /usr/libexec/PlistBuddy -c "Merge $backup :'Window Settings':Basic" "$plist"
+
+    ### terminfo
+    # We need the terminfo capabilites of tmux-256color, however macOS doesn't
+    # provide one. The one in homebrew's ncurses package is incompatible
+    # with macOS' ncurses tools (tic/terminfo). So we export the terminfo
+    # capabilities with homebrew's ncurses' infocmp and compile them with macOS'
+    # tic.
+    "${BREW_PREFIX}/opt/ncurses/bin/infocmp" -x tmux-256color > ~/.terminfo/tmux-256color.ncurses.terminfo
+    # This command will generate a binary terminfo database in ~/.terminfo and the next one
+    # will generate a terminfo database with the same name, however since our custom version
+    # includes the same terminfo database (use=tmux-256color), our capabilities will be added to
+    # the former one.
+    tic -x ~/.terminfo/tmux-256color.ncurses.terminfo
+    tic -x ~/.terminfo/tmux-256color.terminfo
+
     ### Utils
     # Replace some of macOS' utils with GNU or uutils ones. We do this because some of our zsh
     # aliases depend on specific GNU's coreutils flags. It's also useful when quickly copying
@@ -386,6 +380,12 @@ end tell
     for bin in date dircolors du head rm sort timeout; do
         [[ -L ~/.usr/bin/"${bin}" ]] || \
             ln -s "${BREW_PREFIX}/opt/uutils-coreutils/bin/uu-${bin}" ~/.usr/bin/"${bin}"
+    done
+
+    ### zsh-completions
+    # Link only the completion files we need
+    for completion in cmake gpgconf node ; do
+        [[ -L ~/.zshrc.d/completion/_"${completion}" ]] || ln -s "${BREW_PREFIX}/share/zsh-completions/_${completion}" ~/.zshrc.d/completion/
     done
 
     # Symlink macOS specific dotfiles

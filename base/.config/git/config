@@ -38,6 +38,7 @@
   l  = pull --tags
   p  = push --follow-tags # Only push annotated tags
   pf = p --force-with-lease
+  pt = push --tags
   r  = remote
   rv = r -v
   sh = show

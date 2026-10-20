@@ -2841,7 +2841,7 @@ Make Text Bigger</string>
 				<key>Green Component</key>
 				<real>1</real>
 				<key>Red Component</key>
-				<real>0.99999994039535522</real>
+				<real>1</real>
 			</dict>
 			<key>Ansi 1 Color</key>
 			<dict>

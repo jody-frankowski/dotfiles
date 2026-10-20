@@ -139,6 +139,17 @@ if ./base/.usr/bin/_onmacos ; then
     ### Alert Sound
     defaults write "Apple Global Domain" com.apple.sound.beep.sound -string /System/Library/Sounds/Purr.aiff
 
+    ### Chrome
+    # Disable `Allow Chrome sign-in`
+    defaults write com.google.Chrome BrowserSignin -int 0
+    # Disable `Help improve Chrome's features and performance`
+    defaults write com.google.Chrome MetricsReportingEnabled -bool false
+    # Disable `Make searches and browsing better`
+    defaults write com.google.Chrome UrlKeyedAnonymizedDataCollectionEnabled -bool false
+    # Disable `Enhanced spell check` (keeps basic/local spell checking available)
+    defaults write com.google.Chrome SpellCheckServiceEnabled -bool false
+    # Disable `Improve search suggestions`
+    defaults write com.google.Chrome SearchSuggestEnabled -bool false
 
     ### Clock
     # Don't show day of week

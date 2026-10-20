@@ -30,6 +30,7 @@
 [alias]
   a  = add
   b  = branch
+  bl = "!f() { git blame --line-porcelain \"$@\" | perl -ne 'use POSIX qw(strftime); if(/^([0-9a-f]{40}) /){$h=substr($1,0,6)} elsif(/^author (.*)/){$a=$1; $a=q(Uncommit) if $a eq q(Not Committed Yet)} elsif(/^author-time (\\d+)/){$t=$1} elsif(/^\\t(.*)/){printf \"\\e[1;34m%s\\e[0m \\e[1;32m%s\\e[0m \\e[34m%-8s\\e[0m %s\\n\", $h, strftime(\"%y-%m-%d\", localtime($t)), $a, $1}'; }; f"
   c  = commit -v -m
   co = checkout
   d  = diff

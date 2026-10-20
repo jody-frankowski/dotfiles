@@ -139,17 +139,18 @@ if ./base/.usr/bin/_onmacos ; then
     ### Alert Sound
     defaults write "Apple Global Domain" com.apple.sound.beep.sound -string /System/Library/Sounds/Purr.aiff
 
-    ### curl
-    # Use homebrew's curl so that we can use its zsh completion and have a binary with a matching
-    # version
-    [[ -L ~/.usr/bin/curl ]] || ln -s "${BREW_PREFIX}/opt/curl/bin/curl" ~/.usr/bin/
-    [[ -L ~/.zshrc.d/completion/_curl ]] || ln -s "${BREW_PREFIX}/opt/curl/share/zsh/site-functions/_curl" ~/.zshrc.d/completion/
 
     ### Clock
     # Don't show day of week
     defaults write com.apple.menuextra.clock ShowDayOfWeek -bool false
     # Never show date
     defaults write com.apple.menuextra.clock ShowDate 2
+
+    ### curl
+    # Use homebrew's curl so that we can use its zsh completion and have a binary with a matching
+    # version
+    [[ -L ~/.usr/bin/curl ]] || ln -s "${BREW_PREFIX}/opt/curl/bin/curl" ~/.usr/bin/
+    [[ -L ~/.zshrc.d/completion/_curl ]] || ln -s "${BREW_PREFIX}/opt/curl/share/zsh/site-functions/_curl" ~/.zshrc.d/completion/
 
     ### Desktop & Dock
     # Windows/Prefer tabs when opening documents: Always

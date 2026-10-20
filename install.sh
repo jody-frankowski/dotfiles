@@ -107,7 +107,7 @@ if ./base/.usr/bin/_onmacos ; then
 
     casks=(
         firefox
-        font-adwaita-mono-nerd-font
+        font-ioskeley-mono-term-nerd-font
         google-chrome
         iina
         iterm2

@@ -1853,7 +1853,7 @@
 	<false/>
 	<key>GlobalKeyMap</key>
 	<dict>
-		<key>0x19-0x60000-0x30</key>
+		<key>0x19-0x60000-0x30-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>39</integer>
@@ -1866,7 +1866,7 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x21-0x120000-0x12</key>
+		<key>0x21-0x120000-0x12-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -1879,7 +1879,7 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x28-0x120000-0x19</key>
+		<key>0x28-0x120000-0x19-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -1892,7 +1892,7 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x29-0x120000-0x1d</key>
+		<key>0x29-0x120000-0x1d-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -1905,7 +1905,7 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x2a-0x120000-0x1c</key>
+		<key>0x2a-0x120000-0x1c-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -1918,7 +1918,7 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x2c-0x100000-0x2b</key>
+		<key>0x2c-0x100000-0x2b-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -1931,7 +1931,7 @@
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x2c-0x80000-0x2b</key>
+		<key>0x2c-0x80000-0x2b-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>25</integer>
@@ -1945,7 +1945,7 @@ Preferences...</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x2d-0x100000-0x1b</key>
+		<key>0x2d-0x100000-0x1b-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -1958,7 +1958,7 @@ Preferences...</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x2d-0x80000-0x1b</key>
+		<key>0x2d-0x80000-0x1b-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>25</integer>
@@ -1972,7 +1972,7 @@ Make Text Smaller</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x2e-0x100000-0x2f</key>
+		<key>0x2e-0x100000-0x2f-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -1985,7 +1985,7 @@ Make Text Smaller</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x30-0x100000-0x1d</key>
+		<key>0x30-0x100000-0x1d-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -1998,7 +1998,7 @@ Make Text Smaller</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x30-0x80000-0x1d</key>
+		<key>0x30-0x80000-0x1d-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>25</integer>
@@ -2012,7 +2012,7 @@ Make Text Normal Size</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x3a-0x120000-0x29</key>
+		<key>0x3a-0x120000-0x29-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2025,7 +2025,7 @@ Make Text Normal Size</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x3b-0x100000-0x29</key>
+		<key>0x3b-0x100000-0x29-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2038,7 +2038,7 @@ Make Text Normal Size</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x3d-0x80000-0x18</key>
+		<key>0x3d-0x80000-0x18-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>25</integer>
@@ -2052,7 +2052,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x41-0x120000-0x0</key>
+		<key>0x41-0x120000-0x0-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2065,7 +2065,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x42-0x120000-0xb</key>
+		<key>0x42-0x120000-0xb-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2078,7 +2078,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x43-0x120000-0x8</key>
+		<key>0x43-0x120000-0x8-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2091,7 +2091,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x44-0x120000-0x2</key>
+		<key>0x44-0x120000-0x2-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2104,7 +2104,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x45-0x120000-0xe</key>
+		<key>0x45-0x120000-0xe-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2117,7 +2117,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x46-0x120000-0x3</key>
+		<key>0x46-0x120000-0x3-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2130,7 +2130,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x47-0x120000-0x5</key>
+		<key>0x47-0x120000-0x5-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2143,7 +2143,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x48-0x120000-0x4</key>
+		<key>0x48-0x120000-0x4-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2156,7 +2156,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x49-0x120000-0x22</key>
+		<key>0x49-0x120000-0x22-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2169,7 +2169,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x4a-0x120000-0x26</key>
+		<key>0x4a-0x120000-0x26-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2182,7 +2182,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x4b-0x120000-0x28</key>
+		<key>0x4b-0x120000-0x28-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2195,7 +2195,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x4c-0x120000-0x25</key>
+		<key>0x4c-0x120000-0x25-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2208,7 +2208,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x4d-0x120000-0x2e</key>
+		<key>0x4d-0x120000-0x2e-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2221,7 +2221,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x4e-0x120000-0x2d</key>
+		<key>0x4e-0x120000-0x2d-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2234,7 +2234,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x4f-0x120000-0x1f</key>
+		<key>0x4f-0x120000-0x1f-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2247,7 +2247,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x50-0x120000-0x23</key>
+		<key>0x50-0x120000-0x23-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2260,7 +2260,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x52-0x120000-0xf</key>
+		<key>0x52-0x120000-0xf-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2273,7 +2273,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x53-0x120000-0x1</key>
+		<key>0x53-0x120000-0x1-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2286,7 +2286,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x54-0x120000-0x11</key>
+		<key>0x54-0x120000-0x11-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2299,7 +2299,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x55-0x120000-0x20</key>
+		<key>0x55-0x120000-0x20-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2312,7 +2312,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x56-0x120000-0x9</key>
+		<key>0x56-0x120000-0x9-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2325,7 +2325,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x57-0x120000-0xd</key>
+		<key>0x57-0x120000-0xd-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2338,7 +2338,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x58-0x120000-0x7</key>
+		<key>0x58-0x120000-0x7-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2351,7 +2351,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x59-0x120000-0x10</key>
+		<key>0x59-0x120000-0x10-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2364,7 +2364,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x5a-0x120000-0x6</key>
+		<key>0x5a-0x120000-0x6-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2377,7 +2377,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x5f-0x120000-0x1b</key>
+		<key>0x5f-0x120000-0x1b-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2390,7 +2390,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x61-0x100000-0x0</key>
+		<key>0x61-0x100000-0x0-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2403,7 +2403,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x62-0x100000-0xb</key>
+		<key>0x62-0x100000-0xb-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2416,7 +2416,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x64-0x100000-0x2</key>
+		<key>0x64-0x100000-0x2-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2429,7 +2429,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x65-0x100000-0xe</key>
+		<key>0x65-0x100000-0xe-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2442,7 +2442,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x66-0x100000-0x3</key>
+		<key>0x66-0x100000-0x3-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2455,7 +2455,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x67-0x100000-0x5</key>
+		<key>0x67-0x100000-0x5-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2468,7 +2468,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x68-0x100000-0x4</key>
+		<key>0x68-0x100000-0x4-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2481,7 +2481,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x69-0x100000-0x22</key>
+		<key>0x69-0x100000-0x22-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2494,7 +2494,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x6a-0x100000-0x26</key>
+		<key>0x6a-0x100000-0x26-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2507,7 +2507,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x6b-0x100000-0x28</key>
+		<key>0x6b-0x100000-0x28-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2520,7 +2520,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x6c-0x100000-0x25</key>
+		<key>0x6c-0x100000-0x25-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2533,7 +2533,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x6d-0x100000-0x2e</key>
+		<key>0x6d-0x100000-0x2e-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2546,7 +2546,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x6e-0x100000-0x2d</key>
+		<key>0x6e-0x100000-0x2d-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2559,7 +2559,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x6e-0x80000-0x2d</key>
+		<key>0x6e-0x80000-0x2d-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>26</integer>
@@ -2572,7 +2572,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x6f-0x100000-0x1f</key>
+		<key>0x6f-0x100000-0x1f-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2585,7 +2585,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x70-0x100000-0x23</key>
+		<key>0x70-0x100000-0x23-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2598,7 +2598,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x72-0x100000-0xf</key>
+		<key>0x72-0x100000-0xf-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2611,7 +2611,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x73-0x100000-0x1</key>
+		<key>0x73-0x100000-0x1-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2624,7 +2624,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x74-0x100000-0x11</key>
+		<key>0x74-0x100000-0x11-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2637,7 +2637,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x75-0x100000-0x20</key>
+		<key>0x75-0x100000-0x20-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2650,7 +2650,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x77-0x100000-0xd</key>
+		<key>0x77-0x100000-0xd-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2663,7 +2663,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x78-0x100000-0x7</key>
+		<key>0x78-0x100000-0x7-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2676,7 +2676,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x79-0x100000-0x10</key>
+		<key>0x79-0x100000-0x10-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2689,7 +2689,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x7a-0x100000-0x6</key>
+		<key>0x7a-0x100000-0x6-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2702,7 +2702,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x7c-0x120000-0x2a</key>
+		<key>0x7c-0x120000-0x2a-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>10</integer>
@@ -2715,7 +2715,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x7f-0x100000-0x33</key>
+		<key>0x7f-0x100000-0x33-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>11</integer>
@@ -2728,7 +2728,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0x9-0x40000-0x30</key>
+		<key>0x9-0x40000-0x30-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>32</integer>
@@ -2741,7 +2741,7 @@ Make Text Bigger</string>
 			<key>Version</key>
 			<integer>2</integer>
 		</dict>
-		<key>0xd-0x100000-0x24</key>
+		<key>0xd-0x100000-0x24-0x1</key>
 		<dict>
 			<key>Action</key>
 			<integer>11</integer>

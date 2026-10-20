@@ -6,6 +6,9 @@
  * user_pref("widget.macos.native-context-menus", false);
 */
 
+/* Navigation Bar */
+/* Remove useless top 1px border */
+#nav-bar { border-top: 0px !important; }
 /* Hide horizontal top of window tabs except for Private Browsing Mode windows */
 #main-window {
   #sidebar-main,
@@ -21,6 +24,23 @@
     }
   }
 }
+
+
+/* Browser Container */
+.browserContainer { border: none !important; }
+
+
+/* Sidebar */
+#sidebar-box {
+  /* Remove border */
+  border: none !important;
+  /* Remove padding */
+  padding-inline-start: 0px !important;
+}
+/* Hide toggle button */
+#sidebar-button { display: none !important; }
+/* Collapse splitter width */
+#sidebar-splitter { min-width: 0px !important; width: 0px !important; }
 
 
 /* Context Menu */
@@ -106,3 +126,13 @@
   content: "Copy Link to Highlight" !important;
   display: -moz-box !important;
 }
+
+
+/* URL Bar */
+/* Hide the clock history icon */
+.urlbarView-row[type="history"] {
+	.urlbarView-favicon { mask-image: none !important; }
+	.urlbarView-type-icon { display: none !important; }
+}
+/* Hide the `Switch to Tab` result action. The synced tabs device name will still appear. */
+span.urlbarView-switchToTab { display: none !important; }

@@ -281,6 +281,13 @@ if ./base/.usr/bin/_onmacos ; then
     defaults write -g ApplePressAndHoldEnabled -bool false
 
     ### Terminal.app
+    # Font
+    osascript <<EOF
+tell application "Terminal"
+    set font name of settings set Basic to IoskeleyMonoTermNFM
+    set font size of settings set Basic to 12
+end tell
+    EOF
     # Use Option as Meta key
     /usr/libexec/PlistBuddy -c 'Set :"Window Settings":Basic:useOptionAsMetaKey 1' ~/Library/Preferences/com.apple.Terminal.plist
     # Theme

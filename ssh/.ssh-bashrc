@@ -157,9 +157,12 @@ fi
 
 ### functions ###
 bak () {
-    for arg in "$@" ; do
-        newname="$arg-$(date -Iseconds).bak";
-        cp -a "$arg" "$newname";
+    local ts=$(date +%Y-%m-%dT%H%M%S%z)
+    local user=${USER:-$(id -un)}
+
+    # ${@%/} removes trailing slashes to avoid creating subdirectories like `/SRC/-DATE.bak`
+    for arg in "${@%/}"; do
+        cp -a -- "${arg}" "${arg}-${user}-${ts}.bak"
     done
 }
 

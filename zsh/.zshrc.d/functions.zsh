@@ -1,13 +1,15 @@
 # -*- mode: sh -*-
 
 bak () {
-    local date=$(date -Isec)
-    local slash
+    local ts=$(date +%Y-%m-%dT%H%M%S%z)
 
-    # ${@%/} removes trailing slashes to avoid creating subdirectories like `/SRC/-DATE.bak`
-    for arg in "${@%/}"; do
-        slash=; [[ -d $arg ]] && slash=/
-        rsync -a -f '- node_modules' -f '- .venv' "${arg}${slash}" "$(realpath ${arg})-${date}.bak"
+    for arg in "$@"; do
+        # Removes trailing slash and protects against names containing `:` which may trip up rsync
+        # remote copy detection
+        src="$(realpath ${arg})"
+        dst="${src}-${ts}.bak"
+        [[ -d $src ]] && src="$src/"
+        rsync -a -f '- node_modules' -f '- .venv' "${src}" "${dst}"
     done
 }
 

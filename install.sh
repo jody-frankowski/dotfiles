@@ -289,12 +289,12 @@ tell application "Terminal"
 end tell
     EOF
     # Use Option as Meta key
-    /usr/libexec/PlistBuddy -c 'Set :"Window Settings":Basic:useOptionAsMetaKey 1' ~/Library/Preferences/com.apple.Terminal.plist
+    plist="$HOME/Library/Preferences/com.apple.Terminal.plist"
+    /usr/libexec/PlistBuddy -c 'Set :"Window Settings":Basic:useOptionAsMetaKey 1' "$plist"
     # Theme
     defaults write com.apple.Terminal "Default Window Settings" Basic
     defaults write com.apple.Terminal "Startup Window Settings" Basic
     # Delete all the other themes
-    plist="$HOME/Library/Preferences/com.apple.Terminal.plist"
     backup="/tmp/terminal-basic.plist"
     plutil -extract "Window Settings.Basic" xml1 -o "$backup" "$plist"
     plutil -remove "Window Settings" "$plist"

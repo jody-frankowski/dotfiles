@@ -130,7 +130,7 @@
 
 /* URL Bar */
 /* Hide the clock history icon */
-.urlbarView-row[type="history"] {
+.urlbarView-row[type^="history"] {
 	.urlbarView-favicon { mask-image: none !important; }
 	.urlbarView-type-icon { display: none !important; }
 }

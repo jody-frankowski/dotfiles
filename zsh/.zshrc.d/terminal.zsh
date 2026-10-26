@@ -1,20 +1,42 @@
 # -*- mode: sh -*-
 
-# Return if requirements aren't met
-[[ ! -t 1 || -z "$TERM" || "$TERM" == (dumb|linux) ]] && return 1
+# Docs:
+# - https://invisible-island.net/xterm/ctlseqs/ctlseqs.html
+# - https://en.wikipedia.org/wiki/ANSI_escape_code
+# - https://vtdn.dev/docs/category/c0-control-codes
 
-if ! infocmp &> /dev/null ; then
-    echo "Terminfo database '$TERM' not found!" >&2
+# Only run when called with a terminal attached
+[[ -o interactive && -t 1 && -t 2 && -n $TERM && $TERM != (dumb|linux) ]] || return 0
 
-    if infocmp "${TERM[(ws:-:)1]}" &> /dev/null ; then
-        echo "Falling back to a dumber TERM: '${TERM[(ws:-:)1]}'!" >&2
-        export TERM="${TERM[(ws:-:)1]}"
-    else
-        echo "Dumber TERM '${TERM[(ws:-:)1]}' not found either!" >&2
-        echo "Falling back to 'xterm'!" >&2
-        export TERM=xterm
+() {
+  emulate -L zsh
+
+  # No terminfo tooling? Leave TERM alone rather than guessing.
+  (( $+commands[infocmp] )) || return 0
+  infocmp $TERM &>/dev/null && return 0
+
+  print -ru2 -- "terminfo: no entry for '$TERM'"
+
+  # Build candidates: for each stripped prefix, prefer -256color first,
+  # then generic fallbacks. Deduplicate and drop the original TERM.
+  local -a candidates
+  local base=$TERM c
+  while [[ $base == *-* ]]; do
+    base=${base%-*}
+    candidates+=( $base-256color $base )
+  done
+  candidates+=( xterm-256color xterm vt100 )
+  candidates=( ${(u)candidates:#$TERM} )
+
+  for c ($candidates)
+    if infocmp $c &>/dev/null; then
+      print -ru2 -- "terminfo: falling back to '$c'"
+      export TERM=$c
+      return 0
     fi
-fi
+
+  print -ru2 -- "terminfo: database appears unusable; leaving TERM=$TERM"
+}
 
 # Colored less and manpages
 # See `man -P "$PAGER -p '-Dxcolor'" less`

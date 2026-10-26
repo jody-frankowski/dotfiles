@@ -128,6 +128,26 @@ _terminal-osc7-set-cwd() {
 add-zsh-hook chpwd _terminal-osc7-set-cwd
 _terminal-osc7-set-cwd # Call it at least once when the shell starts
 
+() {
+    # Build the reset string once instead of on every prompt
+    local -a seqs=(
+        $'\e[?1049l'                                   # Alternate screen off
+        $'\e[?7h'                                      # Auto-wrap on
+        $'\e[?25h'                                     # Cursor visible
+        $'\e[?1004l'                                   # Focus reporting off
+        $'\e[?1005l\e[?1006l\e[?1015l'                 # Mouse encodings off
+        $'\e[?9l\e[?1000l\e[?1001l\e[?1002l\e[?1003l'  # Mouse tracking off
+        $'\e[?1l\e>'                                   # Normal cursor keys & numeric keypad
+        $'\e[?2026l'                                   # Synchronized output off
+        $'\e[>4;0m'                                    # xterm modifyOtherKeys off
+    )
+    typeset -g _term_reset_seq=${(j::)seqs}
+}
+_term-reset-modes() {
+    print -rn -- $_term_reset_seq
+}
+add-zsh-hook precmd _term-reset-modes
+
 # Set OSC 133 prompt mark
 # Tmux only supports OSC 133 A & C:
 # https://github.com/tmux/tmux/blob/bef4865d91ff8e549a3a4d63563f0ef1a39a1a39/input.c#L3083

@@ -101,11 +101,6 @@ alias latr='lat -r'
 command -v zless    >/dev/null && alias less=zless
 command -v zstdless >/dev/null && alias less=zstdless
 
-alias apr='apachectl -k graceful'
-alias apt='apachectl -t && apachectl -t -D DUMP_VHOSTS'
-alias nxr='nginx -s reload'
-alias nxt='nginx -t'
-
 alias cpv='rsync -avP'
 alias cpvr='rsync -avP --inplace --size-only -i'
 alias cpvs='rsync -avP --rsync-path="sudo rsync"'

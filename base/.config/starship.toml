@@ -183,6 +183,11 @@ symbol = '🧙  '
 format = '[$symbol$workspace]($style) '
 symbol = ' '
 
+[username]
+disabled = false
+aliases = { "root" = "⚡️" }
+format = '[$user]($style) '
+
 [aws]
 disabled = true
 [gcloud]
@@ -194,8 +199,6 @@ disabled = true
 [netns]
 disabled = true
 [swift]
-disabled = true
-[username]
 disabled = true
 [vagrant]
 disabled = true

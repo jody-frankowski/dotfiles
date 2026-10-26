@@ -179,6 +179,10 @@ format = '[$symbol]($style)'
 # Remove when https://github.com/starship/starship/issues/5924 is fixed?
 symbol = '🧙  '
 
+[terraform]
+format = '[$symbol$workspace]($style) '
+symbol = ' '
+
 [aws]
 disabled = true
 [gcloud]

@@ -110,6 +110,7 @@ format = '[ $path ]($style) '
 read_only = '󰉐'
 style = 'blue bold inverted'
 truncation_length = 0
+truncate_to_repo = false
 
 [direnv]
 format = '[$loaded](green)[$allowed](red) '

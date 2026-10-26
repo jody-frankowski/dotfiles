@@ -148,6 +148,7 @@ style = 'blue bold'
 
 [mise]
 disabled = false
+format = '[$symbol]($style)'
 
 [nix_shell]
 format = '[$symbol]($style) '

@@ -123,6 +123,9 @@ _terminal-osc7-set-cwd() {
     # systems: The system primitives used to get the subprocess path always result in their
     # realpath. It works with symlinks, but can be surprising.
     # e.g. `mkdir real; ln -s real symlink; cd symlink; ls -la /proc/$$/cwd` >> `[...]/real`
+
+    # Skip subshells (Can't be guarded against at the top of terminal.zsh)
+    (( ZSH_SUBSHELL )) && return 0
     printf "\e]7;file://$HOST/$PWD\e\\"
 }
 add-zsh-hook chpwd _terminal-osc7-set-cwd

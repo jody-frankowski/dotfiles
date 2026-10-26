@@ -128,7 +128,10 @@ _terminal-osc7-set-cwd() {
     (( ZSH_SUBSHELL )) && return 0
     printf "\e]7;file://$HOST/$PWD\e\\"
 }
-add-zsh-hook chpwd _terminal-osc7-set-cwd
+# Trigger on any directory change
+add-zsh-hook chpwd  _terminal-osc7-set-cwd
+# Trigger if ssh/subshell sessions exit early without clearing their own osc7 traces
+add-zsh-hook precmd _terminal-osc7-set-cwd
 _terminal-osc7-set-cwd # Call it at least once when the shell starts
 
 () {

@@ -192,6 +192,8 @@ format = '[$user]($style) '
 disabled = true
 [gcloud]
 disabled = true
+[gradle]
+disabled = true
 [helm]
 disabled = true
 [lua]

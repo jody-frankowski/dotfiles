@@ -1316,6 +1316,26 @@ isearch):
 (define-key minibuffer-local-isearch-map (kbd "C-n") 'next-history-element)
 (define-key isearch-mode-map (kbd "C-p") 'isearch-ring-retreat)
 (define-key minibuffer-local-isearch-map (kbd "C-p") 'previous-history-element)
+
+Define some =apropos= keybindings:
+
+#+BEGIN_SRC emacs-lisp
+(defvar-keymap help-apropos-map
+  :doc "Keymap for apropos subcommands."
+  "a"   #'apropos
+  "l"   #'apropos-library
+  "f"   #'apropos-function
+  "x"   #'apropos-command
+  "v"   #'apropos-variable
+  "V"   #'apropos-local-variable
+  "u"   #'apropos-user-option
+  "d"   #'apropos-documentation
+  "C-f" #'customize-apropos-faces
+  "g"   #'customize-apropos-groups
+  "o"   #'customize-apropos-options
+  "c"   #'customize-apropos
+  "i"   #'info-apropos)
+(keymap-set help-map "a" help-apropos-map)
 #+END_SRC
 
 Unbind some keybindings that duplicate other evil/vim keybindings:

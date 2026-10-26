@@ -21,7 +21,7 @@ fi
 export LESS='-i -M -R -j4 --use-color -DCwk -DEr~ -DNr -DPw~ -DSw~'
 export MANPAGER='less -Dd+r -Dk+r -Dsw~ -Dug*'
 
-_set-window-title () {
+_term-title-set () {
     # Sets the terminal window title with the following OSC:
     # https://invisible-island.net/xterm/ctlseqs/ctlseqs.html#h3-Operating-System-Commands
     # Works with most terminals however some might need further configuration.
@@ -29,7 +29,6 @@ _set-window-title () {
 
     printf '\e]2;%s\a' "$@"
 }
-
 _term-title-cmd () {
     # Sets the window title with the current command
 
@@ -90,9 +89,8 @@ _term-title-cmd () {
         title+=$cmd
     fi
 
-    _set-window-title $title
+    _term-title-set $title
 }
-
 _term-title-path () {
     # Sets the window title with the current path
 
@@ -107,15 +105,14 @@ _term-title-path () {
         title+="${${${${(@j:/:M)${(@s:/:)pwd}##.#?}:h}%/}//\%/%%}/${${pwd:t}//\%/%%}"
     fi
 
-    _set-window-title $title
+    _term-title-set $title
 }
-
 # Set the window title before command execution
 add-zsh-hook preexec _term-title-cmd
 # Set the window title before displaying the prompt
 add-zsh-hook precmd  _term-title-path
 
-_terminal-osc7-set-cwd() {
+_term-osc7-set-cwd() {
     # Used by tmux's `pane_path`.
     # It's not standard, but we follow this dead proposal:
     # https://gitlab.freedesktop.org/terminal-wg/specifications/-/merge_requests/7/diffs
@@ -129,10 +126,10 @@ _terminal-osc7-set-cwd() {
     printf "\e]7;file://$HOST/$PWD\e\\"
 }
 # Trigger on any directory change
-add-zsh-hook chpwd  _terminal-osc7-set-cwd
+add-zsh-hook chpwd  _term-osc7-set-cwd
 # Trigger if ssh/subshell sessions exit early without clearing their own osc7 traces
-add-zsh-hook precmd _terminal-osc7-set-cwd
-_terminal-osc7-set-cwd # Call it at least once when the shell starts
+add-zsh-hook precmd _term-osc7-set-cwd
+_term-osc7-set-cwd # Call it at least once when the shell starts
 
 () {
     # Build the reset string once instead of on every prompt

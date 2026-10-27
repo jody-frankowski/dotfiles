@@ -182,6 +182,39 @@ getip () {
     dig +short myip.opendns.com @resolver1.opendns.com
 }
 
+get-limits-proc () {
+    echo 'Max System Threads (Kernel Limit):'
+    cat /proc/sys/kernel/threads-max
+
+    echo
+    echo 'Max Threads Of PID 1 (And Children):'
+    grep --color=never 'Max processes' /proc/1/limits
+
+    echo
+    echo 'Current Thread Parent Tree Limits:'
+    pid=$$
+    while (( pid > 1 )); do
+        printf '%-7s %-15s %s\n' $pid "$(cat /proc/$pid/comm)" \
+               "$(awk '/Max processes/ {print $3, $4}' /proc/$pid/limits)"
+        pid=$(ps -o ppid= -p $pid | tr -d ' ')
+    done
+
+    echo
+    echo 'PAM Limits:'
+    # PAM limits (applied by sudo/sshd/login if pam_limits is enabled)
+    grep --color=never -rn nproc /etc/security/limits.conf /etc/security/limits.d/ 2>/dev/null
+    grep --color=never -rn pam_limits /etc/pam.d/ 2>/dev/null
+
+    echo
+    echo 'Systemd Default Threads Limits:'
+    # Systemd defaults and unit overrides
+    grep --color=never -rn NPROC /etc/systemd/system.conf /etc/systemd/system.conf.d/ /etc/systemd/user.conf 2>/dev/null
+    systemctl show -p DefaultLimitNPROC
+    echo
+    echo 'Systemd sshd Threads Limit:'
+    systemctl show sshd -p LimitNPROC
+}
+
 mkcd () {
   (( $# == 1 )) || return 1
   mkdir -p "$1" && builtin cd "$1"

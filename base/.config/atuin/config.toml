@@ -59,6 +59,9 @@ ignored_commands = [
 [sync]
 records = true # Sync v2
 
+[theme]
+name = "mine"
+
 [tmux]
 # Disable the tmux popup for now. The popup forbids us to switch windows until it's closed.
 enabled = false

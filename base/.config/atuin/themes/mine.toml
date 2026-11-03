@@ -1,0 +1,6 @@
+[theme]
+name = "mine"
+parent = "default"
+
+[colors]
+Annotation = "black"

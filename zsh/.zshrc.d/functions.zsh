@@ -1184,107 +1184,135 @@ _onlinux && (( $+commands[systemctl] )) && {
 }
 
 share () {
-    if [[ $1 = "-h" || $1 = "--help" ]] ; then
-        echo "Usage: $0 [--auth[=PASSWORD]] [--expose] [DIR|FILE...]"
-        return
+    emulate -L zsh
+    setopt err_return pipe_fail no_unset
+
+    local usage="Usage: $0 [--ip=LISTEN_IP] [--port=PORT] [--pass=PASS] [-s|--https] [-v|--verbose] [DIR|FILE...]
+Share the specified directories or files (defaults to the current directory)."
+
+    local -A opts
+    local -a help verbose https
+    zparseopts -D -E -F -A opts - \
+        h=help -help=help \
+        v=verbose -verbose=verbose \
+        s=https -https=https \
+        -pass:=opts -ip:=opts -port:=opts || { print -u2 "$usage"; return 1 }
+
+    (( $#help )) && { print -u2 "$usage"; return 0 }
+    (( $#verbose )) && setopt xtrace
+
+    local pass="${${opts[--pass]:-}#=}"
+    local listen_ip="${${opts[--ip]:-}#=}"
+    local port="${${opts[--port]:-}#=}"
+    local scheme="http"
+    local tls_config=""
+    local wget_tls_flag=""
+
+    if (( $#https )); then
+        scheme="https"
+        wget_tls_flag=" --no-check-certificate"
+        tls_config="tls internal {
+        on_demand
+    }"
     fi
 
-    local auth=false
-    local auth_password=""
-    local expose=false
-    local to_share=()
-    while [[ $# -gt 0 ]] ; do
-        arg="$1"
+    [[ "${1:-}" == "--" ]] && shift
+    local -a to_share=( "${@:A}" )
+    (( ${#to_share} == 0 )) && to_share=( "${PWD:A}" )
 
-        case "$arg" in
-            --auth*)
-                auth=true
-                auth_password="$(echo $1 | cut -s -d= -f2)"
-                ;;
-            --expose)
-                expose=true
-                ;;
-            *)
-                to_share+=("$1")
-                ;;
-        esac
-        shift
+    for arg in "${to_share[@]}"; do
+        [[ -e "$arg" ]] || { print -u2 "Error: '$arg' does not exist."; return 1 }
     done
 
-    if [[ ${#to_share[@]} -eq 0 ]] ; then
-        to_share=(.)
+    # Port selection: use 8080 if free, otherwise pick a random free port
+    if [[ -z "$port" ]]; then
+        if ! lsof -iTCP:8080 -sTCP:Listen -P -n &>/dev/null; then
+            port=8080
+        else
+            port=$(python3 -c 'import socket; s=socket.socket(); s.bind(("", 0)); print(s.getsockname()[1]); s.close()')
+            print -u2 "Port 8080 is in use; using random port: ${port}"
+        fi
     fi
 
-    local share_directory_root=$(mktemp -d)
-
-    if [[ "${auth}" = true ]] ; then
-        # When there is an index.html file, Python doesn't generate a directory
-        # listing for the root directory
-        # https://docs.python.org/3/library/http.server.html#http.server.SimpleHTTPRequestHandler.do_GET
-        touch "${share_directory_root}"/index.html
-        if [[ -z "${auth_password}" ]] ; then
-            auth_password=$(gen-passphrase --no-clipboard)
+    # Generate passphrase if not provided
+    if [[ -z "$pass" ]]; then
+        if (( $+commands[gen-passphrase] )); then
+            pass="$(gen-passphrase --no-clipboard | sed -E "s/ |'//g")"
+        else
+            pass="$(LC_ALL=C tr -dc 'a-zA-Z0-9' < /dev/urandom | head -c 16 || true)"
         fi
-        share_directory="${share_directory_root}"/"${auth_password}"
-        mkdir "${share_directory}"
-    else
-        share_directory="${share_directory_root}"
+        [[ -n "$pass" ]] || { print -u2 "Error: failed to generate passphrase."; return 1 }
     fi
 
-    for arg in "${to_share[@]}" ; do
-        ln -s "$(realpath ${arg})" "${share_directory}"
-    done
+    local -r shares_base="${HOME}/.local/share/caddy/shares"
+    command mkdir -p "$shares_base"
+    local -r share_directory_root="$(command mktemp -d "${shares_base}/share.XXXXXX")"
 
-    cd "${share_directory_root}" &>/dev/null
+    {
+        print > "${share_directory_root}/index.html"
+        print "User-agent: Wget\nAllow: /\nUser-agent: *\nDisallow: /" > "${share_directory_root}/robots.txt"
+        command mkdir -p "${share_directory_root}/${pass}"
 
-    # It really should be a while loop of python trying to listen to the port,
-    # but with this way we can easily print the port before running the server,
-    # and let the user stop it with a simple C-c
-    local port="9999"
-    while ss -nlt | awk '{print $4}' | grep ":${port}" > /dev/null ; do
-        port="${RANDOM}"
-    done
-
-    echo "Pick one of the following:"
-    [[ ${expose} == true ]] && echo "Local:"
-    for ip in $(ip -o -4 a | awk -F'[ /]+' '$2!~/lo/{print $4}') ; do
-        url="http://${ip}:${port}"
-        if [[ -n "${auth_password}" ]] ; then
-            url="${url}/${auth_password}/"
-        fi
-        echo wget -r --reject "'"index.html\*"'" "${url}"
-    done
-
-    if [[ "${expose}" = true ]] ; then
-        if ! local remote_port=$(forward-port "${port}" | head -n1 | awk '{print $3}') ; then
-            echo "Failed to expose share."
-            return 1
-        fi
-        echo "Remote:"
-        remote_local_ips=$(ssh port-forwarder "ip -o -4 a | awk -F'[ /]+' '\$2!~/lo/{print \$4}'")
-        for ip in ${=remote_local_ips} ; do
-            url="http://${ip}:${remote_port}"
-            if [[ -n "${auth_password}" ]] ; then
-                url="${url}/${auth_password}/"
-            fi
-            echo wget -r --reject "'"index.html\*"'" "${url}"
+        for arg in "${to_share[@]}"; do
+            command ln -s "$arg" "${share_directory_root}/${pass}/"
         done
-    fi
 
-    python3 -m http.server "${port}"
-    forward-port "${port}" --stop
+        local url_path="$pass" trailing_slash="/"
+        if (( ${#to_share} == 1 )); then
+            url_path="${pass}/${to_share[1]:t}"
+            [[ -d "${to_share[1]}" ]] || trailing_slash=""
+        fi
 
-    # We don't `rm -rf` to be a bit safer
-    find "${share_directory}" -maxdepth 1 -type l -delete
-    if [[ "${auth}" = true ]] ; then
-        rmdir "${share_directory}"
-        rm -f "${share_directory_root}/index.html"
-    fi
-    rmdir "${share_directory_root}"
-
-    cd - &>/dev/null
+        local -r caddyfile="${share_directory_root}/Caddyfile"
+        cat <<EOF > "$caddyfile"
+{
+    admin off
+    auto_https off
 }
+${scheme}://${listen_ip}:${port} {
+    ${listen_ip:+bind ${listen_ip}}
+    ${tls_config}
+    root * "${share_directory_root}"
+    file_server browse
+    handle_errors {
+        @404 expression {err.status_code} == 404
+        redir @404 ../ 302
+    }
+}
+EOF
 
+        local cmd="wget -r --np --nH --cut-dirs=1${wget_tls_flag} --reject 'index.html*'"
+        print "Pick one of the following:"
+        local -a ips=( "${listen_ip:-$(ifconfig 2>/dev/null | awk '/inet / && $2 != "127.0.0.1" {sub(/\/.*/, "", $2); print $2}')}" )
+        for ip in ${(f)ips}; do
+            print "${cmd} '${scheme}://${ip}:${port}/${url_path}${trailing_slash}'"
+        done
+        print
+
+        caddy run --config "$caddyfile" --adapter caddyfile || true
+    } always {
+        if [[ -n "${share_directory_root:-}" && -d "$share_directory_root" ]]; then
+            command find "${share_directory_root}/${pass}" -maxdepth 1 -type l -delete 2>/dev/null || true
+            command rmdir "${share_directory_root}/${pass}" 2>/dev/null || true
+            command rm -f "${share_directory_root}"/{index.html,robots.txt,Caddyfile} 2>/dev/null || true
+            command rmdir "${share_directory_root}" 2>/dev/null || true
+        fi
+    }
+}
+_share () {
+    local -a ips
+    ips=( $(ifconfig 2>/dev/null | awk '/inet / {sub(/\/.*/, "", $2); print $2}') )
+
+    _arguments -s -S \
+        '(- *)'{-h,--help}'[Show help message]' \
+        '(-v --verbose)'{-v,--verbose}'[Enable xtrace debug logging]' \
+        '(-s --https)'{-s,--https}'[Serve over HTTPS using an internal self-signed certificate]' \
+        '--ip=[IP address to listen on]:listen IP:('${(j: :)ips}')' \
+        '--port=[Port to listen on]:port:(8080 9999 8000 3000)' \
+        '--pass=[Custom URL passphrase]:passphrase:' \
+        '*:file or directory to share:_files'
+}
+compdef _share share
 
 sshrc () {
     ssh -o ControlPath=none \

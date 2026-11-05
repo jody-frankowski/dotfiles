@@ -1183,6 +1183,45 @@ _onlinux && (( $+commands[systemctl] )) && {
     alias scu='systemctl --user'
 }
 
+s () {
+    # s [SSH_OPTIONS] HOST [COMMAND...]
+    # With no COMMAND: upload a bashrc and tmux.conf, then attach to (or create) a tmux session.
+    # With COMMAND: run plain ssh.
+    emulate -L zsh
+    setopt brace_ccl  # {abc} → a b c
+    local usage="Usage: $0 [SSH_OPTIONS] HOST [COMMAND...]"
+    local -a opts help
+    zparseopts -D -F -a opts h=help -help=help \
+        {46AaCfGgKkMNnqsTtVvXxYy}+ {BbcDEeFIiJLlmOoPpQRSWw}+: || return
+
+    if (( $#help )); then print -- $usage; return 0
+    elif (( ! $# )); then print -u2 -- $usage; return 1
+    elif (( $# > 1 )); then ssh "${opts[@]}" "$@"; return  # COMMAND given: plain ssh
+    fi
+
+    # Ship the files inside RemoteCommand (one connection, one auth).
+    # %n = host as typed, %r = remote user; ssh expands these tokens.
+    local rc=/tmp/%r-bashrc conf=/tmp/%r-tmux.conf
+    local -a rcfiles=(~/.ssh-bashrc*(N))
+    local rc_b64 conf_b64
+    rc_b64=$(cat -- $rcfiles </dev/null | base64 | tr -d '\n')
+    # Strip features unsupported by older server-side tmux versions.
+    conf_b64=$(sed -E \
+        -e '/prompt-cursor-colour|menu-style|menu-selected-style/d' \
+        -e 's/,fill=.*//' \
+        ~/.tmux.conf | base64 | tr -d '\n')
+
+    local remote="umask 077
+{ echo _HOST=%n; echo $rc_b64 | base64 -d; } >$rc
+echo $conf_b64 | base64 -d | sed 's/#[{]host_short[}]/%n/g' >$conf
+echo \"set -g default-command 'bash --rcfile $rc'\" >>$conf
+if command -v tmux >/dev/null 2>&1; then tmux -f $conf new -As %r && exit; fi
+exec bash --rcfile $rc"
+
+    ssh -t -o RemoteCommand=$remote "${opts[@]}" "$@"
+}
+compdef s=ssh
+
 scp-r2r () {
     emulate -L zsh
     setopt pipefail extendedglob
@@ -1371,19 +1410,6 @@ _share () {
         '*:file or directory to share:_files'
 }
 compdef _share share
-
-sshrc () {
-    ssh -o ControlPath=none \
-        -o PermitLocalCommand=yes \
-        -o LocalCommand="scp -qC ~/.ssh-bashrc %n:/tmp/" \
-        -t $@ -- \
-        "(tmux new -A -s ssh-\$(whoami) \
-               \"tmux set -s default-command 'bash --rcfile /tmp/.ssh-bashrc'
-                 bash --rcfile /tmp/.ssh-bashrc\") \
-         || bash --rcfile /tmp/.ssh-bashrc"
-}
-alias s=sshrc
-compdef s="ssh"
 
 rdap () {
     [[ $# -eq 0 ]] && { command rdap; return 1 }

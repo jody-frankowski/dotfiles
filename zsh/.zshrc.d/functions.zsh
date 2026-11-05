@@ -726,6 +726,137 @@ mac-plist-services-list () {
 }
 fi
 
+# ── manned: read a manned.org manpage for a specific distro/version ──────────
+# Usage: manned [-o] MANPAGE DISTRO VERSION [SECTION]
+#   SECTION defaults to 1
+#   -o      Open the manned.org web page instead of rendering in the terminal
+#
+#   e.g. manned ls debian 12
+#        manned open ubuntu noble 2
+#        manned -o systemctl centos 9
+
+# key: "<distro> <version>"   value: "<manned system id>:<description>"
+typeset -gA _manned_systems=(
+    'debian 13'    'debian-trixie:trixie'
+    'debian 12'    'debian-bookworm:bookworm'
+    'debian 11'    'debian-bullseye:bullseye'
+    'debian 10'    'debian-buster:buster'
+    'ubuntu 26.04' 'ubuntu-resolute:resolute (LTS)'
+    'ubuntu 24.04' 'ubuntu-noble:noble (LTS)'
+    'ubuntu 22.04' 'ubuntu-jammy:jammy (LTS)'
+    'ubuntu 20.04' 'ubuntu-focal:focal (LTS)'
+    'centos 10'    'centos-10:Stream 10'
+    'centos 9'     'centos-9:Stream 9'
+    'centos 8'     'centos-8:8 / Stream 8'
+    'centos 7'     'centos-7:7'
+)
+typeset -ga _manned_distros=(centos debian ubuntu)
+# Set $reply to the known versions of distro $1, newest first.
+_manned_versions() {
+    local -a vs=(${${(M)${(k)_manned_systems}:#$1 *}#$1 })
+    reply=(${(On)vs})
+}
+manned() {
+    emulate -L zsh
+
+    local -a opt_open opt_help reply
+    zparseopts -D -E -F -- o=opt_open h=opt_help -help=opt_help || return 2
+
+    if (( $#opt_help || $# < 3 || $# > 4 )); then
+        print -u2 "Usage: $0 [-o] MANPAGE DISTRO VERSION [SECTION]"
+        return 2
+    fi
+
+    local page=$1 distro=${2:l} version=${3:l} section=${4:-1}
+    local entry=${_manned_systems[$distro $version]} v d
+
+    # Fall back to matching a codename (e.g. "noble", "bookworm")
+    if [[ -z $entry ]]; then
+        _manned_versions $distro
+        for v in $reply; do
+            [[ ${${_manned_systems[$distro $v]}#*:} == ${version}(| *) ]] \
+                && { entry=${_manned_systems[$distro $v]}; break }
+        done
+    fi
+
+    if [[ -z $entry ]]; then
+        print -u2 "$0: unknown system '$distro $version'. Known:"
+        for d in $_manned_distros; do
+            _manned_versions $d
+            print -u2 -- "  $d: ${(j:, :)reply}"
+        done
+        return 1
+    fi
+
+    if [[ $section != [1-9]* ]]; then
+        print -u2 "$0: invalid section '$section'"
+        return 2
+    fi
+
+    local target="${entry%%:*}/${page}.${section}"
+
+    # Web mode
+    if (( $#opt_open )); then
+        local url="https://manned.org/man/$target"
+        print -r -- $url
+        ${MANNED_OPENER:-open} $url
+        return
+    fi
+
+    # Terminal mode
+    local raw_url="https://manned.org/raw/$target" src
+    if ! src=$(curl -fsSL -- "$raw_url") || [[ -z $src ]]; then
+        print -u2 "$0: not found: $raw_url"
+        return 1
+    fi
+
+    if (( $+commands[mandoc] )); then
+        print -r -- "$src" | mandoc -a -man
+    elif (( $+commands[groff] )); then
+        print -r -- "$src" | groff -man -Tutf8 | ${PAGER:-less -R}
+    else
+        print -u2 "$0: need mandoc or groff to render"
+        return 1
+    fi
+}
+_manned() {
+    local curcontext=$curcontext state state_descr line ret=1
+    typeset -A opt_args
+
+    _arguments -C -s \
+               '-o[Open the manned.org web page instead]' \
+               '(- *)'{-h,--help}'[Show usage]' \
+               '1:man page:_command_names -e' \
+               "2:distro:($_manned_distros)" \
+               '3:version:->version' \
+               '4::section (default 1):((
+        1\:"User commands"
+        2\:"System calls"
+        3\:"Library functions"
+        4\:"Special files"
+        5\:"File formats"
+        6\:"Games"
+        7\:"Miscellanea"
+        8\:"System administration"
+        9\:"Kernel routines"))' && ret=0
+
+    case $state in
+        version)
+            local -a vers reply
+            local v distro=${line[2]:l}
+            _manned_versions $distro
+            for v in $reply; do
+                vers+=("$v:${${_manned_systems[$distro $v]}#*:}")
+            done
+            # -V: unsorted group, keeps our newest-first order
+            _describe -V -t versions 'version' vers && ret=0
+            ;;
+    esac
+
+    return ret
+}
+compdef _manned manned
+
 mkcd () {
     [[ -n "$1"  ]] && mkdir -p "$1" && builtin cd "$1"
 }

@@ -249,6 +249,27 @@ _encode-audio-dir () {
             cp -Rv -- "$file" "$output/" || failed=1
         fi
     done
+
+    [[ "$ext" == flac ]] && {
+        print -ru2 Before:
+        du -ch *.wav | tail -n1
+        print -ru2 After:
+        du -ch *.flac | tail -n1
+
+        rm -f  *.wav(N)
+    }
+
+    [[ "$ext" == opus ]] && {
+        print -ru2 Before:
+        du -ch *.(flac|wav) | tail -n1
+        print -ru2 After:
+        du -ch *.opus | tail -n1
+
+        rm -f  *.(flac|wav)(N)
+    }
+
+    rm -f  *.(cue|jpg|jpeg|log|m3u|nfo|sfv)(N)
+
     return $failed
 }
 encode-flac-dir () { _encode-audio-dir $0 encode-flac flac "$@" }

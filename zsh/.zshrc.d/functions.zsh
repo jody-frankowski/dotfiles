@@ -483,6 +483,26 @@ git-open () {
 git-pull-r () {
     bfs . -type d -iname '\.git' -printf '%h\n' -execdir git pull \;
 }
+git-project () {
+    local -a roots
+    roots=("${(@f)$(git rev-parse --show-superproject-working-tree --show-toplevel 2>/dev/null)}") || return 1
+    print -r -- "$roots[1]"
+}
+git-top-print () {
+    local dir=$PWD top=""
+
+    while [[ $dir != / ]]; do
+        [[ -e $dir/.git ]] && top=$dir
+        dir=${dir:h}
+    done
+
+    [[ -n $top ]] && { print -r -- "$top"; return 0 }
+    return 1
+}
+git-top () {
+    local top
+    top=$(git-top-print) && cd -- "$top"
+}
 
 gen-passphrase () {
     [[ $1 == -h ]] && { echo "Usage: $0 [--no-clipboard] [DICTFILE]" >&2; return 1 }

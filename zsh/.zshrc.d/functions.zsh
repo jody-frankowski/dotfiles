@@ -665,20 +665,30 @@ k () {
 _k () {
     words[1]=kubectl
 
+    local subcmd_idx=0
     local arg=2
     while (( arg <= CURRENT )); do
         case "$words[$arg]" in
-            -c) words[$arg]=--context ; break ;;
-            a)  words[$arg]=apply     ; break ;;
-            d)  words[$arg]=describe  ; break ;;
-            e)  words[$arg]=edit      ; break ;;
-            g)  words[$arg]=get       ; break ;;
-            l)  words[$arg]=logs      ; break ;;
-            rm) words[$arg]=delete    ; break ;;
-            sh) words[$arg]=exec      ; break ;;
+            -c) words[$arg]=--context    ; (( arg += 2 ));  continue ;;
+            a)  words[$arg]=apply        ; subcmd_idx=$arg; break ;;
+            d)  words[$arg]=describe     ; subcmd_idx=$arg; break ;;
+            e)  words[$arg]=edit         ; subcmd_idx=$arg; break ;;
+            g)  words[$arg]=get          ; subcmd_idx=$arg; break ;;
+            l)  words[$arg]=logs         ; subcmd_idx=$arg; break ;;
+            pf) words[$arg]=port-forward ; subcmd_idx=$arg; break ;;
+            rm) words[$arg]=delete       ; subcmd_idx=$arg; break ;;
+            sh) words[$arg]=exec         ; subcmd_idx=$arg; break ;;
         esac
-        ((arg++))
+        (( arg++ ))
     done
+
+    # If the word currently being completed starts with "dep" (e.g. `k g dep<TAB>`),
+    # rewrite both `words[CURRENT]` and `PREFIX` so Zsh replaces "dep" on the
+    # command line with "deploy/..."
+    if [[ $PREFIX == dep ]]; then
+        words[CURRENT]="deploy/${words[CURRENT]#dep}"
+        PREFIX="deploy/${PREFIX#dep}"
+    fi
 
     _kubectl
 }

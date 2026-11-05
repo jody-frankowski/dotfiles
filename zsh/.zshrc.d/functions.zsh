@@ -448,7 +448,37 @@ gcl () {
     fi
 }
 git-open () {
-    o "https://$(git remote get-url origin | sed -e 's/git@//' -e 's/\.git$//' -e 's#:#/#')"
+    # Get current branch (returns empty string if in detached HEAD or not a git repo)
+    local branch=$(git symbolic-ref --short -q HEAD)
+    local remote="origin"
+
+    # If on a feature branch, check for a tracking remote
+    if [[ -n "$branch" && "$branch" != (main|master) ]]; then
+        local tracking_remote=$(git config "branch.${branch}.remote")
+        [[ -n "$tracking_remote" ]] && remote="$tracking_remote"
+    fi
+
+    # Get the raw URL for the determined remote
+    local raw_url=$(git remote get-url "$remote" 2>/dev/null)
+    if [[ -z "$raw_url" ]]; then
+        echo "Error: No URL found for remote '$remote'." >&2
+        return 1
+    fi
+
+    # Normalize SSH (git@host:user/repo.git) and HTTPS URLs into https://host/user/repo
+    local base_url="$raw_url"
+    base_url="${base_url%.git}"             # Strip trailing .git
+    base_url="${base_url#ssh://}"           # Strip ssh:// if present
+    base_url="${base_url#http://}"          # Strip http:// if present
+    base_url="${base_url#https://}"         # Strip https:// if present
+    base_url="${base_url#git@}"             # Strip git@
+    base_url="https://${base_url/://}"      # Replace remaining ':' (from SSH) with '/'
+
+    if [[ -n "$branch" && "$branch" != (main|master) ]]; then
+        o "${base_url}/tree/${branch}"
+    else
+        o "$base_url"
+    fi
 }
 git-pull-r () {
     bfs . -type d -iname '\.git' -printf '%h\n' -execdir git pull \;

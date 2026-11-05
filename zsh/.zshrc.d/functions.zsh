@@ -233,7 +233,7 @@ _encode-audio-dir () {
     local file out failed=0
     local -a outs
     for file in "$input"/*(N); do
-        if [[ -f $file && ${(L)file:e} == (wav|flac|aif|aiff) ]]; then
+        if [[ -f $file && ${(L)file:e} == (flac|wav) ]]; then
             out="$output/${file:t:r}.$ext"
             if (( ${outs[(Ie)$out]} )); then
                 print -ru2 "$name: skipping $file: $out already written"

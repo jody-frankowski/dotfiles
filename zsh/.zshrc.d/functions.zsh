@@ -1183,6 +1183,64 @@ _onlinux && (( $+commands[systemctl] )) && {
     alias scu='systemctl --user'
 }
 
+scp-r2r () {
+    emulate -L zsh
+    setopt pipefail extendedglob
+
+    local -a help sudo compress verbose
+    zparseopts -D -E -F - \
+               {h,-help}=help \
+               {s,-sudo}=sudo \
+               {z,-compress}=compress \
+               {v,-verbose}=verbose || return 1
+
+    if (( $#help || $# != 2 )) || [[ $1 != *?:?* || $2 != *?:?* ]]; then
+        print -u2 "Usage: $0 [-s|--sudo] [-z|--compress] [-v|--verbose] <src_host:path> <dst_host:dir>"
+        return $(( ! $#help ))
+    fi
+
+    local sflag=${sudo:+sudo -n}
+    local zflag=${compress:+-z}
+    local vflag=${verbose:+-v}
+
+    local src_host=${1%%:*} src_path=${${1#*:}%%/#}
+    local dst_host=${2%%:*} dst_path=${2#*:}
+    src_path=${src_path:-/}
+
+    ssh -nT -- "$src_host" \
+        "$sflag tar --acls --xattrs $zflag -C ${(qq)src_path:h} -cf - -- ${(qq)src_path:t}" |
+        ssh -T -- "$dst_host" \
+            "$sflag mkdir -p -- ${(qq)dst_path} && $sflag tar --acls --xattrs --same-owner $zflag $vflag -C ${(qq)dst_path} -xpf -"
+}
+_scp-r2r () {
+    local curcontext="$curcontext" state line
+    typeset -A opt_args
+
+    _arguments -C -s -S \
+               '(- *)'{-h,--help}'[Display help message]' \
+               '(-s --sudo)'{-s,--sudo}'[Run remote commands with sudo -n]' \
+               '(-z --compress)'{-z,--compress}'[Compress archive stream with gzip (-z)]' \
+               '(-v --verbose)'{-v,--verbose}'[Verbose tar extraction]' \
+               '1:source (host\:path):->src' \
+               '2:destination (host\:dir):->dst' && return 0
+
+    case $state in
+        src|dst)
+            if compset -P '*:'; then
+                local -a slash=(${${(M)state:#dst}:+-/})
+                _remote_files $slash -- ssh
+            elif compset -P '*@'; then
+                _wanted hosts expl 'remote host' _ssh_hosts -qS:
+            else
+                _alternative \
+                    'hosts:remote host:_ssh_hosts -qS:' \
+                    'users:user:_users -qS@'
+            fi
+            ;;
+    esac
+}
+compdef _scp-r2r scp-r2r
+
 share () {
     emulate -L zsh
     setopt err_return pipe_fail no_unset

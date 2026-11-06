@@ -98,6 +98,7 @@ alias lat='la -t'
 alias latr='lat -r'
 
 # Misc
+export LESS='-i -M -R -j4'
 command -v zless    >/dev/null && alias less=zless
 command -v zstdless >/dev/null && alias less=zstdless
 

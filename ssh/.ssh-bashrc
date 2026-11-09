@@ -90,7 +90,6 @@ alias grep='grep --color=auto -i'
 alias g='grep -r'
 
 alias ls='ls --color=auto'
-command -v lsd >/dev/null && alias ls='lsd --color=auto --group-directories-first'
 _onlinux && alias ls='ls --group-directories-first'
 alias l='ls -lh'
 alias la='l -A'

@@ -1480,7 +1480,7 @@ rdap () {
     # TODO Handle ccSLD (e.g. .co.uk)
     domain="${(j/./)${(s/./)domain}[-2,-1]}" # Keep only the second-level domain
 
-    command rdap -j "${domain}" || command whois "${domain}"
+    command rdap "${domain}" || command whois "${domain}"
 }
 whois () {
     echo "Deprecated, call rdap:"

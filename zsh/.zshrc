@@ -71,7 +71,8 @@ export GPG_TTY="$(tty)"
 # for programs written with libssh!
 ###
 
-# Generate the LS_COLORS variable
+# Generate the LS_COLORS variable. Not compatible with macOS' ls which uses `LSCOLORS` and is in a
+# different format.
 eval `dircolors ~/.dir_colors`
 
 # Needed by some loaded scripts

@@ -58,7 +58,14 @@ clifu () {
 }
 
 curlg () {
-    curl --continue-at - --location --remote-name --remote-time $@
+    curl --continue-at - \
+         --glob-off \
+         --location \
+         --no-clobber \
+         --parallel \
+         --remote-name-all \
+         --remote-time \
+         --retry 5 $@
 }
 curlh () {
     curl -s -v -o /dev/null $@

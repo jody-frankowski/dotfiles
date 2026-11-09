@@ -189,14 +189,54 @@ encode-opus () {
     local output=${opt_output[-1]:-${input:r}.opus}
     local tmp="${output:h}/.${output:t:r}.$$.opus"
     local tmp2="${tmp:r}.stripped.opus"
+
+    # Channel count of the first audio stream (ffprobe ships with ffmpeg)
+    local ch
+    ch=$(ffprobe -v error -select_streams a:0 -show_entries stream=channels \
+                 -of csv=p=0 -i "$input") || return 1
+    [[ $ch == <1-> ]] || { print -ru2 "$0: no audio stream in: $input"; return 1 }
+    # Mapping family 1 supports at most 8 channels; aformat below downmixes larger layouts to 7.1
+    (( ch > 8 )) && ch=8
+
+    # Family 0 for mono/stereo (as opusenc does), family 1 for surround
+    local family=$(( ch <= 2 ? 0 : 1 ))
+
+    # Bitrate: 96k/channel up to stereo; beyond that 64k per extra
+    # full-range channel and 16k for the LFE (5.1, 6.1, 7.1 have one)
+    local -i lfe=$(( ch >= 6 ))
+    local -i full=$(( ch - lfe ))
+    local -i kbps
+    if (( ch <= 2 )); then
+        kbps=$(( ch * 96 ))
+    else
+        kbps=$(( 192 + (full - 2) * 64 + lfe * 16 ))
+    fi
+
     # https://wiki.xiph.org/Opus_Recommended_Settings
-    local -a enc_args=( --bitrate 192 --framesize 60 )
-    (( $#opt_strip )) && enc_args+=( --discard-comments --discard-pictures )
+    local -a enc_args=(
+        -c:a libopus -b:a ${kbps}k -vbr on -compression_level 10
+        -frame_duration 60 -application audio -mapping_family $family
+    )
+
+    # Resample to 48 kHz with swresample, feed float samples, and normalize the
+    # channel layout to one Opus supports (e.g. 5.1(side) -> 5.1)
+    local filters='aresample=48000:resampler=swr:filter_size=64,aformat=sample_fmts=flt:channel_layouts=mono|stereo|3.0|quad|5.0|5.1|6.1|7.1'
+
+    local -a meta_args
+    if (( $#opt_strip )); then
+        meta_args=( -map_metadata -1 -map_chapters -1 )
+    else
+        # Keep global tags and chapters; drop per-stream container tags
+        # (e.g. mkvmerge's BPS/DURATION/NUMBER_OF_* statistics)
+        meta_args=( -map_metadata 0 -map_metadata:s -1 )
+    fi
 
     {
-        opusenc $enc_args "$input" "$tmp" || return 1
+        ffmpeg -nostdin -hide_banner -loglevel error -stats -y -i "$input" \
+               -map 0:a:0 $meta_args -af $filters $enc_args \
+               "$tmp" || return 1
         if (( $#opt_strip )); then
-            # opusenc always writes ENCODER/ENCODER_OPTIONS; remux to drop them
+            # ffmpeg always writes an ENCODER tag when encoding; remux to drop it
             ffmpeg -nostdin -loglevel error -y -i "$tmp" -map 0:a -c copy \
                    -map_metadata -1 -map_chapters -1 -fflags +bitexact \
                    "$tmp2" || return 1

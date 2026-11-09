@@ -156,7 +156,6 @@ _term-osc7-set-cwd # Call it at least once when the shell starts
 () {
     # Build the reset string once instead of on every prompt
     local -a seqs=(
-        $'\e[?1049l'                                   # Alternate screen off
         $'\e[?7h'                                      # Auto-wrap on
         $'\e[?25h'                                     # Cursor visible
         $'\e[?1004l'                                   # Focus reporting off

@@ -1275,7 +1275,7 @@ Misc keybindings with General:
   "pr"  'projectile-recentf
   "pR"  'projectile-replace
   "QQ"  'save-buffers-kill-emacs
-  "qq"  'delete-frame
+  "qq"  'save-buffers-kill-terminal
   "ry"  'counsel-yank-pop
   "tw"  'whitespace-mode
   "/"   'counsel-rg)

@@ -73,6 +73,8 @@
   suu  = su update
   sus  = su sync
 
+  wt = worktree
+
 [include]
 	path = ~/.config/git/config-private
 [includeIf "gitdir:~/Dev/**"]

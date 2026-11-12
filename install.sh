@@ -348,6 +348,14 @@ if ./base/.usr/bin/_onmacos ; then
     # Disable background listening for "Hey Siri"
     defaults write com.apple.Siri VoiceTriggerUserEnabled -bool false
 
+    ### sudo
+    # TouchID password-less sudo
+    sudo cat >/etc/pam.d/sudo_local <<EOF
+# sudo_local: local config file which survives system update and is included for sudo
+# uncomment following line to enable Touch ID for sudo
+auth       sufficient     pam_tid.so
+EOF
+
     ### Terminal.app
     # Font
     osascript <<EOF

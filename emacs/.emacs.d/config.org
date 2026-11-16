@@ -910,24 +910,35 @@ if(foo)
 
 *** Go
 
-Install =go-mode=:
+Install and setup =go-ts-mode=:
 
 #+BEGIN_SRC emacs-lisp
-(use-package go-mode)
-#+END_SRC
+;; Go via the built-in tree-sitter mode (Emacs 29+).
+(use-package go-ts-mode
+  :ensure nil                           ; built-in, don't fetch from a package archive
+  :mode (("\\.go\\'"     . go-ts-mode)
+         ("/go\\.mod\\'" . go-mod-ts-mode))
+  :hook ((go-ts-mode . lsp-deferred)
+         (go-ts-mode . me/lsp-go-install-save-hooks))
+  :init
+  ;; Where to fetch the grammars from. The Go grammar is pinned because newer
+  ;; releases can break Emacs 29's font-lock queries. On Emacs 30+ you can try
+  ;; removing the version.
+  (add-to-list 'treesit-language-source-alist
+               '(go "https://github.com/tree-sitter/tree-sitter-go" "v0.20.0"))
+  (add-to-list 'treesit-language-source-alist
+               '(gomod "https://github.com/camdencheek/tree-sitter-go-mod"))
 
-Configure =lsp-mode= for Go:
+  ;; Install any grammars that are missing (only happens once).
+  (dolist (lang '(go gomod))
+    (unless (treesit-language-available-p lang)
+      (treesit-install-language-grammar lang)))
 
-#+BEGIN_SRC emacs-lisp
-;; Start an LSP server startup when a Go buffer is visible for the first time.
-(add-hook 'go-mode-hook #'lsp-deferred)
-
-;; Set up before-save hooks to format buffer and add/delete imports.
-;; Make sure you don't have other gofmt/goimports hooks enabled.
-(defun lsp-go-install-save-hooks ()
-  (add-hook 'before-save-hook #'lsp-format-buffer t t)
-  (add-hook 'before-save-hook #'lsp-organize-imports t t))
-(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+  ;; Format and organize imports on save via gopls.
+  ;; Make sure no other gofmt/goimports hooks are enabled.
+  (defun me/lsp-go-install-save-hooks ()
+    (add-hook 'before-save-hook #'lsp-format-buffer t t)
+    (add-hook 'before-save-hook #'lsp-organize-imports t t)))
 #+END_SRC
 
 *** Lisp

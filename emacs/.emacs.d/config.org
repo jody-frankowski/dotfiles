@@ -1264,6 +1264,7 @@ Misc keybindings with General:
   "ff"  'counsel-find-file
   "fj"  'dired-jump
   "fr"  'counsel-recentf
+  "gb"  'magit-blame-echo
   "gs"  'magit-status
   "hdf" 'counsel-describe-function
   "hdk" 'describe-key

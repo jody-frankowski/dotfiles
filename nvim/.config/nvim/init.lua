@@ -1,6 +1,8 @@
 vim.opt.ignorecase = true -- Ignore case in search patterns
 vim.opt.number = true     -- Enable line numbers
 vim.opt.showtabline = 2   -- Always show the tab line
+vim.opt.splitbelow = true -- Open horizontal splits below
+vim.opt.splitright = true -- Open vertical splits on the right
 
 vim.opt.background = "light"
 vim.opt.termguicolors = true

@@ -1,29 +1,131 @@
-// Zed keymap
-//
 // For information on binding keys, see the Zed
 // documentation: https://zed.dev/docs/key-bindings
-//
 // To see the default key bindings run `zed: open default keymap`
 // from the command palette.
 [
   {
     "context": "Workspace",
-    "bindings": { "shift shift": "command_palette::Toggle" },
+    "unbind": {
+      "alt-cmd-j": "multi_workspace::ToggleWorkspaceSidebar"
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "unbind": {
+      "cmd-l": "go_to_line::Toggle"
+    }
+  },
+  {
+    "context": "Editor",
+    "unbind": {
+      "cmd-l": "editor::SelectLine"
+    }
+  },
+  {
+    "context": "Workspace || Editor",
+    "bindings": {
+      "cmd-l": "multi_workspace::ToggleWorkspaceSidebar"
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "unbind": {
+      "cmd-r": [
+        "buffer_search::Deploy",
+        {
+          "replace_enabled": true
+        }
+      ]
+    }
+  },
+  {
+    "context": "Editor && mode == full",
+    "bindings": {
+      "space s r": [
+        "buffer_search::Deploy",
+        {
+          "replace_enabled": true
+        }
+      ]
+    }
+  },
+  {
+    "context": "Pane",
+    "unbind": {
+      "cmd-0": "git_panel::ToggleFocus"
+    }
+  },
+  {
+    "unbind": {
+      "cmd-0": "git_panel::ToggleFocus"
+    }
+  },
+  {
+    "context": "GitPanel",
+    "unbind": {
+      "cmd-0": "workspace::CloseActiveDock"
+    }
+  },
+  {
+    "bindings": {
+      "cmd-0": "terminal_panel::ToggleFocus",
+    },
   },
   {
     "context": "Terminal",
-    "bindings": { "cmd-b": ["terminal::SendText", "\u001bb"] },
+    "bindings": {
+      "cmd-b": ["terminal::SendText", "\u001bb"],
+      "cmd-f": ["terminal::SendText", "\u001bf"],
+    },
   },
   {
-    "context": "Terminal",
-    "bindings": { "cmd-f": ["terminal::SendText", "\u001bf"] },
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "ctrl-e": ["editor::MoveToEndOfLine", { "stop_at_soft_wraps": false }],
+    },
   },
   {
-    "bindings": { "cmd-0": "terminal_panel::Toggle" },
+    "context": "!Terminal",
+    "bindings": {
+      "ctrl-r": "task::Rerun"
+    }
   },
   {
-    "context": "Terminal",
-    "bindings": { "escape": "editor::ToggleFocus" },
+    "context": "VimControl",
+    "bindings": {
+      "H": "pane::ActivatePreviousItem",
+      "L": "pane::ActivateNextItem",
+    },
+  },
+  {
+    "context": "Workspace",
+    "unbind": {
+      "cmd-shift-f12": "workspace::ToggleAllDocks",
+    },
+  },
+  {
+    "bindings": {
+      "shift-escape": "workspace::ToggleAllDocks",
+    },
+  },
+  {
+    "context": "Editor && mode == full",
+    "bindings": {
+      "ctrl-j": "editor::Hover",
+    },
+  },
+  {
+    "context": "(VimControl && !menu) || (!Editor && !Terminal)",
+    "bindings": {
+      "shift-h": "pane::ActivatePreviousItem",
+      "shift-l": "pane::ActivateNextItem",
+    },
+  },
+  {
+    "context": "VimControl && !menu && vim_mode == visual",
+    "bindings": {
+      "space c y": ["workspace::SendKeystrokes", "y g v g c ' > p"],
+    },
   },
   {
     "context": "VimControl && !menu && vim_mode == normal",
@@ -32,9 +134,9 @@
     },
   },
   {
-    "context": "VimControl && !menu && vim_mode == visual",
+    "context": "Editor && mode == full && vim_mode == normal",
     "bindings": {
-      "space c y": ["workspace::SendKeystrokes", "y g v g c ' > p"],
-    },
+      "space f f": "file_finder::Toggle"
+    }
   },
 ]

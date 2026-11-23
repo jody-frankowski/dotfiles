@@ -32,15 +32,23 @@ elif [[ -f /etc/bash_completion ]]; then
 fi
 ## Completion ##
 
-# ignore commands starting with spaces and duplicates
+## History ##
+# Ignore commands starting with spaces and duplicates
 HISTCONTROL=ignoreboth
-# show human readable time
+# Show human readable time
 HISTTIMEFORMAT="%c "
+# Always append, never overwrite
+shopt -s histappend
+## History ##
 
-# check the window size after each command and, if necessary, updates the values of LINES and COLUMNS.
+# Check the window swize after each command and, if necessary, update the values of LINES and
+# COLUMNS.
 shopt -s checkwinsize
-# TODO needed???
-#shopt -s histappend
+
+# Increase chances of being OOM killed (protect the server's processes). Child processes will
+# inherit this adjustment.
+_onlinux && echo 1000 > /proc/$$/oom_score_adj
+### Bash Settings ###
 
 ### Aliases ###
 ## Global aliases ##

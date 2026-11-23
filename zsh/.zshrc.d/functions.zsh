@@ -280,7 +280,7 @@ _encode-audio-dir () {
     local file out failed=0
     local -a outs
     for file in "$input"/*(N); do
-        if [[ -f $file && ${(L)file:e} == (flac|wav) ]]; then
+        if [[ -f $file && ${(L)file:e} == (flac|mka|wav) ]]; then
             out="$output/${file:t:r}.$ext"
             if (( ${outs[(Ie)$out]} )); then
                 print -ru2 "$name: skipping $file: $out already written"
@@ -308,11 +308,11 @@ _encode-audio-dir () {
 
     [[ "$ext" == opus ]] && {
         print -ru2 Before:
-        du -ch *.(flac|wav) | tail -n1
+        du -ch *.(flac|mka|wav) | tail -n1
         print -ru2 After:
         du -ch *.opus | tail -n1
 
-        rm -f  *.(flac|wav)(N)
+        rm -f  *.(flac|mka|wav)(N)
     }
 
     rm -f  *.(cue|jpg|jpeg|log|m3u|nfo|sfv)(N)

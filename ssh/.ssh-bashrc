@@ -273,12 +273,12 @@ _is_host_prod=false
 
 # Since Bash only knows the cursor position by counting the number of characters *printed*, we need
 # to "escape" terminal control sequences with `\[` and `\]` (man -P "$PAGER -p '^PROMPTING'" bash)
-_term_bold="\[$(tput bold)\]"
-_term_reset="\[$(tput sgr0)\]"
-_term_red="\[$(tput setaf 1)\]"
-_term_green="\[$(tput setaf 2)\]"
-_term_blue="\[$(tput setaf 4)\]"
-_term_standout="\[$(tput smso)\]"
+_tput() { tput "$@" 2>/dev/null; } # Remote may lack terminfo for $TERM
+_term_reset="\[$(_tput sgr0)\]"
+_term_red="\[$(_tput setaf 1)\]"
+_term_green="\[$(_tput setaf 2)\]"
+_term_blue="\[$(_tput setaf 4)\]"
+_term_standout="\[$(_tput smso)\]"
 
 # _HOST can be set by the caller (e.g. `s()`)
 _prompt_host="${_term_green}${_HOST}${_term_reset}"

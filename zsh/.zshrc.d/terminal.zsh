@@ -176,4 +176,6 @@ add-zsh-hook precmd _term-reset-modes
 # Tmux only supports OSC 133 A & C:
 # https://github.com/tmux/tmux/blob/bef4865d91ff8e549a3a4d63563f0ef1a39a1a39/input.c#L3083
 # Use Tmux's `next-prompt` for `A` & `next-prompt -o` for `C`
-PS1+=$'%{\e]133;A\a%}'
+if [[ -n $TMUX ]]; then
+    PS1+=$'%{\e]133;A\a%}'
+fi

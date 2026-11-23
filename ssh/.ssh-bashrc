@@ -269,7 +269,7 @@ vdiff-fw () {
 ### prompt ###
 [[ -z ${_HOST} ]] && _HOST=$(hostname)
 _is_host_prod=false
-[[ ${_HOST} == *.prd* || ${_HOST} == *.prod* || ${_HOST} == *.production* ]] && _is_host_prod=true
+[[ ${_HOST} =~ \.(prd|prod|production) ]] && _is_host_prod=true
 
 # Since Bash only knows the cursor position by counting the number of characters *printed*, we need
 # to "escape" terminal control sequences with `\[` and `\]` (man -P "$PAGER -p '^PROMPTING'" bash)

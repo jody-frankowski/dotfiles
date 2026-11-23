@@ -245,6 +245,11 @@ slit () {
     awk "{ print ${(j:,:):-\$${^@}}  }"
 }
 
+ssg () {
+  if [[ $# != 1 ]]; then echo "Usage: $0 PORT"; return 1; fi
+  sudo ss -nltpH "sport = :$1" | grep -oP 'pid=\K[0-9]+' | sort -u | xargs -r ps uww -p
+}
+
 diff-fw () {
     if grep -i centos /etc/issue || [ -f /etc/redhat-release ]; then
         diff <(iptables-save) /etc/sysconfig/iptables

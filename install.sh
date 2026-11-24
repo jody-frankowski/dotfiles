@@ -402,6 +402,14 @@ end tell
             ln -s "${BREW_PREFIX}/opt/uutils-coreutils/bin/uu-${bin}" ~/.usr/bin/"${bin}"
     done
 
+    ### Widgets
+    # Extract/save with: plutil -extract widgets xml1 -o widgets.plist ~/Library/Containers/com.apple.notificationcenterui/Data/Library/Preferences/com.apple.notificationcenterui.plist
+    plutil -replace widgets -xml "$(cat _macos-misc/widgets.plist)" \
+           ~/Library/Containers/com.apple.notificationcenterui/Data/Library/Preferences/com.apple.notificationcenterui.plist
+    killall cfprefsd
+    killall chronod
+    killall NotificationCenter
+
     ### zsh-completions
     # Link only the completion files we need
     for completion in cmake gpgconf node ; do
@@ -412,7 +420,6 @@ end tell
     for dir in *-macos ; do
         symlink "${dir}"
     done
-
 
     echo Some macOS settings require a logout\! >&2
 fi

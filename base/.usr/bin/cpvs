@@ -3,8 +3,8 @@
 set -euo pipefail
 
 if [[ $# -lt 2 || $1 == -h || $1 == --help ]]; then
-    echo "Usage: $(basename $0) [RSYNC_OPTIONS] FILE|DIR... DESTINATION" >&2
-    echo 'Copies files and directories to a root-owned destination.' >&2
+    echo "Usage: $(basename $0) [RSYNC_OPTIONS] SOURCE... DESTINATION" >&2
+    echo 'Copies files and directories from/to a root-owned source/destination.' >&2
     exit 1
 fi
 

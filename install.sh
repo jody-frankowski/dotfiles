@@ -409,7 +409,7 @@ end tell
     done
 
     # Symlink macOS specific dotfiles
-    for dir in *-macos iterm2 ; do
+    for dir in *-macos ; do
         symlink "${dir}"
     done
 

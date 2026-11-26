@@ -300,9 +300,7 @@ _prompt_command() {
 
     PS1="${title}${_term_green}\t${_term_reset} ${err}${_prompt_host} ${_term_standout}${_term_blue} \w ${_term_reset}\n${_prompt_symbol} "
 }
-
-# Run first (to capture $?), preserve existing hooks, and avoid duplicates on re-source
-[[ $PROMPT_COMMAND == *_prompt_command* ]] || PROMPT_COMMAND="_prompt_command${PROMPT_COMMAND:+; $PROMPT_COMMAND}"
+PROMPT_COMMAND=_prompt_command
 
 ### init ###
 motd

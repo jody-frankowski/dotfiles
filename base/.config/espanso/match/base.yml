@@ -41,6 +41,12 @@ matches:
         params:
           format: "%s"
 
+  # Editors
+  - trigger: ':modelinesnippet'
+    replace: '# -*- mode: snippet -*-'
+  - trigger: ':modelinesh'
+    replace: '# -*- mode: sh; comment-start: "# " -*- vim: set ft=sh commentstring=#\ %s :'
+
   # Emoticons
   - trigger: ":cat"
     replace: "ฅ(^•ﻌ•^ฅ)"

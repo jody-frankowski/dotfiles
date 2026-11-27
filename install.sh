@@ -410,6 +410,11 @@ end tell
     killall chronod
     killall NotificationCenter
 
+    ### Zsh
+    [[ -d ~/.zshrc.d/completion/ ]] || mkdir -p ~/.zshrc.d/completion/
+    # Override Homebrew's git completion (doesn't support aliases completion)
+    ln -sf /usr/share/zsh/$ZSH_VERSION/functions/_git ~/.zshrc.d/completion/
+
     ### zsh-completions
     # Link only the completion files we need
     for completion in cmake gpgconf node ; do
